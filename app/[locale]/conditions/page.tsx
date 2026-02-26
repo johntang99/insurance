@@ -417,7 +417,10 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
             {conditionsLayoutVariant === 'category-detail-alternating' ? (
               <div className="pt-6 space-y-24">
                 {conditionsByCategory
-                  .filter((categoryGroup) => categoryGroup.conditions.length > 0)
+                  .filter(
+                    (categoryGroup) =>
+                      categoryGroup.id !== 'all' && categoryGroup.conditions.length > 0
+                  )
                   .map((categoryGroup, categoryIndex) => {
                     const categoryImage =
                       categoryGroup.image ||

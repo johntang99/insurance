@@ -23,10 +23,10 @@
       "id": "pain-management",
       "icon": "Activity",
       "name": "Pain Management",
-      "subtitle": "Natural relief for acute and chronic pain conditions",
-      "description": "Whether acute or chronic, acupuncture and TCM therapies provide effective relief for lower back pain, upper back pain, and sciatica without drugs.\n\n- Neck and shoulder pain often results from Qi stagnation and blood stasis. \n- We release trigger points with acupuncture.\n- Relax tight muscles with Tui Na, and improve circulation with cupping.",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771986412760-photo-1519824145371-296894a0daa9.jpg",
       "order": 1,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771986412760-photo-1519824145371-296894a0daa9.jpg"
+      "subtitle": "Natural relief for acute and chronic pain conditions",
+      "description": "Whether acute or chronic, acupuncture and TCM therapies provide effective relief for lower back pain, upper back pain, and sciatica without drugs.\n\n- Neck and shoulder pain often results from Qi stagnation and blood stasis. \n- We release trigger points with acupuncture.\n- Relax tight muscles with Tui Na, and improve circulation with cupping."
     },
     {
       "id": "mental-health",
@@ -50,15 +50,15 @@
       "id": "respiratory",
       "icon": "Wind",
       "name": "Respiratory Issues",
-      "description": "Support for breathing and respiratory system",
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987333497-photo-1716284130499-470a2d2b200e.jpg"
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987333497-photo-1716284130499-470a2d2b200e.jpg",
+      "description": "Support for breathing and respiratory system"
     },
     {
       "id": "immune-system",
       "icon": "Shield",
       "name": "Immune System",
-      "description": "Strengthen your body's natural defenses",
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987676016-photo-1706647155880-839358d304db.jpg"
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987676016-photo-1706647155880-839358d304db.jpg",
+      "description": "Strengthen your body's natural defenses"
     },
     {
       "id": "category-7",
@@ -100,6 +100,7 @@
       "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
       "title": "Neck & Shoulder Pain",
       "category": "pain-management",
+      "featured": false,
       "symptoms": [
         "Neck stiffness",
         "Shoulder tension",
@@ -116,8 +117,7 @@
         "Tui Na massage",
         "Cupping therapy",
         "Stretching guidance"
-      ],
-      "featured": false
+      ]
     },
     {
       "id": "arthritis",
@@ -219,6 +219,7 @@
     {
       "id": "insomnia",
       "icon": "Brain",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/headache-2.jpeg",
       "title": "Insomnia & Sleep Disorders",
       "category": "mental-health",
       "symptoms": [
@@ -237,8 +238,7 @@
         "Sleep hygiene guidance",
         "Dietary recommendations",
         "Meditation techniques"
-      ],
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/headache-2.jpeg"
+      ]
     },
     {
       "id": "stress",
@@ -492,11 +492,7 @@
       "description": "Treatment for persistent cough that hasn't responded to conventional approaches.",
       "tcmApproach": "Chronic cough has various patterns including Lung Yin deficiency, Lung Heat, or Phlegm accumulation. We identify the specific pattern and treat accordingly.",
       "treatmentMethods": [
-        "Acupuncture",
-        "Herbal medicine",
-        "Dietary modifications",
-        "Throat soothing remedies",
-        "Lifestyle adjustments"
+        "Pain Management"
       ]
     },
     {

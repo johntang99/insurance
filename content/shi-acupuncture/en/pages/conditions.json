@@ -18,42 +18,61 @@
     "subtitle": "Traditional Chinese Medicine offers natural, effective solutions for a wide range of health concerns",
     "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg"
   },
+  "layoutVariant": "category-detail-alternating",
   "categories": [
     {
       "id": "pain-management",
       "icon": "Activity",
       "name": "Pain Management",
-      "description": "Natural relief for acute and chronic pain conditions"
+      "subtitle": "Natural relief for everyday and persistent pain",
+      "description": "Natural relief for acute and chronic pain conditions",
+      "order": 1,
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/welcome-section.jpg"
     },
     {
       "id": "mental-health",
       "icon": "Brain",
       "name": "Mental & Emotional Health",
-      "description": "Support for stress, anxiety, depression, and emotional wellbeing"
+      "subtitle": "Calm the nervous system and restore emotional balance",
+      "description": "Support for stress, anxiety, depression, and emotional wellbeing",
+      "order": 2,
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg"
     },
     {
       "id": "digestive",
       "icon": "Apple",
       "name": "Digestive Health",
-      "description": "Solutions for digestive disorders and gut health"
+      "subtitle": "Support gut function, energy, and daily comfort",
+      "description": "Solutions for digestive disorders and gut health",
+      "order": 3,
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987333497-photo-1716284130499-470a2d2b200e.jpg"
     },
     {
       "id": "womens-health",
       "icon": "Heart",
       "name": "Women's Health",
-      "description": "Comprehensive care for women's health concerns"
+      "subtitle": "Whole-body support through every hormonal stage",
+      "description": "Comprehensive care for women's health concerns",
+      "order": 4,
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987676016-photo-1706647155880-839358d304db.jpg"
     },
     {
       "id": "respiratory",
       "icon": "Wind",
       "name": "Respiratory Issues",
-      "description": "Support for breathing and respiratory system"
+      "subtitle": "Breathe easier with tailored seasonal support",
+      "description": "Support for breathing and respiratory system",
+      "order": 5,
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png"
     },
     {
       "id": "immune-system",
       "icon": "Shield",
       "name": "Immune System",
-      "description": "Strengthen your body's natural defenses"
+      "subtitle": "Build resilience and reduce recurring illness cycles",
+      "description": "Strengthen your body's natural defenses",
+      "order": 6,
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg"
     }
   ],
   "conditions": [
