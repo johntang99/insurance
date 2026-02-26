@@ -45,6 +45,10 @@ export async function POST(request: NextRequest) {
   const payload = await request.json();
   const siteId = payload.siteId as string | undefined;
   const locale = payload.locale as string | undefined;
+  const includePaths = Array.isArray(payload.includePaths)
+    ? payload.includePaths.filter((value: unknown): value is string => typeof value === 'string')
+    : [];
+  const includePathSet = includePaths.length > 0 ? new Set(includePaths) : null;
 
   if (!siteId || !locale) {
     return NextResponse.json(
@@ -64,8 +68,16 @@ export async function POST(request: NextRequest) {
 
   const contentRoot = path.join(process.cwd(), 'content', siteId, locale);
   const entries = await listContentEntries(siteId, locale);
-  const localeEntryMap = new Map(entries.filter((e) => e.path !== 'theme.json').map((e) => [e.path, e]));
+  const localeEntryMap = new Map(
+    entries
+      .filter((e) => e.path !== 'theme.json')
+      .filter((e) => (includePathSet ? includePathSet.has(e.path) : true))
+      .map((e) => [e.path, e])
+  );
   let themeEntry = entries.find((e) => e.path === 'theme.json');
+  if (includePathSet && !includePathSet.has('theme.json')) {
+    themeEntry = undefined;
+  }
 
   // Backfill missing DB paths from local locale files (pages/*.json, *.layout.json, footer/header, etc.)
   const localJsonPaths = await collectJsonPathsRecursive(contentRoot);
@@ -73,7 +85,11 @@ export async function POST(request: NextRequest) {
   let backfillErrors = 0;
   const backfilledPaths: string[] = [];
   const backfillErrorPaths: string[] = [];
-  const missingLocalPaths = localJsonPaths.filter((relativePath) => !localeEntryMap.has(relativePath));
+  const missingLocalPaths = localJsonPaths.filter(
+    (relativePath) =>
+      !localeEntryMap.has(relativePath) &&
+      (includePathSet ? includePathSet.has(relativePath) : true)
+  );
   const backfillBatchSize = 20;
   for (let i = 0; i < missingLocalPaths.length; i += backfillBatchSize) {
     const batch = missingLocalPaths.slice(i, i + backfillBatchSize);
@@ -109,7 +125,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Backfill theme if missing for this locale
-  if (!themeEntry) {
+  if (!themeEntry && (!includePathSet || includePathSet.has('theme.json'))) {
     const themePath = path.join(process.cwd(), 'content', siteId, 'theme.json');
     try {
       const raw = await fs.readFile(themePath, 'utf-8');

@@ -424,7 +424,7 @@ export function ContentEditor({
 
   const handleImport = async (
     mode: 'missing' | 'overwrite' = 'missing',
-    options?: { dryRun?: boolean; force?: boolean }
+    options?: { dryRun?: boolean; force?: boolean; includePaths?: string[] }
   ) => {
     setStatus(null);
     setLoading(true);
@@ -439,6 +439,7 @@ export function ContentEditor({
           mode,
           dryRun: Boolean(options?.dryRun),
           force: Boolean(options?.force),
+          includePaths: options?.includePaths || undefined,
         }),
       });
       const payload = await response.json();
@@ -532,7 +533,7 @@ export function ContentEditor({
     );
   };
 
-  const handleExport = async () => {
+  const handleExport = async (options?: { includePaths?: string[] }) => {
     setStatus(null);
     setLoading(true);
     setExporting(true);
@@ -540,7 +541,11 @@ export function ContentEditor({
       const response = await fetch('/api/admin/content/export', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ siteId, locale }),
+        body: JSON.stringify({
+          siteId,
+          locale,
+          includePaths: options?.includePaths || undefined,
+        }),
       });
       const payload = await response.json();
       if (!response.ok) {
@@ -897,6 +902,33 @@ export function ContentEditor({
     !isCaseStudiesItemsMode || isCaseStudiesPageSettingsSelected;
   const showSharedPanels =
     showGlobalPanels && showConditionsGlobalPanels && showCaseStudiesGlobalPanels;
+  const scopedActionPaths = useMemo(() => {
+    if (fileFilter === 'services' || fileFilter === 'servicesItems') {
+      return ['pages/services.json', 'pages/services.layout.json'];
+    }
+    if (fileFilter === 'conditions' || fileFilter === 'conditionsItems') {
+      return ['pages/conditions.json', 'pages/conditions.layout.json'];
+    }
+    if (fileFilter === 'caseStudies' || fileFilter === 'caseStudiesItems') {
+      return ['pages/case-studies.json', 'pages/case-studies.layout.json'];
+    }
+    if (fileFilter === 'blog') {
+      return files.filter((file) => file.path.startsWith('blog/')).map((file) => file.path);
+    }
+    return [] as string[];
+  }, [fileFilter, files]);
+  const hasScopedActions = scopedActionPaths.length > 0;
+  const scopeLabel = hasScopedActions
+    ? fileFilter === 'services' || fileFilter === 'servicesItems'
+      ? 'Services'
+      : fileFilter === 'conditions' || fileFilter === 'conditionsItems'
+        ? 'Conditions'
+        : fileFilter === 'caseStudies' || fileFilter === 'caseStudiesItems'
+          ? 'Case Studies'
+          : fileFilter === 'blog'
+            ? 'Blog Posts'
+            : 'Current Section'
+    : 'Current Section';
   const variantSections = formData
     ? Object.entries(SECTION_VARIANT_OPTIONS).filter(
         ([key]) =>
@@ -1709,15 +1741,27 @@ export function ContentEditor({
           <div className="flex items-end gap-2 pt-4 sm:pt-0">
             <button
               type="button"
-              onClick={() => handleImport('missing')}
+              onClick={() => {
+                const confirmed = window.confirm(
+                  `Import locale JSON for ${siteId} (${locale})?\n\nThis applies to all files in the selected site + locale and may overwrite missing DB entries.`
+                );
+                if (!confirmed) return;
+                handleImport('missing');
+              }}
               disabled={importing || loading}
               className="px-3 py-2 rounded-md border border-gray-200 text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-60"
             >
-              {importing ? 'Importing…' : 'Import JSON'}
+              {importing ? 'Importing…' : 'Import Locale JSON'}
             </button>
             <button
               type="button"
-              onClick={handleCheckUpdateFromDb}
+              onClick={() => {
+                const confirmed = window.confirm(
+                  `Run Check Update From DB for ${siteId} (${locale})?\n\nThis compares local JSON vs DB for the whole locale and shows a diff summary.`
+                );
+                if (!confirmed) return;
+                handleCheckUpdateFromDb();
+              }}
               disabled={importing || loading}
               className="px-3 py-2 rounded-md border border-gray-200 text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-60"
             >
@@ -1725,7 +1769,13 @@ export function ContentEditor({
             </button>
             <button
               type="button"
-              onClick={handleOverwriteImport}
+              onClick={() => {
+                const confirmed = window.confirm(
+                  `Overwrite import for ${siteId} (${locale})?\n\nThis is a locale-wide write action and can replace DB content with local JSON. Continue?`
+                );
+                if (!confirmed) return;
+                handleOverwriteImport();
+              }}
               disabled={importing || loading}
               className="px-3 py-2 rounded-md border border-amber-200 text-xs text-amber-700 hover:bg-amber-50 disabled:opacity-60"
             >
@@ -1733,15 +1783,56 @@ export function ContentEditor({
             </button>
             <button
               type="button"
-              onClick={handleExport}
+              onClick={() => {
+                const confirmed = window.confirm(
+                  `Export locale DB to JSON for ${siteId} (${locale})?\n\nThis applies to all files in the selected site + locale.`
+                );
+                if (!confirmed) return;
+                handleExport();
+              }}
               disabled={exporting || loading}
               className="px-3 py-2 rounded-md border border-gray-200 text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-60"
             >
-              {exporting ? 'Exporting…' : 'Export JSON'}
+              {exporting ? 'Exporting…' : 'Export Locale JSON'}
             </button>
+            {hasScopedActions && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const confirmed = window.confirm(
+                      `Import section JSON for ${scopeLabel} (${siteId}, ${locale})?\n\nThis applies only to ${scopeLabel} files and imports missing DB entries.`
+                    );
+                    if (!confirmed) return;
+                    handleImport('missing', { includePaths: scopedActionPaths });
+                  }}
+                  disabled={importing || loading}
+                  className="px-3 py-2 rounded-md border border-gray-200 text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                >
+                  {importing ? 'Importing…' : 'Import Section JSON'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const confirmed = window.confirm(
+                      `Export section JSON for ${scopeLabel} (${siteId}, ${locale})?\n\nThis applies only to ${scopeLabel} files and writes local JSON from DB.`
+                    );
+                    if (!confirmed) return;
+                    handleExport({ includePaths: scopedActionPaths });
+                  }}
+                  disabled={exporting || loading}
+                  className="px-3 py-2 rounded-md border border-gray-200 text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                >
+                  {exporting ? 'Exporting…' : 'Export Section JSON'}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
+      <p className="text-xs text-gray-500 -mt-3">
+        Locale actions apply to all files for selected site+locale. Section actions apply only to this module.
+      </p>
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
         <div className="bg-white border border-gray-200 rounded-xl p-4">

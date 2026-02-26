@@ -129,6 +129,10 @@ export async function POST(request: NextRequest) {
   const mode = payload.mode === 'overwrite' ? 'overwrite' : 'missing';
   const dryRun = Boolean(payload.dryRun);
   const force = Boolean(payload.force);
+  const includePaths = Array.isArray(payload.includePaths)
+    ? payload.includePaths.filter((value: unknown): value is string => typeof value === 'string')
+    : [];
+  const includePathSet = includePaths.length > 0 ? new Set(includePaths) : null;
 
   if (!siteId || !locale) {
     return NextResponse.json(
@@ -146,7 +150,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
 
-  const candidates = await collectImportCandidates(siteId, locale);
+  const allCandidates = await collectImportCandidates(siteId, locale);
+  const candidates =
+    includePathSet === null
+      ? allCandidates
+      : allCandidates.filter((candidate) => includePathSet.has(candidate.path));
   const conflicts: Array<{
     locale: string;
     path: string;

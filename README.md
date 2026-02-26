@@ -86,6 +86,29 @@ curl http://localhost:3003/api/health
 
 Use starter packs as booking data blueprints when launching a new site clone.
 
+## Cross-site TCM services wording
+
+These assets are designed for all TCM sites (not a single site only):
+
+- Canonical service library: `content/shared/services-library/services.master.en.json`
+- Site voice profiles: `content/shared/services-library/site-voice-profiles.en.json`
+- Generator script: `scripts/content/generate-services-variants.mjs`
+
+Example (merge generated wording into one site's `services.json`):
+
+```bash
+node scripts/content/generate-services-variants.mjs \
+  --site dr-huang-clinic \
+  --target content/dr-huang-clinic/en/pages/services.json \
+  --out content/dr-huang-clinic/en/pages/services.generated.json
+```
+
+Recommended workflow:
+
+1. Maintain medical-safe meanings in `services.master.en.json`.
+2. Adjust tone/context in `site-voice-profiles.en.json`.
+3. Generate per-site copy and review before replacing production content.
+
 ---
 
 This repository is the active Chinese Medicine clinic template baseline.
