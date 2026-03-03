@@ -8,8 +8,8 @@
       "text": "预约咨询"
     },
     "secondaryCta": {
-      "link": "tel:845-381-1106",
-      "text": "致电：845-381-1106"
+      "link": "tel:17188889512",
+      "text": "致电：(718) 888-9512"
     }
   },
   "faq": {
@@ -70,7 +70,7 @@
       "优化消化健康",
       "加速损伤恢复"
     ],
-    "introduction": "在黄医生诊所，我们提供全套传统中医治疗服务。每种疗法都经过精心选择和定制，以解决您的具体健康问题和保健目标。我们的整体方法结合了古老的智慧和现代的理解，提供有效的自然治疗。"
+    "introduction": "在江医生诊所，我们提供全套传统中医治疗服务。每种疗法都经过精心选择和定制，以解决您的具体健康问题和保健目标。我们的整体方法结合了古老的智慧和现代的理解，提供有效的自然治疗。"
   },
   "trustBar": {
     "items": [
@@ -242,7 +242,7 @@
       {
         "id": "lifestyle-counseling",
         "icon": "Heart",
-        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/about/dr-huang-lecture-20.png",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/1771563757248-photo-1586768835949-e593c97c8967.jpg",
         "order": 8,
         "title": "生活方式咨询",
         "benefits": [

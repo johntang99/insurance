@@ -32,7 +32,7 @@
     "showMap": true,
     "variant": "shown",
     "embedUrl": "https://www.google.com/maps?q=71+East+Main+Street,+Middletown,+NY+10940&output=embed",
-    "directions": "我们位于米德尔敦市中心的东大街，从211号公路和I-84号州际公路都很容易到达。提供免费路边停车，我们建筑后面也有公共停车场。"
+    "directions": "我们位于法拉盛，从7号地铁和步行都很容易到达。我们建筑旁边有公共停车场。"
   },
   "form": {
     "title": "给我们留言",
@@ -73,7 +73,7 @@
     },
     "variant": "single-column",
     "subtitle": "填写下面的表格，我们会尽快回复您",
-    "errorMessage": "抱歉，发送您的消息时出错。请直接致电我们 (845) 381-1106。",
+    "errorMessage": "抱歉，发送您的消息时出错。请直接致电我们 (718) 888-9512",
     "submitButton": {
       "text": "发送消息"
     },
@@ -143,10 +143,10 @@
       "icon": "Phone",
       "title": "致电我们",
       "action": {
-        "link": "tel:+18453811106",
+        "link": "tel:+17188889512",
         "text": "立即致电"
       },
-      "primary": "(845) 381-1106",
+      "primary": "(718) 888-9512",
       "secondary": null,
       "description": "周一至周五：9am-6pm，周六：9am-2pm"
     },
@@ -154,10 +154,10 @@
       "icon": "Mail",
       "title": "电子邮件",
       "action": {
-        "link": "mailto:sancai.acu@gmail.com",
+        "link": "mailto:acupuncture41ave@gmail.com",
         "text": "发送电子邮件"
       },
-      "primary": "sancai.acu@gmail.com",
+      "primary": "acupuncture41ave@gmail.com",
       "secondary": null,
       "description": "我们通常在24小时内回复"
     },
@@ -165,11 +165,11 @@
       "icon": "MapPin",
       "title": "拜访我们",
       "action": {
-        "link": "https://maps.google.com/?q=71+East+Main+Street+Middletown+NY+10940",
+        "link": "https://www.google.com/maps/place/143-26+41st+Ave,+Flushing,+NY+11355",
         "text": "获取路线"
       },
-      "primary": "71 East Main Street",
-      "secondary": "Middletown, NY 10940",
+      "primary": "143-26 41st Ave",
+      "secondary": "Flashing, NY 11355",
       "description": "提供免费停车"
     },
     {

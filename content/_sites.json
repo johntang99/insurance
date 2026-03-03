@@ -25,6 +25,19 @@
       ],
       "createdAt": "2026-02-04T07:47:54.318Z",
       "updatedAt": "2026-02-04T07:47:54.318Z"
+    },
+    {
+      "id": "golden-lotus-test",
+      "name": "Golden Lotus Acupuncture",
+      "domain": "",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en",
+        "zh"
+      ],
+      "createdAt": "2026-03-03T08:53:57.606Z",
+      "updatedAt": "2026-03-03T08:53:57.607Z"
     }
   ]
 }

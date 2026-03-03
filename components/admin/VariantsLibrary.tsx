@@ -88,7 +88,8 @@ const SECTIONS: SectionDefinition[] = [
     description: 'Conditions lists and category views.',
     examplePath: 'conditions.variant',
     variants: [
-      { id: 'grid-cards', label: 'Grid Cards', description: 'Card grid.' },
+      { id: 'grid-cards-4x', label: 'Grid Cards 4x', description: '4-column card grid on desktop.' },
+      { id: 'grid-cards-3x', label: 'Grid Cards 3x', description: '3-column card grid on desktop.' },
       { id: 'categories-tabs', label: 'Categories Tabs', description: 'Tabbed by category.' },
       { id: 'list-detailed', label: 'List Detailed', description: 'Detailed list view.' },
       { id: 'icon-grid', label: 'Icon Grid', description: 'Icon + title grid.' },

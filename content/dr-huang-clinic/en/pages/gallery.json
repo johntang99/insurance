@@ -169,10 +169,10 @@
     },
     {
       "id": "herbs-5",
-      "alt": "Chinese medicine reference books",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/herbal-books.jpg",
+      "alt": "Chinese medicine patch",
+      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1772577279030-831fa39de1f08a403d76a0a0.jpg",
       "order": 17,
-      "title": "Extensive Reference Library",
+      "title": "Chinese Herb Patch",
       "category": "herbal-pharmacy",
       "description": "Classical and modern TCM texts guide our formulations"
     },
@@ -211,78 +211,6 @@
       "title": "Gua Sha Tools",
       "category": "equipment",
       "description": "Smooth jade and buffalo horn tools"
-    },
-    {
-      "id": "equipment-5",
-      "alt": "Tui Na massage table",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/tuina-table.jpg",
-      "order": 22,
-      "title": "Massage Table",
-      "category": "equipment",
-      "description": "Professional massage table for Tui Na treatments"
-    },
-    {
-      "id": "equipment-6",
-      "alt": "TCM diagnostic tools",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/diagnostic-tools.jpg",
-      "order": 23,
-      "title": "Diagnostic Tools",
-      "category": "equipment",
-      "description": "Traditional tools for pulse and tongue diagnosis"
-    },
-    {
-      "id": "details-1",
-      "alt": "Plants throughout the clinic",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-plants.jpg",
-      "order": 24,
-      "title": "Natural Elements",
-      "category": "details",
-      "description": "Living plants bring nature into our healing space"
-    },
-    {
-      "id": "details-2",
-      "alt": "Chinese calligraphy art",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-art.jpg",
-      "order": 25,
-      "title": "Traditional Art",
-      "category": "details",
-      "description": "Authentic Chinese art honors our medical heritage"
-    },
-    {
-      "id": "details-3",
-      "alt": "Water fountain",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-fountain.jpg",
-      "order": 26,
-      "title": "Soothing Sounds",
-      "category": "details",
-      "description": "Gentle water features create tranquility"
-    },
-    {
-      "id": "details-4",
-      "alt": "Essential oil diffuser",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-aromatherapy.jpg",
-      "order": 27,
-      "title": "Aromatherapy",
-      "category": "details",
-      "description": "Natural scents enhance the healing environment"
-    },
-    {
-      "id": "details-5",
-      "alt": "Diplomas and certificates",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-certificates.jpg",
-      "order": 28,
-      "title": "Credentials on Display",
-      "category": "details",
-      "description": "Dr. Huang's certifications and licenses"
-    },
-    {
-      "id": "details-6",
-      "alt": "Herbal tea service",
-      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-tea.jpg",
-      "order": 29,
-      "title": "Herbal Tea",
-      "category": "details",
-      "description": "Complimentary herbal tea for patients"
     }
   ],
   "categories": [

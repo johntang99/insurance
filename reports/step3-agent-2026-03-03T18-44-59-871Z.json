@@ -1,0 +1,618 @@
+{
+  "generatedAt": "2026-03-03T18:44:56.030Z",
+  "mode": "fix+audit",
+  "targetHost": "oakahkxpbmmodpcpocio.supabase.co",
+  "bucket": "chinesemedicine-media",
+  "checks": {
+    "urlReachability": true,
+    "variantCompatibility": true,
+    "adminFormCoverage": true
+  },
+  "gate": {
+    "failOnBroken": false,
+    "failOnVariant": false,
+    "failed": false,
+    "reasons": []
+  },
+  "formCoveredPrefixes": [
+    "author",
+    "caseStudies",
+    "categories",
+    "category",
+    "conditions",
+    "contentMarkdown",
+    "cta",
+    "excerpt",
+    "featured",
+    "hero",
+    "image",
+    "images",
+    "introduction",
+    "languages",
+    "menu",
+    "menu.items",
+    "pages",
+    "profile",
+    "publishDate",
+    "readingTime",
+    "relatedReading",
+    "relatedReading.preferredSlugs",
+    "seoDescription",
+    "seoTitle",
+    "servicesList",
+    "servicesList.items",
+    "slug",
+    "status",
+    "tags",
+    "title",
+    "trustBar",
+    "trustBar.items"
+  ],
+  "sites": [
+    {
+      "siteId": "dr-huang-clinic",
+      "contentEntries": 68,
+      "mediaAssets": 65,
+      "imageRefs": {
+        "legacyUploadPathCount": 0,
+        "bucketUrlCount": 148,
+        "externalImageUrlCount": 0
+      },
+      "variantKeyCount": 120,
+      "variantIssuesCount": 8,
+      "variantIssuesPreview": [
+        {
+          "type": "unknown_variant_key",
+          "path": "menu.variant",
+          "key": "variant",
+          "value": "transparent"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "layoutVariant",
+          "key": "layoutVariant",
+          "value": "category-detail-alternating"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "menu.variant",
+          "key": "variant",
+          "value": "transparent"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "headerVariant",
+          "key": "headerVariant",
+          "value": "stacked"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "menu.variant",
+          "key": "variant",
+          "value": "transparent"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "layoutVariant",
+          "key": "layoutVariant",
+          "value": "category-detail-alternating"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "menu.variant",
+          "key": "variant",
+          "value": "transparent"
+        },
+        {
+          "type": "unknown_variant_key",
+          "path": "headerVariant",
+          "key": "headerVariant",
+          "value": "stacked"
+        }
+      ],
+      "urlReachability": {
+        "checked": 75,
+        "broken": 30,
+        "brokenPreview": [
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/hero-bg.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/contact/hero-bg.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/exterior-sign.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/reception-waiting.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/exterior-parking.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/reception-reading.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/treatment-room-2.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/treatment-table.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/treatment-room-1.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/treatment-lighting.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/herbal-wall.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/herbal-jars.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/herbal-packages.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/treatment-privacy.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/herbal-preparation.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/herbal-books.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/diagnostic-tools.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/tuina-table.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/cupping-set.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/gua-sha-tools.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/moxa-supplies.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-art.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-certificates.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/detail-tea.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/pricing/hero-bg.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/immune-system.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/herbal-medicine.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/acupuncture-11.jpeg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/case-studies/fertility.jpg",
+            "ok": false,
+            "status": 400
+          },
+          {
+            "url": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/why-tcm.jpg",
+            "ok": false,
+            "status": 400
+          }
+        ]
+      },
+      "formCoverage": {
+        "filesFlagged": 37,
+        "mismatchesPreview": [
+          {
+            "file": "en:blog/acupuncture-pain-new.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedConditions[0]",
+              "relatedConditions[1]",
+              "relatedConditions[2]"
+            ]
+          },
+          {
+            "file": "en:blog/acupuncture-pain-relief-science.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedConditions[0]",
+              "relatedConditions[1]"
+            ]
+          },
+          {
+            "file": "en:blog/chinese-herbal-formulas.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedServices[2]",
+              "relatedConditions[0]"
+            ]
+          },
+          {
+            "file": "en:blog/cupping-therapy-basics.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedServices[2]",
+              "relatedConditions[0]",
+              "relatedConditions[1]",
+              "relatedConditions[2]"
+            ]
+          },
+          {
+            "file": "en:blog/digestive-balance-tcm.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedConditions[0]"
+            ]
+          },
+          {
+            "file": "en:blog/first-visit-acupuncture-guide.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedConditions[0]",
+              "relatedConditions[1]",
+              "relatedConditions[2]"
+            ]
+          },
+          {
+            "file": "en:blog/moxibustion-warming-guide.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedServices[2]",
+              "relatedConditions[0]",
+              "relatedConditions[1]",
+              "relatedConditions[2]"
+            ]
+          },
+          {
+            "file": "en:blog/seasonal-allergy-support.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedServices[2]",
+              "relatedConditions[0]",
+              "relatedConditions[1]",
+              "relatedConditions[2]"
+            ]
+          },
+          {
+            "file": "en:blog/sleep-restoration-tips.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedConditions[0]"
+            ]
+          },
+          {
+            "file": "en:blog/spring-seasonal-reset.json",
+            "missingPaths": [
+              "relatedServices[0]",
+              "relatedServices[1]",
+              "relatedServices[2]",
+              "relatedConditions[0]",
+              "relatedConditions[1]",
+              "relatedConditions[2]"
+            ]
+          },
+          {
+            "file": "en:header.json",
+            "missingPaths": [
+              "topbar.badge",
+              "topbar.hours",
+              "topbar.phone",
+              "topbar.address",
+              "topbar.phoneHref",
+              "topbar.addressHref"
+            ]
+          },
+          {
+            "file": "en:navigation.json",
+            "missingPaths": [
+              "main[0].url",
+              "main[0].text",
+              "main[1].url",
+              "main[1].text",
+              "main[2].url",
+              "main[2].text",
+              "main[3].url",
+              "main[3].text",
+              "main[4].url",
+              "main[4].text",
+              "main[5].url",
+              "main[5].text",
+              "main[6].url",
+              "main[6].text",
+              "main[7].url"
+            ]
+          },
+          {
+            "file": "en:pages/about.json",
+            "missingPaths": [
+              "clinic.title",
+              "clinic.values[0].icon",
+              "clinic.values[0].title",
+              "clinic.values[0].description",
+              "clinic.values[1].icon",
+              "clinic.values[1].title",
+              "clinic.values[1].description",
+              "clinic.values[2].icon",
+              "clinic.values[2].title",
+              "clinic.values[2].description",
+              "clinic.values[3].icon",
+              "clinic.values[3].title",
+              "clinic.values[3].description",
+              "clinic.variant",
+              "clinic.features[0]"
+            ]
+          },
+          {
+            "file": "en:pages/case-studies.json",
+            "missingPaths": [
+              "statistics.stats[0].icon",
+              "statistics.stats[0].label",
+              "statistics.stats[0].number",
+              "statistics.stats[1].icon",
+              "statistics.stats[1].label",
+              "statistics.stats[1].number",
+              "statistics.stats[2].icon",
+              "statistics.stats[2].label",
+              "statistics.stats[2].number",
+              "statistics.stats[3].icon",
+              "statistics.stats[3].label",
+              "statistics.stats[3].number",
+              "statistics.title",
+              "statistics.variant"
+            ]
+          },
+          {
+            "file": "en:pages/conditions.json",
+            "missingPaths": [
+              "layoutVariant"
+            ]
+          },
+          {
+            "file": "en:pages/contact.json",
+            "missingPaths": [
+              "faq.items[0].answer",
+              "faq.items[0].question",
+              "faq.items[1].answer",
+              "faq.items[1].question",
+              "faq.items[2].answer",
+              "faq.items[2].question",
+              "faq.items[3].answer",
+              "faq.items[3].question",
+              "faq.title",
+              "faq.variant",
+              "map.title",
+              "map.showMap",
+              "map.variant",
+              "map.embedUrl",
+              "map.directions"
+            ]
+          },
+          {
+            "file": "en:pages/gallery.json",
+            "missingPaths": [
+              "virtualTour.title",
+              "virtualTour.available",
+              "virtualTour.description"
+            ]
+          },
+          {
+            "file": "en:pages/home.json",
+            "missingPaths": [
+              "blog.badge",
+              "blog.posts[0].slug",
+              "blog.posts[0].type",
+              "blog.posts[0].image",
+              "blog.posts[0].title",
+              "blog.posts[0].excerpt",
+              "blog.posts[0].category",
+              "blog.posts[0].readTime",
+              "blog.posts[1].slug",
+              "blog.posts[1].type",
+              "blog.posts[1].image",
+              "blog.posts[1].title",
+              "blog.posts[1].excerpt",
+              "blog.posts[1].category",
+              "blog.posts[1].readTime"
+            ]
+          },
+          {
+            "file": "en:pages/new-patients.json",
+            "missingPaths": [
+              "faq.items[0].answer",
+              "faq.items[0].question",
+              "faq.items[1].answer",
+              "faq.items[1].question",
+              "faq.items[2].answer",
+              "faq.items[2].question",
+              "faq.items[3].answer",
+              "faq.items[3].question",
+              "faq.items[4].answer",
+              "faq.items[4].question",
+              "faq.items[5].answer",
+              "faq.items[5].question",
+              "faq.items[6].answer",
+              "faq.items[6].question",
+              "faq.items[7].answer"
+            ]
+          },
+          {
+            "file": "en:pages/pricing.json",
+            "missingPaths": [
+              "faq.items[0].answer",
+              "faq.items[0].question",
+              "faq.items[1].answer",
+              "faq.items[1].question",
+              "faq.items[2].answer",
+              "faq.items[2].question",
+              "faq.items[3].answer",
+              "faq.items[3].question",
+              "faq.items[4].answer",
+              "faq.items[4].question",
+              "faq.items[5].answer",
+              "faq.items[5].question",
+              "faq.items[6].answer",
+              "faq.items[6].question",
+              "faq.title"
+            ]
+          },
+          {
+            "file": "en:pages/services.json",
+            "missingPaths": [
+              "faq.faqs[0].answer",
+              "faq.faqs[0].question",
+              "faq.faqs[1].answer",
+              "faq.faqs[1].question",
+              "faq.faqs[2].answer",
+              "faq.faqs[2].question",
+              "faq.faqs[3].answer",
+              "faq.faqs[3].question",
+              "faq.faqs[4].answer",
+              "faq.faqs[4].question",
+              "faq.faqs[5].answer",
+              "faq.faqs[5].question",
+              "faq.faqs[6].answer",
+              "faq.faqs[6].question",
+              "faq.faqs[7].answer"
+            ]
+          },
+          {
+            "file": "en:seo.json",
+            "missingPaths": [
+              "home.title",
+              "home.description",
+              "description"
+            ]
+          },
+          {
+            "file": "en:theme.json",
+            "missingPaths": [
+              "colors.primary.50",
+              "colors.primary.100",
+              "colors.primary.dark",
+              "colors.primary.light",
+              "colors.primary.DEFAULT",
+              "colors.backdrop.primary",
+              "colors.backdrop.secondary",
+              "colors.secondary.50",
+              "colors.secondary.dark",
+              "colors.secondary.light",
+              "colors.secondary.DEFAULT",
+              "typography.body",
+              "typography.fonts.body",
+              "typography.fonts.small",
+              "typography.fonts.display"
+            ]
+          },
+          {
+            "file": "zh:header.json",
+            "missingPaths": [
+              "topbar.badge",
+              "topbar.hours",
+              "topbar.phone",
+              "topbar.address",
+              "topbar.phoneHref",
+              "topbar.addressHref"
+            ]
+          },
+          {
+            "file": "zh:navigation.json",
+            "missingPaths": [
+              "main[0].url",
+              "main[0].text",
+              "main[1].url",
+              "main[1].text",
+              "main[2].url",
+              "main[2].text",
+              "main[3].url",
+              "main[3].text",
+              "main[4].url",
+              "main[4].text",
+              "main[5].url",
+              "main[5].text",
+              "main[6].url",
+              "main[6].text",
+              "main[7].url"
+            ]
+          }
+        ]
+      },
+      "filesWithLegacyPathsPreview": []
+    }
+  ]
+}

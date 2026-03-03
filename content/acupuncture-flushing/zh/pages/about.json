@@ -107,15 +107,15 @@
     "items": [
       {
         "icon": "GraduationCap",
-        "year": "2008",
+        "year": "1996",
         "location": "中国北京市",
-        "credential": "传统中医理学硕士",
+        "credential": "传统中医理学博士",
         "institution": "北京中医药大学"
       },
       {
         "icon": "Award",
-        "year": "2009",
-        "location": "执照 #12345",
+        "year": "2010",
+        "location": "执照 #4371",
         "credential": "持牌针灸师",
         "institution": "纽约州教育部"
       },
@@ -125,13 +125,6 @@
         "location": "针灸文凭持有者",
         "credential": "针灸国家委员会认证",
         "institution": "NCCAOM（国家认证委员会）"
-      },
-      {
-        "icon": "Certificate",
-        "year": "2009",
-        "location": "中药学文凭持有者",
-        "credential": "中药学国家委员会认证",
-        "institution": "NCCAOM"
       }
     ],
     "title": "教育和资质",
@@ -152,10 +145,6 @@
       {
         "name": "美国针灸和东方医学协会（AAAOM）",
         "role": "专业会员"
-      },
-      {
-        "name": "针灸和中药学院理事会",
-        "role": "支持会员"
       }
     ]
   },
@@ -190,13 +179,12 @@
     "items": [
       "高级运动医学针灸认证（2019年）",
       "生育和生殖健康专业化（2016年）",
-      "与Heiner Fruehauf博士的经典中药研讨会",
       "每年参加国家中医会议",
       "与当地中医执业者的定期学习小组",
       "每年30+小时的继续教育（要求：每3年30小时）"
     ],
     "title": "继续教育和培训",
     "variant": "compact",
-    "description": "江医生积极参与中医社区，并定期寻求高级培训："
+    "description": "江医生积极参与中医社区活动，并定期寻求高级培训："
   }
 }

@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-03-03T09:58:20.641Z",
+  "mode": "audit",
+  "targetHost": "oakahkxpbmmodpcpocio.supabase.co",
+  "bucket": "chinesemedicine-media",
+  "sites": [
+    {
+      "siteId": "dr-huang-clinic",
+      "contentEntries": 68,
+      "mediaAssets": 62,
+      "imageRefs": {
+        "legacyUploadPathCount": 0,
+        "bucketUrlCount": 148,
+        "externalImageUrlCount": 0
+      },
+      "variantKeyCount": 120,
+      "filesWithLegacyPathsPreview": []
+    },
+    {
+      "siteId": "shi-acupuncture",
+      "contentEntries": 68,
+      "mediaAssets": 60,
+      "imageRefs": {
+        "legacyUploadPathCount": 0,
+        "bucketUrlCount": 171,
+        "externalImageUrlCount": 0
+      },
+      "variantKeyCount": 119,
+      "filesWithLegacyPathsPreview": []
+    },
+    {
+      "siteId": "acupuncture-flushing",
+      "contentEntries": 68,
+      "mediaAssets": 53,
+      "imageRefs": {
+        "legacyUploadPathCount": 0,
+        "bucketUrlCount": 149,
+        "externalImageUrlCount": 0
+      },
+      "variantKeyCount": 120,
+      "filesWithLegacyPathsPreview": []
+    }
+  ]
+}

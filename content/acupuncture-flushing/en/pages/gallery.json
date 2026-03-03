@@ -283,6 +283,16 @@
       "title": "Herbal Tea",
       "category": "details",
       "description": "Complimentary herbal tea for patients"
+    },
+    {
+      "id": "gallery-1772576734454",
+      "alt": "",
+      "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/1772576800524-831fa39de1f08a403d76a0a0.jpg",
+      "order": 30,
+      "title": "Back patch",
+      "category": "herbal-pharmacy",
+      "featured": false,
+      "description": ""
     }
   ],
   "categories": [

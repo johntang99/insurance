@@ -275,7 +275,7 @@
   },
   "conditions": {
     "title": "我們治療的病症",
-    "variant": "grid-cards",
+    "variant": "grid-cards-3x",
     "moreLink": {
       "url": "/zh/conditions",
       "text": "查看所有病症"
@@ -283,64 +283,134 @@
     "subtitle": "傳統中醫可以幫助治療多種健康問題",
     "conditions": [
       {
-        "id": "back-pain",
+        "id": "pain-management-full",
         "icon": "Activity",
-        "link": "/zh/conditions#back-pain",
+        "link": "/zh/conditions#pain",
         "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/acupuncture-needles.jpg",
-        "title": "痛症",
+        "title": "急慢性痛症全科",
         "category": "疼痛管理",
         "symptoms": [
-          "下背部疼痛",
-          "上背部僵硬",
-          "坐骨神經痛",
-          "椎間盤突出疼痛"
+          "頸肩腰腿痛、坐骨神經痛、三叉神經痛",
+          "頸椎病、腰椎病、骨質疏鬆、骨折不癒",
+          "肩周炎、網球肘、腱鞘炎、腕管綜合徵",
+          "風濕關節炎、膝關節炎、筋膜炎、足跟痛"
         ],
-        "description": "針灸與中醫療法可緩解急慢性背痛，無需藥物或手術"
+        "description": "涵蓋從骨傷科到神經性痛症的全方位治療，透過針灸與中醫藥有效緩解炎症、修復受損組織。"
       },
       {
-        "id": "headaches-migraines",
-        "icon": "Activity",
-        "link": "/zh/conditions#headaches-migraines",
-        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg",
-        "title": "頭痛和偏頭痛",
-        "category": "疼痛管理",
-        "symptoms": [
-          "反覆頭痛",
-          "偏頭痛發作",
-          "太陽穴緊張",
-          "畏光"
-        ],
-        "description": "無需藥物即可有效緩解緊張性頭痛與偏頭痛"
-      },
-      {
-        "id": "anxiety",
-        "icon": "Brain",
-        "link": "/zh/conditions#anxiety",
+        "id": "sleep-mental-full",
+        "icon": "Moon",
+        "link": "/zh/conditions#sleep",
         "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/anxiate-3.jpeg",
-        "title": "焦慮和恐慌症",
+        "title": "心理情緒與睡眠醫學",
         "category": "心理與情緒健康",
         "symptoms": [
-          "過度擔憂",
-          "思緒飛馳",
-          "恐慌發作",
-          "坐立不安"
+          "失眠、焦慮、憂鬱、強迫症",
+          "發作性睡病、打鼾、睡眠呼吸暫停",
+          "睡眠行為異常、壓力性偏頭痛"
         ],
-        "description": "對焦慮、恐慌發作和緊張的自然、無藥物支持"
+        "description": "調節神經遞質與臟腑氣血，針對現代人高壓生活引起的多種心理與睡眠障礙提供深度治療。"
       },
       {
-        "id": "ibs",
-        "icon": "Apple",
-        "link": "/zh/conditions#ibs",
+        "id": "psychosomatic-full",
+        "icon": "HeartPulse",
+        "link": "/zh/conditions#psychosomatic",
         "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/chinese-dietary-10.jpg",
-        "title": "腸易激綜合徵和消化問題",
-        "category": "消化系統健康",
+        "title": "內科與心身疾病調理",
+        "category": "內科調理",
         "symptoms": [
-          "腹痛",
-          "腹脹",
-          "便秘或腹瀉",
-          "脹氣"
+          "腸易激綜合徵 (IBS)、各類結節類疾病",
+          "癌前病變調理、放化療後身體修復",
+          "慢性疲勞綜合徵、內分泌失調"
         ],
-        "description": "有效緩解腸易激綜合徵、腹脹、脹氣和消化不適"
+        "description": "專注於內臟功能的整體協調，針對複雜性心身疾病與重大疾病後的機能重建。"
+      },
+      {
+        "id": "aesthetic-full",
+        "icon": "Sparkles",
+        "link": "/zh/conditions#aesthetic",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
+        "title": "損美性疾病與體重管理",
+        "category": "美容與減重",
+        "symptoms": [
+          "單純性肥胖、體態塑形",
+          "皺紋、皮膚鬆弛、暗沉斑點",
+          "脫髮、斑禿、痤瘡後遺症"
+        ],
+        "description": "結合中醫體質辨證，利用針灸與調理改善代謝，實現健康減重與自然煥顏的效果。"
+      },
+      {
+        "id": "gynecology",
+        "icon": "Heart",
+        "link": "/zh/conditions#gynecology",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-10.jpeg",
+        "title": "婦科調理",
+        "category": "婦女健康",
+        "symptoms": [
+          "月經不調、經痛、卵巢早衰",
+          "不孕症、產後修復、子宮脫垂",
+          "更年期綜合症、更年期抑鬱",
+          "乳腺結節、乳癰 (乳腺炎)"
+        ],
+        "description": "針對女性各階段生理特點，調節沖任二脈與氣血平衡，解決生殖系統與內分泌困擾。"
+      },
+      {
+        "id": "pediatrics",
+        "icon": "Baby",
+        "link": "/zh/conditions#pediatrics",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/chinese-herb-10.webp",
+        "title": "兒科發展與調理",
+        "category": "小兒科",
+        "symptoms": [
+          "食積、厭食症、腹瀉、消化不良",
+          "生長發育遲緩、腦部發育不全",
+          "小兒早熟、免疫力低下"
+        ],
+        "description": "呵護小兒稚陰稚陽之體，透過溫和的推拿與中藥改善消化吸收，促進青少年健康發育。"
+      },
+      {
+        "id": "dermatology",
+        "icon": "Shield",
+        "link": "/zh/conditions#dermatology",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
+        "title": "皮膚與免疫科",
+        "category": "皮膚管理",
+        "symptoms": [
+          "痤瘡 (青春痘)、濕疹、蕁麻疹",
+          "帶狀皰疹 (皮蛇)、銀屑病 (牛皮癬)",
+          "神經性皮炎、皮膚搔癢、黃褐斑",
+          "萊姆病、花粉症 (過敏性鼻炎)"
+        ],
+        "description": "從內在臟腑調理出發，治風先治血，解決各類頑固皮膚疾病與免疫系統過敏問題。"
+      },
+      {
+        "id": "andrology",
+        "icon": "User",
+        "link": "/zh/conditions#andrology",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg",
+        "title": "男科機能調理",
+        "category": "男性健康",
+        "symptoms": [
+          "前列腺增生肥大",
+          "陽痿、早洩、性功能障礙",
+          "男性不育、補腎益精"
+        ],
+        "description": "針對男性常見的泌尿與生殖系統問題，透過辨證施治達到強身健體、恢復自信的效果。"
+      },
+      {
+        "id": "internal-medicine",
+        "icon": "Stethoscope",
+        "link": "/zh/conditions#internal",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/chinese-dietary-10.jpg",
+        "title": "內科系統全科",
+        "category": "內科綜合調理",
+        "symptoms": [
+          "呼吸與循環：肺炎、氣喘、高血壓、冠心病、心衰",
+          "消化系統：胃炎、腸炎、潰瘍、膽囊炎、膽石症",
+          "神經系統：腦梗後遺症、帕金森、記憶力減退、眩暈",
+          "泌尿與腎病：腎炎、腎病綜合徵、尿路感染、結石"
+        ],
+        "description": "涵蓋人體各大系統常見慢性病與疑難雜症，如重症肌無力、耳鳴耳聾等，提供整體的機能修復方案。"
       }
     ]
   },

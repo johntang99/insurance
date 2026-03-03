@@ -18,70 +18,69 @@
     "subtitle": "传统中医为各种健康问题提供自然、有效的解决方案",
     "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg"
   },
-  "layoutVariant": "category-detail-alternating",
   "categories": [
     {
       "id": "all",
       "icon": "Grid",
       "name": "所有病症",
-      "subtitle": "按分类查看完整调理方案",
-      "description": "查看所有病症",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg",
       "order": 0,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg"
+      "subtitle": "按分类查看完整调理方案",
+      "description": "查看所有病症"
     },
     {
       "id": "pain-management",
       "icon": "Activity",
       "name": "疼痛管理",
-      "subtitle": "急慢性疼痛的自然缓解与功能恢复",
-      "description": "急性和慢性疼痛的自然缓解",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/welcome-section.jpg",
       "order": 1,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/welcome-section.jpg"
+      "subtitle": "急慢性疼痛的自然缓解与功能恢复",
+      "description": "急性和慢性疼痛的自然缓解"
     },
     {
       "id": "mental-health",
       "icon": "Brain",
       "name": "心理与情绪健康",
-      "subtitle": "调神安神，帮助情绪回归平衡",
-      "description": "压力、焦虑、抑郁和情绪健康的支持",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg",
       "order": 2,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg"
+      "subtitle": "调神安神，帮助情绪回归平衡",
+      "description": "压力、焦虑、抑郁和情绪健康的支持"
     },
     {
       "id": "digestive",
       "icon": "Apple",
       "name": "消化系统健康",
-      "subtitle": "改善脾胃功能，提升日常舒适度",
-      "description": "消化系统疾病和肠道健康的解决方案",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987333497-photo-1716284130499-470a2d2b200e.jpg",
       "order": 3,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987333497-photo-1716284130499-470a2d2b200e.jpg"
+      "subtitle": "改善脾胃功能，提升日常舒适度",
+      "description": "消化系统疾病和肠道健康的解决方案"
     },
     {
       "id": "womens-health",
       "icon": "Heart",
       "name": "妇女健康",
-      "subtitle": "覆盖周期、备孕与更年期阶段护理",
-      "description": "妇女健康问题的综合护理",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987676016-photo-1706647155880-839358d304db.jpg",
       "order": 4,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987676016-photo-1706647155880-839358d304db.jpg"
+      "subtitle": "覆盖周期、备孕与更年期阶段护理",
+      "description": "妇女健康问题的综合护理"
     },
     {
       "id": "respiratory",
       "icon": "Wind",
       "name": "呼吸系统问题",
-      "subtitle": "减轻季节性不适，帮助呼吸更顺畅",
-      "description": "呼吸和呼吸系统的支持",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
       "order": 5,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png"
+      "subtitle": "减轻季节性不适，帮助呼吸更顺畅",
+      "description": "呼吸和呼吸系统的支持"
     },
     {
       "id": "immune-system",
       "icon": "Shield",
       "name": "免疫系统",
-      "subtitle": "提升体质，减少反复发作",
-      "description": "增强身体的自然防御",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg",
       "order": 6,
-      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg"
+      "subtitle": "提升体质，减少反复发作",
+      "description": "增强身体的自然防御"
     }
   ],
   "conditions": [
@@ -563,5 +562,6 @@
     "note": "没有看到您的病症？请联系我们 - 我们可能仍然可以帮助您！",
     "text": "在黄医生诊所，我们治疗整个人，而不仅仅是症状。我们的综合方法在提供即时缓解的同时，解决疾病的根本原因。以下是我们常见治疗的一些病症，并取得了良好的效果。",
     "variant": "centered"
-  }
+  },
+  "layoutVariant": "category-detail-alternating"
 }

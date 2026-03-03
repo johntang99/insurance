@@ -7,7 +7,7 @@
       "link": "/en/contact",
       "text": "Book Your Consultation"
     },
-    "contactInfo": "Call us at (845) 381-1106 or book online",
+    "contactInfo": "Call us at (516)466-4018 or book online",
     "secondaryCta": {
       "link": "tel:+15164664018",
       "text": "Call Us Now"
@@ -115,7 +115,7 @@
       "Stress Relief"
     ],
     "secondaryCta": {
-      "link": "tel:+18453811106",
+      "link": "tel:+15164664018",
       "text": "Call Now"
     }
   },
@@ -173,10 +173,10 @@
       "text": "Accepting New Patients",
       "visible": true
     },
-    "email": "sancai.acu@gmail.com",
-    "phone": "(845) 381-1106",
-    "address": "71 East Main Street, Middletown, NY 10940",
-    "addressMapUrl": "https://maps.google.com/?q=71+East+Main+Street+Middletown+NY+10940"
+    "email": "shigangusus@yahoo.com",
+    "phone": "(516)466-4018",
+    "address": "935 Northern Boulevard, Suite 303, Great Neck, NY 11021",
+    "addressMapUrl": "https://maps.google.com/?q=935+Northern+Boulevard+Suite303+Greak Neck+NY+11021"
   },
   "gallery": {
     "badge": "VISIT OUR CLINIC",
@@ -411,7 +411,7 @@
     ],
     "title": "How Chinese Medicine Works",
     "variant": "vertical-image-right",
-    "imageAlt": "Patient care at Dr. Huang Clinic",
+    "imageAlt": "Patient care at Gang Shi Clinic",
     "subtitle": "A holistic approach to healing"
   },
   "whyChooseUs": {
@@ -452,13 +452,13 @@
       {
         "name": "Jennifer M.",
         "image": "",
-        "quote": "After years of chronic back pain and trying everything, acupuncture with Dr. Huang finally gave me relief. I'm pain-free and back to my active lifestyle!",
+        "quote": "After years of chronic back pain and trying everything, acupuncture with Dr. Shi finally gave me relief. I'm pain-free and back to my active lifestyle!",
         "condition": "Chronic Back Pain"
       },
       {
         "name": "Robert T.",
         "image": "",
-        "quote": "Dr. Huang's holistic approach helped me manage my anxiety without medication. The combination of acupuncture and herbs has been life-changing.",
+        "quote": "Dr. Shi's holistic approach helped me manage my anxiety without medication. The combination of acupuncture and herbs has been life-changing.",
         "condition": "Stress & Anxiety"
       },
       {

@@ -206,6 +206,8 @@ export interface Condition {
 export interface ConditionsSection {
   variant?:
     | 'grid-cards'
+    | 'grid-cards-4x'
+    | 'grid-cards-3x'
     | 'categories-tabs'
     | 'list-detailed'
     | 'icon-grid'

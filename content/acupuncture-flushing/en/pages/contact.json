@@ -31,7 +31,7 @@
     "title": "Find Us",
     "showMap": true,
     "variant": "shown",
-    "embedUrl": "https://www.google.com/maps?q=71+East+Main+Street,+Middletown,+NY+10940&output=embed",
+    "embedUrl": "https://www.google.com/maps/place/143-26+41st+Ave,+Flushing,+NY+11355",
     "directions": "We're located on East Main Street in downtown Middletown, easily accessible from Route 211 and I-84. Free street parking is available, as well as a public parking lot behind our building."
   },
   "form": {
@@ -102,8 +102,7 @@
       },
       {
         "day": "Wednesday",
-        "note": "Community Acupuncture Day",
-        "time": "9:00 AM - 7:00 PM",
+        "time": "9:00 AM - 6:00 PM",
         "isOpen": true
       },
       {
@@ -143,10 +142,10 @@
       "icon": "Phone",
       "title": "Call Us",
       "action": {
-        "link": "tel:+18453811106",
+        "link": "tel:+17188889512",
         "text": "Call Now"
       },
-      "primary": "(845) 381-1106",
+      "primary": "(718) 888-9512",
       "secondary": null,
       "description": "Mon-Fri: 9am-6pm, Sat: 9am-2pm"
     },
@@ -154,10 +153,10 @@
       "icon": "Mail",
       "title": "Email",
       "action": {
-        "link": "mailto:sancai.acu@gmail.com",
+        "link": "mailto:acupuncture41ave@gmail.com",
         "text": "Send Email"
       },
-      "primary": "sancai.acu@gmail.com",
+      "primary": "acupuncture41ave@gmail.com",
       "secondary": null,
       "description": "We typically respond within 24 hours"
     },
@@ -165,11 +164,11 @@
       "icon": "MapPin",
       "title": "Visit Us",
       "action": {
-        "link": "https://maps.google.com/?q=71+East+Main+Street+Middletown+NY+10940",
+        "link": "https://www.google.com/maps/place/143-26+41st+Ave,+Flushing,+NY+11355",
         "text": "Get Directions"
       },
-      "primary": "71 East Main Street",
-      "secondary": "Middletown, NY 10940",
+      "primary": "143-26 41st Ave",
+      "secondary": "Flushing, NY 11355",
       "description": "Free parking available"
     },
     {

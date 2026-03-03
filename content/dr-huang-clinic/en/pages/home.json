@@ -221,7 +221,7 @@
       "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/Acupuncture-15.webp",
       "title": "Acupuncture",
       "subtitle": "Restore balance and stimulate healing",
-      "fullDescription": "Acupuncture involves the insertion of fine, sterile needles at specific points to restore the flow of Qi. This ancient practice stimulates natural healing, reduces pain, and promotes overall wellness.",
+      "fullDescription": "Regulates the body's internal organs and meridians by stimulating specific acupuncture points. It balances Yin and Yang, promotes the circulation of Qi and blood, and clears the meridians to prevent and treat various conditions.",
       "shortDescription": "Our primary treatment modality using fine needles to restore balance and promote healing"
     },
     "moreLink": {
@@ -235,7 +235,7 @@
         "link": "/en/services#herbs",
         "title": "Chinese Herbal Medicine",
         "subtitle": "Nature's pharmacy for holistic healing",
-        "fullDescription": "Chinese herbal medicine uses natural plant-based remedies, carefully combined in traditional formulas, to address the root causes of health concerns. Each formula is customized to your unique constitution and current health needs.",
+        "fullDescription": "Utilizes syndrome differentiation to select specific herbs or formulas that regulate the Yin, Yang, Qi, and blood of the internal organs, effectively adjusting the body's overall functional balance.",
         "shortDescription": "Custom herbal formulas tailored to your needs"
       },
       {
@@ -244,7 +244,7 @@
         "link": "/en/services#cupping",
         "title": "Cupping Therapy",
         "subtitle": "Release tension and promote circulation",
-        "fullDescription": "Cupping therapy uses glass or silicone cups to create suction on the skin, promoting blood flow, releasing muscle tension, and drawing out toxins. This technique has been used for thousands of years to treat pain and improve circulation.",
+        "fullDescription": "Uses fire or vacuum suction to create negative pressure on the skin. This expands the capillaries to promote blood circulation, remove blood stasis, and expel wind and cold pathogens from the body.",
         "shortDescription": "Release muscle tension and improve circulation"
       },
       {
@@ -253,7 +253,7 @@
         "link": "/en/services#moxibustion",
         "title": "Moxibustion",
         "subtitle": "Warming therapy to invigorate Qi",
-        "fullDescription": "Moxibustion involves burning dried mugwort (moxa) near acupuncture points to warm the meridians, strengthen Qi, and promote healing. The gentle heat penetrates deeply to nourish and invigorate the body.",
+        "fullDescription": "Uses the gentle, penetrating heat from burning moxa (mugwort) to stimulate specific acupuncture points. This therapy warms the meridians, expels cold, activates blood circulation, and relieves pain.",
         "shortDescription": "Warm therapy to strengthen and energize"
       },
       {
@@ -262,7 +262,7 @@
         "link": "/en/services#tuina",
         "title": "Tui Na Massage",
         "subtitle": "Therapeutic massage along meridians",
-        "fullDescription": "Tui Na is a form of Chinese therapeutic massage that uses rhythmic compression, stretching, and manipulation techniques along the body's meridian channels. It combines massage with acupressure to restore balance and relieve pain.",
+        "fullDescription": "Applies manual techniques to the meridians, muscles, and joints to harmonize Qi and blood, relax the tendons, clear the meridians, and improve local circulation.",
         "shortDescription": "Traditional Chinese medical massage"
       },
       {
@@ -271,7 +271,7 @@
         "link": "/en/services#gua-sha",
         "title": "Gua Sha",
         "subtitle": "Scraping therapy to release stagnation",
-        "fullDescription": "Gua Sha involves using a smooth-edged tool to gently scrape the skin, promoting blood flow and releasing stagnation. This technique is particularly effective for releasing muscle tension and supporting recovery.",
+        "fullDescription": "Uses a specialized scraping tool to rub the skin over meridians and acupuncture points until sha (redness) appears. This process promotes the movement of Qi and blood, clears the meridians, and expels wind-cold or damp-heat pathogens",
         "shortDescription": "Scraping therapy for pain and inflammation"
       }
     ],
@@ -279,7 +279,7 @@
   },
   "conditions": {
     "title": "Conditions We Treat",
-    "variant": "grid-cards",
+    "variant": "grid-cards-3x",
     "moreLink": {
       "url": "/en/conditions",
       "text": "View All Conditions"

@@ -31,7 +31,9 @@ export type ServicesVariant =
   | 'detail-image-right';   // Detail rows with image always on right
 
 export type ConditionsVariant =
-  | 'grid-cards'            // Card grid
+  | 'grid-cards'            // Legacy card grid (mapped to grid-cards-4x)
+  | 'grid-cards-4x'         // Card grid, 4 columns
+  | 'grid-cards-3x'         // Card grid, 3 columns
   | 'categories-tabs'       // Tabbed by category
   | 'list-detailed'         // Detailed list view
   | 'icon-grid'             // Icon + title grid

@@ -1,12 +1,12 @@
 {
   "brand": {
-    "name": "Dr Huang Clinic",
+    "name": "黃醫生診所 (Dr Huang Clinic)",
     "logoText": "TCM",
-    "description": "以传统中医和针灸为社区提供整体治疗。"
+    "description": "以傳統中醫和針灸為社區提供整體治療。"
   },
   "hours": [
-    "Mon-Fri: 9:00 AM - 6:00 PM",
-    "Sat: 10:00 AM - 2:00 PM"
+    "週一至週五: 9:00 AM - 6:00 PM",
+    "週六: 10:00 AM - 2:00 PM"
   ],
   "contact": {
     "email": "info@clinic.com",
@@ -21,11 +21,11 @@
   "services": [
     {
       "url": "/zh/services#acupuncture",
-      "text": "针灸"
+      "text": "針灸"
     },
     {
       "url": "/zh/services#herbs",
-      "text": "中药"
+      "text": "中藥"
     },
     {
       "url": "/zh/services#cupping",
@@ -36,29 +36,29 @@
       "text": "推拿"
     }
   ],
-  "copyright": "© {year} Dr Huang Clinic. 版权所有。",
+  "copyright": "© {year} 黃醫生診所. 版權所有。",
   "legalLinks": [
     {
       "url": "/zh/privacy",
-      "text": "隐私政策"
+      "text": "隱私政策"
     },
     {
       "url": "/zh/terms",
-      "text": "服务条款"
+      "text": "服務條款"
     }
   ],
   "quickLinks": [
     {
       "url": "/zh/about",
-      "text": "关于我们"
+      "text": "關於我們"
     },
     {
       "url": "/zh/services",
-      "text": "服务项目"
+      "text": "服務項目"
     },
     {
       "url": "/zh/conditions",
-      "text": "治疗病症"
+      "text": "治療病症"
     },
     {
       "url": "/zh/case-studies",
@@ -66,7 +66,7 @@
     },
     {
       "url": "/zh/new-patients",
-      "text": "首次就诊"
+      "text": "首次就診"
     },
     {
       "url": "/zh/new-patients",
@@ -74,11 +74,11 @@
     },
     {
       "url": "/zh/blog",
-      "text": "博客"
+      "text": "網誌"
     },
     {
       "url": "/zh/contact",
-      "text": "联系我们"
+      "text": "聯繫我們"
     }
   ]
 }

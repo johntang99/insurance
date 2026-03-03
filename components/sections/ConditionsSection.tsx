@@ -13,7 +13,13 @@ export interface ConditionsSectionProps {
     text: string;
     url: string;
   };
-  variant?: 'grid-cards' | 'categories-tabs' | 'list-detailed' | 'icon-grid';
+  variant?:
+    | 'grid-cards'
+    | 'grid-cards-4x'
+    | 'grid-cards-3x'
+    | 'categories-tabs'
+    | 'list-detailed'
+    | 'icon-grid';
   className?: string;
 }
 
@@ -23,9 +29,12 @@ export default function ConditionsSection({
   subtitle,
   conditions,
   moreLink,
-  variant = 'grid-cards',
+  variant = 'grid-cards-4x',
   className,
 }: ConditionsSectionProps) {
+  // Backward compatibility for existing content that still uses "grid-cards".
+  const normalizedVariant = variant === 'grid-cards' ? 'grid-cards-4x' : variant;
+
   return (
     <section className={cn('section-padding bg-gray-50', className)}>
       <div className="container-custom">
@@ -43,19 +52,22 @@ export default function ConditionsSection({
         </div>
 
         {/* Render based on variant */}
-        {variant === 'grid-cards' && (
-          <ConditionsGrid conditions={conditions} />
+        {(normalizedVariant === 'grid-cards-4x' || normalizedVariant === 'grid-cards-3x') && (
+          <ConditionsGrid
+            conditions={conditions}
+            columns={normalizedVariant === 'grid-cards-3x' ? 3 : 4}
+          />
         )}
         
-        {variant === 'categories-tabs' && (
+        {normalizedVariant === 'categories-tabs' && (
           <ConditionsTabs conditions={conditions} />
         )}
         
-        {variant === 'list-detailed' && (
+        {normalizedVariant === 'list-detailed' && (
           <ConditionsList conditions={conditions} />
         )}
         
-        {variant === 'icon-grid' && (
+        {normalizedVariant === 'icon-grid' && (
           <ConditionsIconGrid conditions={conditions} />
         )}
 
@@ -82,9 +94,17 @@ export default function ConditionsSection({
 // VARIANT COMPONENTS
 // ============================================
 
-function ConditionsGrid({ conditions }: { conditions: Condition[] }) {
+function ConditionsGrid({
+  conditions,
+  columns,
+}: {
+  conditions: Condition[];
+  columns: 3 | 4;
+}) {
+  const gridClassName =
+    columns === 3 ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'grid md:grid-cols-2 lg:grid-cols-4 gap-6';
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className={gridClassName}>
       {conditions.map((condition) => (
         <ConditionCard key={condition.id} condition={condition} />
       ))}

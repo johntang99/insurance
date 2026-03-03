@@ -1,34 +1,34 @@
 {
   "cta": {
     "link": "/zh/contact",
-    "text": "在线预约"
+    "text": "線上預約"
   },
   "menu": {
     "logo": {
-      "text": "黄医生诊所",
+      "text": "黃醫生診所",
       "emoji": "",
       "image": {
-        "alt": "黄医生诊所",
+        "alt": "黃醫生診所",
         "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/drhuang-2.svg"
       },
-      "subtext": "传统中医与针灸"
+      "subtext": "傳統中醫與針灸"
     },
     "items": [
       {
         "url": "/zh",
-        "text": "首页"
+        "text": "首頁"
       },
       {
         "url": "/zh/services",
-        "text": "服务项目"
+        "text": "服務項目"
       },
       {
         "url": "/zh/conditions",
-        "text": "治疗病症"
+        "text": "治療病症"
       },
       {
         "url": "/zh/about",
-        "text": "关于我们"
+        "text": "關於我們"
       },
       {
         "url": "/zh/case-studies",
@@ -36,30 +36,30 @@
       },
       {
         "url": "/zh/gallery",
-        "text": "诊所环境"
+        "text": "診所環境"
       },
       {
         "url": "/zh/new-patients",
-        "text": "首次就诊"
+        "text": "首次就診"
       },
       {
         "url": "/zh/pricing",
-        "text": "收费"
+        "text": "收費標準"
       },
       {
         "url": "/zh/blog",
-        "text": "博客"
+        "text": "網誌"
       },
       {
         "url": "/zh/contact",
-        "text": "联系我们"
+        "text": "聯繫我們"
       }
     ],
     "variant": "transparent"
   },
   "topbar": {
     "badge": "接受新患者",
-    "hours": "周一至周五 9:00-18:00",
+    "hours": "週一至週五 9:00-18:00",
     "phone": "(845) 381-1106",
     "address": "71 East Main Street, Middletown, NY 10940",
     "phoneHref": "tel:+18453811106",
