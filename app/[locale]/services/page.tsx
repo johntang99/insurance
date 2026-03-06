@@ -133,19 +133,29 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
   const backgroundHero = heroVariant === 'photo-background' && Boolean(hero.backgroundImage);
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
   const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
+  const sectionSpacingStyle = {
+    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingBottom: 'var(--section-padding-y, 5rem)',
+  };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
 
   return (
     <main className="min-h-screen flex flex-col">
       {/* Hero Section */}
       {isEnabled('hero') && (
         <section
-          className={`relative ${heroTopPaddingClass} pb-16 md:pb-20 px-4 overflow-hidden ${
+          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
             backgroundHero
               ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/75'
               : 'bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)]'
           }`}
           style={{
             ...(sectionStyle('hero') || {}),
+            ...heroBottomSpacingStyle,
             ...(backgroundHero ? { backgroundImage: `url(${hero.backgroundImage})` } : {}),
           }}
         >
@@ -173,14 +183,15 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
                   return (
                     <div
                       key={item.title}
-                      className="flex flex-col items-center sm:items-start gap-3 bg-white/80 backdrop-blur rounded-xl p-4 border border-gray-200 shadow-sm"
+                      className="flex flex-col items-center sm:items-start gap-3 bg-white/80 backdrop-blur p-4 border border-gray-200"
+                      style={tokenSurfaceStyle}
                     >
-                      <div className="w-12 h-12 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 bg-primary-50 flex items-center justify-center shrink-0" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
                         <TrustIcon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="text-center sm:text-left">
-                        <p className="font-semibold text-gray-900 text-sm">{item.title}</p>
-                        <p className="text-xs text-gray-600">{item.description}</p>
+                        <p className="font-semibold text-gray-900 text-small">{item.title}</p>
+                        <p className="text-small text-gray-600">{item.description}</p>
                       </div>
                     </div>
                   );
@@ -191,7 +202,7 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
             {/* Right Column - Hero Image */}
             {!centeredHero && (
             <div className={`hidden md:block w-full ${imageLeftHero ? 'lg:order-first' : ''}`}>
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="overflow-hidden" style={tokenSurfaceStyle}>
                 {hero.backgroundImage ? (
                   <Image
                     src={hero.backgroundImage}
@@ -211,7 +222,7 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
                       <p className="text-gray-700 font-semibold text-subheading mb-2">
                         {heroPlaceholder.title}
                       </p>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-gray-600 text-small">
                         {heroPlaceholder.subtitle}
                       </p>
                     </div>
@@ -227,14 +238,20 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
 
       {/* Overview Section */}
       {isEnabled('overview') && (
-        <section className="py-16 lg:py-24 bg-white" style={sectionStyle('overview')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('overview') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <p className="text-lg text-gray-700 leading-relaxed mb-12">
+            <p className="text-body text-gray-700 leading-relaxed mb-12">
               {overview.introduction}
             </p>
 
-            <div className="bg-gradient-to-br from-primary/5 to-backdrop-primary rounded-2xl p-8 lg:p-12">
+            <div
+              className="bg-gradient-to-br from-primary/5 to-backdrop-primary p-8 lg:p-12"
+              style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}
+            >
               <h2 className="text-heading font-bold text-gray-900 mb-6">
                 {overviewTitle}
               </h2>
@@ -272,7 +289,10 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
 
       {/* FAQ Section */}
       {isEnabled('faq') && (
-        <section className="py-16 lg:py-24 bg-white" style={sectionStyle('faq')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('faq') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
@@ -299,8 +319,8 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
 
       {isEnabled('relatedReading') && relatedPosts.length > 0 && (
         <section
-          className="py-16 lg:py-24 bg-gradient-to-br from-backdrop-secondary to-white"
-          style={sectionStyle('relatedReading')}
+          className="bg-gradient-to-br from-backdrop-secondary to-white"
+          style={{ ...(sectionStyle('relatedReading') || {}), ...sectionSpacingStyle }}
         >
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
@@ -327,12 +347,12 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
               <div className="grid md:grid-cols-3 gap-6">
                 {relatedPosts.map((post) => (
                   <Link key={post.slug} href={`/${locale}/blog/${post.slug}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow">
+                    <Card className="h-full">
                       <CardHeader>
                         <Badge variant="secondary" size="sm">
                           {post.category || relatedReading.defaultCategory || (locale === 'en' ? 'Guide' : '指南')}
                         </Badge>
-                        <CardTitle className="text-base mt-3 line-clamp-2">
+                        <CardTitle className="text-body mt-3 line-clamp-2">
                           {post.title}
                         </CardTitle>
                         {post.excerpt && (
@@ -359,7 +379,7 @@ export default async function ServicesPageComponent({ params }: ServicesPageProp
             primaryCta={cta.primaryCta}
             secondaryCta={cta.secondaryCta}
             variant={cta.variant || 'centered'}
-            className="py-16 lg:py-24"
+            className=""
           />
         </div>
       )}

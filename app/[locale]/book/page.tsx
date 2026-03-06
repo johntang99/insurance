@@ -28,10 +28,11 @@ export async function generateMetadata({ params }: BookingPageProps): Promise<Me
 
 export default function BookingPage({ params }: BookingPageProps) {
   const { locale } = params;
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
 
   return (
     <main className="bg-gray-50">
-      <section className="pt-28 md:pt-32 pb-10 px-4">
+      <section className="pt-20 md:pt-24 px-4" style={heroBottomSpacingStyle}>
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-10">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[color-mix(in_srgb,var(--primary)_12%,white)] text-[var(--primary)] mb-4">

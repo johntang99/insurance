@@ -20,6 +20,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       asChild = false,
       disabled,
       children,
+      style,
       ...props
     },
     ref
@@ -28,19 +29,25 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     if (asChild && children) {
       return children as React.ReactElement;
     }
-    const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
     
     const variants = {
-      primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary shadow-sm hover:shadow-md',
-      secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary shadow-sm hover:shadow-md',
+      primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary',
+      secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary',
       outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
       ghost: 'text-primary hover:bg-primary-50 focus:ring-primary',
     };
     
     const sizes = {
-      sm: 'px-4 py-2 text-sm',
-      md: 'px-6 py-3 text-base',
-      lg: 'px-8 py-4 text-lg',
+      sm: 'px-4 py-2 text-small',
+      md: 'px-6 py-3 text-body',
+      lg: 'px-8 py-4 text-subheading',
+    };
+    const getShadow = () => {
+      if (variant === 'primary' || variant === 'secondary' || variant === 'outline') {
+        return 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))';
+      }
+      return undefined;
     };
     
     return (
@@ -53,6 +60,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           fullWidth && 'w-full',
           className
         )}
+        style={{
+          borderRadius: 'var(--radius-base, 0.5rem)',
+          boxShadow: getShadow(),
+          ...(style || {}),
+        }}
         disabled={disabled || loading}
         {...props}
       >

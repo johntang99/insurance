@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { getSessionFromRequest } from '@/lib/admin/auth';
 import { isSuperAdmin } from '@/lib/admin/permissions';
 import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 
 // ── Types ────────────────────────────────────────────────────────────
@@ -200,6 +201,56 @@ async function deleteRows(table: string, filters: Record<string, string>): Promi
   if (!res.ok) throw new Error(`Delete ${table} failed (${res.status}): ${await res.text()}`);
 }
 
+// ── Supabase Storage helpers ─────────────────────────────────────────
+
+function getStorageBucket(): string {
+  return process.env.SUPABASE_STORAGE_BUCKET || process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || '';
+}
+
+async function listStorageFiles(prefix: string): Promise<string[]> {
+  const { url, key } = getSupabaseConfig();
+  const bucket = getStorageBucket();
+  if (!bucket) return [];
+
+  const files: string[] = [];
+  const queue = [prefix];
+  while (queue.length > 0) {
+    const currentPrefix = queue.shift()!;
+    const res = await fetch(`${url}/storage/v1/object/list/${bucket}`, {
+      method: 'POST',
+      headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prefix: currentPrefix, limit: 1000, offset: 0 }),
+    });
+    if (!res.ok) break;
+    const items: any[] = await res.json();
+    for (const item of items) {
+      const fullPath = currentPrefix ? `${currentPrefix}/${item.name}` : item.name;
+      if (item.id) {
+        files.push(fullPath);
+      } else {
+        queue.push(fullPath);
+      }
+    }
+  }
+  return files;
+}
+
+async function copyStorageFile(fromPath: string, toPath: string): Promise<boolean> {
+  const { url, key } = getSupabaseConfig();
+  const bucket = getStorageBucket();
+  const res = await fetch(`${url}/storage/v1/object/copy`, {
+    method: 'POST',
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ bucketId: bucket, sourceKey: fromPath, destinationKey: toPath }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    if (body.includes('already exists')) return true;
+    return false;
+  }
+  return true;
+}
+
 // ── Claude API helpers ───────────────────────────────────────────────
 
 async function callClaude(prompt: string): Promise<string> {
@@ -363,6 +414,62 @@ export async function POST(request: NextRequest) {
           }
           result.domains = domainRows.length;
 
+          // Clone media assets DB records (remap URLs to new site namespace)
+          const templateMedia = await fetchRows('media_assets', { site_id: TEMPLATE_ID });
+          if (templateMedia.length > 0) {
+            const mediaBatch = 100;
+            for (let i = 0; i < templateMedia.length; i += mediaBatch) {
+              const batch = templateMedia.slice(i, i + mediaBatch);
+              const clonedMedia = batch.map((item: any) => ({
+                site_id: SITE_ID,
+                path: item.path,
+                url: (item.url || '')
+                  .replace(`/uploads/${TEMPLATE_ID}/`, `/uploads/${SITE_ID}/`)
+                  .replace(`/${TEMPLATE_ID}/`, `/${SITE_ID}/`),
+                updated_at: new Date().toISOString(),
+              }));
+              await upsert('media_assets', clonedMedia, 'site_id,path');
+            }
+          }
+
+          // Copy files in Supabase Storage bucket
+          if (getStorageBucket()) {
+            const storageFiles = await listStorageFiles(TEMPLATE_ID);
+            const CONCURRENCY = 5;
+            for (let i = 0; i < storageFiles.length; i += CONCURRENCY) {
+              const batch = storageFiles.slice(i, i + CONCURRENCY);
+              await Promise.allSettled(
+                batch.map((filePath) => {
+                  const destPath = filePath.replace(`${TEMPLATE_ID}/`, `${SITE_ID}/`);
+                  return copyStorageFile(filePath, destPath);
+                })
+              );
+            }
+          }
+
+          // Copy file-based uploads and content directories
+          const copyDirIfExists = async (src: string, dest: string) => {
+            try {
+              await fsPromises.access(src);
+            } catch {
+              return; // source doesn't exist, skip
+            }
+            await fsPromises.mkdir(path.dirname(dest), { recursive: true });
+            await fsPromises.cp(src, dest, { recursive: true, errorOnExist: false });
+          };
+
+          const uploadsRoot = path.join(process.cwd(), 'public', 'uploads');
+          await copyDirIfExists(
+            path.join(uploadsRoot, TEMPLATE_ID),
+            path.join(uploadsRoot, SITE_ID)
+          );
+
+          const contentRoot = path.join(process.cwd(), 'content');
+          await copyDirIfExists(
+            path.join(contentRoot, TEMPLATE_ID),
+            path.join(contentRoot, SITE_ID)
+          );
+
           // Update local _sites.json
           const sitesFile = path.join(CONTENT_DIR, '_sites.json');
           try {
@@ -394,7 +501,7 @@ export async function POST(request: NextRequest) {
             fs.writeFileSync(domainsFile, JSON.stringify(domainsData, null, 2) + '\n');
           } catch { /* _site-domains.json may not exist in all environments */ }
 
-          emitProgress('O1', 'Clone', 'done', `Cloned ${cloned.length} entries`, Date.now() - o1Start);
+          emitProgress('O1', 'Clone', 'done', `Cloned ${cloned.length} entries, ${templateMedia.length} media assets`, Date.now() - o1Start);
         } catch (err: any) {
           emitProgress('O1', 'Clone', 'error', err.message, Date.now() - o1Start);
           throw err;

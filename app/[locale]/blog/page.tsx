@@ -124,12 +124,18 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
   const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
   const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-16 md:pt-20';
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
 
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
       <section
-        className={`relative bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)] ${heroTopPaddingClass} pb-16 md:pb-20 px-4 overflow-hidden`}
+        className={`relative bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)] ${heroTopPaddingClass} px-4 overflow-hidden`}
+        style={heroBottomSpacingStyle}
       >
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 right-10 w-64 h-64 bg-primary-100 rounded-full blur-3xl"></div>
@@ -149,7 +155,10 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
             </div>
 
             <div className="relative lg:h-[420px] h-[320px] hidden md:block">
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] rounded-3xl overflow-hidden shadow-2xl">
+              <div
+                className="absolute inset-0 bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] overflow-hidden"
+                style={tokenSurfaceStyle}
+              >
                 {hero.backgroundImage ? (
                   <Image
                     src={hero.backgroundImage}

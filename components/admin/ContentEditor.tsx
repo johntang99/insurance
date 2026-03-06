@@ -9,6 +9,7 @@ import { ImagePickerModal } from '@/components/admin/ImagePickerModal';
 import { SeoPanel } from '@/components/admin/panels/SeoPanel';
 import { HeaderPanel } from '@/components/admin/panels/HeaderPanel';
 import { ThemePanel } from '@/components/admin/panels/ThemePanel';
+import ThemePresetsTab from '@/components/admin/ThemePresetsTab';
 import { SectionVariantsPanel } from '@/components/admin/panels/SectionVariantsPanel';
 import { ConditionsLayoutPanel } from '@/components/admin/panels/ConditionsLayoutPanel';
 import { HomeSectionPhotosPanel } from '@/components/admin/panels/HomeSectionPhotosPanel';
@@ -36,6 +37,7 @@ import { CaseStudiesPanel } from '@/components/admin/panels/CaseStudiesPanel';
 import { PostsPanel } from '@/components/admin/panels/PostsPanel';
 import { SECTION_VARIANT_OPTIONS, SITE_SETTINGS_PATHS } from '@/components/admin/utils/editorConstants';
 import { getPathValue, toTitleCase } from '@/components/admin/utils/editorHelpers';
+import type { ThemePreset } from '@/lib/theme-presets';
 
 interface ContentFileItem {
   id: string;
@@ -83,7 +85,7 @@ export function ContentEditor({
   const [formData, setFormData] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'form' | 'json'>('form');
+  const [activeTab, setActiveTab] = useState<'presets' | 'form' | 'json'>('form');
   const [showImagePicker, setShowImagePicker] = useState(false);
   const [imageFieldPath, setImageFieldPath] = useState<string[] | null>(null);
   const [markdownPreview, setMarkdownPreview] = useState<Record<string, boolean>>({});
@@ -107,6 +109,32 @@ export function ContentEditor({
   const [activeCaseStudyIndex, setActiveCaseStudyIndex] = useState(-1);
   const [caseStudiesItemJsonDraft, setCaseStudiesItemJsonDraft] = useState('');
   const [caseStudiesItemJsonError, setCaseStudiesItemJsonError] = useState<string | null>(null);
+
+  const withThemeDefaults = (input: Record<string, any>) => {
+    const next = JSON.parse(JSON.stringify(input || {}));
+    next.shape = next.shape || {};
+    next.shape.radius = typeof next.shape.radius === 'string' && next.shape.radius ? next.shape.radius : '8px';
+    next.shape.shadow =
+      typeof next.shape.shadow === 'string' && next.shape.shadow
+        ? next.shape.shadow
+        : '0 4px 20px rgba(0,0,0,0.08)';
+
+    next.layout = next.layout || {};
+    if (typeof next.layout.heroVariant !== 'string') next.layout.heroVariant = 'centered';
+    if (typeof next.layout.featureVariant !== 'string') next.layout.featureVariant = 'grid';
+    if (
+      next.layout.spacingDensity !== 'compact' &&
+      next.layout.spacingDensity !== 'comfortable' &&
+      next.layout.spacingDensity !== 'spacious'
+    ) {
+      next.layout.spacingDensity = 'comfortable';
+    }
+
+    if (next._preset && typeof next._preset !== 'object') {
+      next._preset = {};
+    }
+    return next;
+  };
   const filesTitle =
     fileFilter === 'blog'
       ? 'Blog Posts'
@@ -246,10 +274,18 @@ export function ContentEditor({
       })
       .then((payload) => {
         const nextContent = payload.content || '';
-        setContent(nextContent);
+        let parsedForForm: Record<string, any>;
         try {
-          setFormData(JSON.parse(nextContent));
+          parsedForForm = JSON.parse(nextContent);
+          if (activeFile?.path === 'theme.json') {
+            parsedForForm = withThemeDefaults(parsedForForm);
+            setContent(JSON.stringify(parsedForForm, null, 2));
+          } else {
+            setContent(nextContent);
+          }
+          setFormData(parsedForForm);
         } catch (error) {
+          setContent(nextContent);
           setFormData(null);
         }
       })
@@ -371,6 +407,9 @@ export function ContentEditor({
     if (isRawJsonEditing) {
       try {
         parsedContent = JSON.parse(content);
+        if (activeFile.path === 'theme.json') {
+          parsedContent = withThemeDefaults(parsedContent);
+        }
         setFormData(parsedContent);
       } catch (error) {
         setStatus('Invalid JSON. Please fix before saving.');
@@ -382,7 +421,10 @@ export function ContentEditor({
         return;
       }
       parsedContent = nextFormData;
-      setFormData(nextFormData);
+      if (activeFile.path === 'theme.json') {
+        parsedContent = withThemeDefaults(parsedContent);
+      }
+      setFormData(parsedContent);
     }
 
     let contentToSave = JSON.stringify(parsedContent, null, 2);
@@ -779,6 +821,14 @@ export function ContentEditor({
       }
     });
     setFormData(next);
+  };
+
+  const applyThemePreset = (preset: ThemePreset) => {
+    const nextTheme = JSON.parse(JSON.stringify(preset));
+    setFormData(nextTheme);
+    setContent(JSON.stringify(nextTheme, null, 2));
+    setActiveTab('form');
+    setStatus(`Applied theme preset: ${preset._preset.name}. Click Save to persist.`);
   };
 
   const openImagePicker = (path: string[]) => {
@@ -1615,6 +1665,12 @@ export function ContentEditor({
   ]);
 
   useEffect(() => {
+    if (!isThemeFile && activeTab === 'presets') {
+      setActiveTab('form');
+    }
+  }, [activeTab, isThemeFile]);
+
+  useEffect(() => {
     if (!isCaseStudiesItemsMode || !isCaseStudiesPageFileActive) return;
     const categories = Array.isArray(formData?.categories) ? formData.categories : [];
     const items = Array.isArray(formData?.caseStudies) ? formData.caseStudies : [];
@@ -2061,6 +2117,19 @@ export function ContentEditor({
           )}
 
           <div className="flex items-center gap-2 mb-3">
+            {isThemeFile && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('presets')}
+                className={`px-3 py-1.5 rounded-md text-xs ${
+                  activeTab === 'presets'
+                    ? 'bg-[var(--primary)] text-white'
+                    : 'border border-gray-200 text-gray-700'
+                }`}
+              >
+                Presets
+              </button>
+            )}
             <button
               type="button"
               onClick={() => setActiveTab('form')}
@@ -2085,7 +2154,13 @@ export function ContentEditor({
             </button>
           </div>
 
-          {activeTab === 'form' ? (
+          {activeTab === 'presets' ? (
+            isThemeFile && formData ? (
+              <ThemePresetsTab currentTheme={formData} onApply={applyThemePreset} />
+            ) : (
+              <div className="text-sm text-gray-500">Presets are available only for theme.json.</div>
+            )
+          ) : activeTab === 'form' ? (
             <div className="space-y-6 text-sm">
               {!formData && (
                 <div className="text-sm text-gray-500">

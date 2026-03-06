@@ -11,6 +11,30 @@
       "domain": "acupunctureflushing.com",
       "environment": "prod",
       "enabled": true
+    },
+    {
+      "siteId": "tcm-hub",
+      "domain": "tcm-hub.com",
+      "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "tcm-hub",
+      "domain": "tcm-hub.local",
+      "environment": "dev",
+      "enabled": true
+    },
+    {
+      "siteId": "kingsfoil-acupuncture",
+      "domain": "goshenacupuncture.com",
+      "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "kingsfoil-acupuncture",
+      "domain": "kingsfoil.local",
+      "environment": "dev",
+      "enabled": true
     }
   ]
 }

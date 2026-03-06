@@ -30,6 +30,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
       placeholder,
       id,
       children,
+      style,
       ...props
     },
     ref
@@ -52,12 +53,13 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             className={cn(
-              'block w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2.5 pr-10 text-gray-900 transition-colors',
+              'block w-full appearance-none border border-gray-300 bg-white px-4 py-2.5 pr-10 text-gray-900 transition-colors',
               'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
               'disabled:bg-gray-100 disabled:cursor-not-allowed',
               error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
               className
             )}
+            style={{ borderRadius: 'var(--radius-base, 0.5rem)', ...(style || {}) }}
             {...props}
           >
             {/* Support both children and options prop */}

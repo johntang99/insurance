@@ -65,8 +65,8 @@ export default function Tabs({
       inactive: 'text-gray-600 hover:text-gray-900',
     },
     pills: {
-      container: 'bg-gray-100 rounded-lg p-1',
-      button: 'px-4 py-2 rounded-md font-medium transition-all',
+      container: 'bg-gray-100 p-1',
+      button: 'px-4 py-2 font-medium transition-all',
       active: 'bg-white text-primary shadow-sm',
       inactive: 'text-gray-600 hover:text-gray-900',
     },
@@ -83,7 +83,7 @@ export default function Tabs({
   return (
     <div className={className}>
       {/* Tab List */}
-      <div className={cn('flex flex-wrap', styles.container)}>
+      <div className={cn('flex flex-wrap', styles.container)} style={variant === 'pills' ? { borderRadius: 'var(--radius-base, 0.5rem)' } : undefined}>
         {tabItems.map((tab) => {
           const tabId = getTabId(tab);
           const isActive = currentTab === tabId;
@@ -97,6 +97,7 @@ export default function Tabs({
                 'flex items-center gap-2',
                 isActive ? styles.active : styles.inactive
               )}
+              style={variant === 'pills' ? { borderRadius: 'var(--radius-base, 0.375rem)' } : undefined}
             >
               {tab.icon && (
                 typeof tab.icon === 'string' ? (

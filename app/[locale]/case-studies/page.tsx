@@ -130,6 +130,11 @@ export default async function CaseStudiesPage({ params }: CaseStudiesPageProps) 
   const backgroundHero = heroVariant === 'photo-background' && Boolean(hero.backgroundImage);
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
   const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
   const statsVariant = statistics.variant || 'grid-2x2';
 
   const caseStudiesByCategory = (categoryId: string) => {
@@ -150,13 +155,14 @@ export default async function CaseStudiesPage({ params }: CaseStudiesPageProps) 
       {/* Hero Section */}
       {isEnabled('hero') && (
         <section
-          className={`relative ${heroTopPaddingClass} pb-16 md:pb-20 px-4 overflow-hidden ${
+          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
             backgroundHero
               ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/75'
               : 'bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)]'
           }`}
           style={{
             ...(sectionStyle('hero') || {}),
+            ...heroBottomSpacingStyle,
             ...(backgroundHero ? { backgroundImage: `url(${hero.backgroundImage})` } : {}),
           }}
         >
@@ -178,7 +184,7 @@ export default async function CaseStudiesPage({ params }: CaseStudiesPageProps) 
 
             {!centeredHero && (
             <div className={`hidden md:block w-full ${imageLeftHero ? 'lg:order-first' : ''}`}>
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="overflow-hidden" style={tokenSurfaceStyle}>
                 {hero.backgroundImage ? (
                   <Image
                     src={hero.backgroundImage}

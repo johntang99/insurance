@@ -50,7 +50,7 @@ export default function Carousel({
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Slides */}
-      <div className="overflow-hidden rounded-xl">
+      <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}>
         <div
           className="flex transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -68,14 +68,22 @@ export default function Carousel({
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 transition-all hover:scale-110"
+            style={{
+              borderRadius: '999px',
+              boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+            }}
             aria-label="Previous slide"
           >
             <ChevronLeft size={24} className="text-gray-800" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 transition-all hover:scale-110"
+            style={{
+              borderRadius: '999px',
+              boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+            }}
             aria-label="Next slide"
           >
             <ChevronRight size={24} className="text-gray-800" />

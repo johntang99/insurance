@@ -67,6 +67,63 @@ export function ThemePanel({ getPathValue, updateFormValue, renderColorField }: 
           {renderColorField('Backdrop Secondary', ['colors', 'backdrop', 'secondary'])}
         </div>
       </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="space-y-3">
+          <div className="text-xs font-semibold text-gray-500 uppercase">Shape Tokens</div>
+          <div>
+            <label className="block text-xs text-gray-500">Radius</label>
+            <input
+              className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={String(getPathValue(['shape', 'radius']) || '')}
+              onChange={(event) => updateFormValue(['shape', 'radius'], event.target.value)}
+              placeholder="e.g. 8px"
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500">Shadow</label>
+            <input
+              className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={String(getPathValue(['shape', 'shadow']) || '')}
+              onChange={(event) => updateFormValue(['shape', 'shadow'], event.target.value)}
+              placeholder="e.g. 0 4px 20px rgba(0,0,0,0.08)"
+            />
+          </div>
+        </div>
+        <div className="space-y-3">
+          <div className="text-xs font-semibold text-gray-500 uppercase">Layout Tokens</div>
+          <div>
+            <label className="block text-xs text-gray-500">Hero Variant</label>
+            <input
+              className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={String(getPathValue(['layout', 'heroVariant']) || '')}
+              onChange={(event) => updateFormValue(['layout', 'heroVariant'], event.target.value)}
+              placeholder="e.g. split"
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500">Feature Variant</label>
+            <input
+              className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={String(getPathValue(['layout', 'featureVariant']) || '')}
+              onChange={(event) => updateFormValue(['layout', 'featureVariant'], event.target.value)}
+              placeholder="e.g. grid"
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500">Spacing Density</label>
+            <select
+              className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={String(getPathValue(['layout', 'spacingDensity']) || 'comfortable')}
+              onChange={(event) => updateFormValue(['layout', 'spacingDensity'], event.target.value)}
+            >
+              <option value="compact">compact</option>
+              <option value="comfortable">comfortable</option>
+              <option value="spacious">spacious</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

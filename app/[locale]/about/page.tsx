@@ -309,19 +309,29 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const affiliationsVariant = affiliations.variant || 'compact';
   const continuingEducationVariant = continuingEducation.variant || 'compact';
   const businessSectionVariant = businessSection.variant || 'split';
+  const sectionSpacingStyle = {
+    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingBottom: 'var(--section-padding-y, 5rem)',
+  };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
 
   return (
     <main className="min-h-screen flex flex-col">
       {/* Hero Section */}
       {isEnabled('hero') && (
         <section
-          className={`relative ${heroTopPaddingClass} pb-16 md:pb-20 px-4 overflow-hidden ${
+          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
             backgroundHero
               ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/75'
               : 'bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)]'
           }`}
           style={{
             ...(sectionStyle('hero') || {}),
+            ...heroBottomSpacingStyle,
             ...(backgroundHero
               ? { backgroundImage: `url(${resolvedHeroBackgroundImage})` }
               : {}),
@@ -353,7 +363,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
             {/* Right Column - Hero Image */}
             {!centeredHero && (
             <div className={`hidden md:block w-full ${imageLeftHero ? 'lg:order-first' : ''}`}>
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="overflow-hidden" style={tokenSurfaceStyle}>
                 {resolvedHeroBackgroundImage ? (
                   <Image
                     src={resolvedHeroBackgroundImage}
@@ -373,7 +383,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                       <p className="text-gray-700 font-semibold text-subheading mb-2">
                         {getSiteDisplayName(siteInfo, 'Our Team')}
                       </p>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-gray-600 text-small">
                         {siteInfo?.tagline || 'Professional Services'}
                       </p>
                     </div>
@@ -389,14 +399,17 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* Profile Section */}
       {isEnabled('profile') && (
-        <section className="py-16 lg:py-24 bg-white" style={sectionStyle('profile')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('profile') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className={profileVariant === 'stacked' ? 'space-y-10' : 'grid lg:grid-cols-5 gap-12 items-start'}>
               {/* Photo */}
               <div className={profileVariant === 'stacked' ? 'max-w-md mx-auto' : 'lg:col-span-2'}>
                 <div className="sticky top-8">
-                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl mb-6 bg-gray-100">
+                  <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-gray-100" style={tokenSurfaceStyle}>
                     {resolvedProfileImage ? (
                       <Image
                         src={resolvedProfileImage}
@@ -430,13 +443,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
               {/* Bio Content */}
               <div className={profileVariant === 'stacked' ? 'max-w-3xl mx-auto space-y-8 text-center' : 'lg:col-span-3 space-y-8'}>
                 <div>
-                  <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  <p className="text-body text-gray-700 leading-relaxed mb-6">
                     {profile.bio}
                   </p>
                   
                   {/* Quote */}
-                  <div className="bg-gradient-to-br from-primary/5 to-backdrop-primary border-l-4 border-primary rounded-r-2xl p-8">
-                    <blockquote className="text-xl italic text-gray-800 mb-4">
+                  <div
+                    className="bg-gradient-to-br from-primary/5 to-backdrop-primary border-l-4 border-primary p-8"
+                    style={{ borderTopRightRadius: 'var(--radius-base, 0.75rem)', borderBottomRightRadius: 'var(--radius-base, 0.75rem)' }}
+                  >
+                    <blockquote className="text-subheading italic text-gray-800 mb-4">
                       "{profile.quote}"
                     </blockquote>
                     <div className="text-right">
@@ -454,8 +470,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* Credentials */}
       {isEnabled('credentials') && (
         <section
-          className="py-16 lg:py-24 bg-gradient-to-br from-backdrop-secondary to-white"
-          style={sectionStyle('credentials')}
+          className="bg-gradient-to-br from-backdrop-secondary to-white"
+          style={{ ...(sectionStyle('credentials') || {}), ...sectionSpacingStyle }}
         >
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -470,18 +486,19 @@ export default async function AboutPage({ params }: AboutPageProps) {
               {credentials.items.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all"
+                  className="bg-white p-6 border border-gray-100 hover:border-primary/30 transition-all"
+                  style={tokenSurfaceStyle}
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-primary/10 flex items-center justify-center flex-shrink-0" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
                       <Icon name={item.icon as any} className="text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                      <h3 className="text-subheading font-bold text-gray-900 mb-1">
                         {item.credential}
                       </h3>
                       <p className="text-gray-700 mb-2">{item.institution}</p>
-                      <div className="flex flex-wrap gap-3 text-sm text-gray-500">
+                      <div className="flex flex-wrap gap-3 text-small text-gray-500">
                         <span className="flex items-center gap-1">
                           <Icon name="Calendar" size="sm" />
                           {item.year}
@@ -503,7 +520,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* Specializations */}
       {isEnabled('specializations') && (
-        <section className="py-16 lg:py-24 bg-white" style={sectionStyle('specializations')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('specializations') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
@@ -526,9 +546,12 @@ export default async function AboutPage({ params }: AboutPageProps) {
               }
             >
               {specializations.areas.map((area, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
+                <Card key={index}>
                   <CardHeader>
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <div
+                      className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4"
+                      style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
+                    >
                       <Icon name={area.icon as any} className="text-primary" />
                     </div>
                     <CardTitle>{area.title}</CardTitle>
@@ -545,8 +568,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* Philosophy */}
       {isEnabled('philosophy') && (
         <section
-          className="py-16 lg:py-24 bg-gradient-to-br from-primary/5 to-backdrop-primary"
-          style={sectionStyle('philosophy')}
+          className="bg-gradient-to-br from-primary/5 to-backdrop-primary"
+          style={{ ...(sectionStyle('philosophy') || {}), ...sectionSpacingStyle }}
         >
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -555,7 +578,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
               <h2 className="text-heading font-bold text-gray-900 mb-4">
                 {philosophy.title}
               </h2>
-              <p className="text-lg text-gray-700">
+              <p className="text-body text-gray-700">
                 {philosophy.introduction}
               </p>
             </div>
@@ -564,15 +587,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
               {philosophy.principles.map((principle, index) => (
                 <div
                   key={index}
-                  className={`bg-white rounded-xl p-6 shadow-sm ${
+                  className={`bg-white p-6 ${
                     philosophyVariant === 'timeline' ? 'border-l-4 border-primary' : ''
                   }`}
+                  style={tokenSurfaceStyle}
                 >
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold">
+                    <div className="w-8 h-8 bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
                       {index + 1}
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 pt-0.5">
+                    <h3 className="text-subheading font-bold text-gray-900 pt-0.5">
                       {principle.title}
                     </h3>
                   </div>
@@ -589,7 +613,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* Journey Story */}
       {isEnabled('journey') && (
-        <section className="py-16 lg:py-24 bg-white" style={sectionStyle('journey')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('journey') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -599,7 +626,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
               </h2>
             </div>
 
-            <div className={journeyVariant === 'card' ? 'bg-white rounded-2xl p-8 shadow-sm border border-gray-100' : 'prose prose-lg max-w-none'}>
+            <div
+              className={journeyVariant === 'card' ? 'bg-white p-8 border border-gray-100' : 'prose prose-lg max-w-none'}
+              style={journeyVariant === 'card' ? tokenSurfaceStyle : undefined}
+            >
               {journey.story.split('\n\n').map((paragraph, index) => (
                 <p key={index} className="text-gray-700 leading-relaxed mb-6">
                   {paragraph}
@@ -614,8 +644,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* Affiliations & Continuing Ed */}
       {isEnabled('affiliationsEducation') && (
         <section
-          className="py-16 lg:py-24 bg-gradient-to-br from-backdrop-secondary to-white"
-          style={sectionStyle('affiliationsEducation')}
+          className="bg-gradient-to-br from-backdrop-secondary to-white"
+          style={{ ...(sectionStyle('affiliationsEducation') || {}), ...sectionSpacingStyle }}
         >
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -629,14 +659,13 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   {affiliations.organizations.map((org, index) => (
                     <div
                       key={index}
-                      className={`bg-white rounded-lg p-4 border border-gray-100 ${
-                        affiliationsVariant === 'detailed' ? 'shadow-sm' : ''
-                      }`}
+                      className="bg-white p-4 border border-gray-100"
+                      style={{ borderRadius: 'var(--radius-base, 0.5rem)', ...(affiliationsVariant === 'detailed' ? { boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))' } : {}) }}
                     >
                       <p className="font-semibold text-gray-900 mb-1">
                         {org.name}
                       </p>
-                      <p className="text-sm text-gray-600">{org.role}</p>
+                      <p className="text-small text-gray-600">{org.role}</p>
                     </div>
                   ))}
                 </div>
@@ -667,7 +696,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* About the Business */}
       {isEnabled('clinic') && (
-        <section className="py-20 px-4 bg-gray-50" style={sectionStyle('clinic')}>
+        <section
+          className="px-4 bg-gray-50"
+          style={{ ...(sectionStyle('clinic') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-heading font-bold text-gray-900 mb-8 text-center">{businessSection.title}</h2>
 
@@ -685,7 +717,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
           <div className={businessSectionVariant === 'cards' ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'grid lg:grid-cols-2 gap-8'}>
             {/* Features List */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-8">
+            <div className="bg-white border-2 border-gray-200 p-8" style={tokenSurfaceStyle}>
               <h3 className="text-subheading font-bold text-gray-900 mb-6">
                 {locale === 'en' ? 'Business Features' : '业务特色'}
               </h3>
@@ -705,7 +737,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
             {/* Location & Hours */}
             <div className={`space-y-6 ${businessSectionVariant === 'cards' ? 'md:col-span-2 lg:col-span-2' : ''}`}>
               {/* Location Card */}
-              <div className="bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] border-2 border-gray-200 rounded-xl p-8">
+              <div className="bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] border-2 border-gray-200 p-8" style={tokenSurfaceStyle}>
                 <div className="flex items-start gap-3 mb-4">
                   <MapPin className="w-6 h-6 text-primary shrink-0" />
                   <h3 className="text-subheading font-bold text-gray-900">
@@ -729,7 +761,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
               </div>
 
               {/* Hours Card */}
-              <div className="bg-white border-2 border-gray-200 rounded-xl p-8">
+              <div className="bg-white border-2 border-gray-200 p-8" style={tokenSurfaceStyle}>
                 <div className="flex items-start gap-3 mb-4">
                   <Clock className="w-6 h-6 text-primary shrink-0" />
                   <h3 className="text-subheading font-bold text-gray-900">
@@ -760,7 +792,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
             primaryCta={cta.primaryCta}
             secondaryCta={cta.secondaryCta}
             variant={cta.variant || 'centered'}
-            className="py-16"
+            className=""
           />
         </div>
       )}

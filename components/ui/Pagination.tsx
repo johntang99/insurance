@@ -70,11 +70,12 @@ export default function Pagination({
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={cn(
-          'p-2 rounded-lg transition-colors',
+          'p-2 transition-colors',
           currentPage === 1
             ? 'text-gray-300 cursor-not-allowed'
             : 'text-gray-700 hover:bg-gray-100'
         )}
+        style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
         aria-label="Previous page"
       >
         <ChevronLeft size={20} />
@@ -85,7 +86,8 @@ export default function Pagination({
         <>
           <button
             onClick={() => onPageChange(1)}
-            className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            className="px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+            style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
           >
             1
           </button>
@@ -115,6 +117,7 @@ export default function Pagination({
                 ? 'bg-primary text-white'
                 : 'text-gray-700 hover:bg-gray-100'
             )}
+            style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
             aria-label={`Page ${page}`}
             aria-current={currentPage === page ? 'page' : undefined}
           >
@@ -131,7 +134,8 @@ export default function Pagination({
           </span>
           <button
             onClick={() => onPageChange(totalPages)}
-            className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            className="px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+            style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
           >
             {totalPages}
           </button>
@@ -143,11 +147,12 @@ export default function Pagination({
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={cn(
-          'p-2 rounded-lg transition-colors',
+          'p-2 transition-colors',
           currentPage === totalPages
             ? 'text-gray-300 cursor-not-allowed'
             : 'text-gray-700 hover:bg-gray-100'
         )}
+        style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
         aria-label="Next page"
       >
         <ChevronRight size={20} />

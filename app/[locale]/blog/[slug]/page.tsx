@@ -136,6 +136,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     };
   });
   const postType = post.type || 'article';
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
 
   const normalizeMarkdown = (text: string) =>
     text
@@ -146,7 +147,10 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   return (
     <main className="min-h-screen">
       {/* Hero Section with Featured Image */}
-      <section className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <section
+        className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-20 md:pt-24 px-4 overflow-hidden"
+        style={heroBottomSpacingStyle}
+      >
         <div className="absolute inset-0">
           {post.image ? (
             <Image
@@ -161,7 +165,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           )}
         </div>
 
-        <div className="relative container mx-auto px-4 py-20 lg:py-32">
+        <div className="relative container mx-auto">
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-white/70 mb-8">

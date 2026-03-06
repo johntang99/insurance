@@ -15,16 +15,17 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       hover = false,
       padding = 'md',
       children,
+      style,
       ...props
     },
     ref
   ) => {
-    const baseStyles = 'rounded-xl transition-all duration-200';
+    const baseStyles = 'transition-all duration-200';
     
     const variants = {
-      default: 'bg-white shadow-md',
+      default: 'bg-white',
       bordered: 'bg-white border-2 border-gray-200',
-      elevated: 'bg-white shadow-lg',
+      elevated: 'bg-white',
       flat: 'bg-gray-50',
     };
     
@@ -35,7 +36,13 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       lg: 'p-8',
     };
     
-    const hoverEffect = hover ? 'hover:shadow-xl hover:-translate-y-1 cursor-pointer' : '';
+    const hoverEffect = hover ? 'hover:-translate-y-1 cursor-pointer' : '';
+    const getShadow = () => {
+      if (variant === 'flat') return 'none';
+      if (variant === 'elevated') return 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))';
+      if (variant === 'default') return 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))';
+      return undefined;
+    };
     
     return (
       <div
@@ -47,6 +54,11 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           hoverEffect,
           className
         )}
+        style={{
+          borderRadius: 'var(--radius-base, 0.75rem)',
+          boxShadow: getShadow(),
+          ...(style || {}),
+        }}
         {...props}
       >
         {children}

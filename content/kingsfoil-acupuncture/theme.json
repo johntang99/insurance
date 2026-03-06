@@ -1,0 +1,50 @@
+{
+  "shape": {
+    "radius": "2px",
+    "shadow": "0 8px 40px rgba(0, 0, 0, 0.12)"
+  },
+  "colors": {
+    "primary": {
+      "50": "#eff6ff",
+      "100": "#dbeafe",
+      "dark": "#1e2d6e",
+      "light": "#93c5fd",
+      "DEFAULT": "#1e3a8a"
+    },
+    "backdrop": {
+      "primary": "#f8faff",
+      "secondary": "#fef2f2"
+    },
+    "secondary": {
+      "50": "#fef2f2",
+      "dark": "#b91c1c",
+      "light": "#fca5a5",
+      "DEFAULT": "#dc2626"
+    }
+  },
+  "layout": {
+    "heroVariant": "fullbleed",
+    "featureVariant": "alternating",
+    "spacingDensity": "spacious"
+  },
+  "_preset": {
+    "id": "luxury-navy",
+    "name": "Luxury Navy",
+    "category": "luxury",
+    "description": "Deep navy with sharp edges and elegant serif typography."
+  },
+  "typography": {
+    "body": "1rem",
+    "fonts": {
+      "body": "Inter, system-ui, sans-serif",
+      "small": "Inter, system-ui, sans-serif",
+      "display": "Cormorant Garamond, Georgia, serif",
+      "heading": "Cormorant Garamond, Georgia, serif",
+      "subheading": "Inter, system-ui, sans-serif"
+    },
+    "small": "0.875rem",
+    "display": "3.5rem",
+    "heading": "2.5rem",
+    "subheading": "1.25rem"
+  }
+}

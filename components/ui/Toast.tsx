@@ -48,10 +48,14 @@ export default function Toast({
   const toastContent = (
     <div
       className={cn(
-        'fixed bottom-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg transition-all duration-300',
+        'fixed bottom-4 right-4 z-50 flex items-center gap-3 px-4 py-3 border transition-all duration-300',
         styles[type],
         isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
       )}
+      style={{
+        borderRadius: 'var(--radius-base, 0.5rem)',
+        boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+      }}
     >
       {icons[type]}
       <p className="font-medium">{message}</p>
@@ -60,7 +64,8 @@ export default function Toast({
           setIsVisible(false);
           setTimeout(onClose, 300);
         }}
-        className="ml-2 p-1 hover:bg-black/5 rounded transition-colors"
+        className="ml-2 p-1 hover:bg-black/5 transition-colors"
+        style={{ borderRadius: 'var(--radius-base, 0.375rem)' }}
       >
         <X size={16} />
       </button>

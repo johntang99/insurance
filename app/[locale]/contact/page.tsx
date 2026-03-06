@@ -130,24 +130,26 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const sectionStyle = (sectionId: string) =>
     useLayout ? { order: layoutOrder.get(sectionId) ?? 0 } : undefined;
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
-  const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'py-20 lg:py-32';
+  const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
 
   return (
     <main className="min-h-screen flex flex-col">
       {/* Hero Section */}
       {isEnabled('hero') && (
         <section
-          className={`relative ${heroTopPaddingClass} ${
+          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
             backgroundHero
               ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/80'
               : 'bg-gradient-to-br from-primary/10 via-backdrop-primary to-primary/5'
           }`}
           style={{
             ...(sectionStyle('hero') || {}),
+            ...heroBottomSpacingStyle,
             ...(backgroundHero ? { backgroundImage: `url(${hero.backgroundImage})` } : {}),
           }}
         >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className={`max-w-4xl mx-auto relative z-10 ${isCenteredHero ? 'text-center' : 'text-left'}`}>
             <h1 className="text-display font-bold text-gray-900 mb-6">
               {hero.title}

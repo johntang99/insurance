@@ -44,6 +44,7 @@ interface EditableDomainAlias {
 export function SiteForm({ site, mode = 'edit', sites = [] }: SiteFormProps) {
    const router = useRouter();
    const [status, setStatus] = useState<string | null>(null);
+  const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const isCreate = mode === 'create';
   const [domainAliases, setDomainAliases] = useState<EditableDomainAlias[]>(
     Array.isArray(site.domainAliases) && site.domainAliases.length > 0
@@ -111,6 +112,23 @@ export function SiteForm({ site, mode = 'edit', sites = [] }: SiteFormProps) {
    };
  
    const supported = form.watch('supportedLocales');
+  const devDomains = domainAliases
+    .filter((alias) => alias.environment === 'dev' && alias.enabled && alias.domain.trim().length > 0)
+    .map((alias) => alias.domain.trim());
+  const localDomainHints = Array.from(new Set([
+    ...devDomains,
+    `${site.id}.local`,
+  ]));
+  const buildLocalHostCommand = (domain: string) =>
+    `SITE=${domain}; grep -q "127.0.0.1 $SITE" /etc/hosts || echo "127.0.0.1 $SITE" | sudo tee -a /etc/hosts >/dev/null; sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder`;
+  const copyToClipboard = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus(`Copied ${label}`);
+    } catch {
+      setCopyStatus(`Copy failed for ${label}`);
+    }
+  };
  
    return (
      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -274,6 +292,43 @@ export function SiteForm({ site, mode = 'edit', sites = [] }: SiteFormProps) {
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {!isCreate && (
+        <div className="space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-4">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Local Domain Quick Setup (Mac)</label>
+              <p className="text-xs text-gray-500 mt-1">
+                Copy one command and paste in Terminal to map local domain + flush DNS.
+              </p>
+            </div>
+            {copyStatus && <span className="text-xs text-gray-600">{copyStatus}</span>}
+          </div>
+          <div className="space-y-2">
+            {localDomainHints.map((domain) => {
+              const command = buildLocalHostCommand(domain);
+              return (
+                <div
+                  key={`local-domain-cmd-${domain}`}
+                  className="rounded-md border border-gray-200 bg-white p-3"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-xs font-semibold text-gray-700">{domain}</span>
+                    <button
+                      type="button"
+                      className="px-2 py-1 rounded-md border border-gray-200 text-xs text-gray-700 hover:bg-gray-50"
+                      onClick={() => copyToClipboard(command, domain)}
+                    >
+                      Copy Command
+                    </button>
+                  </div>
+                  <pre className="text-[11px] leading-5 text-gray-700 whitespace-pre-wrap break-all">{command}</pre>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
  

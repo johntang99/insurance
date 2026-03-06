@@ -31,18 +31,26 @@ export default function CTASection({
   image,
   className,
 }: CTASectionProps) {
+  const sectionSpacingStyle = {
+    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingBottom: 'var(--section-padding-y, 5rem)',
+  };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
   // Render based on variant
   switch (variant) {
     case 'split':
       return (
-        <section className={cn('section-padding bg-gray-50', className)}>
+        <section className={cn('bg-gray-50', className)} style={sectionSpacingStyle}>
           <div className="container-custom">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               {/* Content */}
               <div>
                 <h2 className="text-heading font-bold mb-4">{title}</h2>
                 {subtitle && (
-                  <p className="text-lg text-gray-600 mb-8">{subtitle}</p>
+                  <p className="text-body text-gray-600 mb-8">{subtitle}</p>
                 )}
                 <div className="flex gap-4 flex-wrap">
                   {primaryCta && (
@@ -66,7 +74,7 @@ export default function CTASection({
               
               {/* Image */}
               {image && (
-                <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="relative h-64 md:h-96 overflow-hidden" style={tokenSurfaceStyle}>
                   <Image
                     src={image}
                     alt={title}
@@ -101,10 +109,10 @@ export default function CTASection({
           )}
           
           {/* Content */}
-          <div className="relative z-10 container-custom py-20 md:py-32 text-center text-white">
+          <div className="relative z-10 container-custom text-center text-white" style={sectionSpacingStyle}>
             <h2 className="text-heading font-bold mb-6">{title}</h2>
             {subtitle && (
-              <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">{subtitle}</p>
+              <p className="text-subheading mb-8 max-w-2xl mx-auto text-white/90">{subtitle}</p>
             )}
             <div className="flex gap-4 justify-center flex-wrap">
               {primaryCta && (
@@ -127,13 +135,19 @@ export default function CTASection({
     
     case 'card-elevated':
       return (
-        <section className={cn('section-padding bg-gray-50', className)}>
+        <section className={cn('bg-gray-50', className)} style={sectionSpacingStyle}>
           <div className="container-custom">
             <Card variant="elevated" className="max-w-4xl mx-auto bg-gradient-to-br from-primary to-primary-dark text-white">
-              <CardContent className="text-center py-12">
+              <CardContent
+                className="text-center"
+                style={{
+                  paddingTop: 'calc(var(--section-padding-y, 5rem) * 0.6)',
+                  paddingBottom: 'calc(var(--section-padding-y, 5rem) * 0.6)',
+                }}
+              >
                 <h2 className="text-heading font-bold mb-4">{title}</h2>
                 {subtitle && (
-                  <p className="text-lg mb-8 text-white/90 max-w-2xl mx-auto">{subtitle}</p>
+                  <p className="text-body mb-8 text-white/90 max-w-2xl mx-auto">{subtitle}</p>
                 )}
                 <div className="flex gap-4 justify-center flex-wrap">
                   {primaryCta && (
@@ -164,24 +178,18 @@ export default function CTASection({
             <div className="max-w-3xl mx-auto">
               <h2 className="text-heading font-bold mb-6">{title}</h2>
               {subtitle && (
-                <p className="text-lg text-gray-600 mb-8">{subtitle}</p>
+                <p className="text-body text-gray-600 mb-8">{subtitle}</p>
               )}
               <div className="flex gap-4 justify-center flex-wrap">
                 {primaryCta && (
-                  <Link
-                    href={primaryCta.link}
-                    className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 px-8 py-4 text-lg shadow-lg hover:shadow-xl bg-primary text-white hover:bg-primary-dark"
-                  >
-                    {primaryCta.text}
-                  </Link>
+                  <Button size="lg" asChild>
+                    <Link href={primaryCta.link}>{primaryCta.text}</Link>
+                  </Button>
                 )}
                 {secondaryCta && (
-                  <Link
-                    href={secondaryCta.link}
-                    className="inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 px-8 py-4 text-lg shadow-lg hover:shadow-xl border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                  >
-                    {secondaryCta.text}
-                  </Link>
+                  <Button variant="outline" size="lg" asChild>
+                    <Link href={secondaryCta.link}>{secondaryCta.text}</Link>
+                  </Button>
                 )}
               </div>
               {contactInfo && (

@@ -19,6 +19,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       fullWidth = false,
       icon,
       id,
+      style,
       ...props
     },
     ref
@@ -47,7 +48,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 transition-colors',
+              'block w-full border border-gray-300 bg-white px-4 py-2.5 text-gray-900 transition-colors',
               'placeholder:text-gray-400',
               'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
               'disabled:bg-gray-100 disabled:cursor-not-allowed',
@@ -55,6 +56,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               icon && 'pl-10',
               className
             )}
+            style={{ borderRadius: 'var(--radius-base, 0.5rem)', ...(style || {}) }}
             {...props}
           />
         </div>

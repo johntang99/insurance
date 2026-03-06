@@ -65,7 +65,13 @@ export function Skeleton({
 // Skeleton variants for common use cases
 export function SkeletonCard() {
   return (
-    <div className="p-6 bg-white rounded-xl shadow-md space-y-4">
+    <div
+      className="p-6 bg-white space-y-4"
+      style={{
+        borderRadius: 'var(--radius-base, 0.75rem)',
+        boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+      }}
+    >
       <Skeleton variant="rectangular" height={200} />
       <Skeleton variant="text" width="60%" />
       <Skeleton variant="text" width="80%" />

@@ -39,7 +39,7 @@ Specializations: {{ownerSpecializations}}
   "testimonials": [
     { "patientName": "First Last", "text": "2-3 sentence review about their TCM experience", "serviceCategory": "acupuncture|herbal-medicine|cupping|massage|pain-management|wellness", "rating": 5 }
   ],
-  "announcementBar": "Short promotional text for new patients, ~15 words"
+  "announcementBar": "3-5 words max, e.g. 'Accepting New Patients' or 'Now Welcoming New Patients'"
 }
 
 Rules:

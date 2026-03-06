@@ -48,7 +48,8 @@ export default function Accordion({
         return (
           <div
             key={item.id}
-            className="border border-gray-200 rounded-lg overflow-hidden"
+            className="border border-gray-200 overflow-hidden"
+            style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
           >
             {/* Header */}
             <button

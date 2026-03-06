@@ -125,20 +125,31 @@ export default async function LocaleLayout({
   ]);
   const baseUrl = getBaseUrlFromHost(host);
   
+  const spacingDensityMap: Record<string, string> = {
+    compact: '3rem',
+    comfortable: '5rem',
+    spacious: '8rem',
+  };
+
+  const themeSpacingDensity = String(theme?.layout?.spacingDensity || 'comfortable');
+  const themeSectionPaddingY = spacingDensityMap[themeSpacingDensity] || spacingDensityMap.comfortable;
+  const themeRadius = theme?.shape?.radius || '8px';
+  const themeShadow = theme?.shape?.shadow || '0 4px 20px rgba(0,0,0,0.08)';
+
   // Generate inline style for theme variables
   const themeStyle = theme ? `
     :root {
       /* Typography */
-      --text-display: ${theme.typography.display};
-      --text-heading: ${theme.typography.heading};
-      --text-subheading: ${theme.typography.subheading};
-      --text-body: ${theme.typography.body};
-      --text-small: ${theme.typography.small};
-      --font-display: ${theme.typography.fonts?.display || 'var(--font-body-default)'};
-      --font-heading: ${theme.typography.fonts?.heading || 'var(--font-body-default)'};
-      --font-subheading: ${theme.typography.fonts?.subheading || 'var(--font-body-default)'};
-      --font-body: ${theme.typography.fonts?.body || 'var(--font-body-default)'};
-      --font-small: ${theme.typography.fonts?.small || 'var(--font-body-default)'};
+      --text-display: ${theme.typography?.display || '3rem'};
+      --text-heading: ${theme.typography?.heading || '2.25rem'};
+      --text-subheading: ${theme.typography?.subheading || '1.25rem'};
+      --text-body: ${theme.typography?.body || '1rem'};
+      --text-small: ${theme.typography?.small || '0.875rem'};
+      --font-display: ${theme.typography?.fonts?.display || 'var(--font-body-default)'};
+      --font-heading: ${theme.typography?.fonts?.heading || 'var(--font-body-default)'};
+      --font-subheading: ${theme.typography?.fonts?.subheading || 'var(--font-body-default)'};
+      --font-body: ${theme.typography?.fonts?.body || 'var(--font-body-default)'};
+      --font-small: ${theme.typography?.fonts?.small || 'var(--font-body-default)'};
       
       /* Primary Colors */
       --primary: ${theme.colors.primary.DEFAULT};
@@ -156,6 +167,13 @@ export default async function LocaleLayout({
       /* Backdrop Colors */
       --backdrop-primary: ${theme.colors.backdrop.primary};
       --backdrop-secondary: ${theme.colors.backdrop.secondary};
+
+      /* Shape */
+      --radius-base: ${themeRadius};
+      --shadow-base: ${themeShadow};
+
+      /* Layout */
+      --section-padding-y: ${themeSectionPaddingY};
     }
   ` : '';
   

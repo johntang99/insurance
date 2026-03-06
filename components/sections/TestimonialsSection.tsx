@@ -33,9 +33,17 @@ export default function TestimonialsSection({
 
   const limited = testimonials.slice(0, 6);
   const single = testimonials[0];
+  const sectionSpacingStyle = {
+    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingBottom: 'var(--section-padding-y, 5rem)',
+  };
+  const surfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
   
   return (
-    <section className={cn('py-20 px-4 bg-gradient-to-b from-white to-gray-50', className)}>
+    <section className={cn('px-4 bg-gradient-to-b from-white to-gray-50', className)} style={sectionSpacingStyle}>
       <div className="container-custom max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -50,7 +58,7 @@ export default function TestimonialsSection({
         
         {variant === 'featured-single' && single ? (
           <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-2xl p-10 border-2 border-gray-200 shadow-lg">
+            <div className="bg-white p-10 border-2 border-gray-200" style={surfaceStyle}>
               <div className="flex gap-1 mb-6 justify-center">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5" style={{ fill: 'var(--secondary-light)', color: 'var(--secondary-light)' }} />
@@ -77,10 +85,11 @@ export default function TestimonialsSection({
               <div
                 key={index}
                 className={cn(
-                  'bg-white rounded-xl p-8 border-2 border-gray-200 hover:border-primary hover:shadow-xl transition-all',
+                  'bg-white p-8 border-2 border-gray-200 hover:border-primary transition-all',
                   variant === 'masonry' && 'break-inside-avoid mb-6',
                   variant === 'slider-vertical' && 'w-full'
                 )}
+                style={surfaceStyle}
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (

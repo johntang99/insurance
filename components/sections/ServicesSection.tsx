@@ -129,8 +129,17 @@ export default function ServicesSection({
     ? services
     : services.filter((s) => s.id !== featured?.id);
   
+  const sectionSpacingStyle = {
+    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingBottom: 'var(--section-padding-y, 5rem)',
+  };
+  const surfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
+  
   return (
-    <section className={cn('bg-gray-50', sectionClasses, className)}>
+    <section className={cn('bg-gray-50', sectionClasses, className)} style={sectionSpacingStyle}>
       <div className={contentContainerClass}>
       {/* Section Header */}
       <div className={cn('text-center', isShowcaseGridVariant ? 'mb-16' : 'mb-12')}>
@@ -183,7 +192,7 @@ export default function ServicesSection({
         <div className="space-y-8">
           {/* Featured Service */}
           {featured && (
-            <div className="bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-primary transition-all">
+            <div className="bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] overflow-hidden border-2 border-gray-200 hover:border-primary transition-all" style={surfaceStyle}>
               <div className="grid md:grid-cols-2">
                 {/* Image Side */}
                 <div className="relative aspect-[4/3] md:aspect-auto bg-gray-100">
@@ -201,7 +210,7 @@ export default function ServicesSection({
                   <Badge variant="primary" className="mb-4 w-fit">Featured</Badge>
                   <div className="flex gap-4 items-start mb-4">
                     {featured.icon && (
-                      <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-primary-50 flex items-center justify-center flex-shrink-0" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
                         <Icon name={featured.icon as any} size="md" className="text-primary" />
                       </div>
                     )}
@@ -283,7 +292,7 @@ export default function ServicesSection({
             id: service.id,
             label: service.title,
             content: (
-              <div className="p-6 bg-gray-50 rounded-lg">
+              <div className="p-6 bg-gray-50" style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}>
                 <MarkdownText
                   text={service.fullDescription || service.shortDescription || ''}
                   className="mb-6"
@@ -315,7 +324,8 @@ export default function ServicesSection({
               <div
                 key={service.id}
                 id={service.id}
-                className="rounded-2xl bg-white shadow-md border border-gray-100 p-4 md:p-6"
+                className="bg-white border border-gray-100 p-4 md:p-6"
+                style={surfaceStyle}
               >
                 <div
                   className={`grid lg:grid-cols-2 gap-8 items-center ${
@@ -333,7 +343,7 @@ export default function ServicesSection({
                           : ''
                     }
                   >
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-white" style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}>
                       {service.image ? (
                         <img
                           src={service.image}
@@ -357,9 +367,9 @@ export default function ServicesSection({
                           : ''
                     }
                   >
-                    <div className="rounded-2xl bg-white border border-gray-100 p-6 lg:p-8">
+                    <div className="bg-white border border-gray-100 p-6 lg:p-8" style={surfaceStyle}>
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-primary/10 flex items-center justify-center" style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}>
                           <Icon name={service.icon as any} className="text-primary" />
                         </div>
                         <Badge variant="primary">{`${servicePrefixLabel} ${service.order || index + 1}`}</Badge>
@@ -392,7 +402,7 @@ export default function ServicesSection({
                       )}
 
                       {getServiceWhatToExpect(service) && (
-                        <div className="bg-white rounded-xl p-6 border border-gray-100">
+                        <div className="bg-white p-6 border border-gray-100" style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}>
                           <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                             <Icon name="Info" size="sm" className="text-primary" />
                             {whatToExpectLabel}
@@ -448,10 +458,14 @@ function ServiceDetailCard({
   whatToExpectLabel: string;
 }) {
   const CardWrapper = service.link ? Link : 'div';
+  const surfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
 
   return (
     <CardWrapper href={service.link || '#'} className={service.link ? 'block h-full' : 'h-full'}>
-      <article className="h-full rounded-2xl bg-white shadow-md border border-gray-100 hover:shadow-xl transition-shadow overflow-hidden">
+      <article className="h-full bg-white border border-gray-100 transition-shadow overflow-hidden" style={surfaceStyle}>
         {service.image && (
           <div className="relative aspect-[3/2] bg-white">
             <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
@@ -470,13 +484,13 @@ function ServiceDetailCard({
           {(service.price || service.durationMinutes) && (
             <div className="grid grid-cols-2 gap-2 mb-4 text-xs">
               {service.price && (
-                <div className="rounded-md bg-white border border-gray-100 px-2 py-1">
+                <div className="bg-white border border-gray-100 px-2 py-1" style={{ borderRadius: 'var(--radius-base, 0.375rem)' }}>
                   <span className="text-gray-500">Price</span>
                   <p className="text-gray-800 font-semibold">{service.price}</p>
                 </div>
               )}
               {service.durationMinutes ? (
-                <div className="rounded-md bg-white border border-gray-100 px-2 py-1">
+                <div className="bg-white border border-gray-100 px-2 py-1" style={{ borderRadius: 'var(--radius-base, 0.375rem)' }}>
                   <span className="text-gray-500">Duration</span>
                   <p className="text-gray-800 font-semibold">{service.durationMinutes} min</p>
                 </div>
@@ -499,7 +513,7 @@ function ServiceDetailCard({
           )}
 
           {getServiceWhatToExpect(service) && (
-            <div className="rounded-xl border border-gray-100 bg-white p-3">
+            <div className="border border-gray-100 bg-white p-3" style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}>
               <h5 className="text-xs font-semibold text-gray-900 mb-1">{whatToExpectLabel}</h5>
               <p className="text-xs text-gray-600 leading-relaxed">{getServiceWhatToExpect(service)}</p>
             </div>
@@ -520,17 +534,18 @@ function ServiceCard({ service, compact }: ServiceCardProps) {
         hover
         className={cn(
           'h-full',
-          compact && 'border-2 border-gray-200 rounded-xl shadow-sm hover:shadow-lg'
+          compact && 'border-2 border-gray-200'
         )}
+        style={compact ? { borderRadius: 'var(--radius-base, 0.75rem)', boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))' } : undefined}
       >
         {service.image && !compact && (
-          <div className="h-48 bg-gray-200 rounded-t-xl overflow-hidden">
+          <div className="h-48 bg-gray-200 overflow-hidden" style={{ borderTopLeftRadius: 'var(--radius-base, 0.75rem)', borderTopRightRadius: 'var(--radius-base, 0.75rem)' }}>
             <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
           </div>
         )}
         <CardHeader>
           {service.icon && (
-            <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-4 shadow-sm">
+            <div className="w-12 h-12 bg-primary-50 flex items-center justify-center mb-4" style={{ borderRadius: 'var(--radius-base, 0.5rem)', boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))' }}>
               <Icon name={service.icon as any} size="md" className="text-primary" />
             </div>
           )}

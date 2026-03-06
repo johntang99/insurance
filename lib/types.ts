@@ -73,6 +73,21 @@ export interface ThemeConfig {
       secondary: string;
     };
   };
+  shape?: {
+    radius?: string;
+    shadow?: string;
+  };
+  layout?: {
+    heroVariant?: string;
+    featureVariant?: string;
+    spacingDensity?: 'compact' | 'comfortable' | 'spacious';
+  };
+  _preset?: {
+    id?: string;
+    name?: string;
+    category?: string;
+    description?: string;
+  };
 }
 
 export interface NavigationLink {

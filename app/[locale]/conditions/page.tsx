@@ -165,38 +165,48 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
   const backgroundHero = heroVariant === 'photo-background' && Boolean(hero.backgroundImage);
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
   const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
+  const sectionSpacingStyle = {
+    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingBottom: 'var(--section-padding-y, 5rem)',
+  };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
   const renderConditionDetailCard = (condition: ConditionsPageData['conditions'][number]) => (
     <div
       key={condition.id}
       id={condition.id}
-      className="bg-white border border-gray-100 rounded-xl p-6 shadow-md hover:border-primary/30 hover:shadow-xl transition-all"
+      className="bg-white border border-gray-100 p-6 hover:border-primary/30 transition-all"
+      style={tokenSurfaceStyle}
     >
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Title and Description */}
         <div className="lg:col-span-1">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-primary/10 flex items-center justify-center flex-shrink-0" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
               <Icon name={condition.icon as any} className="text-primary" size="sm" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900">
+            <h3 className="text-subheading font-bold text-gray-900">
               {condition.title}
             </h3>
           </div>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-small">
             {condition.description}
           </p>
         </div>
 
         {/* Symptoms */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-900 mb-3">
+          <h4 className="text-small font-semibold text-gray-900 mb-3">
             {locale === 'en' ? 'Common Symptoms' : '常见症状'}
           </h4>
           <div className="space-y-2">
             {condition.symptoms.map((symptom, idx) => (
               <div key={idx} className="flex items-start gap-2">
                 <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size="sm" />
-                <span className="text-sm text-gray-600">{symptom}</span>
+                <span className="text-small text-gray-600">{symptom}</span>
               </div>
             ))}
           </div>
@@ -204,10 +214,10 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
 
         {/* Approach */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-900 mb-3">
+          <h4 className="text-small font-semibold text-gray-900 mb-3">
             {locale === 'en' ? 'Our Approach' : '我们的方案'}
           </h4>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-small text-gray-600 mb-4">
             {condition.tcmApproach}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -227,13 +237,14 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
       {/* Hero Section */}
       {isEnabled('hero') && (
         <section
-          className={`relative ${heroTopPaddingClass} pb-16 md:pb-20 px-4 overflow-hidden ${
+          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
             backgroundHero
               ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/75'
               : 'bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)]'
           }`}
           style={{
             ...(sectionStyle('hero') || {}),
+            ...heroBottomSpacingStyle,
             ...(backgroundHero ? { backgroundImage: `url(${hero.backgroundImage})` } : {}),
           }}
         >
@@ -261,12 +272,13 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                   return (
                     <div
                       key={item.text}
-                      className="flex flex-col items-center sm:items-start gap-3 bg-white/80 backdrop-blur rounded-xl p-4 border border-gray-200 shadow-sm"
+                      className="flex flex-col items-center sm:items-start gap-3 bg-white/80 backdrop-blur p-4 border border-gray-200"
+                      style={tokenSurfaceStyle}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primary-50 flex items-center justify-center" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
                         <IconComponent className="w-5 h-5 text-primary" />
                       </div>
-                      <span className="text-xs font-semibold text-gray-900 text-center sm:text-left">
+                      <span className="text-small font-semibold text-gray-900 text-center sm:text-left">
                         {item.text}
                       </span>
                     </div>
@@ -278,7 +290,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
             {/* Right Column - Hero Image */}
             {!centeredHero && (
             <div className={`hidden md:block w-full ${imageLeftHero ? 'lg:order-first' : ''}`}>
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="overflow-hidden" style={tokenSurfaceStyle}>
                 {hero.backgroundImage ? (
                   <Image
                     src={hero.backgroundImage}
@@ -299,7 +311,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                       <p className="text-gray-700 font-semibold text-subheading mb-2">
                         {locale === 'en' ? 'Comprehensive Support' : '全面支持'}
                       </p>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-gray-600 text-small">
                         {locale === 'en' ? 'Structured plans focused on long-term results' : '以长期效果为目标的系统化方案'}
                       </p>
                     </div>
@@ -315,13 +327,16 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
 
       {/* Introduction */}
       {isEnabled('introduction') && (
-        <section className="py-12 lg:py-16 bg-white" style={sectionStyle('introduction')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('introduction') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+            <p className="text-body text-gray-700 leading-relaxed mb-6">
               {introduction.text}
             </p>
-            <div className="bg-primary/5 border-l-4 border-primary rounded-r-lg p-6">
+            <div className="bg-primary/5 border-l-4 border-primary p-6" style={{ borderTopRightRadius: 'var(--radius-base, 0.5rem)', borderBottomRightRadius: 'var(--radius-base, 0.5rem)' }}>
               <p className="text-gray-700 font-medium flex items-start gap-3">
                 <Icon name="Info" className="text-primary mt-0.5 flex-shrink-0" />
                 {introduction.note}
@@ -335,8 +350,8 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
       {/* Featured Conditions */}
       {isEnabled('featured') && (
         <section
-          className="py-12 lg:py-16 bg-gradient-to-br from-backdrop-secondary to-white"
-          style={sectionStyle('featured')}
+          className="bg-gradient-to-br from-backdrop-secondary to-white"
+          style={{ ...(sectionStyle('featured') || {}), ...sectionSpacingStyle }}
         >
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -380,7 +395,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                     <h3 className="text-subheading font-bold text-gray-900 mb-2">
                       {condition.title}
                     </h3>
-                    <p className="text-gray-700 text-sm mb-4">
+                    <p className="text-gray-700 text-small mb-4">
                       {condition.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -406,7 +421,10 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
 
       {/* All Conditions by Category */}
       {isEnabled('categories') && (
-        <section className="py-16 lg:py-24 bg-white" style={sectionStyle('categories')}>
+        <section
+          className="bg-white"
+          style={{ ...(sectionStyle('categories') || {}), ...sectionSpacingStyle }}
+        >
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -421,7 +439,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
             </div>
 
             {conditionsLayoutVariant === 'category-detail-alternating' ? (
-              <div className="pt-6 space-y-24">
+              <div className="space-y-24" style={{ paddingTop: 'var(--section-padding-y, 5rem)' }}>
                 {conditionsByCategory
                   .filter(
                     (categoryGroup) =>
@@ -436,15 +454,15 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                       <div key={categoryGroup.id} className="space-y-6">
                         <div className="grid lg:grid-cols-2 gap-8 items-center">
                           <div className={imageOnRight ? 'lg:order-1' : 'lg:order-2'}>
-                            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary mb-4">
+                            <div className="inline-flex items-center gap-2 border border-primary/20 bg-primary/5 px-3 py-1 text-small font-semibold text-primary mb-4" style={{ borderRadius: '999px' }}>
                               <Icon name={categoryGroup.icon as any} size="sm" />
                               <span>{categoryGroup.name}</span>
                             </div>
-                            <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                            <h3 className="text-heading font-bold text-gray-900 mb-2">
                               {categoryGroup.name}
                             </h3>
                             {categoryGroup.subtitle && (
-                              <p className="text-base font-semibold text-gray-800 mb-3">
+                              <p className="text-body font-semibold text-gray-800 mb-3">
                                 {categoryGroup.subtitle}
                               </p>
                             )}
@@ -460,7 +478,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                             </div>
                           </div>
                           <div className={imageOnRight ? 'lg:order-2' : 'lg:order-1'}>
-                            <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-md bg-gradient-to-br from-gray-50 to-white">
+                            <div className="overflow-hidden border border-gray-200 bg-gradient-to-br from-gray-50 to-white" style={tokenSurfaceStyle}>
                               {categoryImage ? (
                                 <Image
                                   src={categoryImage}
@@ -493,7 +511,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                     value: 'all',
                     label: locale === 'en' ? 'All Conditions' : '全部病症',
                     content: (
-                      <div className="pt-8">
+                      <div style={{ paddingTop: 'var(--section-padding-y, 5rem)' }}>
                         <div className="grid gap-6">
                           {conditions.map((condition) => renderConditionDetailCard(condition))}
                         </div>
@@ -505,10 +523,13 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
                     label: category.name,
                     icon: category.icon as any,
                     content: (
-                      <div className="pt-8">
-                        <div className="mb-8 p-6 bg-gradient-to-br from-primary/5 to-transparent rounded-xl">
+                      <div style={{ paddingTop: 'var(--section-padding-y, 5rem)' }}>
+                        <div
+                          className="mb-8 p-6 bg-gradient-to-br from-primary/5 to-transparent"
+                          style={{ borderRadius: 'var(--radius-base, 0.75rem)' }}
+                        >
                           {category.subtitle && (
-                            <p className="text-sm font-semibold text-gray-900 mb-1">{category.subtitle}</p>
+                            <p className="text-small font-semibold text-gray-900 mb-1">{category.subtitle}</p>
                           )}
                           <div className="prose prose-sm max-w-none text-gray-700">
                             <ReactMarkdown
@@ -541,8 +562,8 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
       {/* Related Reading */}
       {isEnabled('relatedReading') && relatedPosts.length > 0 && (
         <section
-          className="py-16 lg:py-24 bg-gradient-to-br from-backdrop-secondary to-white"
-          style={sectionStyle('relatedReading')}
+          className="bg-gradient-to-br from-backdrop-secondary to-white"
+          style={{ ...(sectionStyle('relatedReading') || {}), ...sectionSpacingStyle }}
         >
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
@@ -568,12 +589,12 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
               <div className="grid md:grid-cols-3 gap-6">
                 {relatedPosts.map((post) => (
                   <Link key={post.slug} href={`/${locale}/blog/${post.slug}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow">
+                    <Card className="h-full">
                       <CardHeader>
                         <Badge variant="secondary" size="sm">
                           {post.category || (locale === 'en' ? 'Wellness' : '健康')}
                         </Badge>
-                        <CardTitle className="text-base mt-3 line-clamp-2">
+                        <CardTitle className="text-body mt-3 line-clamp-2">
                           {post.title}
                         </CardTitle>
                         {post.excerpt && (
@@ -599,7 +620,7 @@ export default async function ConditionsPage({ params }: ConditionsPageProps) {
             primaryCta={cta.primaryCta}
             secondaryCta={cta.secondaryCta}
             variant={cta.variant || 'centered'}
-            className="py-16"
+            className=""
           />
         </div>
       )}

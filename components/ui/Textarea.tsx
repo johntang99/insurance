@@ -17,6 +17,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       helperText,
       fullWidth = false,
       id,
+      style,
       ...props
     },
     ref
@@ -38,7 +39,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           id={textareaId}
           className={cn(
-            'block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 transition-colors',
+            'block w-full border border-gray-300 bg-white px-4 py-2.5 text-gray-900 transition-colors',
             'placeholder:text-gray-400',
             'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
             'disabled:bg-gray-100 disabled:cursor-not-allowed',
@@ -46,6 +47,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
             className
           )}
+          style={{ borderRadius: 'var(--radius-base, 0.5rem)', ...(style || {}) }}
           {...props}
         />
         

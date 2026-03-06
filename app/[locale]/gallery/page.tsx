@@ -119,19 +119,25 @@ interface HeaderMenuConfig {
   const backgroundHero = heroVariant === 'photo-background' && Boolean(hero.backgroundImage);
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
   const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
+  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
  
    return (
     <main className="flex flex-col">
        {/* Hero Section */}
       {isEnabled('hero') && (
         <section
-          className={`relative ${heroTopPaddingClass} pb-16 md:pb-20 px-4 overflow-hidden ${
+          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
             backgroundHero
               ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/75'
               : 'bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)]'
           }`}
           style={{
             ...(sectionStyle('hero') || {}),
+            ...heroBottomSpacingStyle,
             ...(backgroundHero ? { backgroundImage: `url(${hero.backgroundImage})` } : {}),
           }}
         >
@@ -159,11 +165,12 @@ interface HeaderMenuConfig {
                  {heroFeatures.map((item) => {
                    const Icon = item.icon;
                    return (
-                     <div
-                       key={item.text}
-                       className="flex flex-col items-center sm:items-start gap-3 bg-white/80 backdrop-blur rounded-xl p-4 border border-gray-200 shadow-sm"
-                     >
-                       <div className="w-10 h-10 rounded-lg bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] flex items-center justify-center">
+                    <div
+                      key={item.text}
+                      className="flex flex-col items-center sm:items-start gap-3 bg-white/80 backdrop-blur p-4 border border-gray-200"
+                      style={tokenSurfaceStyle}
+                    >
+                      <div className="w-10 h-10 bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] flex items-center justify-center" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
                          <Icon className="w-5 h-5 text-[var(--brand)]" />
                        </div>
                        <span className="text-small font-semibold text-gray-900 text-center sm:text-left">
@@ -177,7 +184,7 @@ interface HeaderMenuConfig {
  
             {!centeredHero && (
             <div className={`hidden md:block w-full ${imageLeftHero ? 'lg:order-first' : ''}`}>
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="overflow-hidden" style={tokenSurfaceStyle}>
                 {hero.backgroundImage ? (
                   <Image
                     src={hero.backgroundImage}

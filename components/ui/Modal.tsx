@@ -70,9 +70,13 @@ export default function Modal({
       {/* Modal */}
       <div
         className={cn(
-          'relative bg-white rounded-xl shadow-2xl w-full animate-fade-in',
+          'relative bg-white w-full animate-fade-in',
           sizes[size]
         )}
+        style={{
+          borderRadius: 'var(--radius-base, 0.75rem)',
+          boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+        }}
       >
         {/* Header */}
         {(title || showCloseButton) && (
@@ -93,7 +97,8 @@ export default function Modal({
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="ml-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                className="ml-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
               >
                 <X size={20} />
               </button>

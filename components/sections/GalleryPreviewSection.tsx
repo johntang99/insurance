@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import { Badge, Carousel } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { GalleryImage } from '@/lib/types';
@@ -26,6 +27,10 @@ export default function GalleryPreviewSection({
   variant = 'grid-uniform',
   className,
 }: GalleryPreviewSectionProps) {
+  const tokenSurfaceStyle = {
+    borderRadius: 'var(--radius-base, 0.75rem)',
+    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
+  };
   return (
     <section className={cn('section-padding gradient-backdrop', className)}>
       <div className="container-custom">
@@ -44,15 +49,15 @@ export default function GalleryPreviewSection({
 
         {/* Render based on variant */}
         {variant === 'grid-masonry' && (
-          <GalleryMasonry images={images} />
+          <GalleryMasonry images={images} tokenSurfaceStyle={tokenSurfaceStyle} />
         )}
         
         {variant === 'grid-uniform' && (
-          <GalleryUniform images={images} />
+          <GalleryUniform images={images} tokenSurfaceStyle={tokenSurfaceStyle} />
         )}
         
         {variant === 'carousel' && (
-          <GalleryCarousel images={images} />
+          <GalleryCarousel images={images} tokenSurfaceStyle={tokenSurfaceStyle} />
         )}
 
         {/* More Link */}
@@ -78,33 +83,51 @@ export default function GalleryPreviewSection({
 // VARIANT COMPONENTS
 // ============================================
 
-function GalleryMasonry({ images }: { images: GalleryImage[] }) {
+function GalleryMasonry({
+  images,
+  tokenSurfaceStyle,
+}: {
+  images: GalleryImage[];
+  tokenSurfaceStyle: CSSProperties;
+}) {
   return (
     <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
       {images.map((image, index) => (
         <div key={index} className="break-inside-avoid">
-          <GalleryImageCard image={image} />
+          <GalleryImageCard image={image} tokenSurfaceStyle={tokenSurfaceStyle} />
         </div>
       ))}
     </div>
   );
 }
 
-function GalleryUniform({ images }: { images: GalleryImage[] }) {
+function GalleryUniform({
+  images,
+  tokenSurfaceStyle,
+}: {
+  images: GalleryImage[];
+  tokenSurfaceStyle: CSSProperties;
+}) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {images.map((image, index) => (
-        <GalleryImageCard key={index} image={image} uniform />
+        <GalleryImageCard key={index} image={image} uniform tokenSurfaceStyle={tokenSurfaceStyle} />
       ))}
     </div>
   );
 }
 
-function GalleryCarousel({ images }: { images: GalleryImage[] }) {
+function GalleryCarousel({
+  images,
+  tokenSurfaceStyle,
+}: {
+  images: GalleryImage[];
+  tokenSurfaceStyle: CSSProperties;
+}) {
   return (
     <Carousel autoPlay interval={4000} showDots showArrows>
       {images.map((image, index) => (
-        <div key={index} className="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden">
+        <div key={index} className="relative h-[400px] md:h-[500px] overflow-hidden" style={tokenSurfaceStyle}>
           <Image
             src={image.src}
             alt={image.alt}
@@ -129,11 +152,15 @@ function GalleryCarousel({ images }: { images: GalleryImage[] }) {
 interface GalleryImageCardProps {
   image: GalleryImage;
   uniform?: boolean;
+  tokenSurfaceStyle: CSSProperties;
 }
 
-function GalleryImageCard({ image, uniform }: GalleryImageCardProps) {
+function GalleryImageCard({ image, uniform, tokenSurfaceStyle }: GalleryImageCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
+    <div
+      className="group relative overflow-hidden transition-all duration-300 cursor-pointer"
+      style={tokenSurfaceStyle}
+    >
       <div className={cn(
         'relative bg-gray-200',
         uniform ? 'aspect-square' : 'aspect-auto'
