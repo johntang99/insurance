@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Locale } from '@/lib/i18n';
 import type { BookingService, BookingSettings, SiteConfig } from '@/lib/types';
 import { Button } from '@/components/ui';
 
 interface BookingSettingsManagerProps {
   sites: SiteConfig[];
   selectedSiteId: string;
+  selectedLocale: string;
 }
 
 const DEFAULT_SETTINGS: BookingSettings = {
@@ -37,13 +40,30 @@ const DEFAULT_SETTINGS: BookingSettings = {
 export function BookingSettingsManager({
   sites,
   selectedSiteId,
+  selectedLocale,
 }: BookingSettingsManagerProps) {
+  const router = useRouter();
   const [siteId, setSiteId] = useState(selectedSiteId);
+  const [locale, setLocale] = useState<Locale>(selectedLocale as Locale);
   const [settings, setSettings] = useState<BookingSettings>(DEFAULT_SETTINGS);
   const [services, setServices] = useState<BookingService[]>([]);
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [importing, setImporting] = useState(false);
+  const selectedSite = sites.find((site) => site.id === siteId);
+
+  useEffect(() => {
+    if (!selectedSite) return;
+    if (!selectedSite.supportedLocales.includes(locale)) {
+      setLocale(selectedSite.defaultLocale || 'en');
+    }
+  }, [selectedSite, locale]);
+
+  useEffect(() => {
+    if (!siteId || !locale) return;
+    const params = new URLSearchParams({ siteId, locale });
+    router.replace(`/admin/booking-settings?${params.toString()}`);
+  }, [router, siteId, locale]);
 
   const loadSettings = async () => {
     if (!siteId) return;
@@ -208,6 +228,20 @@ export function BookingSettingsManager({
               {sites.map((site) => (
                 <option key={site.id} value={site.id}>
                   {site.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-500">Locale</label>
+            <select
+              className="mt-1 rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={locale}
+              onChange={(event) => setLocale(event.target.value as Locale)}
+            >
+              {(selectedSite?.supportedLocales || ['en']).map((item) => (
+                <option key={item} value={item}>
+                  {item === 'en' ? 'English' : item === 'zh' ? 'Chinese' : item}
                 </option>
               ))}
             </select>

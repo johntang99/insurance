@@ -15,7 +15,8 @@
     "content:normalize-media-urls": "node scripts/normalize-content-media-urls.mjs",
     "qa:step3": "node scripts/step3-agent.mjs",
     "qa:step3:fix": "node scripts/step3-agent.mjs --fix",
-    "qa:step3:ci": "node scripts/step3-agent.mjs --fail-on-broken --fail-on-variant"
+    "qa:step3:ci": "node scripts/step3-agent.mjs --fail-on-broken --fail-on-variant",
+    "qa:o5b:smoke": "node scripts/test-onboarding-o5b-quality.mjs"
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.20",

@@ -4,6 +4,18 @@ import { isSuperAdmin } from '@/lib/admin/permissions';
 import fs from 'fs';
 import fsPromises from 'fs/promises';
 import path from 'path';
+import { insertContentRevision } from '@/lib/contentDb';
+import {
+  approveRewriteItems,
+  createRewriteJob,
+  listRewriteItems,
+  markRewriteItemsApplied,
+  replaceRewriteItems,
+  updateRewriteJob,
+  writeRewriteAuditLog,
+} from '@/lib/admin/rewriteDb';
+import { extractRewriteItems, generateRewriteItemsFromProvider } from '@/lib/admin/rewriteEngine';
+import { generateRewriteWithProvider, isRewriteProviderConfigured } from '@/lib/ai/rewrite/provider';
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -287,6 +299,60 @@ function parseJsonFromResponse(text: string): any {
     if (braceMatch) return JSON.parse(braceMatch[0]);
     throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
   }
+}
+
+function chunkArray<T>(items: T[], chunkSize: number): T[][] {
+  if (items.length === 0) return [];
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += chunkSize) {
+    chunks.push(items.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
+type PathToken = string | number;
+
+function tokenizeFieldPath(fieldPath: string): PathToken[] {
+  const tokens: PathToken[] = [];
+  const regex = /([^[.\]]+)|\[(\d+)\]/g;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(fieldPath)) !== null) {
+    if (match[1]) {
+      tokens.push(match[1]);
+    } else if (match[2]) {
+      tokens.push(Number(match[2]));
+    }
+  }
+  return tokens;
+}
+
+function setValueAtFieldPath(root: unknown, fieldPath: string, nextValue: string): boolean {
+  const tokens = tokenizeFieldPath(fieldPath);
+  if (tokens.length === 0 || !root || typeof root !== 'object') {
+    return false;
+  }
+
+  let current: any = root;
+  for (let i = 0; i < tokens.length - 1; i += 1) {
+    const token = tokens[i];
+    if (typeof token === 'number') {
+      if (!Array.isArray(current) || token < 0 || token >= current.length) return false;
+      current = current[token];
+    } else {
+      if (!current || typeof current !== 'object' || !(token in current)) return false;
+      current = current[token];
+    }
+  }
+
+  const leaf = tokens[tokens.length - 1];
+  if (typeof leaf === 'number') {
+    if (!Array.isArray(current) || leaf < 0 || leaf >= current.length) return false;
+    current[leaf] = nextValue;
+    return true;
+  }
+  if (!current || typeof current !== 'object') return false;
+  current[leaf] = nextValue;
+  return true;
 }
 
 // ── POST handler ─────────────────────────────────────────────────────
@@ -986,12 +1052,325 @@ export async function POST(request: NextRequest) {
                 }], 'site_id,locale,path');
               }
             }
+
           }
 
           emitProgress('O5', 'AI Content', 'done', SKIP_AI ? 'Skipped' : 'Content + SEO generated', Date.now() - o5Start);
         } catch (err: any) {
           emitProgress('O5', 'AI Content', 'error', err.message, Date.now() - o5Start);
           throw err;
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  O5B: AUTOMATIC REWRITE (SERVICES + CONDITIONS)
+        // ════════════════════════════════════════════════════════════════
+        const o5bStart = Date.now();
+        emitProgress(
+          'O5B',
+          'Rewrite Core Content',
+          'running',
+          SKIP_AI ? 'Skipping rewrite (skipAi=true)...' : 'Rewriting services + conditions...'
+        );
+
+        try {
+          if (!SKIP_AI) {
+            const targetPaths = ['pages/services.json', 'pages/conditions.json'];
+            const rewriteMode = String(intake.rewriteMode || 'aggressive').toLowerCase() as
+              | 'conservative'
+              | 'balanced'
+              | 'aggressive';
+            const rewriteStrictness = String(intake.rewriteStrictness || 'strict-medical').toLowerCase();
+            const rewriteAutoApply = intake.rewriteAutoApply !== false;
+            const provider = String(
+              intake.rewriteProvider ||
+              process.env.AI_REWRITE_PROVIDER ||
+              (process.env.ANTHROPIC_API_KEY ? 'claude' : 'openai')
+            ).toLowerCase();
+
+            if (!isRewriteProviderConfigured(provider)) {
+              throw new Error(`Rewrite provider "${provider}" is not configured`);
+            }
+
+            const model = provider === 'claude'
+              ? (process.env.AI_REWRITE_CLAUDE_MODEL || process.env.ANTHROPIC_MAIN_MODEL || 'claude-sonnet-4-6')
+              : (process.env.AI_REWRITE_OPENAI_MODEL || process.env.OPENAI_MAIN_MODEL || 'gpt-5.2');
+
+            const rewriteJob = await createRewriteJob({
+              siteId: SITE_ID,
+              locale: DEFAULT_LOCALE,
+              scope: 'custom',
+              targetPaths,
+              mode: rewriteMode,
+              provider,
+              model,
+              sourceOfTruth: 'db',
+              createdBy: session.user.id,
+              requirements: {
+                preserveMeaning: true,
+                onboarding: true,
+                maxLengthDeltaPct: rewriteMode === 'aggressive' ? 60 : 35,
+                minLengthDeltaPct: 5,
+                minChangeRatio: rewriteMode === 'aggressive' ? 0.3 : 0.2,
+                forbiddenTerms: ['cure', 'guaranteed', 'miracle', 'risk-free'],
+                requiredTerms: intake.rewriteRequiredTerms || [],
+                voiceProfile: intake.contentTone?.voice || 'warm-professional',
+                strictness: rewriteStrictness,
+              },
+            });
+            if (!rewriteJob) {
+              throw new Error('Failed to create rewrite job during onboarding');
+            }
+
+            await updateRewriteJob({
+              jobId: rewriteJob.id,
+              status: 'running',
+              startedAt: new Date().toISOString(),
+              error: null,
+              completedAt: null,
+            });
+            await writeRewriteAuditLog({
+              jobId: rewriteJob.id,
+              action: 'job_started',
+              actorId: session.user.id,
+              actorEmail: session.user.email,
+              metadata: { source: 'onboarding-o5b' },
+            });
+
+            const generatedRows: Array<{
+              jobId: string;
+              siteId: string;
+              locale: string;
+              path: string;
+              fieldPath: string;
+              sourceHash: string;
+              sourceText: string;
+              rewrittenText: string;
+              similarityScore: number;
+              riskFlags: string[];
+              validation: Record<string, unknown>;
+              validationPassed: boolean;
+            }> = [];
+            let missingTargets = 0;
+
+            for (const contentPath of targetPaths) {
+              const rows = await fetchRows('content_entries', {
+                site_id: SITE_ID,
+                locale: DEFAULT_LOCALE,
+                path: contentPath,
+              });
+              if (!rows[0]?.data) {
+                missingTargets += 1;
+                continue;
+              }
+
+              const extracted = extractRewriteItems(rows[0].data);
+              const providerMatches: Record<string, { rewrittenText: string; provider: string }> = {};
+
+              for (const chunk of chunkArray(extracted, 40)) {
+                const providerItems = await generateRewriteWithProvider({
+                  provider,
+                  model,
+                  siteId: SITE_ID,
+                  locale: DEFAULT_LOCALE,
+                  scope: 'custom',
+                  mode: rewriteMode,
+                  targetPaths: [contentPath],
+                  requirements: rewriteJob.requirements,
+                  voiceProfile:
+                    typeof intake.contentTone?.voice === 'string' ? intake.contentTone.voice : '',
+                  items: chunk.map((item) => ({
+                    path: contentPath,
+                    fieldPath: item.fieldPath,
+                    sourceText: item.sourceText,
+                  })),
+                });
+                for (const item of providerItems) {
+                  providerMatches[item.fieldPath] = {
+                    rewrittenText: item.rewrittenText,
+                    provider,
+                  };
+                }
+              }
+
+              const generated = generateRewriteItemsFromProvider(extracted, providerMatches, {
+                requirements: rewriteJob.requirements as any,
+              });
+              generated.forEach((item) => {
+                generatedRows.push({
+                  jobId: rewriteJob.id,
+                  siteId: SITE_ID,
+                  locale: DEFAULT_LOCALE,
+                  path: contentPath,
+                  fieldPath: item.fieldPath,
+                  sourceHash: item.sourceHash,
+                  sourceText: item.sourceText,
+                  rewrittenText: item.rewrittenText,
+                  similarityScore: item.similarityScore,
+                  riskFlags: item.riskFlags,
+                  validation: item.validation,
+                  validationPassed: item.validationPassed,
+                });
+              });
+            }
+
+            const generatedItems = await replaceRewriteItems(generatedRows);
+            const generatedDbItems = await listRewriteItems({ jobId: rewriteJob.id, limit: 5000 });
+            const criticalFlags =
+              rewriteStrictness === 'strict-medical'
+                ? new Set([
+                    'forbidden_terms_present',
+                    'missing_required_terms',
+                    'rewrite_too_similar',
+                    'empty_rewrite',
+                    'length_delta_too_high',
+                  ])
+                : new Set(['forbidden_terms_present', 'empty_rewrite']);
+            const safeItems = generatedDbItems.filter(
+              (item) =>
+                item.validation_passed === true &&
+                typeof item.rewritten_text === 'string' &&
+                item.rewritten_text.trim().length > 0 &&
+                !item.risk_flags.some((flag) => criticalFlags.has(flag))
+            );
+            const riskyItems = generatedDbItems.filter((item) => !safeItems.includes(item));
+            const autoApproveIds = safeItems
+              .map((item) => item.id);
+
+            await approveRewriteItems({
+              jobId: rewriteJob.id,
+              itemIds: autoApproveIds,
+              approved: true,
+              approvedBy: session.user.id,
+            });
+
+            const byPath = new Map<string, typeof generatedDbItems>();
+            for (const item of generatedDbItems) {
+              if (!autoApproveIds.includes(item.id)) continue;
+              const list = byPath.get(item.path) || [];
+              list.push(item);
+              byPath.set(item.path, list);
+            }
+
+            const appliedIds: string[] = [];
+            let updatedPaths = 0;
+            if (rewriteAutoApply) {
+              for (const [contentPath, pathItems] of byPath.entries()) {
+                const rows = await fetchRows('content_entries', {
+                  site_id: SITE_ID,
+                  locale: DEFAULT_LOCALE,
+                  path: contentPath,
+                });
+                if (!rows[0]?.data) continue;
+                const data = rows[0].data;
+                let changed = 0;
+                for (const item of pathItems) {
+                  const ok = setValueAtFieldPath(data, item.field_path, String(item.rewritten_text || ''));
+                  if (ok) {
+                    changed += 1;
+                    appliedIds.push(item.id);
+                  }
+                }
+                if (changed > 0) {
+                  await upsert(
+                    'content_entries',
+                    [{
+                      site_id: SITE_ID,
+                      locale: DEFAULT_LOCALE,
+                      path: contentPath,
+                      data,
+                      updated_by: 'onboard-api-o5b',
+                    }],
+                    'site_id,locale,path'
+                  );
+                  if (rows[0]?.id) {
+                    await insertContentRevision({
+                      entryId: rows[0].id,
+                      data,
+                      createdBy: session.user.id,
+                      note: 'Onboarding O5B auto-rewrite applied',
+                    });
+                  }
+                  updatedPaths += 1;
+                }
+              }
+            }
+
+            if (rewriteAutoApply) {
+              await markRewriteItemsApplied({
+                jobId: rewriteJob.id,
+                itemIds: appliedIds,
+              });
+            }
+            await updateRewriteJob({
+              jobId: rewriteJob.id,
+              status:
+                rewriteAutoApply && riskyItems.length === 0 && autoApproveIds.length > 0
+                  ? 'completed'
+                  : 'needs_review',
+              completedAt: new Date().toISOString(),
+              error: riskyItems.length > 0 ? `Needs review: ${riskyItems.length} risky items` : null,
+            });
+
+            await writeRewriteAuditLog({
+              jobId: rewriteJob.id,
+              action: 'item_generated',
+              actorId: session.user.id,
+              actorEmail: session.user.email,
+              metadata: {
+                generatedItems,
+                autoApproved: autoApproveIds.length,
+                appliedItems: rewriteAutoApply ? appliedIds.length : 0,
+                updatedPaths,
+                missingTargets,
+                riskyItems: riskyItems.length,
+              },
+            });
+            await writeRewriteAuditLog({
+              jobId: rewriteJob.id,
+              action: 'job_applied',
+              actorId: session.user.id,
+              actorEmail: session.user.email,
+              metadata: {
+                appliedItems: rewriteAutoApply ? appliedIds.length : 0,
+                updatedPaths,
+                riskyItems: riskyItems.length,
+              },
+            });
+
+            if (riskyItems.length > 0) {
+              result.warnings.push(
+                `O5B rewrite generated ${riskyItems.length} risky items requiring admin review`
+              );
+            }
+            const avgChangeRatio =
+              generatedRows.length === 0
+                ? 0
+                : Number(
+                    (
+                      generatedRows.reduce((sum, row) => {
+                        const value =
+                          typeof (row.validation as any)?.changeRatio === 'number'
+                            ? (row.validation as any).changeRatio
+                            : 0;
+                        return sum + value;
+                      }, 0) / generatedRows.length
+                    ).toFixed(4)
+                  );
+
+            emitProgress(
+              'O5B',
+              'Rewrite Core Content',
+              'done',
+              `Job ${rewriteJob.id.slice(0, 8)}: generated ${generatedItems}, approved ${autoApproveIds.length}, risky ${riskyItems.length}, applied ${rewriteAutoApply ? appliedIds.length : 0}, avgChange ${avgChangeRatio}`,
+              Date.now() - o5bStart
+            );
+          } else {
+            emitProgress('O5B', 'Rewrite Core Content', 'done', 'Skipped', Date.now() - o5bStart);
+          }
+        } catch (err: any) {
+          const message = err?.message || 'O5B failed';
+          result.warnings.push(`O5B warning: ${message}`);
+          emitProgress('O5B', 'Rewrite Core Content', 'error', message, Date.now() - o5bStart);
         }
 
         // ════════════════════════════════════════════════════════════════

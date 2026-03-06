@@ -119,7 +119,7 @@ export default function Header({
     return false;
   };
 
-  const renderLogo = (sizeClass: string, width: number, height: number) => {
+  const renderLogo = (sizeClass: string, width: number, height: number, sizes: string) => {
     const siteDisplayName = getSiteDisplayName(siteInfo, 'Site');
     if (logoImage?.src && logoImage.src.trim()) {
       return (
@@ -128,7 +128,9 @@ export default function Header({
           alt={logoImage.alt || logoConfig?.text || siteDisplayName || 'Logo'}
           width={width}
           height={height}
-          className={`${sizeClass} hover:opacity-90 transition-opacity`}
+          sizes={sizes}
+          quality={95}
+          className={`${sizeClass} object-contain hover:opacity-90 transition-opacity`}
         />
       );
     }
@@ -243,7 +245,7 @@ export default function Header({
             {/* Logo - Centered */}
             <div className="flex justify-center mb-4">
               <Link href={`/${locale}`}>
-                {renderLogo('w-auto h-16', 60, 60)}
+                {renderLogo('w-auto h-16', 240, 80, '(min-width: 1024px) 240px, 200px')}
             </Link>
             </div>
             
@@ -290,7 +292,7 @@ export default function Header({
             <div className="flex items-center h-20">
               {/* Logo */}
               <Link href={`/${locale}`} className="flex-shrink-0">
-                {renderLogo('w-auto h-12', 48, 48)}
+                {renderLogo('w-auto h-12', 180, 60, '(min-width: 1280px) 180px, 140px')}
               </Link>
               
               {/* Desktop Navigation - All in one line */}

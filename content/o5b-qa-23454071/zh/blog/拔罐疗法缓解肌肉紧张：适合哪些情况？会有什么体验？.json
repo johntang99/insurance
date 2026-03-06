@@ -1,0 +1,19 @@
+{
+  "cta": {
+    "title": "下一步",
+    "primaryCta": {
+      "link": "/contact",
+      "text": "Book Now"
+    },
+    "description": "如果你不确定拔罐是否适合你的情况，进行一次简短咨询可以帮助明确治疗方向，并建立合理预期。",
+    "secondaryCta": {
+      "link": "/services",
+      "text": "Learn More"
+    }
+  },
+  "hero": {
+    "title": "拔罐疗法缓解肌肉紧张：适合哪些情况？会有什么体验？",
+    "subtitle": "Page subtitle goes here",
+    "backgroundImage": ""
+  }
+}

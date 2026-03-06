@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Locale } from '@/lib/i18n';
 import type { SiteConfig } from '@/lib/types';
 import { Button } from '@/components/ui';
 
@@ -13,6 +15,7 @@ interface MediaItem {
 interface MediaManagerProps {
   sites: SiteConfig[];
   selectedSiteId: string;
+  selectedLocale: string;
 }
 
 async function parseApiError(response: Response, fallback: string) {
@@ -26,8 +29,10 @@ async function parseApiError(response: Response, fallback: string) {
   }
 }
 
-export function MediaManager({ sites, selectedSiteId }: MediaManagerProps) {
+export function MediaManager({ sites, selectedSiteId, selectedLocale }: MediaManagerProps) {
+  const router = useRouter();
   const [siteId, setSiteId] = useState(selectedSiteId);
+  const [locale, setLocale] = useState<Locale>(selectedLocale as Locale);
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -35,6 +40,20 @@ export function MediaManager({ sites, selectedSiteId }: MediaManagerProps) {
   const [folder, setFolder] = useState('general');
   const [uploading, setUploading] = useState(false);
   const [importing, setImporting] = useState(false);
+  const selectedSite = sites.find((site) => site.id === siteId);
+
+  useEffect(() => {
+    if (!selectedSite) return;
+    if (!selectedSite.supportedLocales.includes(locale)) {
+      setLocale(selectedSite.defaultLocale || 'en');
+    }
+  }, [selectedSite, locale]);
+
+  useEffect(() => {
+    if (!siteId || !locale) return;
+    const params = new URLSearchParams({ siteId, locale });
+    router.replace(`/admin/media?${params.toString()}`);
+  }, [router, siteId, locale]);
 
   const loadMedia = async () => {
     if (!siteId) return;
@@ -157,19 +176,35 @@ export function MediaManager({ sites, selectedSiteId }: MediaManagerProps) {
             Upload, optimize, and organize images for each site.
           </p>
         </div>
-        <div>
-          <label className="block text-xs font-medium text-gray-500">Site</label>
-          <select
-            className="mt-1 rounded-md border border-gray-200 px-3 py-2 text-sm"
-            value={siteId}
-            onChange={(event) => setSiteId(event.target.value)}
-          >
-            {sites.map((site) => (
-              <option key={site.id} value={site.id}>
-                {site.name}
-              </option>
-            ))}
-          </select>
+        <div className="flex items-end gap-2">
+          <div>
+            <label className="block text-xs font-medium text-gray-500">Site</label>
+            <select
+              className="mt-1 rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={siteId}
+              onChange={(event) => setSiteId(event.target.value)}
+            >
+              {sites.map((site) => (
+                <option key={site.id} value={site.id}>
+                  {site.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-500">Locale</label>
+            <select
+              className="mt-1 rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={locale}
+              onChange={(event) => setLocale(event.target.value as Locale)}
+            >
+              {(selectedSite?.supportedLocales || ['en']).map((item) => (
+                <option key={item} value={item}>
+                  {item === 'en' ? 'English' : item === 'zh' ? 'Chinese' : item}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 

@@ -37,3 +37,7 @@ next-env.d.ts
 
 # admin history backups
 /content/_history/
+
+.env.local
+.env.local copy
+.env.*.local

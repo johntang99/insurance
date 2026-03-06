@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Locale } from '@/lib/i18n';
 import type { BookingRecord, BookingService, BookingStatus, SiteConfig } from '@/lib/types';
 import { Button } from '@/components/ui';
 import Modal from '@/components/ui/Modal';
@@ -12,6 +14,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 interface BookingsManagerProps {
   sites: SiteConfig[];
   selectedSiteId: string;
+  selectedLocale: string;
 }
 
 const STATUS_OPTIONS: BookingStatus[] = ['confirmed', 'rescheduled', 'cancelled'];
@@ -22,8 +25,10 @@ function getDateOffset(days: number) {
   return date.toISOString().slice(0, 10);
 }
 
-export function BookingsManager({ sites, selectedSiteId }: BookingsManagerProps) {
+export function BookingsManager({ sites, selectedSiteId, selectedLocale }: BookingsManagerProps) {
+  const router = useRouter();
   const [siteId, setSiteId] = useState(selectedSiteId);
+  const [locale, setLocale] = useState<Locale>(selectedLocale as Locale);
   const [from, setFrom] = useState(getDateOffset(0));
   const [to, setTo] = useState(getDateOffset(30));
   const [bookings, setBookings] = useState<BookingRecord[]>([]);
@@ -52,6 +57,24 @@ export function BookingsManager({ sites, selectedSiteId }: BookingsManagerProps)
     });
     return map;
   }, [services]);
+
+  const selectedSite = useMemo(
+    () => sites.find((site) => site.id === siteId),
+    [sites, siteId]
+  );
+
+  useEffect(() => {
+    if (!selectedSite) return;
+    if (!selectedSite.supportedLocales.includes(locale)) {
+      setLocale(selectedSite.defaultLocale || 'en');
+    }
+  }, [selectedSite, locale]);
+
+  useEffect(() => {
+    if (!siteId || !locale) return;
+    const params = new URLSearchParams({ siteId, locale });
+    router.replace(`/admin/bookings?${params.toString()}`);
+  }, [router, siteId, locale]);
 
   const loadServices = async () => {
     if (!siteId) return;
@@ -227,7 +250,7 @@ export function BookingsManager({ sites, selectedSiteId }: BookingsManagerProps)
           <h1 className="text-2xl font-semibold text-gray-900">Bookings</h1>
           <p className="text-sm text-gray-600">Review and manage client bookings.</p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-4 sm:items-end">
+        <div className="grid gap-3 sm:grid-cols-5 sm:items-end">
           <div>
             <label className="block text-xs font-medium text-gray-500">Site</label>
             <select
@@ -238,6 +261,20 @@ export function BookingsManager({ sites, selectedSiteId }: BookingsManagerProps)
               {sites.map((site) => (
                 <option key={site.id} value={site.id}>
                   {site.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-500">Locale</label>
+            <select
+              className="mt-1 rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={locale}
+              onChange={(event) => setLocale(event.target.value as Locale)}
+            >
+              {(selectedSite?.supportedLocales || ['en']).map((item) => (
+                <option key={item} value={item}>
+                  {item === 'en' ? 'English' : item === 'zh' ? 'Chinese' : item}
                 </option>
               ))}
             </select>

@@ -64,6 +64,66 @@
       ],
       "createdAt": "2026-03-06T06:00:35.131Z",
       "updatedAt": "2026-03-06T06:00:35.131Z"
+    },
+    {
+      "id": "o5b-test-21180462",
+      "name": "O5B Test Clinic 0462",
+      "domain": "o5b-test-21180462.example.com",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en"
+      ],
+      "createdAt": "2026-03-06T18:19:47.193Z",
+      "updatedAt": "2026-03-06T18:19:47.193Z"
+    },
+    {
+      "id": "o5b-qa-23363145",
+      "name": "O5B QA Clinic 3145",
+      "domain": "o5b-qa-23363145.example.com",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en"
+      ],
+      "createdAt": "2026-03-06T18:56:10.971Z",
+      "updatedAt": "2026-03-06T18:56:10.971Z"
+    },
+    {
+      "id": "o5b-qa-23454071",
+      "name": "O5B QA Clinic 4071",
+      "domain": "o5b-qa-23454071.example.com",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en"
+      ],
+      "createdAt": "2026-03-06T18:57:40.490Z",
+      "updatedAt": "2026-03-06T18:57:40.490Z"
+    },
+    {
+      "id": "o5b-debug-23543001",
+      "name": "Debug Clinic",
+      "domain": "o5b-debug-23543001.example.com",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en"
+      ],
+      "createdAt": "2026-03-06T18:59:08.763Z",
+      "updatedAt": "2026-03-06T18:59:08.763Z"
+    },
+    {
+      "id": "o5b-qa-23598238",
+      "name": "O5B QA Clinic 8238",
+      "domain": "o5b-qa-23598238.example.com",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en"
+      ],
+      "createdAt": "2026-03-06T19:00:04.568Z",
+      "updatedAt": "2026-03-06T19:00:04.568Z"
     }
   ]
 }
