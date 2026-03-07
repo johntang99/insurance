@@ -1,0 +1,65 @@
+{
+  "cta": {
+    "link": "/en/book",
+    "text": "Book Online"
+  },
+  "menu": {
+    "logo": {
+      "text": "Pacific Meridian Care",
+      "emoji": "",
+      "image": {
+        "alt": "Dr Jiang Acupuncture",
+        "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/1771994833240-logo-acu-flushing-4.svg"
+      },
+      "subtext": "Balanced care for modern life"
+    },
+    "items": [
+      {
+        "url": "/en",
+        "text": "Home"
+      },
+      {
+        "url": "/en/services",
+        "text": "Services"
+      },
+      {
+        "url": "/en/conditions",
+        "text": "Conditions"
+      },
+      {
+        "url": "/en/about",
+        "text": "About"
+      },
+      {
+        "url": "/en/case-studies",
+        "text": "Case Studies"
+      },
+      {
+        "url": "/en/pricing",
+        "text": "Pricing"
+      },
+      {
+        "url": "/en/blog",
+        "text": "Blog"
+      },
+      {
+        "url": "/en/contact",
+        "text": "Contact"
+      }
+    ],
+    "variant": "transparent",
+    "fontWeight": "semibold"
+  },
+  "topbar": {
+    "badge": "Welcoming New Patients",
+    "hours": "Mon-Fri 9:00-18:00",
+    "phone": "(917) 229-1229",
+    "address": "220 W 30th Street, New York, NY 10001",
+    "phoneHref": "tel:+19172291229",
+    "addressHref": "https://maps.google.com/?q=220+W+30th+Street+New+York+NY+10001"
+  },
+  "languages": [
+    "en",
+    "zh"
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "cta": {
+    "title": "Wondering Whether We're the Right Fit?",
+    "variant": "centered",
+    "primaryCta": {
+      "link": "/en/contact",
+      "text": "Schedule a Free Consultation"
+    },
+    "description": "Book a no-cost consultation and let's talk through your individual health concerns together",
+    "secondaryCta": {
+      "link": "tel:+19172291229",
+      "text": "Give Us a Call"
+    }
+  },
+  "hero": {
+    "title": "Health Conditions We Support",
+    "variant": "split-photo-right",
+    "subtitle": "Traditional Chinese Medicine provides natural, evidence-informed approaches to address a broad spectrum of health concerns",
+    "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg"
+  },
+  "categories": [
+    {
+      "id": "pain-management",
+      "icon": "Activity",
+      "name": "Pain Management",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/welcome-section.jpg",
+      "order": 1,
+      "subtitle": "Addressing both short-term discomfort and long-standing pain, naturally",
+      "description": "Natural approaches to managing both acute injuries and chronic pain conditions"
+    },
+    {
+      "id": "mental-health",
+      "icon": "Brain",
+      "name": "Mental & Emotional Health",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg",
+      "order": 2,
+      "subtitle": "Soothe the nervous system and bring emotional harmony back into balance",
+      "description": "Caring support for stress, anxiety, depression, and overall emotional wellbeing"
+    },
+    {
+      "id": "digestive",
+      "icon": "Apple",
+      "name": "Digestive Health",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987333497-photo-1716284130499-470a2d2b200e.jpg",
+      "order": 3,
+      "subtitle": "Nurture healthy digestion, steady energy, and day-to-day comfort",
+      "description": "Targeted care for digestive disorders and overall gut health"
+    },
+    {
+      "id": "womens-health",
+      "icon": "Heart",
+      "name": "Women's Health",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/1771987676016-photo-1706647155880-839358d304db.jpg",
+      "order": 4,
+      "subtitle": "Supporting women's health at every hormonal stage of life",
+      "description": "Wide-ranging care tailored to women's unique health needs"
+    },
+    {
+      "id": "respiratory",
+      "icon": "Wind",
+      "name": "Respiratory Issues",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
+      "order": 5,
+      "subtitle": "Personalised seasonal support to help you breathe more comfortably",
+      "description": "Care focused on respiratory health and easier breathing"
+    },
+    {
+      "id": "immune-system",
+      "icon": "Shield",
+      "name": "Immune System",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/gallery/needles-sterile.jpg",
+      "order": 6,
+      "subtitle": "Strengthen your defences and break the cycle of recurring illness",
+      "description": "Supporting and fortifying your body's own natural defences"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "back-pain",
+      "icon": "Activity",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/home/welcome-section.jpg",
+      "title": "Back Pain",
+      "category": "pain-management",
+      "featured": true,
+      "symptoms": [
+        "Lower back pain",
+        "Upper back stiffness",
+        "Sciatica",
+        "Herniated disc pain",
+        "Muscle spasms",
+        "Limited mobility"
+      ],
+      "description": "For both sudden-onset and long-term back pain, acupuncture and TCM therapies can offer meaningful relief for lower back pain, upper back pain, and sciatica — without relying on drugs or surgical intervention.",
+      "tcmApproach": "In TCM, back pain is understood as a disruption in the flow of Qi and blood through the body's channels. Acupuncture is used to clear these disruptions, cupping therapy supports improved circulation, and herbal medicine helps address inflammation while building strength in the back.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Cupping therapy",
+        "Tui Na massage",
+        "Herbal medicine",
+        "Moxibustion"
+      ]
+    },
+    {
+      "id": "neck-shoulder-pain",
+      "icon": "Activity",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
+      "title": "Neck & Shoulder Pain",
+      "category": "pain-management",
+      "symptoms": [
+        "Neck stiffness",
+        "Shoulder tension",
+        "Headaches",
+        "Limited range of motion",
+        "Muscle knots",
+        "Radiating pain to arms"
+      ],
+      "description": "Tension, stiffness, and aching in the neck and shoulders — whether brought on by stress, poor posture, or injury — can be addressed with targeted TCM care.",
+      "tcmApproach": "From a TCM perspective, neck and shoulder pain is frequently linked to Qi stagnation and blood stasis. Acupuncture targets trigger points to release tension, Tui Na helps relax tight musculature, and cupping is applied to encourage better circulation.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Gua Sha",
+        "Tui Na massage",
+        "Cupping therapy",
+        "Stretching guidance"
+      ]
+    },
+    {
+      "id": "arthritis",
+      "icon": "Activity",
+      "title": "Arthritis & Joint Pain",
+      "category": "pain-management",
+      "symptoms": [
+        "Joint pain and swelling",
+        "Morning stiffness",
+        "Reduced mobility",
+        "Inflammation",
+        "Pain that intensifies with changes in weather"
+      ],
+      "description": "Natural pain management approaches for osteoarthritis, rheumatoid arthritis, and joint inflammation.",
+      "tcmApproach": "TCM commonly classifies arthritis as a 'Bi Syndrome,' in which pathogenic factors such as wind, cold, dampness, or heat obstruct the joints. Treatment is aimed at clearing these factors, calming inflammation, and supporting the body's overall resilience.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Moxibustion",
+        "Herbal medicine",
+        "Dietary therapy",
+        "Lifestyle counseling"
+      ]
+    },
+    {
+      "id": "headaches-migraines",
+      "icon": "Activity",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-12.jpeg",
+      "title": "Headaches & Migraines",
+      "category": "pain-management",
+      "featured": true,
+      "symptoms": [
+        "Recurring headaches",
+        "Migraine attacks",
+        "Tension in temples",
+        "Light sensitivity",
+        "Nausea with headaches",
+        "Neck tension"
+      ],
+      "description": "Tension headaches, migraines, and persistent head pain can all be addressed through TCM therapies, offering a non-medication path to relief.",
+      "tcmApproach": "TCM recognises several distinct headache patterns — among them Liver Yang rising, Blood deficiency, and invasion by external pathogenic factors. Your practitioner will identify your specific pattern and create a personalised treatment plan using acupuncture and herbal medicine.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Gua Sha",
+        "Dietary therapy",
+        "Stress management"
+      ]
+    },
+    {
+      "id": "anxiety",
+      "icon": "Brain",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/anxiate-3.jpeg",
+      "title": "Anxiety & Panic Disorders",
+      "category": "mental-health",
+      "featured": true,
+      "symptoms": [
+        "Excessive worry",
+        "Racing thoughts",
+        "Panic attacks",
+        "Restlessness",
+        "Trouble focusing or maintaining concentration",
+        "Physical tension",
+        "Sleep problems"
+      ],
+      "description": "A natural, medication-free approach to supporting those experiencing anxiety, panic attacks, and persistent nervousness.",
+      "tcmApproach": "Anxiety is frequently associated in TCM with Heart and Kidney disharmony, Liver Qi stagnation, or disturbance of the Shen (spirit). Care is directed at calming the Shen, restoring smooth Qi flow, and nourishing the relevant organ systems to bring emotional balance back.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Breathing exercises",
+        "Lifestyle counseling",
+        "Dietary recommendations"
+      ]
+    },
+    {
+      "id": "depression",
+      "icon": "Brain",
+      "title": "Depression & Low Mood",
+      "category": "mental-health",
+      "symptoms": [
+        "Persistent sadness",
+        "Loss of interest",
+        "Fatigue",
+        "Sleep changes",
+        "Appetite changes",
+        "Problems with focus or concentration",
+        "A sense of hopelessness or despair"
+      ],
+      "description": "Whole-person support for those living with depression, persistent low energy, and diminished motivation.",
+      "tcmApproach": "In TCM, depression is often linked to Liver Qi stagnation, Heart Blood deficiency, or Spleen Qi deficiency. Our approach addresses these underlying patterns by moving stagnant Qi, building up deficiencies, and supporting an uplifted spirit.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Lifestyle counseling",
+        "Exercise guidance",
+        "Dietary therapy"
+      ]
+    },
+    {
+      "id": "insomnia",
+      "icon": "Brain",
+      "title": "Insomnia & Sleep Disorders",
+      "category": "mental-health",
+      "symptoms": [
+        "Trouble falling asleep",
+        "Waking during night",
+        "Early morning waking",
+        "Unrefreshing sleep",
+        "Daytime fatigue",
+        "Racing mind at bedtime"
+      ],
+      "description": "Supportive, natural approaches for those struggling to fall asleep, stay asleep, or achieve restorative sleep quality.",
+      "tcmApproach": "From a TCM perspective, sleep difficulties commonly arise from Heart and Kidney imbalance, Yin deficiency with heat, or disturbance of the Shen. Our care focuses on nourishing Yin, settling the Heart, and anchoring the Shen so you can enjoy truly restful sleep.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Sleep hygiene guidance",
+        "Dietary recommendations",
+        "Meditation techniques"
+      ]
+    },
+    {
+      "id": "stress",
+      "icon": "Brain",
+      "title": "Stress & Burnout",
+      "category": "mental-health",
+      "symptoms": [
+        "Feeling overwhelmed",
+        "Exhaustion",
+        "Irritability",
+        "Poor concentration",
+        "Muscle tension",
+        "Digestive issues",
+        "Sleep problems"
+      ],
+      "description": "When chronic stress or burnout has taken its toll, we work with you to rebuild resilience and bring your body back into balance.",
+      "tcmApproach": "Ongoing stress tends to deplete Qi and create Liver stagnation over time. By regulating the Liver, addressing underlying deficiencies, and incorporating stress management techniques, we support your body's return to balance and help you build lasting resilience.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal adaptogens",
+        "Stress management techniques",
+        "Lifestyle counseling",
+        "Breathing exercises"
+      ]
+    },
+    {
+      "id": "ibs",
+      "icon": "Apple",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/digestive-health.jpg",
+      "title": "IBS & Digestive Issues",
+      "category": "digestive",
+      "featured": true,
+      "symptoms": [
+        "Abdominal pain",
+        "Bloating",
+        "Diarrhea or constipation",
+        "Gas",
+        "Cramping",
+        "Food sensitivities"
+      ],
+      "description": "Targeted support for irritable bowel syndrome, bloating, gas, and general digestive discomfort.",
+      "tcmApproach": "IBS commonly reflects a Liver-Spleen disharmony, where emotional stress directly impacts digestive function. We work to regulate Liver Qi, fortify Spleen function, and bring the digestive system back into harmony.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Dietary therapy",
+        "Stress management",
+        "Lifestyle modifications"
+      ]
+    },
+    {
+      "id": "acid-reflux",
+      "icon": "Apple",
+      "title": "Acid Reflux & GERD",
+      "category": "digestive",
+      "symptoms": [
+        "Heartburn",
+        "Acid regurgitation",
+        "Chest discomfort",
+        "Difficulty swallowing",
+        "Chronic cough",
+        "Hoarse voice"
+      ],
+      "description": "Supportive, natural care for heartburn, acid reflux, and gastroesophageal reflux disease.",
+      "tcmApproach": "Acid reflux is understood in TCM as Stomach Qi rebelling upward, frequently accompanied by heat or phlegm. Treatment aims to redirect Stomach Qi downward, clear heat, and support stronger digestive function.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Dietary recommendations",
+        "Lifestyle modifications",
+        "Stress reduction"
+      ]
+    },
+    {
+      "id": "constipation",
+      "icon": "Apple",
+      "title": "Constipation",
+      "category": "digestive",
+      "symptoms": [
+        "Less frequent bowel movements than usual",
+        "Hard stools",
+        "Straining",
+        "Incomplete evacuation",
+        "Abdominal discomfort",
+        "Bloating"
+      ],
+      "description": "Thoughtful, effective support for chronic constipation and irregular bowel habits.",
+      "tcmApproach": "Constipation can stem from several TCM patterns, including Qi stagnation, Blood deficiency, Yin deficiency, or Spleen Qi weakness. Your treatment plan is tailored to your individual pattern, with the goal of restoring healthy bowel function.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Dietary fiber guidance",
+        "Abdominal massage",
+        "Lifestyle changes"
+      ]
+    },
+    {
+      "id": "fertility",
+      "icon": "Heart",
+      "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/fertility-2.jpg",
+      "title": "Fertility Support",
+      "category": "womens-health",
+      "featured": true,
+      "symptoms": [
+        "Difficulty conceiving",
+        "Irregular cycles",
+        "Poor egg quality",
+        "Low sperm count (men)",
+        "Hormonal imbalances",
+        "Previous miscarriages"
+      ],
+      "description": "Wide-ranging support for both women and men pursuing natural conception or preparing for IVF.",
+      "tcmApproach": "Our approach centers on regulating menstrual cycles, nourishing Kidney Essence (Jing), enhancing blood flow to the reproductive organs, and easing stress. Each partner receives a treatment plan shaped around their individual needs.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Dietary therapy",
+        "Lifestyle counseling",
+        "Stress reduction"
+      ]
+    },
+    {
+      "id": "menstrual-issues",
+      "icon": "Heart",
+      "title": "Menstrual Disorders",
+      "category": "womens-health",
+      "symptoms": [
+        "Painful menstruation (dysmenorrhea)",
+        "Irregular cycles",
+        "Heavy bleeding",
+        "PMS symptoms",
+        "Mood swings",
+        "Bloating and cramping"
+      ],
+      "description": "Natural, supportive care for painful periods, irregular cycles, PMS, and other menstrual-related concerns.",
+      "tcmApproach": "Menstrual concerns frequently point to Liver Qi stagnation, Blood deficiency, or Cold in the uterus. We address these patterns by regulating cycles, nourishing Blood, moving Qi, and clearing pathogenic factors.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Dietary recommendations",
+        "Lifestyle modifications",
+        "Stress management"
+      ]
+    },
+    {
+      "id": "menopause",
+      "icon": "Heart",
+      "title": "Menopause Symptoms",
+      "category": "womens-health",
+      "symptoms": [
+        "Hot flashes",
+        "Night sweats",
+        "Mood swings",
+        "Sleep problems",
+        "Vaginal dryness",
+        "Low libido",
+        "Weight gain"
+      ],
+      "description": "Gentle, natural support for hot flashes, night sweats, mood shifts, and the range of symptoms that can accompany menopause.",
+      "tcmApproach": "TCM views menopause as a time of declining Kidney Yin and Yang. We nourish Kidney Yin, work to harmonize Yin and Yang, and calm the Shen to help ease this transition and reduce associated symptoms.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Dietary therapy",
+        "Lifestyle counseling",
+        "Stress reduction"
+      ]
+    },
+    {
+      "id": "pcos",
+      "icon": "Heart",
+      "title": "PCOS (Polycystic Ovary Syndrome)",
+      "category": "womens-health",
+      "symptoms": [
+        "Irregular periods or absence of menstruation",
+        "Weight gain",
+        "Acne",
+        "Excess hair growth",
+        "Difficulty conceiving",
+        "Insulin resistance"
+      ],
+      "description": "A whole-person approach to managing PCOS symptoms, supporting hormonal balance, and restoring regular cycles.",
+      "tcmApproach": "PCOS typically reflects a combination of Kidney deficiency, Phlegm-Damp accumulation, and Liver Qi stagnation. Treatment targets these patterns by resolving phlegm, regulating Qi, and nourishing Kidney function.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Weight management",
+        "Dietary modifications",
+        "Lifestyle changes"
+      ]
+    },
+    {
+      "id": "allergies",
+      "icon": "Wind",
+      "title": "Allergies & Hay Fever",
+      "category": "respiratory",
+      "symptoms": [
+        "Sneezing",
+        "Runny or stuffy nose",
+        "Itchy eyes",
+        "Post-nasal drip",
+        "Sinus pressure",
+        "Fatigue"
+      ],
+      "description": "Natural, supportive care for seasonal allergies, hay fever, and sensitivities to environmental triggers.",
+      "tcmApproach": "In TCM, allergies are connected to weakness in Wei Qi (defensive Qi) alongside internal imbalances. We work to strengthen Wei Qi, clear pathogenic factors, and help reduce the body's inflammatory responses.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Dietary recommendations",
+        "Immune support",
+        "Preventive treatment"
+      ]
+    },
+    {
+      "id": "asthma",
+      "icon": "Wind",
+      "title": "Asthma",
+      "category": "respiratory",
+      "symptoms": [
+        "Wheezing",
+        "Shortness of breath",
+        "Chest tightness",
+        "Coughing",
+        "Difficulty breathing",
+        "Symptoms triggered by physical activity"
+      ],
+      "description": "Complementary care to support asthma management, with a focus on reducing how often and how severely episodes occur.",
+      "tcmApproach": "From a TCM perspective, asthma is rooted in Lung and Kidney deficiency accompanied by phlegm accumulation. Our care focuses on supporting Lung and Kidney function, clearing phlegm, and calming airway reactivity.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal formulas",
+        "Breathing exercises",
+        "Dietary therapy",
+        "Lifestyle modifications"
+      ]
+    },
+    {
+      "id": "chronic-cough",
+      "icon": "Wind",
+      "title": "Chronic Cough",
+      "category": "respiratory",
+      "symptoms": [
+        "Persistent dry cough",
+        "Cough with phlegm",
+        "Throat irritation",
+        "Worse at night",
+        "Worse with talking",
+        "Post-viral cough"
+      ],
+      "description": "Care for a persistent cough that has not improved with standard treatments.",
+      "tcmApproach": "A lingering cough can stem from several TCM patterns — among them Lung Yin deficiency, Lung Heat, or an accumulation of phlegm. By identifying which pattern applies to you, we tailor treatment to address the underlying imbalance directly.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal medicine",
+        "Dietary modifications",
+        "Remedies to soothe the throat",
+        "Lifestyle adjustments"
+      ]
+    },
+    {
+      "id": "frequent-colds",
+      "icon": "Shield",
+      "title": "Frequent Colds & Flu",
+      "category": "immune-system",
+      "symptoms": [
+        "Catching colds easily",
+        "Slow recovery",
+        "Recurrent infections",
+        "Low energy",
+        "Weak immune response",
+        "Frequent sore throats"
+      ],
+      "description": "Support your immune system to help lower how often you get sick and reduce the severity of colds and respiratory infections.",
+      "tcmApproach": "Getting sick often points to Wei Qi deficiency in TCM. We work to strengthen Wei Qi, support Lung and Spleen function, and build lasting immune resilience so your body is better prepared throughout the year.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Immune-boosting herbs",
+        "Moxibustion",
+        "Dietary therapy",
+        "Personalized lifestyle guidance"
+      ]
+    },
+    {
+      "id": "fatigue",
+      "icon": "Shield",
+      "title": "Chronic Fatigue",
+      "category": "immune-system",
+      "symptoms": [
+        "Persistent exhaustion",
+        "Low energy",
+        "Mental fog",
+        "Poor stamina",
+        "Unrefreshing sleep",
+        "Struggling to get through everyday tasks"
+      ],
+      "description": "When persistent tiredness and low energy are affecting your daily life, we focus on supporting your body's natural vitality and helping you regain a sense of well-being.",
+      "tcmApproach": "In TCM, chronic fatigue is most often linked to Qi deficiency affecting the Spleen, Kidneys, or both — and may also involve Blood deficiency. Our approach targets these underlying deficiencies to help restore energy and overall vitality.",
+      "treatmentMethods": [
+        "Acupuncture",
+        "Herbal tonics",
+        "Moxibustion",
+        "Dietary therapy",
+        "Balancing rest with appropriate activity"
+      ]
+    }
+  ],
+  "introduction": {
+    "note": "Not finding your condition here? Reach out to us — there's a good chance we can still support you.",
+    "text": "At Dr. Maya Chen Clinic, our focus goes beyond managing symptoms — we care for you as a whole person. By addressing the root causes of illness alongside immediate discomfort, our approach is both thorough and compassionate. Here are some of the conditions we regularly support.",
+    "variant": "centered"
+  },
+  "layoutVariant": "category-detail-alternating"
+}

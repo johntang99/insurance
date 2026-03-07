@@ -1,0 +1,164 @@
+{
+  "cta": {
+    "title": "Ready to Start Your Healing Journey?",
+    "variant": "centered",
+    "primaryCta": {
+      "link": "/en/contact",
+      "text": "Book Your Consultation"
+    },
+    "description": "Schedule your initial consultation to discuss your health goals and discover how acupuncture can help you feel your best.",
+    "secondaryCta": {
+      "link": "tel:+19172291229",
+      "text": "Call Us Today"
+    }
+  },
+  "hero": {
+    "title": "Meet Dr. Maya Chen",
+    "variant": "split-photo-right",
+    "subtitle": "Dedicated to Your Health & Wellness Through Traditional Chinese Medicine (TCM)",
+    "description": "Committed to healing through time-tested wisdom and personalized care.",
+    "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/1771604339255-dr-jiang-acu-flushing-2.png"
+  },
+  "clinic": {
+    "title": "About Our Clinic",
+    "values": [
+      {
+        "icon": "Heart",
+        "title": "Compassionate Care",
+        "description": "We treat every patient with respect, empathy, and genuine concern for their wellbeing."
+      },
+      {
+        "icon": "Award",
+        "title": "Clinical Excellence",
+        "description": "We maintain the highest standards of practice, using premium herbs and sterile techniques."
+      },
+      {
+        "icon": "Users",
+        "title": "Patient-Centered",
+        "description": "Your needs, concerns, and goals are at the center of everything we do."
+      },
+      {
+        "icon": "Leaf",
+        "title": "Natural Healing",
+        "description": "We believe in supporting the body's natural ability to heal itself."
+      }
+    ],
+    "variant": "split",
+    "features": [
+      "Wheelchair accessible",
+      "Convenient parking",
+      "Multilingual services (English, Mandarin)",
+      "Accepting new patients",
+      "Clean, modern treatment rooms",
+      "Peaceful, calming atmosphere"
+    ],
+    "description": [
+      "Dr. Maya Chen Clinic was founded in New York with a simple mission: to provide accessible, high-quality Traditional Chinese Medicine care to the New York community.",
+      "What started as a small practice has grown into a trusted wellness center, helping over 1,000 patients achieve better health naturally."
+    ],
+    "environment": "Our clinic provides a peaceful, welcoming environment designed to promote relaxation and healing. From the moment you enter, you'll feel the difference - calming colors, comfortable treatment rooms, and a warm, friendly atmosphere that puts patients at ease."
+  },
+  "journey": {
+    "story": "Pacific Meridian Care opened its doors in 2017 with a simple vision: to bring authentic Traditional Chinese Medicine to the heart of New York City. Dr. Maya Chen recognized the growing need for holistic healthcare options that address not just symptoms, but the root causes of imbalance in our fast-paced urban lives.\n\nOur clinic has become a sanctuary where ancient healing wisdom meets modern understanding. We've built deep connections within the diverse New York community, serving families who seek natural alternatives and complementary care. Whether treating chronic pain, managing stress, or supporting overall wellness, we honor the time-tested principles of TCM while embracing evidence-informed practices.\n\nSeven years later, Pacific Meridian Care continues to grow as a trusted partner in health and healing. Our commitment remains unchanged: to restore balance, strengthen qi, and support each person's natural capacity for wellness through personalized, compassionate care.",
+    "title": "My Journey to Chinese Medicine",
+    "variant": "prose"
+  },
+  "profile": {
+    "bio": "Dr. Maya Chen, DACM, brings over 12 years of dedicated practice in Traditional Chinese Medicine to New York's wellness community. As an NCCAOM Diplomate, she combines rigorous Western medical training with deep knowledge of ancient healing traditions. Her journey into TCM began with her own transformative experience with acupuncture, leading her to pursue comprehensive doctoral studies in acupuncture and Chinese medicine.\n\nDr. Chen specializes in pain management and stress care, areas where she has witnessed profound healing through the integration of acupuncture, herbal medicine, and bodywork modalities. Her approach is both evidence-informed and deeply rooted in classical TCM principles, recognizing that true healing occurs when we address imbalances in the body's energy systems. She is particularly skilled in treating complex chronic conditions that benefit from TCM's holistic perspective.\n\nFluent in both English and Mandarin, Dr. Chen serves as a bridge between cultures, making traditional healing accessible to New York's diverse population. Her practice philosophy centers on listening deeply to each patient's unique constitution and life circumstances, then crafting individualized treatment plans that honor both ancient wisdom and modern lifestyle needs. She believes in empowering patients to become active participants in their healing journey.",
+    "name": "Dr. Maya Chen, L.Ac., DACM",
+    "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/acupuncture-11.jpeg",
+    "quote": "True healing happens when we restore the natural flow of qi and support the body's innate wisdom to find balance.",
+    "title": "Licensed Acupuncturist",
+    "variant": "split",
+    "signature": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/about/signature.png"
+  },
+  "philosophy": {
+    "title": "Treatment Philosophy",
+    "variant": "cards",
+    "principles": [
+      {
+        "title": "Treat the Whole Person",
+        "description": "TCM recognizes that physical symptoms are often connected to emotional, mental, and spiritual factors. Dr. Maya Chen addresses all aspects of health, not just isolated symptoms."
+      },
+      {
+        "title": "Find the Root Cause",
+        "description": "Rather than merely suppressing symptoms, treatment focuses on identifying and addressing the underlying imbalances that create disease. This approach leads to lasting results."
+      },
+      {
+        "title": "Personalized Care",
+        "description": "No two patients are alike. Each treatment plan is carefully customized based on your unique constitution, health history, and current condition."
+      },
+      {
+        "title": "Patient Education",
+        "description": "Understanding your body and condition empowers you to take an active role in your healing. Dr. Maya Chen takes time to explain your diagnosis and treatment in clear, accessible terms."
+      },
+      {
+        "title": "Integration with Western Medicine",
+        "description": "TCM can work beautifully alongside conventional medical care. Dr. Maya Chen collaborates with other healthcare providers to ensure comprehensive, coordinated treatment."
+      },
+      {
+        "title": "Prevention & Wellness",
+        "description": "The best medicine prevents illness before it occurs. Treatment includes guidance on diet, lifestyle, and self-care practices to maintain long-term health."
+      }
+    ],
+    "introduction": "Dr. Maya Chen's approach to healing is rooted in the fundamental principles of Traditional Chinese Medicine while incorporating modern clinical understanding."
+  },
+  "credentials": {
+    "items": [
+      {
+        "icon": "Award",
+        "year": "",
+        "location": "",
+        "institution": ""
+      },
+      {
+        "icon": "Award",
+        "year": "",
+        "location": "",
+        "institution": ""
+      }
+    ],
+    "title": "Education & Credentials",
+    "variant": "list"
+  },
+  "affiliations": {
+    "title": "Professional Memberships & Affiliations",
+    "variant": "compact",
+    "organizations": [
+      {
+        "name": "NCCAOM",
+        "role": "Member"
+      }
+    ]
+  },
+  "specializations": {
+    "areas": [
+      {
+        "icon": "Activity",
+        "title": "Pain management",
+        "description": ""
+      },
+      {
+        "icon": "Activity",
+        "title": "Stress care",
+        "description": ""
+      }
+    ],
+    "title": "Areas of Specialization",
+    "variant": "grid-2",
+    "description": "Through years of clinical practice and continuing education, Dr. Maya Chen has developed particular expertise in several key areas:"
+  },
+  "continuingEducation": {
+    "items": [
+      "Advanced Sports Medicine Acupuncture certification (2019)",
+      "Fertility and Reproductive Health specialization (2016)",
+      "Classical Chinese Herbal Medicine seminars with Dr. Heiner Fruehauf",
+      "Annual attendance at national TCM conferences",
+      "Regular study groups with local TCM practitioners",
+      "30+ hours of continuing education annually (required: 30 hours every 3 years)"
+    ],
+    "title": "Continuing Education & Training",
+    "variant": "compact",
+    "description": "Dr. Maya Chen maintains active involvement in the TCM community and regularly pursues advanced training:"
+  }
+}

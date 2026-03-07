@@ -5,6 +5,28 @@ import { ServicesVariant, getSectionClasses } from '@/lib/section-variants';
 import { Service } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
+function normalizeServiceMarkdown(text: string): string {
+  const headings = [
+    'Scope of Application',
+    'Precautions',
+    'Core Benefits',
+    'Key Benefits',
+    'What to Expect',
+    '適用範圍',
+    '注意事項',
+    '核心亮點',
+    '服務說明',
+  ];
+
+  let normalized = String(text || '').replace(/\r\n/g, '\n').trim();
+  for (const heading of headings) {
+    const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const markdownHeadingPattern = new RegExp(`\\*\\*${escaped}\\*\\*\\s*`, 'g');
+    normalized = normalized.replace(markdownHeadingPattern, `\n\n**${heading}**\n`);
+  }
+  return normalized.replace(/\n{3,}/g, '\n\n').trim();
+}
+
 function MarkdownText({ text, className }: { text: string; className?: string }) {
   return (
     <div className={cn('prose prose-sm max-w-none text-gray-700', className)}>
@@ -15,7 +37,7 @@ function MarkdownText({ text, className }: { text: string; className?: string })
           p: (props) => <p className="mb-2 last:mb-0" {...props} />,
         }}
       >
-        {text}
+        {normalizeServiceMarkdown(text)}
       </ReactMarkdown>
     </div>
   );

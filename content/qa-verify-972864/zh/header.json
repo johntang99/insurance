@@ -1,0 +1,64 @@
+{
+  "cta": {
+    "link": "/zh/contact",
+    "text": "在线预约"
+  },
+  "menu": {
+    "logo": {
+      "text": "Pacific Meridian Care",
+      "emoji": "",
+      "image": {
+        "alt": "Dr. Maya Chen诊所",
+        "src": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/1771994833240-logo-acu-flushing-4.svg"
+      },
+      "subtext": "Balanced care for modern life"
+    },
+    "items": [
+      {
+        "url": "/zh",
+        "text": "首页"
+      },
+      {
+        "url": "/zh/services",
+        "text": "服务项目"
+      },
+      {
+        "url": "/zh/conditions",
+        "text": "治疗病症"
+      },
+      {
+        "url": "/zh/about",
+        "text": "关于我们"
+      },
+      {
+        "url": "/zh/case-studies",
+        "text": "案例分享"
+      },
+      {
+        "url": "/zh/pricing",
+        "text": "收费"
+      },
+      {
+        "url": "/zh/blog",
+        "text": "博客"
+      },
+      {
+        "url": "/zh/contact",
+        "text": "联系我们"
+      }
+    ],
+    "variant": "transparent"
+  },
+  "topbar": {
+    "badge": "Accepting New Patients",
+    "hours": "周一至周五 9:00-18:00",
+    "phone": "(917) 229-1229",
+    "address": "220 W 30th Street, New York, NY 10001",
+    "phoneHref": "tel:+19172291229",
+    "addressHref": "https://maps.google.com/?q=220+W+30th+Street+New+York+NY+10001"
+  },
+  "languages": [
+    "en",
+    "zh"
+  ]
+}

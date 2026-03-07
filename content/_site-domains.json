@@ -35,6 +35,42 @@
       "domain": "o5b-qa-26903295.local",
       "environment": "dev",
       "enabled": true
+    },
+    {
+      "siteId": "qa-verify-619911",
+      "domain": "qa-verify-619911.example.com",
+      "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "qa-verify-619911",
+      "domain": "qa-verify-619911.local",
+      "environment": "dev",
+      "enabled": true
+    },
+    {
+      "siteId": "qa-verify-972864",
+      "domain": "qa-verify-972864.example.com",
+      "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "qa-verify-972864",
+      "domain": "qa-verify-972864.local",
+      "environment": "dev",
+      "enabled": true
+    },
+    {
+      "siteId": "qa-verify-329728",
+      "domain": "qa-verify-329728.example.com",
+      "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "qa-verify-329728",
+      "domain": "qa-verify-329728.local",
+      "environment": "dev",
+      "enabled": true
     }
   ]
 }

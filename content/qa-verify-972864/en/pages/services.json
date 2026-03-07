@@ -1,0 +1,188 @@
+{
+  "cta": {
+    "title": "Curious About What Natural Therapies Can Do for You?",
+    "variant": "centered",
+    "subtitle": "Schedule a consultation and we'll talk through which treatments align with your health goals. Together, we'll create a care plan shaped around your individual needs.",
+    "primaryCta": {
+      "link": "/en/contact",
+      "text": "Schedule Your Consultation"
+    },
+    "secondaryCta": {
+      "link": "tel:7188889512",
+      "text": "Call: 1-718-888-9512"
+    }
+  },
+  "faq": {
+    "faqs": [
+      {
+        "answer": "Acupuncture is generally well tolerated, with most people reporting little or no discomfort. Because the needles are hair-thin — far finer than the needles used for injections — insertion usually feels like a brief, mild sensation, if you notice anything at all. After the needles are placed, patients commonly settle into a state of deep relaxation, and it's not unusual to drift off to sleep during the session.",
+        "question": "Does acupuncture hurt?"
+      },
+      {
+        "answer": "Treatment frequency depends on several factors, including your condition, how long you've been experiencing it, and how your body responds to care. Acute conditions often show improvement within 3–6 sessions, whereas chronic concerns typically call for 10–15 treatments or more. We'll put together a personalized treatment plan from the start and continue to refine it as we track your progress.",
+        "question": "How many sessions will I need?"
+      },
+      {
+        "answer": "When delivered by a qualified, licensed practitioner, Chinese medicine is considered safe. We use sterile, single-use needles and adhere to rigorous safety protocols throughout every treatment. Our Chinese herbal formulas are drawn from a tradition refined over thousands of years, and we source only high-quality, tested herbs from reputable suppliers. Adverse effects are uncommon and, when they do occur, tend to be minor.",
+        "question": "How safe is Chinese medicine?"
+      },
+      {
+        "answer": "Yes — TCM and Western medical treatments can work very well together. Many patients turn to acupuncture to help manage side effects from medications or procedures, support their recovery, or address concerns that conventional approaches haven't fully resolved. We encourage you to keep all of your healthcare providers informed so your care remains well coordinated.",
+        "question": "Can I use TCM alongside my Western medical treatment?"
+      },
+      {
+        "answer": "Loose, comfortable clothing works best — ideally pieces that roll up easily so we can access your arms, legs, and back without difficulty. Gowns are available if you need them. We also ask that you skip perfume or heavily scented products on treatment days, as some patients may be sensitive to fragrances.",
+        "question": "What should I wear to my treatment?"
+      },
+      {
+        "answer": "We accept most major insurance plans that provide acupuncture coverage. If your plan allows for reimbursement, we can issue a superbill — a detailed receipt you can submit directly to your insurer. Reach out to us to confirm your specific benefits. For those paying out of pocket, we offer competitive self-pay rates as well as package pricing options.",
+        "question": "Do you work with insurance?"
+      },
+      {
+        "answer": "Have a light meal 1–2 hours before your visit — arriving on an empty stomach isn't recommended. On treatment days, try to limit alcohol and excess caffeine. Bring along a list of any medications or supplements you're currently taking, and choose comfortable clothing. It also helps to come ready to share a thorough overview of your health history.",
+        "question": "How do I prepare for my first appointment?"
+      },
+      {
+        "answer": "Needle anxiety is very common, and many patients who share that concern find acupuncture far more comfortable than they expected. The needles are extremely fine, and insertion is usually painless. We'll walk you through each step, move at a pace you're comfortable with, and can begin with fewer needles if that feels better for you. We also offer needle-free options — including herbal medicine, cupping, and Tui Na massage — for those who prefer to avoid needles entirely.",
+        "question": "What if needles make me nervous?"
+      }
+    ],
+    "title": "Your Questions, Answered",
+    "variant": "accordion",
+    "subtitle": "Helpful answers about our services, safety practices, and what you can expect from care"
+  },
+  "hero": {
+    "title": "Traditional Chinese Medicine (TCM) Modalities",
+    "variant": "split-photo-right",
+    "subtitle": "A full range of therapeutic treatments, thoughtfully adapted to your individual health needs",
+    "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/acupuncture-flushing/general/1771563757248-photo-1586768835949-e593c97c8967.jpg"
+  },
+  "overview": {
+    "title": "What Our Care Model Offers",
+    "variant": "centered",
+    "benefits": [
+      "Pain management without medication",
+      "Support for stress and anxiety through natural approaches",
+      "Support for healthy immune function",
+      "Greater energy and a renewed sense of vitality",
+      "Support for hormonal balance",
+      "Better sleep quality",
+      "Digestive health and gut wellness support",
+      "Support for injury rehabilitation and recovery"
+    ],
+    "introduction": "Dr. Maya Chen Clinic provides a full spectrum of Traditional Chinese Medicine treatments, each one thoughtfully chosen and tailored to your specific health concerns and wellness goals. Our approach brings together time-honored practice and contemporary understanding, offering natural, whole-person care that addresses the root of your concerns — not just the symptoms."
+  },
+  "trustBar": {
+    "items": [
+      {
+        "icon": "Award",
+        "title": "Qualified & Licensed Practitioners",
+        "description": "Care grounded in evidence-informed practice"
+      },
+      {
+        "icon": "Users",
+        "title": "Individualized Treatment Plans",
+        "description": "Designed around your unique health needs and goals"
+      },
+      {
+        "icon": "Shield",
+        "title": "Safe & Professional Care",
+        "description": "Rigorous hygiene and professional treatment standards throughout"
+      }
+    ]
+  },
+  "legacyLabels": {
+    "servicePrefix": "Service",
+    "keyBenefitsTitle": "Core Benefits",
+    "whatToExpectTitle": "What You Can Expect"
+  },
+  "servicesList": {
+    "badge": "OUR SERVICES",
+    "items": [
+      {
+        "id": "acupuncture",
+        "title": "Acupuncture",
+        "benefits": [
+          "supports pain management without pharmaceutical intervention",
+          "Can ease feelings of stress and physical tension",
+          "May contribute to better sleep quality",
+          "may help promote healthy circulation and the body's recovery process"
+        ],
+        "whatToExpect": "When you visit Acupuncture New York, your care includes a structured plan with thoughtful treatment pacing and clear follow-up guidance. Each appointment begins with an intake conversation, followed by point selection and a restful phase during which the needles remain in place. The majority of patients experience little to no discomfort and often feel deeply relaxed throughout the session.",
+        "fullDescription": "At Acupuncture New York, acupuncture is delivered through a caring, family-centered, and well-organized framework.\n\nBy stimulating targeted points on the body, acupuncture works to help regulate circulation, settle the nervous system, and encourage the body's own healing processes.\n\nEvery treatment plan is built around your individual symptoms, health background, and how your body responds over the course of care.",
+        "shortDescription": "A foundational Traditional Chinese Medicine practice that uses fine, sterile needles to help address pain, support stress regulation, and encourage whole-body balance. Each treatment is personalized to meet both immediate symptom needs and longer-term wellness goals."
+      },
+      {
+        "id": "chinese-herbal-medicine",
+        "title": "Chinese Herbal Medicine",
+        "benefits": [
+          "Individually tailored formulation approach",
+          "may help address chronic and functional health concerns",
+          "Works well alongside acupuncture treatment",
+          "Grounded in pattern-based clinical assessment"
+        ],
+        "whatToExpect": "At Acupuncture New York, every patient receives a thoughtful care plan, structured treatment pacing, and ongoing follow-up guidance. Following your initial assessment, you will be given a formula designed specifically for your presentation along with straightforward dosing instructions. Return visits allow your practitioner to track your progress and refine the prescription as your condition evolves.",
+        "fullDescription": "At Acupuncture New York, Chinese Herbal Medicine is provided within a warm, family-centered, and carefully structured care environment.\n\nFormulas in Chinese herbal medicine bring together multiple botanicals in balanced combinations.\n\nAs your condition shifts, prescriptions are refined with close attention to how your symptoms, digestion, sleep, and energy levels are responding.",
+        "shortDescription": "Herbal formulas crafted to reflect your individual presentation, constitution, and treatment objectives. Care is shaped around both relieving current symptoms and supporting lasting balance over time."
+      },
+      {
+        "id": "cupping-therapy",
+        "title": "Cupping Therapy",
+        "benefits": [
+          "Can help release tightness in the muscles",
+          "may help encourage circulation in targeted areas",
+          "May help ease stiffness following physical strain",
+          "Can offer support for respiratory comfort"
+        ],
+        "whatToExpect": "At Acupuncture New York, your visit is guided by a clear care plan, a well-paced treatment schedule, and thorough follow-up support. During the session, you may notice a firm pulling or pressure sensation. Circular marks on the skin are a common, temporary response and typically fade within a few days.",
+        "fullDescription": "At Acupuncture New York, Cupping Therapy is delivered with a warm, family-centered, and organized approach to care.\n\nUsing negative pressure, cupping mobilizes soft tissue and encourages improved blood flow to the treated area.\n\nDepending on your condition and comfort level, your practitioner may use static or gliding cup techniques.",
+        "shortDescription": "A suction-based technique designed to ease muscle tightness, encourage circulation, and address discomfort linked to stagnation. Each session is adapted to support both immediate relief and ongoing physical balance."
+      },
+      {
+        "id": "moxibustion",
+        "title": "Moxibustion",
+        "benefits": [
+          "Delivers targeted therapeutic warmth",
+          "May help ease cold-type discomfort",
+          "may help encourage circulation and overall vitality",
+          "Pairs well with existing acupuncture protocols"
+        ],
+        "whatToExpect": "At Acupuncture New York, your treatment includes a structured care plan, thoughtful pacing, and clear follow-up guidance. Throughout the session, you will feel a gentle, steady warmth while your practitioner monitors closely to ensure your comfort and safety.",
+        "fullDescription": "At Acupuncture New York, Moxibustion is offered within a warm, family-centered, and well-structured care setting.\n\nThrough the application of therapeutic heat to specific points, moxibustion works to warm the channels and support the movement of qi.\n\nIt is frequently used for patients experiencing cold sensitivity, fatigue, or certain ongoing patterns of imbalance.",
+        "shortDescription": "A heat-based therapy that applies mugwort warmth to specific points in order to support circulation, energy, and cold-pattern conditions. Treatment is personalized to address both present symptoms and longer-term wellbeing."
+      },
+      {
+        "id": "tuina-massage",
+        "title": "Tui Na Medical Massage",
+        "benefits": [
+          "may help improve mobility in joints and soft tissue",
+          "Can help relieve tension in the neck, shoulders, and back",
+          "May support the body's recovery from overuse injuries",
+          "Combines naturally with acupuncture as part of a broader care plan"
+        ],
+        "whatToExpect": "At Acupuncture New York, every patient receives a clear treatment plan, a well-paced schedule, and attentive follow-up support. The level of pressure applied during sessions can be adapted from light to firm, with each visit shaped around your individual tolerance and clinical objectives.",
+        "fullDescription": "At Acupuncture New York, Tui Na Medical Massage is provided through a warm, family-centered, and carefully structured approach to care.\n\nDrawing on precise hand techniques applied along channels and affected regions, Tui Na works to ease tension, improve the quality of movement, and support rehabilitation outcomes for each patient.",
+        "shortDescription": "A hands-on Chinese medicine bodywork modality that blends acupressure and mobilization techniques to address pain and support physical function. Sessions are tailored to meet both immediate relief needs and longer-term recovery goals."
+      }
+    ],
+    "title": "Traditional Chinese Medicine Approaches & Therapies",
+    "variant": "detail-alternating",
+    "subtitle": "A full range of therapeutic options, thoughtfully personalized to meet your individual health needs"
+  },
+  "relatedReading": {
+    "title": "Further Reading & Resources",
+    "subtitle": "Discover helpful guides and articles connected to the services we offer.",
+    "viewAllText": "See all resources",
+    "preferredSlugs": [
+      "acupuncture-pain-relief-science",
+      "chinese-herbal-formulas",
+      "first-visit-acupuncture-guide"
+    ],
+    "defaultCategory": "Guide"
+  },
+  "heroPlaceholder": {
+    "emoji": "🧘",
+    "title": "Expert Care & Clinical Services",
+    "subtitle": "Care plans designed around your personal health goals"
+  }
+}

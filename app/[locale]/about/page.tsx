@@ -318,6 +318,14 @@ export default async function AboutPage({ params }: AboutPageProps) {
     boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
   };
   const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
+  const bioParagraphs =
+    typeof profile.bio === 'string'
+      ? profile.bio
+          .split(/\n\s*\n/g)
+          .map((paragraph) => paragraph.trim())
+          .filter(Boolean)
+      : [];
+  const resolvedBioParagraphs = bioParagraphs.length > 0 ? bioParagraphs : [String(profile.bio || '').trim()].filter(Boolean);
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -443,9 +451,13 @@ export default async function AboutPage({ params }: AboutPageProps) {
               {/* Bio Content */}
               <div className={profileVariant === 'stacked' ? 'max-w-3xl mx-auto space-y-8 text-center' : 'lg:col-span-3 space-y-8'}>
                 <div>
-                  <p className="text-body text-gray-700 leading-relaxed mb-6">
-                    {profile.bio}
-                  </p>
+                  <div className="space-y-4 mb-6">
+                    {resolvedBioParagraphs.map((paragraph, index) => (
+                      <p key={`bio-${index}`} className="text-body text-gray-700 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                   
                   {/* Quote */}
                   <div
