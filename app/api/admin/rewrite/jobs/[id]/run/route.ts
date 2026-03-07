@@ -251,8 +251,12 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
 
     const inserted = await replaceRewriteItems(generatedRows);
-    const riskyItems = generatedRows.filter(
-      (item) => !item.validationPassed || item.riskFlags.length > 0
+    const hardBlockFlags = new Set(['forbidden_terms_present', 'empty_rewrite']);
+    const riskyItems = generatedRows.filter((item) =>
+      item.riskFlags.some((flag) => hardBlockFlags.has(flag))
+    ).length;
+    const warningItems = generatedRows.filter(
+      (item) => item.riskFlags.length > 0 && !item.riskFlags.some((flag) => hardBlockFlags.has(flag))
     ).length;
     const avgChangeRatio =
       generatedRows.length === 0
@@ -285,6 +289,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         missingTargets,
         generatedItems: inserted,
         riskyItems,
+        warningItems,
         avgChangeRatio,
       },
     });
@@ -299,6 +304,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         provider: job.provider,
         model: job.model,
         riskyItems,
+        warningItems,
         avgChangeRatio,
       },
     });
@@ -311,6 +317,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       missingTargets,
       generatedItems: inserted,
       riskyItems,
+      warningItems,
       avgChangeRatio,
     });
   } catch (error: any) {

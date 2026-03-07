@@ -14,14 +14,6 @@ import {
   writeRewriteAuditLog,
 } from '@/lib/admin/rewriteDb';
 
-const CRITICAL_RISK_FLAGS = new Set([
-  'forbidden_terms_present',
-  'missing_required_terms',
-  'rewrite_too_similar',
-  'empty_rewrite',
-  'length_delta_too_high',
-]);
-
 type PathToken = string | number;
 
 function tokenizeFieldPath(fieldPath: string): PathToken[] {
@@ -162,17 +154,14 @@ export async function POST(
     (item) =>
       item.approved === true &&
       item.applied !== true &&
-      item.validation_passed === true &&
       typeof item.rewritten_text === 'string' &&
-      item.rewritten_text.trim().length > 0 &&
-      !(Array.isArray(item.risk_flags) && item.risk_flags.some((flag) => CRITICAL_RISK_FLAGS.has(flag)))
+      item.rewritten_text.trim().length > 0
   );
   const blockedItems = items.filter(
     (item) =>
       item.approved === true &&
       item.applied !== true &&
-      (!item.validation_passed ||
-        (Array.isArray(item.risk_flags) && item.risk_flags.some((flag) => CRITICAL_RISK_FLAGS.has(flag))))
+      (typeof item.rewritten_text !== 'string' || item.rewritten_text.trim().length === 0)
   );
 
   if (approvedItems.length === 0) {

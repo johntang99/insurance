@@ -52,6 +52,8 @@ const MODE_HELP: Record<RewriteMode, string> = {
   aggressive: 'Largest variation while preserving intent and safety rules.',
 };
 
+const CRITICAL_RISK_FLAGS = new Set(['forbidden_terms_present', 'empty_rewrite']);
+
 export function RewriteStudio({ sites }: RewriteStudioProps) {
   const [scope, setScope] = useState<RewriteScope>('services');
   const [mode, setMode] = useState<RewriteMode>('balanced');
@@ -239,10 +241,9 @@ export function RewriteStudio({ sites }: RewriteStudioProps) {
     const safeItems = jobItems.filter(
       (item) =>
         item.approved !== true &&
-        item.validation_passed &&
-        !item.risk_flags.includes('forbidden_terms_present') &&
-        !item.risk_flags.includes('missing_required_terms') &&
-        !item.risk_flags.includes('rewrite_too_similar')
+        typeof item.rewritten_text === 'string' &&
+        item.rewritten_text.trim().length > 0 &&
+        !item.risk_flags.some((flag) => CRITICAL_RISK_FLAGS.has(flag))
     );
     for (const item of safeItems) {
       await setItemDecision(selectedJobId, item.id, true);
@@ -306,11 +307,16 @@ export function RewriteStudio({ sites }: RewriteStudioProps) {
     }
   };
 
+  const isCriticalRisk = (item: RewriteItem) =>
+    item.risk_flags.some((flag) => CRITICAL_RISK_FLAGS.has(flag));
+  const isWarningRisk = (item: RewriteItem) => item.risk_flags.length > 0 && !isCriticalRisk(item);
+
   const selectedJob = jobs.find((job) => job.id === selectedJobId) || null;
   const reviewedCount = jobItems.filter((item) => item.approved !== null).length;
   const approvedCount = jobItems.filter((item) => item.approved === true).length;
   const appliedCount = jobItems.filter((item) => item.applied === true).length;
-  const riskyCount = jobItems.filter((item) => item.risk_flags.length > 0).length;
+  const criticalRiskCount = jobItems.filter((item) => isCriticalRisk(item)).length;
+  const warningRiskCount = jobItems.filter((item) => isWarningRisk(item)).length;
 
   return (
     <div className="space-y-6">
@@ -538,7 +544,8 @@ export function RewriteStudio({ sites }: RewriteStudioProps) {
                 <span>Reviewed: {reviewedCount}</span>
                 <span>Approved: {approvedCount}</span>
                 <span>Applied: {appliedCount}</span>
-                <span>Risky: {riskyCount}</span>
+                <span>Critical risk: {criticalRiskCount}</span>
+                <span>Warning risk: {warningRiskCount}</span>
               </div>
             ) : null}
 
@@ -598,20 +605,39 @@ export function RewriteStudio({ sites }: RewriteStudioProps) {
                         </span>
                         <span
                           className={`rounded-full px-2 py-0.5 text-[11px] ${
-                            item.validation_passed ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'
+                            item.validation_passed
+                              ? 'bg-emerald-100 text-emerald-700'
+                              : isCriticalRisk(item)
+                                ? 'bg-rose-100 text-rose-700'
+                                : 'bg-amber-100 text-amber-800'
                           }`}
                         >
-                          {item.validation_passed ? 'valid' : 'needs check'}
+                          {item.validation_passed
+                            ? 'valid'
+                            : isCriticalRisk(item)
+                              ? 'critical review'
+                              : 'review warning'}
                         </span>
                         {item.risk_flags.length > 0 ? (
-                          <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[11px] text-rose-700">
-                            risk: {item.risk_flags.slice(0, 2).join(', ')}
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[11px] ${
+                              isCriticalRisk(item)
+                                ? 'bg-rose-100 text-rose-700'
+                                : 'bg-amber-100 text-amber-800'
+                            }`}
+                          >
+                            {isCriticalRisk(item) ? 'critical' : 'warning'}: {item.risk_flags.slice(0, 2).join(', ')}
                           </span>
                         ) : (
                           <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] text-emerald-700">
                             low risk
                           </span>
                         )}
+                        {item.approved === true && item.applied !== true && item.risk_flags.length > 0 ? (
+                          <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-[11px] text-indigo-700">
+                            approved override
+                          </span>
+                        ) : null}
                         <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[11px] text-blue-700">
                           change: {typeof item.validation?.changeRatio === 'number' ? Math.round(item.validation.changeRatio * 100) : 0}%
                         </span>

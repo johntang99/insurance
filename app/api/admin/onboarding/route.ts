@@ -153,6 +153,38 @@ function phoneToTel(phone: string): string {
   return 'tel:+1' + phone.replace(/[^0-9]/g, '');
 }
 
+function ownerDisplayName(biz: any): string {
+  return biz?.ownerNameWithCredentials || biz?.ownerName || biz?.name || '';
+}
+
+function locationLabel(loc: any): string {
+  if (!loc?.city && !loc?.state) return '';
+  if (loc.city && loc.state) return `${loc.city}, ${loc.state}`;
+  return loc.city || loc.state || '';
+}
+
+function formatBioParagraphs(raw: string | undefined, minParagraphs = 3, maxParagraphs = 4): string | undefined {
+  if (!raw || typeof raw !== 'string') return raw;
+  const existing = raw
+    .split(/\n\s*\n/g)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  if (existing.length >= minParagraphs) {
+    return existing.slice(0, maxParagraphs).join('\n\n');
+  }
+  const normalized = raw.replace(/\s+/g, ' ').trim();
+  const sentences = normalized.match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map((s) => s.trim()).filter(Boolean) || [normalized];
+  if (sentences.length <= 1) return normalized;
+
+  const target = Math.min(maxParagraphs, Math.max(minParagraphs, Math.ceil(sentences.length / 3)));
+  const chunkSize = Math.max(1, Math.ceil(sentences.length / target));
+  const chunks: string[] = [];
+  for (let i = 0; i < sentences.length; i += chunkSize) {
+    chunks.push(sentences.slice(i, i + chunkSize).join(' ').trim());
+  }
+  return chunks.slice(0, maxParagraphs).join('\n\n');
+}
+
 // ── Template interpolation ───────────────────────────────────────────
 
 function interpolateTemplate(template: string, vars: Record<string, string>): string {
@@ -161,6 +193,23 @@ function interpolateTemplate(template: string, vars: Record<string, string>): st
     result = result.replaceAll(`{{${key}}}`, value);
   }
   return result;
+}
+
+async function syncSiteContentToLocal(siteId: string): Promise<number> {
+  const siteEntries = await fetchRows('content_entries', { site_id: siteId });
+  const siteDir = path.join(process.cwd(), 'content', siteId);
+  await fsPromises.rm(siteDir, { recursive: true, force: true });
+  let written = 0;
+  for (const entry of siteEntries) {
+    const locale = String(entry.locale || '').trim();
+    const contentPath = String(entry.path || '').trim();
+    if (!locale || !contentPath) continue;
+    const filePath = path.join(siteDir, locale, contentPath);
+    await fsPromises.mkdir(path.dirname(filePath), { recursive: true });
+    await fsPromises.writeFile(filePath, JSON.stringify(entry.data ?? {}, null, 2) + '\n', 'utf-8');
+    written += 1;
+  }
+  return written;
 }
 
 // ── Supabase REST helpers ────────────────────────────────────────────
@@ -384,11 +433,24 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  if (!intake.clientId || !intake.business?.name) {
+  const normalizedClientId =
+    typeof intake.clientId === 'string' ? intake.clientId.trim().toLowerCase() : '';
+  if (!normalizedClientId || !intake.business?.name) {
     return new Response(JSON.stringify({ message: 'clientId and business.name are required' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
+  }
+  if (!/^[a-z0-9-]+$/.test(normalizedClientId)) {
+    return new Response(
+      JSON.stringify({
+        message: 'clientId must contain only lowercase letters, numbers, and hyphens',
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 
   // Validate Supabase config early
@@ -402,7 +464,7 @@ export async function POST(request: NextRequest) {
   }
 
   const TEMPLATE_ID = intake.templateSiteId || 'dr-huang-clinic';
-  const SITE_ID: string = intake.clientId;
+  const SITE_ID: string = normalizedClientId;
   const LOCALES: string[] = intake.locales?.supported || ['en'];
   const DEFAULT_LOCALE: string = intake.locales?.default || 'en';
   const SKIP_AI: boolean = intake.skipAi === true;
@@ -716,6 +778,7 @@ export async function POST(request: NextRequest) {
         try {
           const biz = intake.business;
           const loc = intake.location;
+          const media = intake.media || {};
 
           // Build replacement pairs — ordered longest-first to avoid partial matches
           // Business name is always required
@@ -729,6 +792,9 @@ export async function POST(request: NextRequest) {
               ['Dr Huang Clinic', biz.name],
               ['Dr. Huang', biz.ownerName],
               ['Dr Huang', biz.ownerName.replace(/\.\s?/g, ' ').trim()],
+              ['Dr. Jiang', biz.ownerName],
+              ['Acupuncturist Jiang, L.Ac., M.S.', ownerWithCreds],
+              ['江医生', biz.ownerName],
             );
           } else {
             replacements.push(
@@ -741,6 +807,8 @@ export async function POST(request: NextRequest) {
             replacements.push(
               ['mailto:sancai.acu@gmail.com', `mailto:${loc.email}`],
               ['sancai.acu@gmail.com', loc.email],
+              ['mailto:acupuncture41ave@gmail.com', `mailto:${loc.email}`],
+              ['acupuncture41ave@gmail.com', loc.email],
             );
           }
 
@@ -751,6 +819,9 @@ export async function POST(request: NextRequest) {
               ['tel:+18453811106', phoneToTel(loc.phone)],
               ['+18453811106', `+1${phoneDigits}`],
               ['(845) 381-1106', loc.phone],
+              ['tel:+17188889512', phoneToTel(loc.phone)],
+              ['+17188889512', `+1${phoneDigits}`],
+              ['(718) 888-9512', loc.phone],
             );
           }
 
@@ -764,6 +835,12 @@ export async function POST(request: NextRequest) {
               ['NY 10940', `${loc.state} ${loc.zip}`],
               ['Middletown', loc.city],
               ['10940', loc.zip],
+              ['143-26 41st Ave, Flushing, NY 11355', `${loc.address}, ${loc.city}, ${loc.state} ${loc.zip}`],
+              ['143-26 41st Ave', loc.address],
+              ['Flushing, NY 11355', `${loc.city}, ${loc.state} ${loc.zip}`],
+              ['Flushing, NY', `${loc.city}, ${loc.state}`],
+              ['Flushing', loc.city],
+              ['11355', loc.zip],
             );
           }
 
@@ -826,6 +903,13 @@ export async function POST(request: NextRequest) {
               if (header.menu?.logo) {
                 header.menu.logo.text = biz.name.replace(/ Clinic$/, '').replace(/ Practice$/, '');
                 if (biz.tagline) header.menu.logo.subtext = biz.tagline;
+                if (media.logoImageUrl) {
+                  header.menu.logo.image = {
+                    ...(header.menu.logo.image || {}),
+                    src: media.logoImageUrl,
+                    alt: biz.name || header.menu.logo.image?.alt || 'Site logo',
+                  };
+                }
               }
               // topbar fields
               if (header.topbar) {
@@ -878,11 +962,21 @@ export async function POST(request: NextRequest) {
               const aboutRows = await fetchRows('content_entries', { site_id: SITE_ID, locale, path: 'pages/about.json' });
               if (aboutRows[0]?.data) {
                 const about = aboutRows[0].data;
+                const isZh = locale.startsWith('zh');
 
                 // Update profile
                 if (about.profile) {
                   about.profile.name = biz.ownerNameWithCredentials || biz.ownerName;
                   if (biz.ownerTitle) about.profile.title = biz.ownerTitle;
+                  if (typeof about.profile.bio === 'string') {
+                    about.profile.bio = formatBioParagraphs(about.profile.bio);
+                  }
+                  if (media.aboutBioImageUrl) {
+                    about.profile.image = media.aboutBioImageUrl;
+                  }
+                }
+                if (about.hero && biz.ownerName) {
+                  about.hero.title = isZh ? `认识${biz.ownerName}` : `Meet ${biz.ownerName}`;
                 }
 
                 // Update credentials if provided
@@ -921,6 +1015,154 @@ export async function POST(request: NextRequest) {
                 }
 
                 await upsert('content_entries', [{ site_id: SITE_ID, locale, path: 'pages/about.json', data: about, updated_by: 'onboard-api' }], 'site_id,locale,path');
+              }
+            }
+
+            // home.json — enforce hero/location/contact/testimonial consistency
+            const homeRows = await fetchRows('content_entries', { site_id: SITE_ID, locale, path: 'pages/home.json' });
+            if (homeRows[0]?.data) {
+              const home = homeRows[0].data;
+              const location = locationLabel(loc);
+              const owner = ownerDisplayName(biz);
+              const isZh = locale.startsWith('zh');
+
+              if (home.hero) {
+                if (media.homeHeroImageUrl) {
+                  if (typeof home.hero.image === 'string') home.hero.image = media.homeHeroImageUrl;
+                  if (typeof home.hero.backgroundImage === 'string') home.hero.backgroundImage = media.homeHeroImageUrl;
+                }
+                if (location) {
+                  home.hero.clinicName =
+                    isZh
+                      ? `${biz.name}${loc?.city ? ` · ${loc.city}` : ''}`
+                      : `${biz.name}${location ? ` in ${location}` : ''}`;
+                  home.hero.title =
+                    isZh
+                      ? `${loc?.city || '本地'}中医与针灸护理`
+                      : `Traditional Chinese Medicine Care in ${location}`;
+                  if (typeof home.hero.description === 'string' && home.hero.description.includes('Flushing')) {
+                    home.hero.description = home.hero.description.replaceAll('Flushing, NY', location).replaceAll('Flushing', loc?.city || 'your area');
+                  }
+                }
+                if (loc.phone && home.hero.secondaryCta) {
+                  home.hero.secondaryCta.link = phoneToTel(loc.phone);
+                }
+              }
+
+              if (home.cta) {
+                if (loc.phone) {
+                  home.cta.contactInfo = isZh
+                    ? `致电${loc.phone}或在线预约`
+                    : `Call us at ${loc.phone} or book online`;
+                  if (home.cta.secondaryCta) {
+                    home.cta.secondaryCta.link = phoneToTel(loc.phone);
+                  }
+                }
+              }
+
+              if (home.testimonials?.testimonials && Array.isArray(home.testimonials.testimonials) && owner) {
+                home.testimonials.testimonials = home.testimonials.testimonials.map((t: any) => {
+                  const next = { ...t };
+                  if (typeof next.quote === 'string') {
+                    next.quote = next.quote
+                      .replaceAll('Dr. Jiang', biz.ownerName || owner)
+                      .replaceAll('Dr. Huang', biz.ownerName || owner)
+                      .replaceAll('黄医生', biz.ownerName || owner)
+                      .replaceAll('江医生', biz.ownerName || owner);
+                  }
+                  return next;
+                });
+              }
+
+              await upsert('content_entries', [{ site_id: SITE_ID, locale, path: 'pages/home.json', data: home, updated_by: 'onboard-api' }], 'site_id,locale,path');
+            }
+
+            // contact.json — enforce contact methods, map, and support copy with intake location data
+            const contactRows = await fetchRows('content_entries', { site_id: SITE_ID, locale, path: 'pages/contact.json' });
+            if (contactRows[0]?.data) {
+              const contact = contactRows[0].data;
+              const isZh = locale.startsWith('zh');
+              const fullAddress = [loc?.address, loc?.city && loc?.state && loc?.zip ? `${loc.city}, ${loc.state} ${loc.zip}` : '']
+                .filter(Boolean)
+                .join(', ');
+
+              if (contact.map) {
+                if (loc?.addressMapUrl) {
+                  contact.map.embedUrl = loc.addressMapUrl;
+                } else if (loc?.address && loc?.city && loc?.state && loc?.zip) {
+                  contact.map.embedUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${loc.address}, ${loc.city}, ${loc.state} ${loc.zip}`)}`;
+                }
+              }
+              if (contact.form && loc?.phone) {
+                const fallback = isZh
+                  ? `抱歉，发送您的消息时出错。请直接致电我们 ${loc.phone}`
+                  : `Sorry, there was an error sending your message. Please call us directly at ${loc.phone}.`;
+                contact.form.errorMessage = fallback;
+              }
+              if (Array.isArray(contact.contactMethods)) {
+                contact.contactMethods = contact.contactMethods.map((method: any) => {
+                  const next = { ...method, action: { ...(method?.action || {}) } };
+                  const icon = String(next.icon || '').toLowerCase();
+                  if (icon === 'phone' && loc?.phone) {
+                    next.primary = loc.phone;
+                    next.action.link = phoneToTel(loc.phone);
+                  }
+                  if (icon === 'mail' && loc?.email) {
+                    next.primary = loc.email;
+                    next.action.link = `mailto:${loc.email}`;
+                  }
+                  if (icon === 'mappin' && loc?.address) {
+                    next.primary = loc.address;
+                    next.secondary = loc?.city && loc?.state && loc?.zip ? `${loc.city}, ${loc.state} ${loc.zip}` : next.secondary;
+                    if (loc?.addressMapUrl) next.action.link = loc.addressMapUrl;
+                  }
+                  return next;
+                });
+              }
+              if (loc?.phone && contact.cta?.secondaryCta) {
+                contact.cta.secondaryCta.link = phoneToTel(loc.phone);
+              }
+              if (fullAddress && typeof contact.introduction?.text === 'string') {
+                contact.introduction.text = contact.introduction.text
+                  .replaceAll('Middletown', loc?.city || 'our location')
+                  .replaceAll('Flushing', loc?.city || 'our location');
+              }
+              await upsert('content_entries', [{ site_id: SITE_ID, locale, path: 'pages/contact.json', data: contact, updated_by: 'onboard-api' }], 'site_id,locale,path');
+            }
+
+            // blog files — unify author to selected doctor name
+            const owner = ownerDisplayName(biz);
+            if (owner) {
+              const blogIndexRows = await fetchRows('content_entries', { site_id: SITE_ID, locale, path: 'pages/blog.json' });
+              if (blogIndexRows[0]?.data) {
+                const blogIndex = blogIndexRows[0].data;
+                if (Array.isArray(blogIndex.posts)) {
+                  blogIndex.posts = blogIndex.posts.map((post: any) => ({ ...post, author: owner }));
+                }
+                if (blogIndex.featuredPost && typeof blogIndex.featuredPost === 'object') {
+                  blogIndex.featuredPost.author = owner;
+                }
+                await upsert('content_entries', [{ site_id: SITE_ID, locale, path: 'pages/blog.json', data: blogIndex, updated_by: 'onboard-api' }], 'site_id,locale,path');
+              }
+              const localeEntries = await fetchRows('content_entries', { site_id: SITE_ID, locale });
+              const blogArticleUpdates = localeEntries
+                .filter((entry) => typeof entry.path === 'string' && entry.path.startsWith('blog/') && entry.path.endsWith('.json'))
+                .map((entry) => {
+                  if (!entry.data || typeof entry.data !== 'object') return null;
+                  const next = { ...entry.data, author: owner };
+                  return {
+                    site_id: SITE_ID,
+                    locale,
+                    path: entry.path,
+                    data: next,
+                    updated_by: 'onboard-api',
+                  };
+                })
+                .filter(Boolean) as any[];
+              if (blogArticleUpdates.length > 0) {
+                for (let i = 0; i < blogArticleUpdates.length; i += 50) {
+                  await upsert('content_entries', blogArticleUpdates.slice(i, i + 50), 'site_id,locale,path');
+                }
               }
             }
             // NOTE: No separate doctor files to create/delete in TCM
@@ -1007,7 +1249,9 @@ export async function POST(request: NextRequest) {
               if (aboutRows[0]?.data) {
                 const about = aboutRows[0].data;
                 if (aiContent.aboutStory && about.journey) about.journey.story = aiContent.aboutStory;
-                if (aiContent.ownerBio && about.profile) about.profile.bio = aiContent.ownerBio;
+                if (aiContent.ownerBio && about.profile) {
+                  about.profile.bio = formatBioParagraphs(aiContent.ownerBio);
+                }
                 if (aiContent.ownerQuote && about.profile) about.profile.quote = aiContent.ownerQuote;
                 await upsert('content_entries', [{ site_id: SITE_ID, locale, path: 'pages/about.json', data: about, updated_by: 'onboard-api' }], 'site_id,locale,path');
               }
@@ -1215,24 +1459,22 @@ export async function POST(request: NextRequest) {
 
             const generatedItems = await replaceRewriteItems(generatedRows);
             const generatedDbItems = await listRewriteItems({ jobId: rewriteJob.id, limit: 5000 });
-            const criticalFlags =
-              rewriteStrictness === 'strict-medical'
-                ? new Set([
-                    'forbidden_terms_present',
-                    'missing_required_terms',
-                    'rewrite_too_similar',
-                    'empty_rewrite',
-                    'length_delta_too_high',
-                  ])
-                : new Set(['forbidden_terms_present', 'empty_rewrite']);
+            const criticalFlags = new Set(['forbidden_terms_present', 'empty_rewrite']);
             const safeItems = generatedDbItems.filter(
               (item) =>
-                item.validation_passed === true &&
                 typeof item.rewritten_text === 'string' &&
                 item.rewritten_text.trim().length > 0 &&
                 !item.risk_flags.some((flag) => criticalFlags.has(flag))
             );
-            const riskyItems = generatedDbItems.filter((item) => !safeItems.includes(item));
+            const riskyItems = generatedDbItems.filter(
+              (item) =>
+                typeof item.rewritten_text !== 'string' ||
+                item.rewritten_text.trim().length === 0 ||
+                item.risk_flags.some((flag) => criticalFlags.has(flag))
+            );
+            const warningItems = generatedDbItems.filter(
+              (item) => item.risk_flags.length > 0 && !item.risk_flags.some((flag) => criticalFlags.has(flag))
+            );
             const autoApproveIds = safeItems
               .map((item) => item.id);
 
@@ -1323,6 +1565,7 @@ export async function POST(request: NextRequest) {
                 updatedPaths,
                 missingTargets,
                 riskyItems: riskyItems.length,
+                warningItems: warningItems.length,
               },
             });
             await writeRewriteAuditLog({
@@ -1334,12 +1577,18 @@ export async function POST(request: NextRequest) {
                 appliedItems: rewriteAutoApply ? appliedIds.length : 0,
                 updatedPaths,
                 riskyItems: riskyItems.length,
+                warningItems: warningItems.length,
               },
             });
 
             if (riskyItems.length > 0) {
               result.warnings.push(
                 `O5B rewrite generated ${riskyItems.length} risky items requiring admin review`
+              );
+            }
+            if (warningItems.length > 0) {
+              result.warnings.push(
+                `O5B rewrite generated ${warningItems.length} warning items (review optional)`
               );
             }
             const avgChangeRatio =
@@ -1361,7 +1610,7 @@ export async function POST(request: NextRequest) {
               'O5B',
               'Rewrite Core Content',
               'done',
-              `Job ${rewriteJob.id.slice(0, 8)}: generated ${generatedItems}, approved ${autoApproveIds.length}, risky ${riskyItems.length}, applied ${rewriteAutoApply ? appliedIds.length : 0}, avgChange ${avgChangeRatio}`,
+              `Job ${rewriteJob.id.slice(0, 8)}: generated ${generatedItems}, approved ${autoApproveIds.length}, risky ${riskyItems.length}, warnings ${warningItems.length}, applied ${rewriteAutoApply ? appliedIds.length : 0}, avgChange ${avgChangeRatio}`,
               Date.now() - o5bStart
             );
           } else {
@@ -1397,8 +1646,9 @@ export async function POST(request: NextRequest) {
           // Final entry count
           const finalEntries = await fetchRows('content_entries', { site_id: SITE_ID });
           result.entries = finalEntries.length;
+          const syncedLocalFiles = await syncSiteContentToLocal(SITE_ID);
 
-          emitProgress('O6', 'Cleanup', 'done', `${result.entries} entries remaining`, Date.now() - o6Start);
+          emitProgress('O6', 'Cleanup', 'done', `${result.entries} entries remaining, synced ${syncedLocalFiles} local files`, Date.now() - o6Start);
         } catch (err: any) {
           emitProgress('O6', 'Cleanup', 'error', err.message, Date.now() - o6Start);
           throw err;

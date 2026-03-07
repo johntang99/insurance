@@ -13,18 +13,6 @@
       "enabled": true
     },
     {
-      "siteId": "tcm-hub",
-      "domain": "tcm-hub.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "tcm-hub",
-      "domain": "tcm-hub.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
       "siteId": "kingsfoil-acupuncture",
       "domain": "goshenacupuncture.com",
       "environment": "prod",
@@ -37,62 +25,14 @@
       "enabled": true
     },
     {
-      "siteId": "o5b-test-21180462",
-      "domain": "o5b-test-21180462.example.com",
+      "siteId": "o5b-qa-26903295",
+      "domain": "o5b-qa-26903295.example.com",
       "environment": "prod",
       "enabled": true
     },
     {
-      "siteId": "o5b-test-21180462",
-      "domain": "o5b-test-21180462.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-23363145",
-      "domain": "o5b-qa-23363145.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-23363145",
-      "domain": "o5b-qa-23363145.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-23454071",
-      "domain": "o5b-qa-23454071.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-23454071",
-      "domain": "o5b-qa-23454071.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-debug-23543001",
-      "domain": "o5b-debug-23543001.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-debug-23543001",
-      "domain": "o5b-debug-23543001.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-23598238",
-      "domain": "o5b-qa-23598238.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-23598238",
-      "domain": "o5b-qa-23598238.local",
+      "siteId": "o5b-qa-26903295",
+      "domain": "o5b-qa-26903295.local",
       "environment": "dev",
       "enabled": true
     }

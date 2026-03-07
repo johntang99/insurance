@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Button, Input, Select, Badge } from '@/components/ui';
 import Checkbox from '@/components/ui/Checkbox';
 
@@ -49,6 +49,8 @@ interface GenerationResult {
   errors: string[];
   warnings: string[];
 }
+
+type MediaFieldKey = 'logoImageUrl' | 'homeHeroImageUrl' | 'aboutBioImageUrl';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -110,6 +112,17 @@ function slugify(text: string): string {
 
 function getAllServiceSlugs(): string[] {
   return Object.values(TCM_SERVICES).flat().map(s => s.slug);
+}
+
+async function parseApiError(response: Response, fallback: string) {
+  const text = await response.text();
+  if (!text) return fallback;
+  try {
+    const parsed = JSON.parse(text) as { message?: string };
+    return parsed.message || fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -192,6 +205,13 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
   const [email, setEmail] = useState('');
   const [emergencyPhone, setEmergencyPhone] = useState('');
   const [appointmentsEmail, setAppointmentsEmail] = useState('');
+  const [logoImageUrl, setLogoImageUrl] = useState('');
+  const [homeHeroImageUrl, setHomeHeroImageUrl] = useState('');
+  const [aboutBioImageUrl, setAboutBioImageUrl] = useState('');
+  const [mediaUploadingField, setMediaUploadingField] = useState<MediaFieldKey | null>(null);
+  const logoFileInputRef = useRef<HTMLInputElement | null>(null);
+  const homeHeroFileInputRef = useRef<HTMLInputElement | null>(null);
+  const aboutBioFileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Section 4: Hours
   const [hours, setHours] = useState<Record<string, string>>({
@@ -268,6 +288,45 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
     setEmail(`info@${domain}`);
     setAppointmentsEmail(`appointments@${domain}`);
   }, []);
+
+  const setMediaFieldValue = (field: MediaFieldKey, value: string) => {
+    if (field === 'logoImageUrl') setLogoImageUrl(value);
+    else if (field === 'homeHeroImageUrl') setHomeHeroImageUrl(value);
+    else setAboutBioImageUrl(value);
+  };
+
+  const uploadMediaOverride = async (field: MediaFieldKey, file: File) => {
+    const uploadTargetSiteId = siteId.trim();
+    if (!uploadTargetSiteId) {
+      setError('Please set Site ID before uploading media.');
+      return;
+    }
+    setMediaUploadingField(field);
+    setError('');
+    try {
+      const formData = new FormData();
+      formData.append('siteId', uploadTargetSiteId);
+      formData.append('folder', 'onboarding-overrides');
+      formData.append('file', file);
+
+      const response = await fetch('/api/admin/media/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(await parseApiError(response, 'Image upload failed.'));
+      }
+      const payload = await response.json();
+      if (!payload?.url) {
+        throw new Error('Upload succeeded but URL was not returned.');
+      }
+      setMediaFieldValue(field, payload.url);
+    } catch (err: any) {
+      setError(err?.message || 'Image upload failed.');
+    } finally {
+      setMediaUploadingField(null);
+    }
+  };
 
   // ---------------------------------------------------------------------------
   // Service toggling
@@ -405,7 +464,7 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
     }
 
     return {
-      clientId: siteId,
+      clientId: siteId.trim(),
       templateSiteId: cloneFrom,
       skipAi: skipAI,
       industry: 'chinese-medicine',
@@ -443,6 +502,11 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
         phoneEmergency: emergencyPhone || phone,
         emailAppointments: appointmentsEmail,
       },
+      media: {
+        logoImageUrl: logoImageUrl || undefined,
+        homeHeroImageUrl: homeHeroImageUrl || undefined,
+        aboutBioImageUrl: aboutBioImageUrl || undefined,
+      },
       hours: lowerHours,
       services: {
         enabled: selectedServices,
@@ -478,6 +542,11 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
   // SSE Generation
   // ---------------------------------------------------------------------------
   const handleGenerate = async () => {
+    if (!siteId.trim()) {
+      setError('Site ID is required before onboarding.');
+      setPhase('error');
+      return;
+    }
     setPhase('generating');
     setSteps(PIPELINE_STEPS.map(s => ({ ...s, status: 'pending', message: '', duration: 0 })));
 
@@ -557,6 +626,9 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
     setEmail('');
     setEmergencyPhone('');
     setAppointmentsEmail('');
+    setLogoImageUrl('');
+    setHomeHeroImageUrl('');
+    setAboutBioImageUrl('');
     setHours({
       Monday: '9:00 AM - 5:00 PM',
       Tuesday: '9:00 AM - 5:00 PM',
@@ -781,6 +853,7 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
             value={siteId}
             onChange={e => setSiteId(e.target.value)}
             placeholder="auto-generated"
+            required
             fullWidth
           />
         </div>
@@ -885,6 +958,137 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
           <Input label="Email" value={email} onChange={e => setEmail(e.target.value)} placeholder="info@example.com" fullWidth />
           <Input label="Emergency Phone" value={emergencyPhone} onChange={e => setEmergencyPhone(e.target.value)} placeholder="Defaults to phone" fullWidth />
           <Input label="Appointments Email" value={appointmentsEmail} onChange={e => setAppointmentsEmail(e.target.value)} placeholder="appointments@example.com" fullWidth />
+        </div>
+      </CollapsibleSection>
+
+      {/* Section 3B: Media Overrides */}
+      <CollapsibleSection title="Media Overrides" defaultOpen={false} badge="Optional">
+        <p className="text-xs text-gray-500">
+          Provide image URLs to replace template media during onboarding, or use Choose to upload.
+        </p>
+        <p className="text-xs text-gray-500">
+          Uploaded files are stored under your storage bucket path
+          {' '}<code className="rounded bg-gray-100 px-1 py-0.5">/{"<site-id>"}/onboarding-overrides/</code>.
+        </p>
+        {!siteId.trim() ? (
+          <p className="text-xs text-amber-700">
+            Enter Site ID first to enable Choose buttons and ensure uploads go to the new site folder.
+          </p>
+        ) : null}
+        <div className="grid grid-cols-1 gap-4">
+          <div className="space-y-2">
+            <Input
+              label="Site Logo URL"
+              value={logoImageUrl}
+              onChange={e => setLogoImageUrl(e.target.value)}
+              placeholder="https://.../logo.png or .svg"
+              fullWidth
+            />
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                disabled={mediaUploadingField === 'logoImageUrl' || !siteId.trim()}
+                onClick={() => logoFileInputRef.current?.click()}
+              >
+                {mediaUploadingField === 'logoImageUrl' ? 'Uploading...' : 'Choose Logo'}
+              </button>
+              <button
+                type="button"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                onClick={() => setLogoImageUrl('')}
+              >
+                Clear
+              </button>
+              <input
+                ref={logoFileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={async (event) => {
+                  const file = event.target.files?.[0];
+                  if (file) await uploadMediaOverride('logoImageUrl', file);
+                  event.currentTarget.value = '';
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Input
+              label="Home Hero Photo URL"
+              value={homeHeroImageUrl}
+              onChange={e => setHomeHeroImageUrl(e.target.value)}
+              placeholder="https://.../home-hero.jpg"
+              fullWidth
+            />
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                disabled={mediaUploadingField === 'homeHeroImageUrl' || !siteId.trim()}
+                onClick={() => homeHeroFileInputRef.current?.click()}
+              >
+                {mediaUploadingField === 'homeHeroImageUrl' ? 'Uploading...' : 'Choose Home Hero'}
+              </button>
+              <button
+                type="button"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                onClick={() => setHomeHeroImageUrl('')}
+              >
+                Clear
+              </button>
+              <input
+                ref={homeHeroFileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={async (event) => {
+                  const file = event.target.files?.[0];
+                  if (file) await uploadMediaOverride('homeHeroImageUrl', file);
+                  event.currentTarget.value = '';
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Input
+              label="About Bio Photo URL"
+              value={aboutBioImageUrl}
+              onChange={e => setAboutBioImageUrl(e.target.value)}
+              placeholder="https://.../doctor-bio.jpg"
+              fullWidth
+            />
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                disabled={mediaUploadingField === 'aboutBioImageUrl' || !siteId.trim()}
+                onClick={() => aboutBioFileInputRef.current?.click()}
+              >
+                {mediaUploadingField === 'aboutBioImageUrl' ? 'Uploading...' : 'Choose About Photo'}
+              </button>
+              <button
+                type="button"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                onClick={() => setAboutBioImageUrl('')}
+              >
+                Clear
+              </button>
+              <input
+                ref={aboutBioFileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={async (event) => {
+                  const file = event.target.files?.[0];
+                  if (file) await uploadMediaOverride('aboutBioImageUrl', file);
+                  event.currentTarget.value = '';
+                }}
+              />
+            </div>
+          </div>
         </div>
       </CollapsibleSection>
 

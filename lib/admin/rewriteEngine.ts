@@ -31,6 +31,10 @@ export interface RewriteGenerationOptions {
   requirements?: RewriteValidationRequirements;
 }
 
+interface ValidationContext {
+  fieldPath?: string;
+}
+
 function isLikelyContentKey(key: string): boolean {
   return /title|subtitle|description|summary|content|intro|body|text|headline|tagline|blurb|quote/i.test(
     key
@@ -123,10 +127,86 @@ function includesTerm(text: string, term: string): boolean {
   return text.toLowerCase().includes(term.toLowerCase());
 }
 
+function isTitleLikeField(fieldPath: string): boolean {
+  return /(?:^|\.)(title|subtitle|headline|name)$/i.test(fieldPath);
+}
+
+function containsUrl(value: string): boolean {
+  return /(https?:\/\/|www\.)\S+/i.test(value);
+}
+
+function containsEmail(value: string): boolean {
+  return /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i.test(value);
+}
+
+function containsPhone(value: string): boolean {
+  return /(?:\+?\d[\d().\-\s]{6,}\d)/.test(value);
+}
+
+function isNonRewritableField(fieldPath: string, sourceText: string): boolean {
+  const normalizedPath = fieldPath.toLowerCase();
+  const normalizedText = sourceText.trim().toLowerCase();
+
+  if (
+    /(?:^|\.)(phone|email|url|href|link|slug|id|zipcode|zip|postal|addressmapurl)\b/.test(
+      normalizedPath
+    )
+  ) {
+    return true;
+  }
+
+  if (
+    /(?:^|\.)cta\.[^.]+\.(text|label)$/.test(normalizedPath) &&
+    /^(call|text|email|book|contact)\b/.test(normalizedText) &&
+    (containsPhone(sourceText) || containsEmail(sourceText) || containsUrl(sourceText))
+  ) {
+    return true;
+  }
+
+  if (/^(call|text|email)\s*[:\-]/.test(normalizedText)) {
+    return containsPhone(sourceText) || containsEmail(sourceText);
+  }
+
+  return false;
+}
+
+function getAdjustedThresholds(params: {
+  fieldPath: string;
+  sourceText: string;
+  minChangeRatio: number;
+  minLengthDeltaPct: number;
+}): { minChangeRatio: number; minLengthDeltaPct: number; relaxedReason: string | null } {
+  const sourceLength = params.sourceText.trim().length;
+  const titleLike = isTitleLikeField(params.fieldPath);
+
+  if (sourceLength <= 24) {
+    return {
+      minChangeRatio: 0,
+      minLengthDeltaPct: 0,
+      relaxedReason: 'short_string',
+    };
+  }
+
+  if (sourceLength <= 48 || titleLike) {
+    return {
+      minChangeRatio: Number(Math.max(0, params.minChangeRatio * 0.35).toFixed(4)),
+      minLengthDeltaPct: 0,
+      relaxedReason: titleLike ? 'title_like_field' : 'short_string',
+    };
+  }
+
+  return {
+    minChangeRatio: params.minChangeRatio,
+    minLengthDeltaPct: params.minLengthDeltaPct,
+    relaxedReason: null,
+  };
+}
+
 function validateRewrite(
   sourceText: string,
   rewrittenText: string,
-  requirements: RewriteValidationRequirements | undefined
+  requirements: RewriteValidationRequirements | undefined,
+  context?: ValidationContext
 ): { validation: Record<string, unknown>; validationPassed: boolean; riskFlags: string[]; similarityScore: number } {
   const riskFlags: string[] = [];
   const checks: string[] = [];
@@ -136,8 +216,18 @@ function validateRewrite(
   const lexicalSimilarity = calculateLexicalSimilarity(sourceText, rewrittenText);
 
   const maxLengthDeltaPct = requirements?.maxLengthDeltaPct ?? 35;
-  const minLengthDeltaPct = requirements?.minLengthDeltaPct ?? 0;
-  const minChangeRatio = requirements?.minChangeRatio ?? 0.2;
+  const baseMinLengthDeltaPct = requirements?.minLengthDeltaPct ?? 0;
+  const baseMinChangeRatio = requirements?.minChangeRatio ?? 0.2;
+  const fieldPath = context?.fieldPath || '';
+  const nonRewritable = isNonRewritableField(fieldPath, sourceText);
+  const adjusted = getAdjustedThresholds({
+    fieldPath,
+    sourceText,
+    minChangeRatio: baseMinChangeRatio,
+    minLengthDeltaPct: baseMinLengthDeltaPct,
+  });
+  const minLengthDeltaPct = nonRewritable ? 0 : adjusted.minLengthDeltaPct;
+  const minChangeRatio = nonRewritable ? 0 : adjusted.minChangeRatio;
   const forbiddenTerms = Array.isArray(requirements?.forbiddenTerms)
     ? requirements?.forbiddenTerms || []
     : [];
@@ -145,17 +235,19 @@ function validateRewrite(
     ? requirements?.requiredTerms || []
     : [];
 
-  checks.push('lexical_similarity');
-  checks.push('change_ratio');
+  checks.push(nonRewritable ? 'entity_preservation' : 'lexical_similarity');
+  checks.push(nonRewritable ? 'non_rewritable_field' : 'change_ratio');
 
-  if (lengthDeltaPct > maxLengthDeltaPct) {
-    riskFlags.push('length_delta_too_high');
-  }
-  if (lengthDeltaPct < minLengthDeltaPct) {
-    riskFlags.push('length_delta_too_low');
-  }
-  if (changeRatio < minChangeRatio) {
-    riskFlags.push('rewrite_too_similar');
+  if (!nonRewritable) {
+    if (lengthDeltaPct > maxLengthDeltaPct) {
+      riskFlags.push('length_delta_too_high');
+    }
+    if (lengthDeltaPct < minLengthDeltaPct) {
+      riskFlags.push('length_delta_too_low');
+    }
+    if (changeRatio < minChangeRatio) {
+      riskFlags.push('rewrite_too_similar');
+    }
   }
 
   const missingRequiredTerms = requiredTerms.filter((term) => !includesTerm(rewrittenText, term));
@@ -174,13 +266,18 @@ function validateRewrite(
 
   const validation = {
     checks,
+    fieldPath,
+    nonRewritable,
+    thresholdRelaxation: adjusted.relaxedReason,
     lexicalSimilarity: Number(lexicalSimilarity.toFixed(4)),
     semanticSimilarityApprox: Number(lexicalSimilarity.toFixed(4)),
     changeRatio,
     lengthDeltaPct,
     maxLengthDeltaPct,
     minLengthDeltaPct,
+    baseMinLengthDeltaPct,
     minChangeRatio,
+    baseMinChangeRatio,
     missingRequiredTerms,
     forbiddenTermHits,
   };
@@ -234,12 +331,14 @@ export function generateRewriteItemsFromProvider(
       validationPassed,
       riskFlags,
       similarityScore,
-    } = validateRewrite(sourceText, rewrittenText, options?.requirements);
+    } = validateRewrite(sourceText, rewrittenText, options?.requirements, {
+      fieldPath: item.fieldPath,
+    });
     const enrichedRiskFlags = [...riskFlags];
     if (!match) {
       enrichedRiskFlags.push('missing_provider_output');
     }
-    if (rewrittenText === sourceText) {
+    if (rewrittenText === sourceText && !isNonRewritableField(item.fieldPath, sourceText)) {
       enrichedRiskFlags.push('unchanged_by_provider');
     }
 
