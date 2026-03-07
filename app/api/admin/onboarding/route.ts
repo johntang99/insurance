@@ -212,6 +212,19 @@ async function syncSiteContentToLocal(siteId: string): Promise<number> {
   return written;
 }
 
+async function canWriteToPath(targetPath: string): Promise<boolean> {
+  const probeName = `.onboard-write-probe-${Date.now()}-${Math.random().toString(16).slice(2)}.tmp`;
+  try {
+    await fsPromises.mkdir(targetPath, { recursive: true });
+    const probePath = path.join(targetPath, probeName);
+    await fsPromises.writeFile(probePath, 'ok', 'utf-8');
+    await fsPromises.rm(probePath, { force: true });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // ── Supabase REST helpers ────────────────────────────────────────────
 
 function getSupabaseConfig() {
@@ -469,6 +482,10 @@ export async function POST(request: NextRequest) {
   const DEFAULT_LOCALE: string = intake.locales?.default || 'en';
   const SKIP_AI: boolean = intake.skipAi === true;
   const CONTENT_DIR = path.join(process.cwd(), 'content');
+  const UPLOADS_DIR = path.join(process.cwd(), 'public', 'uploads');
+  const localContentWritable = await canWriteToPath(CONTENT_DIR);
+  const localUploadsWritable = await canWriteToPath(UPLOADS_DIR);
+  const canWriteLocalFilesystem = localContentWritable && localUploadsWritable;
 
   // SSE stream
   const encoder = new TextEncoder();
@@ -492,6 +509,11 @@ export async function POST(request: NextRequest) {
         errors: [],
         warnings: [],
       };
+      if (!canWriteLocalFilesystem) {
+        result.warnings.push(
+          'Local filesystem is read-only in this environment; onboarding skipped local file sync/copy and completed via DB/storage.'
+        );
+      }
 
       try {
         // ════════════════════════════════════════════════════════════════
@@ -575,59 +597,63 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          // Copy file-based uploads and content directories
-          const copyDirIfExists = async (src: string, dest: string) => {
-            try {
-              await fsPromises.access(src);
-            } catch {
-              return; // source doesn't exist, skip
-            }
-            await fsPromises.mkdir(path.dirname(dest), { recursive: true });
-            await fsPromises.cp(src, dest, { recursive: true, errorOnExist: false });
-          };
-
-          const uploadsRoot = path.join(process.cwd(), 'public', 'uploads');
-          await copyDirIfExists(
-            path.join(uploadsRoot, TEMPLATE_ID),
-            path.join(uploadsRoot, SITE_ID)
-          );
-
-          const contentRoot = path.join(process.cwd(), 'content');
-          await copyDirIfExists(
-            path.join(contentRoot, TEMPLATE_ID),
-            path.join(contentRoot, SITE_ID)
-          );
-
-          // Update local _sites.json
-          const sitesFile = path.join(CONTENT_DIR, '_sites.json');
-          try {
-            const sitesData = JSON.parse(fs.readFileSync(sitesFile, 'utf-8'));
-            if (!sitesData.sites.find((s: any) => s.id === SITE_ID)) {
-              sitesData.sites.push({
-                id: SITE_ID,
-                name: intake.business.name,
-                domain: intake.domains?.production || '',
-                enabled: true,
-                defaultLocale: DEFAULT_LOCALE,
-                supportedLocales: LOCALES,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-              });
-              fs.writeFileSync(sitesFile, JSON.stringify(sitesData, null, 2) + '\n');
-            }
-          } catch { /* _sites.json may not exist in all environments */ }
-
-          // Update local _site-domains.json
-          const domainsFile = path.join(CONTENT_DIR, '_site-domains.json');
-          try {
-            const domainsData = JSON.parse(fs.readFileSync(domainsFile, 'utf-8'));
-            for (const dr of domainRows) {
-              if (!domainsData.domains.find((d: any) => d.siteId === dr.site_id && d.domain === dr.domain)) {
-                domainsData.domains.push({ siteId: dr.site_id, domain: dr.domain, environment: dr.environment, enabled: true });
+          if (canWriteLocalFilesystem) {
+            // Copy file-based uploads and content directories
+            const copyDirIfExists = async (src: string, dest: string) => {
+              try {
+                await fsPromises.access(src);
+              } catch {
+                return; // source doesn't exist, skip
               }
+              await fsPromises.mkdir(path.dirname(dest), { recursive: true });
+              await fsPromises.cp(src, dest, { recursive: true, errorOnExist: false });
+            };
+
+            await copyDirIfExists(
+              path.join(UPLOADS_DIR, TEMPLATE_ID),
+              path.join(UPLOADS_DIR, SITE_ID)
+            );
+
+            await copyDirIfExists(
+              path.join(CONTENT_DIR, TEMPLATE_ID),
+              path.join(CONTENT_DIR, SITE_ID)
+            );
+
+            // Update local _sites.json
+            const sitesFile = path.join(CONTENT_DIR, '_sites.json');
+            try {
+              const sitesData = JSON.parse(fs.readFileSync(sitesFile, 'utf-8'));
+              if (!sitesData.sites.find((s: any) => s.id === SITE_ID)) {
+                sitesData.sites.push({
+                  id: SITE_ID,
+                  name: intake.business.name,
+                  domain: intake.domains?.production || '',
+                  enabled: true,
+                  defaultLocale: DEFAULT_LOCALE,
+                  supportedLocales: LOCALES,
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                });
+                fs.writeFileSync(sitesFile, JSON.stringify(sitesData, null, 2) + '\n');
+              }
+            } catch {
+              // _sites.json may not exist in all environments
             }
-            fs.writeFileSync(domainsFile, JSON.stringify(domainsData, null, 2) + '\n');
-          } catch { /* _site-domains.json may not exist in all environments */ }
+
+            // Update local _site-domains.json
+            const domainsFile = path.join(CONTENT_DIR, '_site-domains.json');
+            try {
+              const domainsData = JSON.parse(fs.readFileSync(domainsFile, 'utf-8'));
+              for (const dr of domainRows) {
+                if (!domainsData.domains.find((d: any) => d.siteId === dr.site_id && d.domain === dr.domain)) {
+                  domainsData.domains.push({ siteId: dr.site_id, domain: dr.domain, environment: dr.environment, enabled: true });
+                }
+              }
+              fs.writeFileSync(domainsFile, JSON.stringify(domainsData, null, 2) + '\n');
+            } catch {
+              // _site-domains.json may not exist in all environments
+            }
+          }
 
           emitProgress('O1', 'Clone', 'done', `Cloned ${cloned.length} entries, ${templateMedia.length} media assets`, Date.now() - o1Start);
         } catch (err: any) {
@@ -1646,9 +1672,20 @@ export async function POST(request: NextRequest) {
           // Final entry count
           const finalEntries = await fetchRows('content_entries', { site_id: SITE_ID });
           result.entries = finalEntries.length;
-          const syncedLocalFiles = await syncSiteContentToLocal(SITE_ID);
+          let syncedLocalFiles = 0;
+          if (canWriteLocalFilesystem) {
+            syncedLocalFiles = await syncSiteContentToLocal(SITE_ID);
+          }
 
-          emitProgress('O6', 'Cleanup', 'done', `${result.entries} entries remaining, synced ${syncedLocalFiles} local files`, Date.now() - o6Start);
+          emitProgress(
+            'O6',
+            'Cleanup',
+            'done',
+            canWriteLocalFilesystem
+              ? `${result.entries} entries remaining, synced ${syncedLocalFiles} local files`
+              : `${result.entries} entries remaining, skipped local file sync (read-only filesystem)`,
+            Date.now() - o6Start
+          );
         } catch (err: any) {
           emitProgress('O6', 'Cleanup', 'error', err.message, Date.now() - o6Start);
           throw err;
