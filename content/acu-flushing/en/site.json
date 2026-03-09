@@ -39,5 +39,6 @@
   "clinicName": "Flushing Acupuncture",
   "description": "Holistic healing through Traditional Chinese Medicine in New York, NY",
   "addressMapUrl": "https://maps.google.com/?q=71+East+Main+Street+New York+NY+10001",
-  "headerVariant": "stacked"
+  "headerVariant": "stacked",
+  "iconCharacter": "JA"
 }

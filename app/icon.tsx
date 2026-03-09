@@ -1,4 +1,6 @@
 import { ImageResponse } from 'next/og';
+import { defaultLocale } from '@/lib/i18n';
+import { getRequestSiteId, loadSiteInfo, loadTheme } from '@/lib/content';
 
 export const size = {
   width: 32,
@@ -6,10 +8,41 @@ export const size = {
 };
 
 export const contentType = 'image/png';
+export const dynamic = 'force-dynamic';
 
-const PRIMARY_COLOR = '#8b1d1d';
+const FALLBACK_PRIMARY_COLOR = '#8b1d1d';
 
-export default function Icon() {
+function resolvePrimaryColor(theme: any): string {
+  const primary =
+    theme?.colors?.primary?.DEFAULT ||
+    theme?.colors?.primary?.default ||
+    theme?.colors?.primary;
+  return typeof primary === 'string' && primary.trim() ? primary : FALLBACK_PRIMARY_COLOR;
+}
+
+function resolveIconCharacter(siteInfo: any): string {
+  const explicit =
+    siteInfo?.iconCharacter ||
+    siteInfo?.brand?.iconCharacter ||
+    siteInfo?.branding?.iconCharacter;
+  if (typeof explicit === 'string' && explicit.trim()) {
+    return explicit.trim().toUpperCase();
+  }
+  // Product requirement: when no input is set, use H.
+  return 'H';
+}
+
+export default async function Icon() {
+  const siteId = await getRequestSiteId();
+  const [theme, siteInfo] = await Promise.all([
+    loadTheme(siteId),
+    loadSiteInfo(siteId, defaultLocale),
+  ]);
+  const primaryColor = resolvePrimaryColor(theme);
+  const iconCharacter = resolveIconCharacter(siteInfo);
+  const iconLength = Math.max(1, iconCharacter.length);
+  const iconFontSize = iconLength >= 4 ? 12 : iconLength === 3 ? 14 : iconLength === 2 ? 17 : 20;
+
   return new ImageResponse(
     (
       <div
@@ -19,26 +52,25 @@ export default function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#ffffff',
+          background: primaryColor,
         }}
       >
         <div
           style={{
-            width: 26,
-            height: 26,
-            borderRadius: 999,
-            border: `2px solid ${PRIMARY_COLOR}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: PRIMARY_COLOR,
-            fontSize: 18,
+            color: '#ffffff',
+            fontSize: iconFontSize,
             fontWeight: 800,
             lineHeight: 1,
             fontFamily: 'Georgia, serif',
+            maxWidth: '90%',
+            whiteSpace: 'nowrap',
+            letterSpacing: iconLength > 1 ? 0.4 : 0,
           }}
         >
-          H
+          {iconCharacter}
         </div>
       </div>
     ),

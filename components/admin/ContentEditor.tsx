@@ -876,7 +876,136 @@ export function ContentEditor({
     );
   };
 
+  const parsePrimitiveInput = (raw: string, current: any) => {
+    if (typeof current === 'number') {
+      const parsed = Number(raw);
+      return Number.isFinite(parsed) ? parsed : current;
+    }
+    return raw;
+  };
+
+  const setValueAtPath = (path: string[], value: any) => {
+    updateFormValue(path, value);
+  };
+
+  const addArrayItemAtPath = (path: string[]) => {
+    if (!formData) return;
+    const current = getPathValue(formData, path);
+    const list = Array.isArray(current) ? [...current] : [];
+    const first = list[0];
+    let nextValue: any = '';
+    if (typeof first === 'number') nextValue = 0;
+    else if (typeof first === 'boolean') nextValue = false;
+    else if (first && typeof first === 'object' && !Array.isArray(first)) nextValue = {};
+    else if (Array.isArray(first)) nextValue = [];
+    list.push(nextValue);
+    setValueAtPath(path, list);
+  };
+
+  const removeArrayItemAtPath = (path: string[], index: number) => {
+    if (!formData) return;
+    const current = getPathValue(formData, path);
+    if (!Array.isArray(current)) return;
+    const list = [...current];
+    list.splice(index, 1);
+    setValueAtPath(path, list);
+  };
+
+  const renderGenericFormNode = (value: any, path: string[] = [], label = ''): any => {
+    const key = path.join('.') || 'root';
+    const title = label || (path[path.length - 1] ? toTitleCase(path[path.length - 1]) : 'Root');
+
+    if (Array.isArray(value)) {
+      return (
+        <div key={key} className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="block text-xs text-gray-500">{title}</label>
+            <button
+              type="button"
+              className="text-xs text-blue-600 hover:text-blue-700"
+              onClick={() => addArrayItemAtPath(path)}
+            >
+              Add Item
+            </button>
+          </div>
+          <div className="space-y-2">
+            {value.map((item, index) => (
+              <div key={`${key}.${index}`} className="rounded-md border border-gray-100 p-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs text-gray-500">Item {index + 1}</div>
+                  <button
+                    type="button"
+                    className="text-xs text-red-600 hover:text-red-700"
+                    onClick={() => removeArrayItemAtPath(path, index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+                {renderGenericFormNode(item, [...path, String(index)], '')}
+              </div>
+            ))}
+            {value.length === 0 && (
+              <div className="text-xs text-gray-500">No items. Click Add Item.</div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    if (value && typeof value === 'object') {
+      return (
+        <div key={key} className="space-y-3">
+          {label ? <div className="text-sm font-medium text-gray-800">{title}</div> : null}
+          <div className="grid gap-3 md:grid-cols-2">
+            {Object.entries(value).map(([childKey, childValue]) => (
+              <div key={`${key}.${childKey}`} className={childValue && typeof childValue === 'object' ? 'md:col-span-2' : ''}>
+                {renderGenericFormNode(childValue, [...path, childKey], toTitleCase(childKey))}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (typeof value === 'boolean') {
+      return (
+        <label key={key} className="flex items-center gap-2 text-sm text-gray-700">
+          <input
+            type="checkbox"
+            checked={Boolean(value)}
+            onChange={(event) => setValueAtPath(path, event.target.checked)}
+          />
+          {title}
+        </label>
+      );
+    }
+
+    const stringValue = value == null ? '' : String(value);
+    const useTextarea = typeof value === 'string' && stringValue.length > 80;
+    return (
+      <div key={key}>
+        <label className="block text-xs text-gray-500">{title}</label>
+        {useTextarea ? (
+          <textarea
+            className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+            rows={3}
+            value={stringValue}
+            onChange={(event) => setValueAtPath(path, parsePrimitiveInput(event.target.value, value))}
+          />
+        ) : (
+          <input
+            type={typeof value === 'number' ? 'number' : 'text'}
+            className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+            value={stringValue}
+            onChange={(event) => setValueAtPath(path, parsePrimitiveInput(event.target.value, value))}
+          />
+        )}
+      </div>
+    );
+  };
+
   const isSeoFile = activeFile?.path === 'seo.json';
+  const isSiteInfoFile = activeFile?.path === 'site.json';
   const isBlogPostFile = activeFile?.path.startsWith('blog/');
   const isHeaderFile = activeFile?.path === 'header.json';
   const isThemeFile = activeFile?.path === 'theme.json';
@@ -2434,7 +2563,33 @@ export function ContentEditor({
                 />
               )}
 
-              {formData && !formData.hero && !formData.introduction && !formData.cta && (
+              {isSiteInfoFile && formData && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-semibold text-gray-900">Site Info</div>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500">Icon Character</label>
+                    <input
+                      className="mt-1 w-full max-w-xs rounded-md border border-gray-200 px-3 py-2 text-sm"
+                      value={String((formData as any).iconCharacter || '')}
+                      placeholder="H or FA"
+                      onChange={(event) =>
+                        updateFormValue(
+                          ['iconCharacter'],
+                          event.target.value.toUpperCase()
+                        )
+                      }
+                    />
+                    <p className="mt-1 text-xs text-gray-500">
+                      Leave empty to use default icon text: H.
+                    </p>
+                  </div>
+                  {renderGenericFormNode(formData)}
+                </div>
+              )}
+
+              {formData && !isSiteInfoFile && !formData.hero && !formData.introduction && !formData.cta && (
                 <div className="text-sm text-gray-500">
                   No schema panels available for this file yet. Use the JSON tab.
                 </div>
