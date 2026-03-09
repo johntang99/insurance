@@ -625,6 +625,80 @@ export async function POST(request: NextRequest) {
           }
           result.domains = domainRows.length;
 
+          // Clone booking services/settings from template so booking works out-of-box.
+          // Also normalize default service duration to 45 minutes and prefill notifications.
+          let clonedBookingServiceCount = 0;
+          let clonedBookingSettings = false;
+          try {
+            const [templateBookingServices, templateBookingSettings] = await Promise.all([
+              fetchRows('booking_services', { site_id: TEMPLATE_ID }),
+              fetchRows('booking_settings', { site_id: TEMPLATE_ID }),
+            ]);
+
+            const fallbackNotificationEmails = String(process.env.CONTACT_FALLBACK_TO || '')
+              .split(',')
+              .map((item) => item.trim())
+              .filter(Boolean);
+            const requestedNotificationEmails = [
+              String(intake.location?.email || '').trim(),
+              String(intake.business?.email || '').trim(),
+            ].filter(Boolean);
+            const notificationEmails = Array.from(
+              new Set(
+                (requestedNotificationEmails.length > 0
+                  ? requestedNotificationEmails
+                  : fallbackNotificationEmails)
+              )
+            );
+
+            const templateServices = Array.isArray(templateBookingServices?.[0]?.services)
+              ? templateBookingServices[0].services
+              : [];
+            const normalizedServices = templateServices.map((service: any) => ({
+              ...service,
+              durationMinutes: 45,
+            }));
+            if (normalizedServices.length > 0) {
+              await upsert(
+                'booking_services',
+                [
+                  {
+                    site_id: SITE_ID,
+                    services: normalizedServices,
+                    updated_at: new Date().toISOString(),
+                  },
+                ],
+                'site_id'
+              );
+              clonedBookingServiceCount = normalizedServices.length;
+            }
+
+            const templateSettings = templateBookingSettings?.[0]?.settings;
+            if (templateSettings && typeof templateSettings === 'object') {
+              const normalizedSettings = {
+                ...templateSettings,
+                defaultServiceType: 'appointment',
+                notificationEmails,
+              };
+              await upsert(
+                'booking_settings',
+                [
+                  {
+                    site_id: SITE_ID,
+                    settings: normalizedSettings,
+                    updated_at: new Date().toISOString(),
+                  },
+                ],
+                'site_id'
+              );
+              clonedBookingSettings = true;
+            }
+          } catch (bookingCloneError: any) {
+            result.warnings.push(
+              `Booking clone warning: ${bookingCloneError?.message || 'unable to clone booking settings/services'}`
+            );
+          }
+
           // Clone media assets DB records (remap URLs to new site namespace)
           const templateMedia = await fetchRows('media_assets', { site_id: TEMPLATE_ID });
           if (templateMedia.length > 0) {
@@ -716,7 +790,13 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          emitProgress('O1', 'Clone', 'done', `Cloned ${cloned.length} entries, ${templateMedia.length} media assets`, Date.now() - o1Start);
+          emitProgress(
+            'O1',
+            'Clone',
+            'done',
+            `Cloned ${cloned.length} entries, ${templateMedia.length} media assets, booking services: ${clonedBookingServiceCount}, booking settings: ${clonedBookingSettings ? 'yes' : 'no'}`,
+            Date.now() - o1Start
+          );
         } catch (err: any) {
           emitProgress('O1', 'Clone', 'error', err.message, Date.now() - o1Start);
           throw err;
