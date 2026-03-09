@@ -53,7 +53,7 @@
       "Peaceful, calming atmosphere"
     ],
     "description": [
-      "Dr. Henry Smith Clinic was founded in 2010 with a simple mission: to provide accessible, high-quality Traditional Chinese Medicine care to the New York community.",
+      "Flushing Acupuncture was founded in 2010 with a simple mission: to provide accessible, high-quality Traditional Chinese Medicine care to the New York community.",
       "What started as a small practice has grown into a trusted wellness center, helping over 1,000 patients achieve better health naturally."
     ],
     "environment": "Our clinic provides a peaceful, welcoming environment designed to promote relaxation and healing. From the moment you enter, you'll feel the difference - calming colors, comfortable treatment rooms, and a warm, friendly atmosphere that puts patients at ease."
@@ -78,7 +78,7 @@
     "principles": [
       {
         "title": "Treat the Whole Person",
-        "description": "TCM recognizes that physical symptoms are often connected to emotional, mental, and spiritual factors. Dr. Henry Smith addresses all aspects of health, not just isolated symptoms."
+        "description": "TCM recognizes that physical symptoms are often connected to emotional, mental, and spiritual factors. Dr. Jiang addresses all aspects of health, not just isolated symptoms."
       },
       {
         "title": "Find the Root Cause",
@@ -90,18 +90,18 @@
       },
       {
         "title": "Patient Education",
-        "description": "Understanding your body and condition empowers you to take an active role in your healing. Dr. Henry Smith takes time to explain your diagnosis and treatment in clear, accessible terms."
+        "description": "Understanding your body and condition empowers you to take an active role in your healing. Dr. Jiang takes time to explain your diagnosis and treatment in clear, accessible terms."
       },
       {
         "title": "Integration with Western Medicine",
-        "description": "TCM can work beautifully alongside conventional medical care. Dr. Henry Smith collaborates with other healthcare providers to ensure comprehensive, coordinated treatment."
+        "description": "TCM can work beautifully alongside conventional medical care. Dr. Jiang collaborates with other healthcare providers to ensure comprehensive, coordinated treatment."
       },
       {
         "title": "Prevention & Wellness",
         "description": "The best medicine prevents illness before it occurs. Treatment includes guidance on diet, lifestyle, and self-care practices to maintain long-term health."
       }
     ],
-    "introduction": "Dr. Henry Smith's approach to healing is rooted in the fundamental principles of Traditional Chinese Medicine while incorporating modern clinical understanding."
+    "introduction": "Dr. Jiang's approach to healing is rooted in the fundamental principles of Traditional Chinese Medicine while incorporating modern clinical understanding."
   },
   "credentials": {
     "items": [
@@ -161,7 +161,7 @@
     ],
     "title": "Areas of Specialization",
     "variant": "grid-2",
-    "description": "Through years of clinical practice and continuing education, Dr. Henry Smith has developed particular expertise in several key areas:"
+    "description": "Through years of clinical practice and continuing education, Dr. Jiang has developed particular expertise in several key areas:"
   },
   "continuingEducation": {
     "items": [
@@ -174,6 +174,6 @@
     ],
     "title": "Continuing Education & Training",
     "variant": "compact",
-    "description": "Dr. Henry Smith maintains active involvement in the TCM community and regularly pursues advanced training:"
+    "description": "Dr. Jiang maintains active involvement in the TCM community and regularly pursues advanced training:"
   }
 }

@@ -951,23 +951,69 @@ export async function POST(request: NextRequest) {
           // Build replacement pairs — ordered longest-first to avoid partial matches
           // Business name is always required
           const replacements: [string, string][] = [];
+          const ownerReplacement = String(biz.ownerName || '').trim() || biz.name;
+          const ownerWithCreds = String(biz.ownerNameWithCredentials || biz.ownerName || '').trim() || ownerReplacement;
+          const ownerNoDots = ownerReplacement.replace(/\.\s?/g, ' ').trim();
 
-          // Owner name replacements (longest first)
-          if (biz.ownerName) {
-            const ownerWithCreds = biz.ownerNameWithCredentials || biz.ownerName;
-            replacements.push(
-              ['Dr. Huang, L.Ac., MSTCM', ownerWithCreds],
-              ['Dr Huang Clinic', biz.name],
-              ['Dr. Huang', biz.ownerName],
-              ['Dr Huang', biz.ownerName.replace(/\.\s?/g, ' ').trim()],
-              ['Dr. Jiang', biz.ownerName],
-              ['Acupuncturist Jiang, L.Ac., M.S.', ownerWithCreds],
-              ['江医生', biz.ownerName],
-            );
-          } else {
-            replacements.push(
-              ['Dr Huang Clinic', biz.name],
-            );
+          const doctorTerms = new Set<string>([
+            'Dr. Huang, L.Ac., MSTCM',
+            'Acupuncturist Jiang, L.Ac., M.S.',
+            'Dr. Huang',
+            'Dr Huang',
+            'Dr. Jiang',
+            'Dr Jiang',
+            'Dr. Henry Smith',
+            'Dr Henry Smith',
+            '黄医生',
+            '江医生',
+          ]);
+          const clinicTerms = new Set<string>([
+            'Dr Huang Clinic',
+            'Dr. Huang Clinic',
+            'Dr Jiang Clinic',
+            'Dr. Jiang Clinic',
+            'Dr. Henry Smith Clinic',
+            'Dr Henry Smith Clinic',
+            'TCM Network',
+            'Flushing Acupuncture',
+            'Kingsfoil Acupuncture',
+          ]);
+
+          // Pull doctor/clinic terms from template metadata to catch non-standard names.
+          try {
+            const [templateSiteRows, templateAboutRows] = await Promise.all([
+              fetchRows('sites', { id: TEMPLATE_ID }),
+              fetchRows('content_entries', { site_id: TEMPLATE_ID, path: 'pages/about.json' }),
+            ]);
+            const templateSiteName = String(templateSiteRows?.[0]?.name || '').trim();
+            if (templateSiteName) clinicTerms.add(templateSiteName);
+
+            for (const row of templateAboutRows) {
+              const about = row?.data || {};
+              const profileName = String(about?.profile?.name || '').trim();
+              if (profileName) doctorTerms.add(profileName);
+
+              const heroTitle = String(about?.hero?.title || '').trim();
+              if (heroTitle) {
+                doctorTerms.add(heroTitle);
+                const stripped = heroTitle.replace(/^Meet\s+/i, '').replace(/^认识/, '').trim();
+                if (stripped) doctorTerms.add(stripped);
+              }
+            }
+          } catch {
+            // Non-blocking: static fallback terms above still run.
+          }
+
+          for (const term of Array.from(clinicTerms).sort((a, b) => b.length - a.length)) {
+            replacements.push([term, biz.name]);
+          }
+          for (const term of Array.from(doctorTerms).sort((a, b) => b.length - a.length)) {
+            const target = term.includes('L.Ac.') || term.includes('MSTCM') ? ownerWithCreds : ownerReplacement;
+            replacements.push([term, target]);
+          }
+          // Handle no-dot style names from templates ("Dr Henry ...").
+          if (ownerNoDots && ownerNoDots !== ownerReplacement) {
+            replacements.push([ownerReplacement.replace(/\.\s?/g, ' ').trim(), ownerNoDots]);
           }
 
           // Email (longest first)
@@ -1233,6 +1279,12 @@ export async function POST(request: NextRequest) {
                   const next = { ...t };
                   if (typeof next.quote === 'string') {
                     next.quote = next.quote
+                      .replaceAll('Dr. Henry Smith Clinic', biz.name)
+                      .replaceAll('Dr Henry Smith Clinic', biz.name)
+                      .replaceAll('Dr. Huang Clinic', biz.name)
+                      .replaceAll('Dr Huang Clinic', biz.name)
+                      .replaceAll('Dr. Henry Smith', biz.ownerName || owner)
+                      .replaceAll('Dr Henry Smith', biz.ownerName || owner)
                       .replaceAll('Dr. Jiang', biz.ownerName || owner)
                       .replaceAll('Dr. Huang', biz.ownerName || owner)
                       .replaceAll('黄医生', biz.ownerName || owner)
@@ -1505,10 +1557,15 @@ export async function POST(request: NextRequest) {
               | 'aggressive';
             const rewriteStrictness = String(intake.rewriteStrictness || 'strict-medical').toLowerCase();
             const rewriteAutoApply = intake.rewriteAutoApply !== false;
+            const defaultProvider = process.env.OPENAI_API_KEY
+              ? 'openai'
+              : process.env.ANTHROPIC_API_KEY
+                ? 'claude'
+                : 'openai';
             const provider = String(
               intake.rewriteProvider ||
               process.env.AI_REWRITE_PROVIDER ||
-              (process.env.ANTHROPIC_API_KEY ? 'claude' : 'openai')
+              defaultProvider
             ).toLowerCase();
 
             if (!isRewriteProviderConfigured(provider)) {
@@ -1517,7 +1574,13 @@ export async function POST(request: NextRequest) {
 
             const model = provider === 'claude'
               ? (process.env.AI_REWRITE_CLAUDE_MODEL || process.env.ANTHROPIC_MAIN_MODEL || 'claude-sonnet-4-6')
-              : (process.env.AI_REWRITE_OPENAI_MODEL || process.env.OPENAI_MAIN_MODEL || 'gpt-5.2');
+              : (process.env.AI_REWRITE_OPENAI_MODEL || process.env.OPENAI_MAIN_MODEL || 'gpt-5.4');
+            emitProgress(
+              'O5B',
+              'Rewrite Core Content',
+              'running',
+              `Using provider=${provider}, model=${model}`
+            );
 
             const criticalFlags = new Set(['forbidden_terms_present', 'empty_rewrite']);
             let totalGeneratedItems = 0;
@@ -1925,7 +1988,24 @@ export async function POST(request: NextRequest) {
           }
 
           // 2. Template contamination check — TCM template terms
-          const templateTerms = ['Dr Huang Clinic', 'Dr. Huang', 'sancai.acu@gmail.com', '(845) 381-1106', '71 East Main Street'];
+          const templateTerms = [
+            'Dr Huang Clinic',
+            'Dr. Huang Clinic',
+            'Dr. Huang',
+            'Dr Huang',
+            'Dr. Jiang',
+            'Dr Jiang',
+            'Dr. Henry Smith',
+            'Dr Henry Smith',
+            'Dr. Henry Smith Clinic',
+            'Dr Henry Smith Clinic',
+            'TCM Network',
+            'Flushing Acupuncture',
+            'Kingsfoil Acupuncture',
+            'sancai.acu@gmail.com',
+            '(845) 381-1106',
+            '71 East Main Street',
+          ];
           const contaminated: string[] = [];
           for (const entry of allEntries) {
             const str = JSON.stringify(entry.data);

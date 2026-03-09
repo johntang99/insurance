@@ -39,5 +39,6 @@
   "clinicName": "Flushing Acupuncture",
   "description": "在纽约州米德尔敦通过传统中医进行整体治疗",
   "addressMapUrl": "https://maps.google.com/?q=71+East+Main+Street+New York+NY+10001",
-  "headerVariant": "stacked"
+  "headerVariant": "stacked",
+  "iconCharacter": "JA"
 }
