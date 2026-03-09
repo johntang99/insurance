@@ -16,20 +16,6 @@
         "whatToExpectLead": "At {clinicName}, each session begins with focused assessment and a treatment plan review."
       }
     },
-    "shi-acupuncture": {
-      "clinicName": "Shi Acupuncture",
-      "toneDescriptor": "practical and community-centered",
-      "localContext": "Plans are realistic, step-by-step, and built for busy daily life.",
-      "lexiconReplacements": {
-        "individualized": "personalized",
-        "supports": "is designed to support"
-      },
-      "templates": {
-        "shortDescription": "{core} {localContext}",
-        "fullDescriptionLead": "{title} is provided in a {toneDescriptor} format at {clinicName}.",
-        "whatToExpectLead": "At {clinicName}, visits focus on symptom relief goals and practical home-care guidance."
-      }
-    },
     "acupuncture-flushing": {
       "clinicName": "Acupuncture Flushing",
       "toneDescriptor": "warm, family-focused, and structured",

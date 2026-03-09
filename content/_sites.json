@@ -38,6 +38,19 @@
       ],
       "createdAt": "2026-03-09T09:09:24.250Z",
       "updatedAt": "2026-03-09T09:09:24.250Z"
+    },
+    {
+      "id": "acu-gangshi",
+      "name": "Gang Shi Acupuncture",
+      "domain": "shiacupuncture.com",
+      "enabled": true,
+      "defaultLocale": "en",
+      "supportedLocales": [
+        "en",
+        "zh"
+      ],
+      "createdAt": "2026-03-09T21:24:04.401Z",
+      "updatedAt": "2026-03-09T21:24:04.401Z"
     }
   ]
 }

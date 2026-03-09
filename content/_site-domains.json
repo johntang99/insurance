@@ -17,6 +17,18 @@
       "domain": "acu-flushing.local",
       "environment": "dev",
       "enabled": true
+    },
+    {
+      "siteId": "acu-gangshi",
+      "domain": "shiacupuncture.com",
+      "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "acu-gangshi",
+      "domain": "gangshi.local",
+      "environment": "dev",
+      "enabled": true
     }
   ]
 }

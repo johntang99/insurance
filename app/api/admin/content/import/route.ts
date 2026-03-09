@@ -67,7 +67,7 @@ async function collectImportCandidates(siteId: string, locale: string): Promise<
   // Root locale JSON files
   try {
     const rootFiles = await fs.readdir(localeRoot);
-    for (const file of rootFiles.filter((item) => item.endsWith('.json'))) {
+    for (const file of rootFiles.filter((item) => item.endsWith('.json') && item !== 'theme.json')) {
       await addCandidate(locale, file, path.join(localeRoot, file));
     }
   } catch {

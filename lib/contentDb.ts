@@ -13,7 +13,11 @@ export interface ContentEntryRecord {
 const table = 'content_entries';
 
 export function canUseContentDb() {
-  return Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return Boolean(
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_STAGING_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_PROD_SERVICE_ROLE_KEY
+  );
 }
 
 export async function fetchContentEntry(
