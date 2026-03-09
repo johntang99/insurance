@@ -1006,9 +1006,10 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
                 accept="image/*"
                 className="hidden"
                 onChange={async (event) => {
-                  const file = event.target.files?.[0];
+                  const input = event.currentTarget;
+                  const file = input.files?.[0];
                   if (file) await uploadMediaOverride('logoImageUrl', file);
-                  event.currentTarget.value = '';
+                  input.value = '';
                 }}
               />
             </div>
@@ -1044,9 +1045,10 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
                 accept="image/*"
                 className="hidden"
                 onChange={async (event) => {
-                  const file = event.target.files?.[0];
+                  const input = event.currentTarget;
+                  const file = input.files?.[0];
                   if (file) await uploadMediaOverride('homeHeroImageUrl', file);
-                  event.currentTarget.value = '';
+                  input.value = '';
                 }}
               />
             </div>
@@ -1082,9 +1084,10 @@ export function OnboardingWizard({ templateSites }: OnboardingWizardProps) {
                 accept="image/*"
                 className="hidden"
                 onChange={async (event) => {
-                  const file = event.target.files?.[0];
+                  const input = event.currentTarget;
+                  const file = input.files?.[0];
                   if (file) await uploadMediaOverride('aboutBioImageUrl', file);
-                  event.currentTarget.value = '';
+                  input.value = '';
                 }}
               />
             </div>

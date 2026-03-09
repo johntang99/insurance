@@ -1,0 +1,274 @@
+{
+  "cta": {
+    "title": "準備體驗自然療法？",
+    "variant": "centered",
+    "subtitle": "預約諮詢，了解哪些療法最適合您。我們將根據您的獨特健康需求制定個性化方案。",
+    "primaryCta": {
+      "link": "/zh/contact",
+      "text": "預約諮詢"
+    },
+    "secondaryCta": {
+      "link": "tel:845-381-1106",
+      "text": "致電：845-381-1106"
+    }
+  },
+  "faq": {
+    "faqs": [
+      {
+        "answer": "大多數人在針灸期間感覺很少或沒有疼痛。針非常細（比注射針細得多），插入時通常感覺像一個小捏或蚊子咬。一旦針就位，大多數患者會體驗到深度放鬆，許多人在治療期間會入睡。",
+        "question": "針灸會疼嗎？"
+      },
+      {
+        "answer": "治療次數取決於您的狀況、您患病的時間以及您的身體如何反應。急性病症可能在 3-6 次治療中改善，而慢性問題通常需要 10-15 次或更多治療。我們將制定個性化的治療計劃，並根據您的進展進行調整。",
+        "question": "我需要多少次治療？"
+      },
+      {
+        "answer": "是的，當由合格的持照醫師提供時。我們使用無菌的一次性針，並遵循嚴格的安全協議。中藥經過數千年的完善，我們只使用來自信譽良好的供應商的高質量、經過測試的草藥。副作用罕見且通常較輕。",
+        "question": "中醫安全嗎？"
+      },
+      {
+        "answer": "當然可以！中醫通常與西醫治療非常好地互補。許多患者使用針灸來管理藥物或手術的副作用，支持恢復，或解決傳統醫學尚未完全解決的問題。我們鼓勵與所有醫療保健提供者進行公開溝通。",
+        "question": "中醫可以與西醫一起使用嗎？"
+      },
+      {
+        "answer": "穿著寬鬆、舒適的衣服，可以輕鬆捲起以接觸您的手臂、腿和背部。如果需要，我們備有長袍可用。避免噴灑香水或使用含香味產品，因為有些患者可能較為敏感。",
+        "question": "我應該穿什麼去預約？"
+      },
+      {
+        "answer": "我們接受大多數包含針灸保險的主要保險計劃。我們可以為您提供詳細收據，以便您提交給保險公司以獲得潛在的報銷。請聯繫我們以驗證您的具體保險範圍。我們還提供實惠的自付費率和套餐折扣。",
+        "question": "你們接受保險嗎？"
+      },
+      {
+        "answer": "在預約前 1-2 小時吃一頓清淡的飯（不要空腹前來）。在治療日避免飲酒和過量咖啡因。帶上您正在服用的任何藥物或補充劑清單，並穿著舒適的衣服。帶著開放的心態前來，並準備詳細討論您的健康史。",
+        "question": "我應該如何準備第一次就診？"
+      },
+      {
+        "answer": "許多對針感到緊張的人對針灸感到驚喜。針極其細，插入通常無痛。我們會按照您的節奏進行，解釋我們正在做的一切，如果您願意，可以從較少的針開始。我們還提供無針療法，如中藥、拔罐和推拿。",
+        "question": "如果我害怕針怎麼辦？"
+      }
+    ],
+    "title": "常見問題",
+    "variant": "accordion",
+    "subtitle": "關於服務、安全與預期結果的常見問題"
+  },
+  "hero": {
+    "title": "傳統中醫療法",
+    "variant": "split-photo-right",
+    "subtitle": "為您量身定制的綜合治療方案",
+    "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/tcm-emotion-1.webp"
+  },
+  "overview": {
+    "title": "我們能為您做什麼",
+    "variant": "centered",
+    "benefits": [
+      "無藥物疼痛管理與身心同調",
+      "自然緩解壓力和焦慮",
+      "重塑身材與面容亮澤",
+      "增強免疫功能與體力",
+      "提升能量、活力與精力",
+      "支持荷爾蒙平衡",
+      "改善睡眠質量與心理健康",
+      "優化消化健康及加速損傷恢復"
+    ],
+    "introduction": "在黃醫生診所，我們由頂尖的中醫師為您量身定制中醫治療與健康管理方案。針對疾病，我們堅持身心同調，助您儘快恢復健康；針對亞健康需求，我們致力於讓您的體力、精力、身材、面容及心理都回歸最健康的狀態。結合古老智慧與現代理解，提供最有效的自然治療。"
+  },
+  "trustBar": {
+    "items": [
+      {
+        "icon": "Award",
+        "title": "持牌專業中醫師",
+        "description": "循證結合傳統中醫"
+      },
+      {
+        "icon": "Users",
+        "title": "個性化調理方案",
+        "description": "按體質與目標定制"
+      },
+      {
+        "icon": "Shield",
+        "title": "安全規範治療",
+        "description": "嚴格衛生與流程標準"
+      }
+    ]
+  },
+  "legacyLabels": {
+    "servicePrefix": "服務項目",
+    "keyBenefitsTitle": "核心亮點",
+    "whatToExpectTitle": "服務說明"
+  },
+  "servicesList": {
+    "badge": "服務項目",
+    "items": [
+      {
+        "id": "acupuncture",
+        "icon": "Syringe",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/acupuncture-10.jpeg",
+        "order": 1,
+        "title": "針灸",
+        "benefits": [
+          "無需藥物的有效止痛",
+          "減少炎症",
+          "改善血液循環",
+          "增強免疫功能",
+          "減輕壓力和焦慮",
+          "改善睡眠質量",
+          "平衡荷爾蒙",
+          "提高能量水平"
+        ],
+        "whatToExpect": "治療時，醫師會使用極細的拋棄式無菌針具，精準刺入特定的穴位。您可能會感覺到輕微的痠、麻、脹或重感（中醫稱為「得氣」），這代表身體的氣血正在被調動。療程通常持續 20-30 分鐘，期間您只需放鬆休息。針灸不僅能針對局部止痛，更能從全身角度調節系統平衡。",
+        "fullDescription": "透過針刺人體經絡穴位，調節臟腑經絡，平衡陰陽，促進氣血運行，疏通經絡，從而達到防病治病的目的。 \n\n**適用範圍**\n各種急慢性痛症（頸肩腰腿痛、頭痛、關節炎等）、內科（失眠、胃腸病、高血壓等）、外科（軟組織損傷，皮膚病等）、婦科（月經不規則、更年期症候群等）、兒科（消化不良、免疫力低等）、男科（前列腺肥大、陽痿、早洩、性功能障礙等）、美容塑身（抗痘、抗老、減重、肌膚緊緻提拉、消除水腫等）。 \n\n**注意事項**\n避免空腹或過飽針刺；孕婦、嚴重心臟病或出血性疾病患者需謹慎；服用抗血小板聚集，抗凝血的中西藥需告知針灸師，由針灸師判斷是否適合針灸，針刺後注意保暖，避免受風寒及馬上洗澡。",
+        "shortDescription": "我們的主要治療方式，使用細針恢復平衡並促進全身癒合。"
+      },
+      {
+        "id": "chinese-herbal-medicine",
+        "icon": "Leaf",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/chinese-herb-10.webp",
+        "order": 2,
+        "title": "中藥",
+        "benefits": [
+          "為您的確切需求定制",
+          "治療根本原因，而不僅僅是症狀",
+          "副作用極少或沒有",
+          "補充針灸治療",
+          "解決慢性疾病",
+          "增強免疫系統",
+          "支持內臟功能",
+          "促進長期健康"
+        ],
+        "whatToExpect": "經過全面的諮詢和診斷後，我們將為您建立專門的定制中藥配方。您將收到關於如何準備和服用中藥的詳細說明。我們會監測您的進展，並根據需要調整配方以獲得最佳效果。",
+        "fullDescription": "透過辨證施治，選用草藥或方劑調理臟腑陰陽氣血，調整整體功能。 \n\n**適用範圍**\n內科（脾胃疾病、肝病、心臟血管疾病等）、婦科（月經疾病、不孕、更年期等）、兒科（感冒、消化不良等）、男科（腎虛、陽痿等）、慢性病調養、美容養顏、抗衰等。 \n\n**注意事項**\n必須在專業中醫師辨識下使用；如正在服用西藥，需告知中醫師，由中醫師調整草藥處方；孕婦、哺乳期及特殊人群應嚴格遵醫囑。",
+        "shortDescription": "精心調配的定制中藥配方，針對您的具體健康問題，支持身體癒合。"
+      },
+      {
+        "id": "cupping-therapy",
+        "icon": "Circle",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/cupping-10.jpg",
+        "order": 3,
+        "title": "拔罐",
+        "benefits": [
+          "深度肌肉緊張釋放",
+          "改善血液循環",
+          "減少炎症",
+          "緩解疼痛",
+          "增強損傷恢復",
+          "呼吸系統支持",
+          "排毒",
+          "增強免疫系統"
+        ],
+        "whatToExpect": "玻璃或矽膠罐被放置在緊張或疼痛的區域。您會感到強烈的拉扯感，大多數人認為這是緩解而不是疼痛。罐可能會留在原位 5-15 分鐘，或在皮膚上移動。暫時性的圓形印記是正常的，會在幾天內消退。",
+        "fullDescription": "透過火罐或真空罐產生負壓，吸附皮膚，使微血管擴張，達到活血化瘀、祛風散寒的效果。 \n\n**適用範圍**\n感冒、咳嗽、氣喘、風濕關節痛、感受風寒所致的肩頸腰背痛、青春痘等。 \n\n**注意事項**\n皮膚破潰、出血性疾病、孕婦腰腹部禁用；年老體虛患者慎用，拔罐後避免受涼、勞累或立即洗澡。",
+        "shortDescription": "使用吸力罐釋放肌肉緊張、改善循環和促進癒合的古老療法。"
+      },
+      {
+        "id": "moxibustion",
+        "icon": "Flame",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/moxibustion-2.jpeg",
+        "order": 4,
+        "title": "艾灸",
+        "benefits": [
+          "增強免疫系統",
+          "提高能量和活力",
+          "改善血液循環",
+          "緩解寒性疼痛",
+          "支持消化功能",
+          "轉正胎位",
+          "溫暖手腳冰冷",
+          "補虛"
+        ],
+        "whatToExpect": "在艾灸期間，您會感到溫暖的感覺，因為燃燒的艾條在您身體的特定穴位附近。治療過程深度放鬆且溫暖。有些人形容這感覺就像溫和的陽光照在皮膚上。艾草有獨特的泥土香氣。",
+        "fullDescription": "艾葉燃燒所產生的溫熱，作用於特定穴位，能夠溫通經脈、散寒祛邪，同時促進氣血運行，達到緩解疼痛的效果。 \n\n**適用範圍**\n體質虛寒、宮寒引起的經痛、慢性胃腸疾患、風濕性關節疼痛、氣喘，以及容易疲勞怕冷的虛勞狀態。 \n\n**注意事項**\n施灸時須謹慎防止燙傷；陰虛火旺或正在發燒的患者不適合接受灸療；患有糖尿病周邊神經病變者應謹慎使用；孕婦腹部、腰部及薦椎部位亦應避免施灸。",
+        "shortDescription": "以艾草為媒介的溫熱療法，有助於驅散寒邪、促進血液循環，並提振整體活力。"
+      },
+      {
+        "id": "tuina-massage",
+        "icon": "Hand",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/acupuncture-pain.jpg",
+        "order": 5,
+        "title": "推拿",
+        "benefits": [
+          "緩解肌肉疼痛和緊張",
+          "改善關節活動度",
+          "更好的姿勢和對齊",
+          "增強血液循環",
+          "減輕壓力",
+          "支持損傷恢復",
+          "緩解頭痛和偏頭痛",
+          "改善消化"
+        ],
+        "whatToExpect": "依據您的身體狀況與體質，推拿的力度可從輕柔調整至較為深層。醫師會運用手掌、手指、肘部，有時也會借助腳部施加各種手法。整個療程中您無需更換衣物，單次治療時間通常為 30 至 60 分鐘。",
+        "fullDescription": "推拿以手法直接作用於經絡、肌肉及關節，藉此調和氣血、疏通筋絡，並改善局部的血液循環。 \n\n**適用範圍**\n頸部、肩部、腰部及腿部疼痛、肌肉勞損、運動傷害、消化功能不佳、小兒咳嗽及便秘等情形。 \n\n**注意事項**\n皮膚有傷口或感染、患有血液疾病或惡性腫瘤者不宜接受推拿；孕婦腰腹部應避免使用重手法；對於年長者及骨質疏鬆患者，手法應保持輕柔。",
+        "shortDescription": "融合穴位按摩、伸展及關節活動的傳統中醫推拿手法。"
+      },
+      {
+        "id": "gua-sha",
+        "icon": "Shield",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
+        "order": 6,
+        "title": "刮痧",
+        "benefits": [
+          "快速緩解疼痛",
+          "減少肌肉緊張",
+          "減少炎症",
+          "改善免疫反應",
+          "增強血液循環",
+          "加速從疾病中恢復",
+          "緩解頭痛",
+          "頸肩緊張釋放"
+        ],
+        "whatToExpect": "療程開始前，醫師會在皮膚表面塗抹適量的油，再以光滑的刮痧工具沿著緊繃或不適的部位向下刮拭。過程中您會感受到一定的壓力與刮擦感，強度雖明顯但在可承受範圍之內。皮膚上出現的紅色或紫色痧印屬正常現象，通常於 2 至 7 天內自然消退。",
+        "fullDescription": "以刮痧板沿經絡及腧穴反覆刮拭，使皮下出現痧象，從而促進氣血流通、疏通經絡，並協助排除體內風寒與濕熱之邪。 \n\n**適用範圍**\n感冒發燒、咽喉疼痛、中暑、高血壓，以及頸部、肩部、腰背部疼痛等。 \n\n**注意事項**\n皮膚有破損處不宜進行刮痧；患有出血性疾病、腫瘤者，以及年老體虛、孕婦腹部及腰薦部位均應謹慎或避免使用；刮痧後請注意保暖，避免直接受冷風吹拂，並暫勿立即沐浴。",
+        "shortDescription": "源自傳統的刮痧療法，透過刮拭皮膚以舒緩肌肉緊張、改善循環並有助於減輕炎症反應。"
+      },
+      {
+        "id": "herbal-plaster-therapy",
+        "icon": "plaster",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/chinese-dietary-10.jpg",
+        "order": 7,
+        "title": "貼敷療法",
+        "benefits": [],
+        "whatToExpect": "",
+        "fullDescription": "將中藥材製成膏藥或藥粉，外敷於特定穴位或患處，藉由皮膚吸收發揮活血化瘀、疏通經絡、緩解疼痛及清熱解毒等作用。 \n\n**適用範圍**\n風濕性關節疼痛、腰腿痛、氣喘、鼻炎、小兒咳嗽（如三伏貼、三九貼），以及多種皮膚疾患。 \n\n**注意事項**\n皮膚容易過敏或有破損者應謹慎使用；貼敷後若皮膚出現明顯紅腫或劇烈瘙癢，請立即停止並告知醫師。",
+        "shortDescription": "以中醫理論為基礎的個人化外敷療法，透過穴位貼敷支持身體調養與平衡。"
+      },
+      {
+        "id": "lifestyle-counseling",
+        "icon": "Heart",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/about/dr-huang-lecture-20.png",
+        "order": 8,
+        "title": "生活方式諮詢",
+        "benefits": [
+          "可持續的健康改善",
+          "更好的睡眠質量",
+          "有效的壓力管理",
+          "提高能量和活力",
+          "情緒平衡",
+          "預防未來的疾病",
+          "增強治療效果",
+          "長期健康策略"
+        ],
+        "whatToExpect": "在整個療程中，我們會與您深入探討日常生活的各個層面，並提供具體、切實可行的建議。內容涵蓋呼吸練習、冥想方法、睡眠衛生習慣、隨季節調整的養生方式，以及壓力管理策略。我們的目標是與您攜手，共同建立長久可持續的健康改變。",
+        "fullDescription": "身體的調養往往不只仰賴單一治療，而需要從生活整體著手。\n\n我們提供全方位的生活方式諮詢，涵蓋睡眠品質、運動習慣、壓力調適技巧及日常作息等面向。\n\n所有建議均以中醫理論為依據，並依照您個人的體質特點與生活環境量身規劃。",
+        "shortDescription": "從睡眠、運動、壓力調適到日常習慣，提供全面的整體健康指導，陪伴您走上健康之路。"
+      }
+    ],
+    "title": "中醫傳統診療項目",
+    "variant": "detail-alternating",
+    "subtitle": "依據您的個人需求，制定全面而細緻的調理方案"
+  },
+  "relatedReading": {
+    "title": "延伸閱讀",
+    "subtitle": "探索與本頁服務密切相關的實用健康資訊。",
+    "viewAllText": "瀏覽全部",
+    "preferredSlugs": [
+      "acupuncture-pain-relief-science",
+      "chinese-herbal-formulas",
+      "first-visit-acupuncture-guide"
+    ],
+    "defaultCategory": "指南"
+  },
+  "heroPlaceholder": {
+    "emoji": "🧘",
+    "title": "專業醫療服務",
+    "subtitle": "以您的健康目標為核心，量身打造個人化方案"
+  }
+}

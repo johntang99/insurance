@@ -1,30 +1,46 @@
 {
+  "shape": {
+    "radius": "10px",
+    "shadow": "0 4px 20px rgba(3, 105, 161, 0.10)"
+  },
   "colors": {
     "primary": {
-      "50": "#E0F5F5",
-      "100": "#B3E8E8",
-      "dark": "#095555",
-      "light": "#14A3A3",
-      "DEFAULT": "#0D6E6E"
+      "50": "#f0f9ff",
+      "100": "#e0f2fe",
+      "dark": "#075985",
+      "light": "#7dd3fc",
+      "DEFAULT": "#0369a1"
     },
     "backdrop": {
-      "primary": "#F8FAFA",
-      "secondary": "#FFF8E7"
+      "primary": "#f0f9ff",
+      "secondary": "#fff7ed"
     },
     "secondary": {
-      "50": "#FFF8E7",
-      "dark": "#9E8338",
-      "light": "#E0C56A",
-      "DEFAULT": "#C9A84C"
+      "50": "#fff7ed",
+      "dark": "#c2410c",
+      "light": "#fdba74",
+      "DEFAULT": "#ea580c"
     }
+  },
+  "layout": {
+    "heroVariant": "split",
+    "featureVariant": "grid",
+    "spacingDensity": "comfortable"
+  },
+  "_preset": {
+    "id": "fresh-ocean",
+    "name": "Fresh Ocean",
+    "category": "fresh",
+    "description": "Clean blue-forward style with approachable modern type."
   },
   "typography": {
     "body": "1rem",
     "fonts": {
-      "body": "'Inter', -apple-system, sans-serif",
-      "small": "'Inter', -apple-system, sans-serif",
-      "display": "'Playfair Display', Georgia, serif",
-      "heading": "'Playfair Display', Georgia, serif"
+      "body": "Inter, system-ui, sans-serif",
+      "small": "Inter, system-ui, sans-serif",
+      "display": "Poppins, system-ui, sans-serif",
+      "heading": "Poppins, system-ui, sans-serif",
+      "subheading": "Poppins, system-ui, sans-serif"
     },
     "small": "0.875rem",
     "display": "3rem",

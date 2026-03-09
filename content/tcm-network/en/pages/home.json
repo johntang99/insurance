@@ -346,6 +346,39 @@
           "Gas"
         ],
         "description": "Effective relief for IBS, bloating, gas, and digestive discomfort"
+      },
+      {
+        "id": "neck-shoulder-pain",
+        "icon": "Activity",
+        "link": "/en/conditions#neck-shoulder-pain",
+        "image": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/blog/gua-sha-22.png",
+        "title": "Neck & Shoulder Pain",
+        "category": "pain-management",
+        "symptoms": [
+          "Neck stiffness",
+          "Shoulder tension",
+          "Headaches",
+          "Limited range of motion",
+          "Muscle knots",
+          "Radiating pain to arms"
+        ],
+        "description": "Tension, stiffness, and aching in the neck and shoulders — whether rooted in stress, postural habits, or an injury — can be addressed with targeted, natural therapies."
+      },
+      {
+        "id": "arthritis",
+        "icon": "Activity",
+        "link": "/en/conditions#arthritis",
+        "image": "",
+        "title": "Arthritis & Joint Pain",
+        "category": "pain-management",
+        "symptoms": [
+          "Joint pain and swelling",
+          "Morning stiffness",
+          "Reduced mobility",
+          "Inflammation",
+          "Pain that intensifies with changes in weather"
+        ],
+        "description": "Natural approaches to managing pain associated with osteoarthritis, rheumatoid arthritis, and general joint inflammation."
       }
     ]
   },

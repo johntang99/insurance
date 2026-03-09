@@ -14,7 +14,7 @@
   },
   "hero": {
     "title": "Meet Dr. Henry Smith",
-    "variant": "photo-background",
+    "variant": "centered",
     "subtitle": "Dedicated to Your Health & Wellness Through Traditional Chinese Medicine (TCM)",
     "description": "Committed to healing through time-tested wisdom and personalized care.",
     "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/about/dr-huang-lecture-20.png"

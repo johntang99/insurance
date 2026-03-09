@@ -4,6 +4,10 @@ import type { BookingRecord, BookingService } from '@/lib/types';
 const resendApiKey = process.env.RESEND_API_KEY;
 const resendFrom = process.env.RESEND_FROM;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
+const fallbackAdminRecipients = (process.env.CONTACT_FALLBACK_TO || '')
+  .split(',')
+  .map((item) => item.trim())
+  .filter(Boolean);
 
 function formatBookingDetails(booking: BookingRecord, service?: BookingService) {
   return [
@@ -49,6 +53,8 @@ export async function sendBookingEmails({
 
   const detailText = formatBookingDetails(booking, service);
   const body = `${message}\n\n${detailText}`;
+  const resolvedAdminRecipients =
+    adminRecipients && adminRecipients.length > 0 ? adminRecipients : fallbackAdminRecipients;
 
   try {
     await resend.emails.send({
@@ -61,13 +67,15 @@ export async function sendBookingEmails({
     console.warn('Client email failed:', error);
   }
 
-  if (adminRecipients && adminRecipients.length > 0) {
+  if (resolvedAdminRecipients.length > 0) {
     try {
       await resend.emails.send({
         from: resendFrom,
-        to: adminRecipients,
+        to: resolvedAdminRecipients,
         subject: `[Admin] ${subject}`,
         text: body,
+        // Allow clinic staff to reply directly to the customer who booked.
+        reply_to: booking.email,
       });
     } catch (error) {
       console.warn('Admin email failed:', error);

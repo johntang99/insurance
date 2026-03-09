@@ -53,9 +53,9 @@
   },
   "hero": {
     "title": "Welcome New Patients",
-    "variant": "split-photo-right",
+    "variant": "centered",
     "subtitle": "Everything you need to know before your first visit to Dr. Henry Smith Clinic",
-    "backgroundImage": "https://oakahkxpbmmodpcpocio.supabase.co/storage/v1/object/public/chinesemedicine-media/dr-huang-clinic/general/welcome-clinic-10.png"
+    "backgroundImage": ""
   },
   "insurance": {
     "link": {

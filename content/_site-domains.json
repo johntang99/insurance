@@ -7,9 +7,15 @@
       "enabled": true
     },
     {
-      "siteId": "acupuncture-flushing",
+      "siteId": "acu-flushing",
       "domain": "acupunctureflushing.com",
       "environment": "prod",
+      "enabled": true
+    },
+    {
+      "siteId": "acu-flushing",
+      "domain": "acu-flushing.local",
+      "environment": "dev",
       "enabled": true
     }
   ]

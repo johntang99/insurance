@@ -137,6 +137,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       typeof (job.requirements as any)?.voiceProfile === 'string'
         ? (job.requirements as any).voiceProfile
         : '';
+    const MAX_PROVIDER_CHUNK_RETRIES = 2;
+    const chunkFailureWarnings: string[] = [];
     const generatedRows: Array<{
       jobId: string;
       siteId: string;
@@ -187,7 +189,33 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
           })),
         };
 
-        let providerItems = await generateRewriteWithProvider(baseRequest);
+        let providerItems: Awaited<ReturnType<typeof generateRewriteWithProvider>> = [];
+        let chunkSucceeded = false;
+        let lastChunkError = '';
+        for (let attempt = 0; attempt <= MAX_PROVIDER_CHUNK_RETRIES; attempt += 1) {
+          try {
+            providerItems = await generateRewriteWithProvider({
+              ...baseRequest,
+              overrideModeInstructions:
+                attempt === 0
+                  ? undefined
+                  : 'CRITICAL: Return strict valid JSON only. No commentary, no markdown, no trailing commas, no extra keys. Keep locale language exactly as requested.',
+            });
+            if (providerItems.length === 0) {
+              throw new Error('Provider returned 0 rewrite items');
+            }
+            chunkSucceeded = true;
+            break;
+          } catch (error: any) {
+            lastChunkError = error?.message || 'provider chunk rewrite failed';
+          }
+        }
+        if (!chunkSucceeded) {
+          chunkFailureWarnings.push(
+            `${contentPath} chunk failed after retries: ${lastChunkError}`
+          );
+          continue;
+        }
         let generated = generateRewriteItemsFromProvider(
           chunk,
           Object.fromEntries(
@@ -291,6 +319,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         riskyItems,
         warningItems,
         avgChangeRatio,
+        chunkFailures: chunkFailureWarnings.length,
       },
     });
     await writeRewriteAuditLog({
@@ -306,6 +335,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         riskyItems,
         warningItems,
         avgChangeRatio,
+        chunkFailures: chunkFailureWarnings.length,
+        chunkFailureSamples: chunkFailureWarnings.slice(0, 5),
       },
     });
 
@@ -319,6 +350,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       riskyItems,
       warningItems,
       avgChangeRatio,
+      chunkFailures: chunkFailureWarnings.length,
+      chunkFailureSamples: chunkFailureWarnings.slice(0, 5),
     });
   } catch (error: any) {
     const message = error?.message || 'Failed to run rewrite job';
