@@ -23,6 +23,7 @@ const navigation: Array<{
 
   { name: 'Sites', href: '/admin/sites', iconKey: 'building2', group: 'system', preserveContext: false },
   { name: 'Onboarding', href: '/admin/onboarding', iconKey: 'rocket', group: 'system', preserveContext: false, superAdminOnly: true },
+  { name: 'Onboarding QA Checklist', href: '/admin/onboarding-checklist', iconKey: 'fileText', group: 'system', preserveContext: false },
   { name: 'Rewrite Studio', href: '/admin/rewrite-studio', iconKey: 'fileText', group: 'system', preserveContext: false, superAdminOnly: true },
   {
     name: 'Master Services',

@@ -16,6 +16,7 @@ import { HomeSectionPhotosPanel } from '@/components/admin/panels/HomeSectionPho
 import { HeroPanel } from '@/components/admin/panels/HeroPanel';
 import { ProfilePanel } from '@/components/admin/panels/ProfilePanel';
 import { IntroductionPanel } from '@/components/admin/panels/IntroductionPanel';
+import { AboutAdditionalPanel } from '@/components/admin/panels/AboutAdditionalPanel';
 import { GalleryPhotosPanel } from '@/components/admin/panels/GalleryPhotosPanel';
 import { CtaPanel } from '@/components/admin/panels/CtaPanel';
 import { ServicesPanel } from '@/components/admin/panels/ServicesPanel';
@@ -2205,6 +2206,7 @@ export function ContentEditor({
                   variantSections={variantSections}
                   getPathValue={getPathValueLocal}
                   updateFormValue={updateFormValue}
+                  currentFilePath={activeFile?.path}
                 />
               )}
 
@@ -2243,6 +2245,13 @@ export function ContentEditor({
               {showSharedPanels && formData?.introduction && (
                 <IntroductionPanel
                   introduction={formData.introduction}
+                  updateFormValue={updateFormValue}
+                />
+              )}
+
+              {showSharedPanels && activeFile?.path === 'pages/about.json' && formData && (
+                <AboutAdditionalPanel
+                  formData={formData}
                   updateFormValue={updateFormValue}
                 />
               )}

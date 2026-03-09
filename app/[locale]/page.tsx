@@ -23,7 +23,13 @@ interface PageProps {
 }
 
 interface HomePageContent {
+  menu?: {
+    variant?: string;
+  };
   topBar?: {
+    address?: string;
+    phone?: string;
+    email?: string;
     badge?: {
       text: string;
       visible?: boolean;
@@ -110,6 +116,11 @@ export default async function HomePage({ params }: PageProps) {
   }
   
   const { hero } = content;
+  const hasTopBar =
+    Boolean(content.topBar?.badge?.visible) ||
+    Boolean(content.topBar?.address) ||
+    Boolean(content.topBar?.phone) ||
+    Boolean(content.topBar?.email);
   const heroBusinessName = hero.businessName || hero.clinicName || 'Business';
   const defaultSections = [
     'hero',
@@ -133,6 +144,7 @@ export default async function HomePage({ params }: PageProps) {
         return (
           <HeroSection
             variant={hero.variant}
+            topSpacingMode={hasTopBar ? 'extra' : 'default'}
             businessName={heroBusinessName}
             tagline={hero.tagline}
             description={hero.description}

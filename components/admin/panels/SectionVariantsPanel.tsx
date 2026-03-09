@@ -4,16 +4,23 @@ interface SectionVariantsPanelProps {
   variantSections: Array<[string, string[]]>;
   getPathValue: (path: string[]) => any;
   updateFormValue: (path: string[], value: any) => void;
+  currentFilePath?: string;
 }
 
 export function SectionVariantsPanel({
   variantSections,
   getPathValue,
   updateFormValue,
+  currentFilePath,
 }: SectionVariantsPanelProps) {
   return (
     <div className="border border-gray-200 rounded-lg p-4">
       <div className="text-xs font-semibold text-gray-500 uppercase mb-3">Section Variants</div>
+      {currentFilePath ? (
+        <p className="mb-3 text-xs text-gray-500">
+          Applies to current file only: <span className="font-mono text-[11px]">{currentFilePath}</span>
+        </p>
+      ) : null}
       <div className="grid gap-3 md:grid-cols-2">
         {variantSections.map(([sectionKey, options]) => (
           <div key={`variant-${sectionKey}`}>

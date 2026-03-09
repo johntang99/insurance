@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 export interface HeroSectionProps {
   variant?: HeroVariant;
+  topSpacingMode?: 'default' | 'extra';
   businessName?: string;
   clinicName?: string;
   tagline: string;
@@ -38,6 +39,7 @@ export interface HeroSectionProps {
 
 export default function HeroSection({
   variant = 'centered',
+  topSpacingMode = 'default',
   businessName,
   clinicName: legacyName,
   tagline,
@@ -57,12 +59,16 @@ export default function HeroSection({
   const config = heroVariantConfig[variant];
   const sectionClasses = getSectionClasses(config);
   const displayName = businessName || legacyName || '';
+  const topPaddingValue =
+    topSpacingMode === 'extra'
+      ? 'calc(var(--section-padding-y, 5rem) + 2.5rem)'
+      : 'var(--section-padding-y, 5rem)';
   const backdropGradientStyle = {
     backgroundImage:
       'linear-gradient(135deg, var(--backdrop-primary), var(--backdrop-secondary), var(--backdrop-primary))',
   };
   const sectionPaddingStyle = {
-    paddingTop: 'var(--section-padding-y, 5rem)',
+    paddingTop: topPaddingValue,
     paddingBottom: 'var(--section-padding-y, 5rem)',
   };
   const surfaceTokenStyle = {
@@ -122,7 +128,7 @@ export default function HeroSection({
       return (
         <section
           className={cn(sectionClasses, className)}
-          style={backdropGradientStyle}
+          style={{ ...backdropGradientStyle, ...sectionPaddingStyle }}
         >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Image - Left */}
@@ -298,7 +304,7 @@ export default function HeroSection({
       return (
         <section
           className={cn(sectionClasses, className)}
-          style={backdropGradientStyle}
+          style={{ ...backdropGradientStyle, ...sectionPaddingStyle }}
         >
           <div className="max-w-4xl mx-auto">
             <HeroContent

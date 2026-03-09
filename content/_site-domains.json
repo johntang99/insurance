@@ -11,66 +11,6 @@
       "domain": "acupunctureflushing.com",
       "environment": "prod",
       "enabled": true
-    },
-    {
-      "siteId": "kingsfoil-acupuncture",
-      "domain": "goshenacupuncture.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "kingsfoil-acupuncture",
-      "domain": "kingsfoil.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-26903295",
-      "domain": "o5b-qa-26903295.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "o5b-qa-26903295",
-      "domain": "o5b-qa-26903295.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "qa-verify-619911",
-      "domain": "qa-verify-619911.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "qa-verify-619911",
-      "domain": "qa-verify-619911.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "qa-verify-972864",
-      "domain": "qa-verify-972864.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "qa-verify-972864",
-      "domain": "qa-verify-972864.local",
-      "environment": "dev",
-      "enabled": true
-    },
-    {
-      "siteId": "qa-verify-329728",
-      "domain": "qa-verify-329728.example.com",
-      "environment": "prod",
-      "enabled": true
-    },
-    {
-      "siteId": "qa-verify-329728",
-      "domain": "qa-verify-329728.local",
-      "environment": "dev",
-      "enabled": true
     }
   ]
 }

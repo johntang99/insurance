@@ -213,6 +213,7 @@ export default async function LocaleLayout({
         <Header
           locale={locale as Locale}
           siteId={site.id}
+          supportedLocales={site.supportedLocales}
           siteInfo={siteInfo ?? undefined}
           variant={headerConfig?.menu?.variant || siteInfo?.headerVariant || 'default'}
           headerConfig={headerConfig ?? undefined}

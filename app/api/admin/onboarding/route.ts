@@ -1448,7 +1448,9 @@ export async function POST(request: NextRequest) {
             let totalMissingTargets = 0;
             let totalGeneratedRows = 0;
             let totalChangeRatio = 0;
+            let totalChunkFailures = 0;
             const localeJobSummaries: string[] = [];
+            const MAX_PROVIDER_CHUNK_RETRIES = 2;
 
             for (const rewriteLocale of rewriteLocales) {
               const rewriteJob = await createRewriteJob({
@@ -1523,23 +1525,50 @@ export async function POST(request: NextRequest) {
                 const providerMatches: Record<string, { rewrittenText: string; provider: string }> = {};
 
                 for (const chunk of chunkArray(extracted, 40)) {
-                  const providerItems = await generateRewriteWithProvider({
-                    provider,
-                    model,
-                    siteId: SITE_ID,
-                    locale: rewriteLocale,
-                    scope: 'custom',
-                    mode: rewriteMode,
-                    targetPaths: [contentPath],
-                    requirements: rewriteJob.requirements,
-                    voiceProfile:
-                      typeof intake.contentTone?.voice === 'string' ? intake.contentTone.voice : '',
-                    items: chunk.map((item) => ({
-                      path: contentPath,
-                      fieldPath: item.fieldPath,
-                      sourceText: item.sourceText,
-                    })),
-                  });
+                  let providerItems: Awaited<ReturnType<typeof generateRewriteWithProvider>> = [];
+                  let chunkSucceeded = false;
+                  let lastChunkError = '';
+
+                  for (let attempt = 0; attempt <= MAX_PROVIDER_CHUNK_RETRIES; attempt += 1) {
+                    try {
+                      providerItems = await generateRewriteWithProvider({
+                        provider,
+                        model,
+                        siteId: SITE_ID,
+                        locale: rewriteLocale,
+                        scope: 'custom',
+                        mode: rewriteMode,
+                        targetPaths: [contentPath],
+                        requirements: rewriteJob.requirements,
+                        voiceProfile:
+                          typeof intake.contentTone?.voice === 'string' ? intake.contentTone.voice : '',
+                        overrideModeInstructions:
+                          attempt === 0
+                            ? undefined
+                            : 'CRITICAL: Return strict valid JSON only. No commentary, no markdown, no trailing commas, no extra keys. Keep locale language exactly as requested.',
+                        items: chunk.map((item) => ({
+                          path: contentPath,
+                          fieldPath: item.fieldPath,
+                          sourceText: item.sourceText,
+                        })),
+                      });
+                      if (providerItems.length === 0) {
+                        throw new Error('Provider returned 0 rewrite items');
+                      }
+                      chunkSucceeded = true;
+                      break;
+                    } catch (error: any) {
+                      lastChunkError = error?.message || 'provider chunk rewrite failed';
+                    }
+                  }
+
+                  if (!chunkSucceeded) {
+                    totalChunkFailures += 1;
+                    result.warnings.push(
+                      `O5B chunk warning (${rewriteLocale}, ${contentPath}): ${lastChunkError}`
+                    );
+                    continue;
+                  }
                   for (const item of providerItems) {
                     providerMatches[item.fieldPath] = {
                       rewrittenText: item.rewrittenText,
@@ -1726,6 +1755,12 @@ export async function POST(request: NextRequest) {
               );
             }
 
+            if (totalChunkFailures > 0) {
+              result.warnings.push(
+                `O5B rewrite had ${totalChunkFailures} chunk-level provider failures; onboarding continued with partial rewrite coverage`
+              );
+            }
+
             const avgChangeRatio =
               totalGeneratedRows === 0 ? 0 : Number((totalChangeRatio / totalGeneratedRows).toFixed(4));
 
@@ -1733,7 +1768,7 @@ export async function POST(request: NextRequest) {
               'O5B',
               'Rewrite Core Content',
               'done',
-              `Jobs ${localeJobSummaries.join(', ')}: generated ${totalGeneratedItems}, approved ${totalAutoApproved}, risky ${totalRiskyItems}, warnings ${totalWarningItems}, applied ${rewriteAutoApply ? totalAppliedItems : 0}, missingTargets ${totalMissingTargets}, avgChange ${avgChangeRatio}`,
+              `Jobs ${localeJobSummaries.join(', ')}: generated ${totalGeneratedItems}, approved ${totalAutoApproved}, risky ${totalRiskyItems}, warnings ${totalWarningItems}, applied ${rewriteAutoApply ? totalAppliedItems : 0}, missingTargets ${totalMissingTargets}, chunkFailures ${totalChunkFailures}, avgChange ${avgChangeRatio}`,
               Date.now() - o5bStart
             );
           } else {

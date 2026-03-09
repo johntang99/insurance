@@ -42,6 +42,7 @@ export interface HeaderConfig {
 interface HeaderProps {
   locale: Locale;
   siteId: string;
+  supportedLocales?: Locale[];
   siteInfo?: SiteInfo;
   variant?: 'default' | 'centered' | 'transparent' | 'stacked';
   headerConfig?: HeaderConfig;
@@ -59,6 +60,7 @@ interface HeaderProps {
 export default function Header({
   locale,
   siteId,
+  supportedLocales,
   siteInfo,
   variant = 'default',
   headerConfig,
@@ -98,6 +100,9 @@ export default function Header({
     (menu?.fontWeight || headerConfig?.menu?.fontWeight || 'semibold') === 'regular'
       ? 'font-normal'
       : 'font-semibold';
+  const showLanguageSwitcher = Array.isArray(supportedLocales)
+    ? supportedLocales.length > 1
+    : true;
 
   const normalizePath = (value?: string | null) => {
     if (!value) return '';
@@ -263,7 +268,9 @@ export default function Header({
                 </Link>
               ))}
               
-              <LanguageSwitcher currentLocale={locale} />
+              {showLanguageSwitcher && (
+                <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
+              )}
               
               <Link href={cta.link} className="btn-primary text-sm px-5 py-2.5 ml-4">
                 {cta.text}
@@ -272,7 +279,9 @@ export default function Header({
             
             {/* Mobile Menu Button - Centered variant */}
             <div className="flex lg:hidden justify-center gap-4 mt-4">
-              <LanguageSwitcher currentLocale={locale} />
+              {showLanguageSwitcher && (
+                <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
+              )}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 text-gray-700 hover:text-primary"
@@ -310,7 +319,9 @@ export default function Header({
                 ))}
               </div>
               <div className="hidden xl:flex items-center gap-4">
-                <LanguageSwitcher currentLocale={locale} />
+                {showLanguageSwitcher && (
+                  <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
+                )}
                 <Link href={cta.link} className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap">
                   {cta.text}
                 </Link>
@@ -318,7 +329,9 @@ export default function Header({
             
               {/* Mobile Menu Button */}
               <div className="flex xl:hidden items-center gap-4">
-                <LanguageSwitcher currentLocale={locale} />
+                {showLanguageSwitcher && (
+                  <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
+                )}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                   className="p-2 text-gray-700 hover:text-primary"

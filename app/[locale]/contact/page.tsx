@@ -132,6 +132,29 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
   const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
   const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
+  const renderEmailWithPreferredBreaks = (value: string) => {
+    const atIndex = value.indexOf('@');
+    if (atIndex === -1) return value;
+    const local = value.slice(0, atIndex);
+    const domain = value.slice(atIndex + 1);
+    const domainParts = domain.split('.');
+    return (
+      <>
+        {local}
+        <wbr />@<wbr />
+        {domainParts.map((part, index) => (
+          <span key={`${part}-${index}`}>
+            {index > 0 && (
+              <>
+                <wbr />.
+              </>
+            )}
+            {part}
+          </span>
+        ))}
+      </>
+    );
+  };
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -214,7 +237,17 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     <CardDescription>{method.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-2xl font-bold text-primary mb-1">{method.primary}</p>
+                    <p
+                      className={`font-bold text-primary mb-1 leading-tight ${
+                        method.icon === 'Mail'
+                          ? 'text-xl md:text-2xl whitespace-normal break-words [overflow-wrap:anywhere]'
+                          : 'text-2xl'
+                      }`}
+                    >
+                      {method.icon === 'Mail'
+                        ? renderEmailWithPreferredBreaks(method.primary)
+                        : method.primary}
+                    </p>
                     {method.secondary && (
                       <p className="text-gray-600 mb-4">{method.secondary}</p>
                     )}
