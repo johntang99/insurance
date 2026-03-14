@@ -95,6 +95,7 @@ export function ContentEditor({
   const [seoPopulating, setSeoPopulating] = useState(false);
   const [importing, setImporting] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [blogActionLoading, setBlogActionLoading] = useState(false);
   const [blogServiceOptions, setBlogServiceOptions] = useState<
     Array<{ id: string; title: string }>
   >([]);
@@ -749,6 +750,67 @@ export function ContentEditor({
       return;
     }
     await loadFiles();
+  };
+
+  const handleRunDuePublisher = async () => {
+    if (!siteId) return;
+    setBlogActionLoading(true);
+    setStatus(null);
+    try {
+      const response = await fetch('/api/admin/blog/publish-due', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ siteId }),
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || 'Failed to run scheduled publisher');
+      }
+      setStatus(payload.message || 'Scheduled publisher completed.');
+      await loadFiles(activeFile?.path);
+    } catch (error: any) {
+      setStatus(error?.message || 'Failed to run scheduled publisher');
+    } finally {
+      setBlogActionLoading(false);
+    }
+  };
+
+  const handleWeeklyAutoSchedule = async () => {
+    if (!siteId) return;
+    const startDate = window.prompt('First publish date (YYYY-MM-DD)', new Date().toISOString().slice(0, 10));
+    if (!startDate) return;
+    const intervalInput = window.prompt('Days between posts', '7');
+    const intervalDays = Number(intervalInput || '7');
+    if (!Number.isFinite(intervalDays) || intervalDays <= 0) {
+      setStatus('Interval must be a positive number of days.');
+      return;
+    }
+    const onlyDrafts = window.confirm('Schedule only posts currently in draft status?\n\nOK = draft only\nCancel = schedule all blog posts in the series');
+    setBlogActionLoading(true);
+    setStatus(null);
+    try {
+      const response = await fetch('/api/admin/blog/schedule-series', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          siteId,
+          locales: site?.supportedLocales || ['en', 'zh'],
+          startDate,
+          intervalDays,
+          onlyDrafts,
+        }),
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || 'Failed to schedule weekly article series');
+      }
+      setStatus(payload.message || 'Weekly blog series scheduled.');
+      await loadFiles(activeFile?.path);
+    } catch (error: any) {
+      setStatus(error?.message || 'Failed to schedule weekly article series');
+    } finally {
+      setBlogActionLoading(false);
+    }
   };
 
   const loadBlogLinkOptions = async () => {
@@ -1929,6 +1991,26 @@ export function ContentEditor({
             </select>
           </div>
           <div className="flex items-end gap-2 pt-4 sm:pt-0">
+            {fileFilter === 'blog' && (
+              <>
+                <button
+                  type="button"
+                  onClick={handleWeeklyAutoSchedule}
+                  disabled={blogActionLoading || loading}
+                  className="px-3 py-2 rounded-md border border-blue-200 text-xs text-blue-700 hover:bg-blue-50 disabled:opacity-60"
+                >
+                  {blogActionLoading ? 'Working…' : 'Auto-Schedule Weekly'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRunDuePublisher}
+                  disabled={blogActionLoading || loading}
+                  className="px-3 py-2 rounded-md border border-emerald-200 text-xs text-emerald-700 hover:bg-emerald-50 disabled:opacity-60"
+                >
+                  {blogActionLoading ? 'Working…' : 'Run Publisher Now'}
+                </button>
+              </>
+            )}
             <button
               type="button"
               onClick={() => {

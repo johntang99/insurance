@@ -53,6 +53,28 @@ function isLocalhostRequest(request?: NextRequest): boolean {
   }
 }
 
+function validateBlogContent(filePath: string, data: any): string | null {
+  if (!filePath.startsWith('blog/')) return null;
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    return 'Blog post JSON must be an object';
+  }
+  if (typeof data.slug !== 'string' || !data.slug.trim()) {
+    return 'Blog post slug is required';
+  }
+  if (data.status && !['draft', 'scheduled', 'published'].includes(data.status)) {
+    return 'Blog post status must be draft, scheduled, or published';
+  }
+  if (data.status === 'scheduled') {
+    if (typeof data.publishAt !== 'string' || !data.publishAt.trim()) {
+      return 'Scheduled blog posts require publishAt';
+    }
+    if (Number.isNaN(Date.parse(data.publishAt))) {
+      return 'publishAt must be a valid ISO datetime';
+    }
+  }
+  return null;
+}
+
 function shouldWriteThroughFile(request?: NextRequest): boolean {
   // Always sync local JSON while operating on localhost to keep DB/file in lockstep.
   if (isLocalhostRequest(request)) {
@@ -164,6 +186,10 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ message: 'Invalid JSON' }, { status: 400 });
   }
   const normalizedParsed = normalizeMediaUrlsInData(parsed, siteId);
+  const blogValidationError = validateBlogContent(filePath, normalizedParsed);
+  if (blogValidationError) {
+    return NextResponse.json({ message: blogValidationError }, { status: 400 });
+  }
   const normalizedContent = JSON.stringify(normalizedParsed, null, 2);
 
   if (canUseContentDb()) {

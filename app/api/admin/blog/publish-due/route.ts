@@ -43,9 +43,17 @@ async function listBlogFilesForSite(siteId: string): Promise<Array<{ locale: str
   return results;
 }
 
+function isCronAuthorized(request: NextRequest): boolean {
+  const configured = process.env.BLOG_PUBLISH_CRON_SECRET;
+  if (!configured) return false;
+  const provided = request.headers.get('x-cron-secret');
+  return Boolean(provided && provided === configured);
+}
+
 export async function POST(request: NextRequest) {
   const session = await getSessionFromRequest(request);
-  if (!session || !canWriteContent(session.user)) {
+  const cronAuthorized = isCronAuthorized(request);
+  if (!cronAuthorized && (!session || !canWriteContent(session.user))) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
 
@@ -56,38 +64,45 @@ export async function POST(request: NextRequest) {
   const published: Array<{ siteId: string; locale: string; path: string; title?: string }> = [];
 
   for (const siteId of siteIds) {
+    const rowsMap = new Map<string, { locale: string; path: string; data: any }>();
     if (canUseContentDb()) {
       const entries = await listContentEntriesForSite(siteId);
       for (const entry of entries.filter((item) => item.path.startsWith('blog/'))) {
-        const data = entry.data as any;
-        if (!isBlogPostDue(data, now)) continue;
-        const normalized = normalizeBlogPostForPublish(data);
-        await upsertContentEntry({
-          siteId,
+        rowsMap.set(`${entry.locale}:${entry.path}`, {
           locale: entry.locale,
           path: entry.path,
-          data: normalized,
-          updatedBy: session.user.email,
+          data: entry.data as any,
         });
-        const resolved = path.join(CONTENT_DIR, siteId, entry.locale, entry.path);
-        try {
-          await fs.mkdir(path.dirname(resolved), { recursive: true });
-          await fs.writeFile(resolved, JSON.stringify(normalized, null, 2));
-        } catch {
-          // best-effort file sync
-        }
-        published.push({ siteId, locale: entry.locale, path: entry.path, title: normalized.title });
       }
-      continue;
     }
 
-    const files = await listBlogFilesForSite(siteId);
-    for (const file of files) {
-      if (!isBlogPostDue(file.data, now)) continue;
-      const normalized = normalizeBlogPostForPublish(file.data);
-      const resolved = path.join(CONTENT_DIR, siteId, file.locale, file.path);
-      await fs.writeFile(resolved, JSON.stringify(normalized, null, 2));
-      published.push({ siteId, locale: file.locale, path: file.path, title: normalized.title });
+    const fileRows = await listBlogFilesForSite(siteId);
+    for (const row of fileRows) {
+      if (!rowsMap.has(`${row.locale}:${row.path}`)) {
+        rowsMap.set(`${row.locale}:${row.path}`, row);
+      }
+    }
+
+    for (const row of rowsMap.values()) {
+      if (!isBlogPostDue(row.data, now)) continue;
+      const normalized = normalizeBlogPostForPublish(row.data);
+      if (canUseContentDb()) {
+        await upsertContentEntry({
+          siteId,
+          locale: row.locale,
+          path: row.path,
+          data: normalized,
+          updatedBy: session?.user.email || 'cron',
+        });
+      }
+      const resolved = path.join(CONTENT_DIR, siteId, row.locale, row.path);
+      try {
+        await fs.mkdir(path.dirname(resolved), { recursive: true });
+        await fs.writeFile(resolved, JSON.stringify(normalized, null, 2));
+      } catch {
+        // best-effort file sync
+      }
+      published.push({ siteId, locale: row.locale, path: row.path, title: normalized.title });
     }
   }
 
