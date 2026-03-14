@@ -173,6 +173,9 @@ export function ContentEditor({
     caseStudies: ['pages/case-studies.json', 'pages/case-studies.layout.json'],
     caseStudiesItems: ['pages/case-studies.json', 'pages/case-studies.layout.json'],
   };
+  const isBlogManagedPath = (value?: string | null) =>
+    typeof value === 'string' &&
+    (value.startsWith('blog/') || value.startsWith('blog-scheduled/'));
   const isServicesItemsMode = fileFilter === 'servicesItems';
   const isConditionsItemsMode = fileFilter === 'conditionsItems';
   const isCaseStudiesItemsMode = fileFilter === 'caseStudiesItems';
@@ -210,7 +213,7 @@ export function ContentEditor({
       const payload = await response.json();
       let nextFiles: ContentFileItem[] = payload.files || [];
       if (fileFilter === 'blog') {
-        nextFiles = nextFiles.filter((file) => file.path.startsWith('blog/'));
+        nextFiles = nextFiles.filter((file) => isBlogManagedPath(file.path));
         nextFiles = [...nextFiles].sort((a, b) => {
           const aDate = a.publishAt || a.publishDate || '';
           const bDate = b.publishAt || b.publishDate || '';
@@ -238,7 +241,7 @@ export function ContentEditor({
         ]);
         nextFiles = nextFiles.filter(
           (file) =>
-            !file.path.startsWith('blog/') &&
+            !isBlogManagedPath(file.path) &&
             !SITE_SETTINGS_PATHS.has(file.path) &&
             !moduleManagedPaths.has(file.path)
         );
@@ -301,7 +304,7 @@ export function ContentEditor({
 
   useEffect(() => {
     if (!activeFile) return;
-    if (activeFile.path.startsWith('blog/')) {
+    if (isBlogManagedPath(activeFile.path)) {
       loadBlogLinkOptions();
     }
   }, [activeFile, siteId, locale]);
@@ -653,7 +656,7 @@ export function ContentEditor({
 
   const handleDuplicate = async () => {
     if (!activeFile) return;
-    const isBlog = activeFile.path.startsWith('blog/');
+    const isBlog = isBlogManagedPath(activeFile.path);
     const slug = window.prompt(
       isBlog
         ? 'Duplicate blog slug (example: my-post-copy)'
@@ -1072,7 +1075,7 @@ export function ContentEditor({
 
   const isSeoFile = activeFile?.path === 'seo.json';
   const isSiteInfoFile = activeFile?.path === 'site.json';
-  const isBlogPostFile = activeFile?.path.startsWith('blog/');
+  const isBlogPostFile = isBlogManagedPath(activeFile?.path);
   const isHeaderFile = activeFile?.path === 'header.json';
   const isThemeFile = activeFile?.path === 'theme.json';
   const isHomePageFile = activeFile?.path === 'pages/home.json';
@@ -1159,7 +1162,7 @@ export function ContentEditor({
       return ['pages/case-studies.json', 'pages/case-studies.layout.json'];
     }
     if (fileFilter === 'blog') {
-      return files.filter((file) => file.path.startsWith('blog/')).map((file) => file.path);
+      return files.filter((file) => isBlogManagedPath(file.path)).map((file) => file.path);
     }
     return [] as string[];
   }, [fileFilter, files]);
@@ -2318,7 +2321,7 @@ export function ContentEditor({
             !isConditionsItemsMode &&
             !isCaseStudiesItemsMode &&
             (activeFile.path.startsWith('pages/') ||
-              activeFile.path.startsWith('blog/')) && (
+              isBlogManagedPath(activeFile.path)) && (
               <button
                 type="button"
                 onClick={handleDelete}

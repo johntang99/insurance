@@ -3,7 +3,12 @@ import fs from 'fs/promises';
 import path from 'path';
 import { getSessionFromRequest } from '@/lib/admin/auth';
 import { canWriteContent } from '@/lib/admin/permissions';
-import { canUseContentDb, listContentEntriesForSite, upsertContentEntry } from '@/lib/contentDb';
+import {
+  canUseContentDb,
+  deleteContentEntry,
+  listContentEntriesForSite,
+  upsertContentEntry,
+} from '@/lib/contentDb';
 import { normalizeBlogPostForPublish, isBlogPostDue } from '@/lib/blog';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -99,6 +104,13 @@ export async function POST(request: NextRequest) {
           data: normalized,
           updatedBy: session?.user.email || 'cron',
         });
+        if (row.sourceDirectory === 'blog-scheduled') {
+          await deleteContentEntry({
+            siteId,
+            locale: row.locale,
+            path: row.path,
+          });
+        }
       }
       const sourceResolved = path.join(CONTENT_DIR, siteId, row.locale, row.path);
       const destinationResolved = path.join(CONTENT_DIR, siteId, row.locale, destinationPath);

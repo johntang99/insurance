@@ -5,6 +5,7 @@ import { getSessionFromRequest } from '@/lib/admin/auth';
 import { canWriteContent, requireSiteAccess } from '@/lib/admin/permissions';
 import {
   canUseContentDb,
+  deleteContentEntry,
   listContentEntries,
   upsertContentEntry,
 } from '@/lib/contentDb';
@@ -27,12 +28,21 @@ function toTranslationKey(pathValue: string, data: BlogLike): string {
   if (typeof data.slug === 'string' && data.slug.trim()) {
     return data.slug.trim();
   }
-  return pathValue.replace(/^blog\//, '').replace(/\.json$/, '');
+  return pathValue
+    .replace(/^blog-scheduled\//, '')
+    .replace(/^blog\//, '')
+    .replace(/\.json$/, '');
 }
 
 function toIsoAtMidMorning(dateText: string): string {
-  const date = new Date(`${dateText}T09:00:00`);
-  return date.toISOString();
+  const [yearText, monthText, dayText] = dateText.split('-');
+  const year = Number(yearText);
+  const month = Number(monthText);
+  const day = Number(dayText);
+  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) {
+    throw new Error('startDate must be YYYY-MM-DD');
+  }
+  return new Date(Date.UTC(year, month - 1, day, 9, 0, 0)).toISOString();
 }
 
 function addDays(iso: string, days: number): string {
@@ -42,25 +52,27 @@ function addDays(iso: string, days: number): string {
 }
 
 async function loadFileBlogEntries(siteId: string, locale: string) {
-  const blogDir = path.join(CONTENT_DIR, siteId, locale, 'blog');
   const rows: Array<{ locale: string; path: string; data: BlogLike }> = [];
-  try {
-    const files = await fs.readdir(blogDir);
-    for (const file of files.filter((entry) => entry.endsWith('.json'))) {
-      const resolved = path.join(blogDir, file);
-      try {
-        const raw = await fs.readFile(resolved, 'utf-8');
-        rows.push({
-          locale,
-          path: `blog/${file}`,
-          data: JSON.parse(raw),
-        });
-      } catch {
-        // ignore invalid file
+  for (const directory of ['blog', 'blog-scheduled'] as const) {
+    const blogDir = path.join(CONTENT_DIR, siteId, locale, directory);
+    try {
+      const files = await fs.readdir(blogDir);
+      for (const file of files.filter((entry) => entry.endsWith('.json'))) {
+        const resolved = path.join(blogDir, file);
+        try {
+          const raw = await fs.readFile(resolved, 'utf-8');
+          rows.push({
+            locale,
+            path: `${directory}/${file}`,
+            data: JSON.parse(raw),
+          });
+        } catch {
+          // ignore invalid file
+        }
       }
+    } catch {
+      // ignore missing dir
     }
-  } catch {
-    // ignore missing dir
   }
   return rows;
 }
@@ -96,7 +108,10 @@ export async function POST(request: NextRequest) {
   if (canUseContentDb()) {
     for (const locale of locales) {
       const entries = await listContentEntries(siteId, locale);
-      for (const entry of entries.filter((item) => item.path.startsWith('blog/'))) {
+      for (const entry of entries.filter(
+        (item) =>
+          item.path.startsWith('blog/') || item.path.startsWith('blog-scheduled/')
+      )) {
         allRowsMap.set(`${locale}:${entry.path}`, {
           locale,
           path: entry.path,
@@ -114,9 +129,25 @@ export async function POST(request: NextRequest) {
     }
   }
   const allRows = Array.from(allRowsMap.values());
+  const translationLocaleMap = new Map<string, { locale: string; path: string; data: BlogLike }>();
+  for (const row of allRows) {
+    const groupKey = toTranslationKey(row.path, row.data);
+    const dedupeKey = `${row.locale}:${groupKey}`;
+    const existing = translationLocaleMap.get(dedupeKey);
+    if (!existing) {
+      translationLocaleMap.set(dedupeKey, row);
+      continue;
+    }
+    const existingIsScheduledPath = existing.path.startsWith('blog-scheduled/');
+    const currentIsScheduledPath = row.path.startsWith('blog-scheduled/');
+    if (!existingIsScheduledPath && currentIsScheduledPath) {
+      translationLocaleMap.set(dedupeKey, row);
+    }
+  }
+  const rowsForScheduling = Array.from(translationLocaleMap.values());
 
   const groups = new Map<string, Array<{ locale: string; path: string; data: BlogLike }>>();
-  for (const row of allRows) {
+  for (const row of rowsForScheduling) {
     const key = toTranslationKey(row.path, row.data);
     const existing = groups.get(key) || [];
     existing.push(row);
@@ -142,7 +173,15 @@ export async function POST(request: NextRequest) {
       return a.key.localeCompare(b.key);
     });
 
-  const baseIso = toIsoAtMidMorning(startDate);
+  let baseIso = '';
+  try {
+    baseIso = toIsoAtMidMorning(startDate);
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error?.message || 'Invalid startDate. Use YYYY-MM-DD.' },
+      { status: 400 }
+    );
+  }
   const updated: Array<{ translationGroup: string; locale: string; path: string; publishAt: string }> = [];
   let seriesIndex = 0;
 
@@ -156,6 +195,10 @@ export async function POST(request: NextRequest) {
     const publishDate = publishAt.slice(0, 10);
 
     for (const row of eligibleRows) {
+      const destinationPath = row.path.startsWith('blog-scheduled/')
+        ? row.path
+        : row.path.replace(/^blog\//, 'blog-scheduled/');
+      const sourcePath = row.path;
       const nextData = {
         ...row.data,
         translationGroup: toTranslationKey(row.path, row.data),
@@ -168,19 +211,30 @@ export async function POST(request: NextRequest) {
         await upsertContentEntry({
           siteId,
           locale: row.locale,
-          path: row.path,
+          path: destinationPath,
           data: nextData,
           updatedBy: session.user.email,
         });
+        if (sourcePath !== destinationPath) {
+          await deleteContentEntry({
+            siteId,
+            locale: row.locale,
+            path: sourcePath,
+          });
+        }
       }
 
-      const resolved = path.join(CONTENT_DIR, siteId, row.locale, row.path);
-      await fs.mkdir(path.dirname(resolved), { recursive: true });
-      await fs.writeFile(resolved, JSON.stringify(nextData, null, 2));
+      const destinationResolved = path.join(CONTENT_DIR, siteId, row.locale, destinationPath);
+      await fs.mkdir(path.dirname(destinationResolved), { recursive: true });
+      await fs.writeFile(destinationResolved, JSON.stringify(nextData, null, 2));
+      if (sourcePath !== destinationPath) {
+        const sourceResolved = path.join(CONTENT_DIR, siteId, row.locale, sourcePath);
+        await fs.unlink(sourceResolved).catch(() => {});
+      }
       updated.push({
         translationGroup: String(nextData.translationGroup || ''),
         locale: row.locale,
-        path: row.path,
+        path: destinationPath,
         publishAt,
       });
     }

@@ -54,7 +54,7 @@ function isLocalhostRequest(request?: NextRequest): boolean {
 }
 
 function validateBlogContent(filePath: string, data: any): string | null {
-  if (!filePath.startsWith('blog/')) return null;
+  if (!filePath.startsWith('blog/') && !filePath.startsWith('blog-scheduled/')) return null;
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
     return 'Blog post JSON must be an object';
   }
@@ -305,7 +305,7 @@ export async function POST(request: NextRequest) {
     if (!slug) {
       return NextResponse.json({ message: 'slug is required' }, { status: 400 });
     }
-    if (!['pages', 'blog'].includes(targetDir)) {
+    if (!['pages', 'blog', 'blog-scheduled'].includes(targetDir)) {
       return NextResponse.json({ message: 'Invalid target directory' }, { status: 400 });
     }
     const normalized = slug.trim().toLowerCase();
@@ -376,12 +376,23 @@ export async function POST(request: NextRequest) {
       );
     }
     const normalized = slug.trim().toLowerCase();
-    const sourceDir = sourcePath.startsWith('blog/') ? 'blog' : 'pages';
+    const sourceDir = sourcePath.startsWith('blog-scheduled/')
+      ? 'blog-scheduled'
+      : sourcePath.startsWith('blog/')
+        ? 'blog'
+        : 'pages';
     const resolvedTargetDir =
-      sourceDir === 'blog' ? 'blog' : targetDir && ['pages', 'blog'].includes(targetDir) ? targetDir : 'pages';
-    if (sourceDir === 'blog' && resolvedTargetDir !== 'blog') {
+      sourceDir === 'blog' || sourceDir === 'blog-scheduled'
+        ? sourceDir
+        : targetDir && ['pages', 'blog', 'blog-scheduled'].includes(targetDir)
+          ? targetDir
+          : 'pages';
+    if (
+      (sourceDir === 'blog' && resolvedTargetDir !== 'blog') ||
+      (sourceDir === 'blog-scheduled' && resolvedTargetDir !== 'blog-scheduled')
+    ) {
       return NextResponse.json(
-        { message: 'Blog posts must be duplicated into blog/' },
+        { message: `Blog posts must be duplicated into ${sourceDir}/` },
         { status: 400 }
       );
     }
@@ -403,7 +414,7 @@ export async function POST(request: NextRequest) {
     }
 
     let nextContent = content;
-    if (sourceDir === 'blog') {
+    if (sourceDir === 'blog' || sourceDir === 'blog-scheduled') {
       try {
         const parsed = JSON.parse(content);
         parsed.slug = normalized;

@@ -137,8 +137,14 @@ export async function listContentFiles(
         return;
       }
 
-      if (entry.path.startsWith('blog/') && entry.path.endsWith('.json')) {
-        const slug = entry.path.replace('blog/', '').replace('.json', '');
+      if (
+        (entry.path.startsWith('blog/') || entry.path.startsWith('blog-scheduled/')) &&
+        entry.path.endsWith('.json')
+      ) {
+        const slug = entry.path
+          .replace(/^blog-scheduled\//, '')
+          .replace(/^blog\//, '')
+          .replace('.json', '');
         const data = entry.data as Record<string, any>;
         const title = typeof data?.title === 'string' ? data.title : '';
         const publishDate =
@@ -196,43 +202,45 @@ export async function listContentFiles(
     // ignore missing pages directory
   }
 
-  const blogDir = path.join(CONTENT_DIR, siteId, locale, 'blog');
-  try {
-    const files = await fs.readdir(blogDir);
-    await Promise.all(
-      files
-        .filter((file) => file.endsWith('.json'))
-        .map(async (file) => {
-          const slug = file.replace('.json', '');
-          let title = '';
-          let publishDate = '';
-          let publishAt = '';
-          let status: 'draft' | 'scheduled' | 'published' | undefined;
-          try {
-            const raw = await fs.readFile(path.join(blogDir, file), 'utf-8');
-            const parsed = JSON.parse(raw);
-            title = typeof parsed.title === 'string' ? parsed.title : '';
-            publishDate =
-              typeof parsed.publishDate === 'string' ? parsed.publishDate : '';
-            publishAt =
-              typeof parsed.publishAt === 'string' ? parsed.publishAt : '';
-            status = getBlogPostStatus(parsed);
-          } catch (error) {
-            // ignore parse errors
-          }
-          addItem({
-            id: `blog-${slug}`,
-            label: `Blog Post: ${title || titleCase(slug)}`,
-            path: `blog/${file}`,
-            scope: 'locale',
-            publishDate: publishDate || undefined,
-            publishAt: publishAt || undefined,
-            status,
-          });
-        })
-    );
-  } catch (error) {
-    // ignore missing blog directory
+  for (const directory of ['blog', 'blog-scheduled'] as const) {
+    const blogDir = path.join(CONTENT_DIR, siteId, locale, directory);
+    try {
+      const files = await fs.readdir(blogDir);
+      await Promise.all(
+        files
+          .filter((file) => file.endsWith('.json'))
+          .map(async (file) => {
+            const slug = file.replace('.json', '');
+            let title = '';
+            let publishDate = '';
+            let publishAt = '';
+            let status: 'draft' | 'scheduled' | 'published' | undefined;
+            try {
+              const raw = await fs.readFile(path.join(blogDir, file), 'utf-8');
+              const parsed = JSON.parse(raw);
+              title = typeof parsed.title === 'string' ? parsed.title : '';
+              publishDate =
+                typeof parsed.publishDate === 'string' ? parsed.publishDate : '';
+              publishAt =
+                typeof parsed.publishAt === 'string' ? parsed.publishAt : '';
+              status = getBlogPostStatus(parsed);
+            } catch (error) {
+              // ignore parse errors
+            }
+            addItem({
+              id: `${directory}-${slug}`,
+              label: `Blog Post: ${title || titleCase(slug)}`,
+              path: `${directory}/${file}`,
+              scope: 'locale',
+              publishDate: publishDate || undefined,
+              publishAt: publishAt || undefined,
+              status,
+            });
+          })
+      );
+    } catch (error) {
+      // ignore missing blog directory
+    }
   }
 
   addItem({
@@ -304,7 +312,7 @@ export function resolveContentPath(siteId: string, locale: string, filePath: str
     return path.join(CONTENT_DIR, siteId, locale, filePath);
   }
 
-  if (filePath.startsWith('blog/')) {
+  if (filePath.startsWith('blog/') || filePath.startsWith('blog-scheduled/')) {
     return path.join(CONTENT_DIR, siteId, locale, filePath);
   }
 
