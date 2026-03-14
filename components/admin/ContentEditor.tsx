@@ -46,6 +46,8 @@ interface ContentFileItem {
   path: string;
   scope: 'locale' | 'site';
   publishDate?: string;
+  publishAt?: string;
+  status?: 'draft' | 'scheduled' | 'published';
 }
 
 interface ContentEditorProps {
@@ -208,9 +210,11 @@ export function ContentEditor({
       let nextFiles: ContentFileItem[] = payload.files || [];
       if (fileFilter === 'blog') {
         nextFiles = nextFiles.filter((file) => file.path.startsWith('blog/'));
-        nextFiles = [...nextFiles].sort((a, b) =>
-          (b.publishDate || '').localeCompare(a.publishDate || '')
-        );
+        nextFiles = [...nextFiles].sort((a, b) => {
+          const aDate = a.publishAt || a.publishDate || '';
+          const bDate = b.publishAt || b.publishDate || '';
+          return bDate.localeCompare(aDate);
+        });
       } else if (fileFilter === 'siteSettings') {
         nextFiles = nextFiles.filter((file) => SITE_SETTINGS_PATHS.has(file.path));
         nextFiles = [...nextFiles].sort((a, b) => a.label.localeCompare(b.label));
@@ -2097,11 +2101,18 @@ export function ContentEditor({
                   >
                     <div className="font-medium">{file.label}</div>
                     <div className="text-xs opacity-70">{file.path}</div>
-                    {fileFilter === 'blog' && file.publishDate && (
-                      <div className="text-[11px] text-gray-500 mt-1">
-                        {new Date(file.publishDate).toLocaleDateString(
-                          locale === 'zh' ? 'zh-CN' : 'en-US',
-                          { year: 'numeric', month: 'short', day: 'numeric' }
+                    {fileFilter === 'blog' && (file.publishAt || file.publishDate || file.status) && (
+                      <div className="mt-1 space-y-1 text-[11px] text-gray-500">
+                        {file.status && (
+                          <div className="uppercase tracking-wide">{file.status}</div>
+                        )}
+                        {(file.publishAt || file.publishDate) && (
+                          <div>
+                            {new Date(file.publishAt || file.publishDate || '').toLocaleDateString(
+                              locale === 'zh' ? 'zh-CN' : 'en-US',
+                              { year: 'numeric', month: 'short', day: 'numeric' }
+                            )}
+                          </div>
                         )}
                       </div>
                     )}

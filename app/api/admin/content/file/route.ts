@@ -297,6 +297,28 @@ export async function POST(request: NextRequest) {
     const template =
       CONTENT_TEMPLATES.find((item) => item.id === templateId) ||
       CONTENT_TEMPLATES[0];
+    const templateContent =
+      targetDir === 'blog'
+        ? {
+            slug: normalized,
+            title: 'New Blog Post',
+            excerpt: '',
+            image: '',
+            imageAlt: '',
+            imageCredit: '',
+            imageSource: '',
+            category: '',
+            author: '',
+            publishDate: '',
+            publishAt: '',
+            status: 'draft',
+            translationGroup: normalized,
+            featured: false,
+            contentMarkdown: '',
+            relatedServices: [],
+            relatedConditions: [],
+          }
+        : template.content;
     if (canUseContentDb()) {
       const existing = await fetchContentEntry(siteId, locale, filePath);
       if (existing) {
@@ -306,14 +328,14 @@ export async function POST(request: NextRequest) {
         siteId,
         locale,
         path: filePath,
-        data: template.content,
+        data: templateContent,
         updatedBy: session.user.email,
       });
       return NextResponse.json({ path: filePath });
     }
 
     await fs.mkdir(path.dirname(resolved), { recursive: true });
-    await fs.writeFile(resolved, JSON.stringify(template.content, null, 2));
+    await fs.writeFile(resolved, JSON.stringify(templateContent, null, 2));
     return NextResponse.json({ path: filePath });
   }
 

@@ -5,6 +5,7 @@ import path from 'path';
 import { getBaseUrlFromHost } from '@/lib/seo';
 import { getDefaultSite, getSiteByHost } from '@/lib/sites';
 import { locales, type Locale } from '@/lib/i18n';
+import { isBlogPostVisible } from '@/lib/blog';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
@@ -28,7 +29,25 @@ async function listPageSlugs(siteId: string, locale: Locale) {
 
 async function listBlogSlugs(siteId: string, locale: Locale) {
   const blogDir = path.join(CONTENT_DIR, siteId, locale, 'blog');
-  return listJsonSlugs(blogDir);
+  try {
+    const files = await fs.readdir(blogDir);
+    const visible: string[] = [];
+    for (const file of files.filter((entry) => entry.endsWith('.json'))) {
+      const fullPath = path.join(blogDir, file);
+      try {
+        const raw = await fs.readFile(fullPath, 'utf-8');
+        const parsed = JSON.parse(raw);
+        if (isBlogPostVisible(parsed)) {
+          visible.push(file.replace(/\.json$/, ''));
+        }
+      } catch {
+        // ignore invalid blog JSON
+      }
+    }
+    return visible;
+  } catch (error) {
+    return [];
+  }
 }
 
 async function getLastModified(filePath: string): Promise<Date | undefined> {

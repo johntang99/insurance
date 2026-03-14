@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getRequestSiteId, loadAllItems, loadContent, loadPageContent } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
 import { Locale } from '@/lib/types';
+import { isBlogPostVisible } from '@/lib/blog';
 import { Button, Badge, Card, CardHeader, CardTitle, CardDescription, CardContent, Icon } from '@/components/ui';
 
 interface BlogPageData {
@@ -99,7 +100,8 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
     const parsed = Date.parse(value || '');
     return Number.isNaN(parsed) ? 0 : parsed;
   };
-  const dedupedPosts = Array.from(new Map(posts.map((post) => [post.slug, post])).values());
+  const visiblePosts = posts.filter((post) => isBlogPostVisible(post));
+  const dedupedPosts = Array.from(new Map(visiblePosts.map((post) => [post.slug, post])).values());
   const sortedPosts = [...dedupedPosts].sort(
     (a, b) => parseDateValue(b.publishDate) - parseDateValue(a.publishDate)
   );

@@ -135,7 +135,27 @@ export function PostsPanel({
               Choose
             </button>
           </div>
-          <div className="grid gap-2 md:grid-cols-3">
+          <div className="grid gap-2 md:grid-cols-2">
+            <input
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              placeholder="Image Alt"
+              value={formData.imageAlt || ''}
+              onChange={(event) => updateFormValue(['imageAlt'], event.target.value)}
+            />
+            <input
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              placeholder="Image Credit"
+              value={formData.imageCredit || ''}
+              onChange={(event) => updateFormValue(['imageCredit'], event.target.value)}
+            />
+          </div>
+          <input
+            className="mt-2 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+            placeholder="Image Source URL"
+            value={formData.imageSource || ''}
+            onChange={(event) => updateFormValue(['imageSource'], event.target.value)}
+          />
+          <div className="grid gap-2 mt-2 md:grid-cols-3">
             <input
               className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
               placeholder="Author"
@@ -148,6 +168,29 @@ export function PostsPanel({
               value={formData.publishDate || ''}
               onChange={(event) => updateFormValue(['publishDate'], event.target.value)}
             />
+            <select
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={formData.status || 'published'}
+              onChange={(event) => updateFormValue(['status'], event.target.value)}
+            >
+              <option value="draft">Draft</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+          <div className="grid gap-2 mt-2 md:grid-cols-2">
+            <input
+              type="datetime-local"
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={formData.publishAt ? String(formData.publishAt).slice(0, 16) : ''}
+              onChange={(event) => updateFormValue(['publishAt'], event.target.value ? new Date(event.target.value).toISOString() : '')}
+            />
+            <input
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              placeholder="Translation Group (shared EN/ZH id)"
+              value={formData.translationGroup || ''}
+              onChange={(event) => updateFormValue(['translationGroup'], event.target.value)}
+            />
           </div>
           <input
             className="mt-2 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
@@ -155,6 +198,9 @@ export function PostsPanel({
             value={formData.category || ''}
             onChange={(event) => updateFormValue(['category'], event.target.value)}
           />
+          <div className="mt-2 text-xs text-gray-500">
+            Use <strong>draft</strong> to hide a post, <strong>scheduled</strong> with <strong>publishAt</strong> for future auto-publishing, or <strong>published</strong> to make it live now.
+          </div>
           <div className="mt-3 flex items-center gap-2">
             <input
               id="featured"

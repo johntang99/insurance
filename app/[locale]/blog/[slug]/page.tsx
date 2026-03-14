@@ -7,6 +7,7 @@ import { Locale } from '@/lib/types';
 import { getRequestSiteId, loadAllItems, loadItemBySlug, loadPageContent } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
 import { Button, Badge, Icon, Card, CardHeader, CardTitle, CardDescription } from '@/components/ui';
+import { isBlogPostVisible } from '@/lib/blog';
 
 interface BlogContentBlock {
   type: 'paragraph' | 'heading' | 'list' | 'quote' | 'image' | 'video';
@@ -101,7 +102,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   // Load post content
   const post = await loadBlogPost(siteId, slug, locale);
   
-  if (!post) {
+  if (!post || !isBlogPostVisible(post)) {
     notFound();
   }
 
@@ -111,9 +112,10 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     loadPageJson(siteId, locale, 'services'),
     loadPageJson(siteId, locale, 'conditions'),
   ]);
+  const visiblePosts = allPosts.filter((candidate) => isBlogPostVisible(candidate));
   const relatedPosts = post.relatedPosts 
-    ? allPosts.filter((p: any) => post.relatedPosts?.includes(p.slug)).slice(0, 3)
-    : allPosts.filter((p: any) => p.category === post.category && p.slug !== post.slug).slice(0, 3);
+    ? visiblePosts.filter((p: any) => post.relatedPosts?.includes(p.slug)).slice(0, 3)
+    : visiblePosts.filter((p: any) => p.category === post.category && p.slug !== post.slug).slice(0, 3);
   const servicesItems =
     servicesPage?.servicesList?.items ||
     servicesPage?.services ||

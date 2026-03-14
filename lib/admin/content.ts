@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { getDefaultFooter } from '../footer';
 import { listContentEntries } from '@/lib/contentDb';
+import { getBlogPostStatus } from '@/lib/blog';
 
 export interface ContentFileItem {
   id: string;
@@ -9,6 +10,8 @@ export interface ContentFileItem {
   path: string;
   scope: 'locale' | 'site';
   publishDate?: string;
+  publishAt?: string;
+  status?: 'draft' | 'scheduled' | 'published';
 }
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -140,12 +143,16 @@ export async function listContentFiles(
         const title = typeof data?.title === 'string' ? data.title : '';
         const publishDate =
           typeof data?.publishDate === 'string' ? data.publishDate : '';
+        const publishAt =
+          typeof data?.publishAt === 'string' ? data.publishAt : '';
         addItem({
           id: `blog-${slug}`,
           label: `Blog Post: ${title || titleCase(slug)}`,
           path: entry.path,
           scope: 'locale',
           publishDate: publishDate || undefined,
+          publishAt: publishAt || undefined,
+          status: getBlogPostStatus(data),
         });
         return;
       }
@@ -199,12 +206,17 @@ export async function listContentFiles(
           const slug = file.replace('.json', '');
           let title = '';
           let publishDate = '';
+          let publishAt = '';
+          let status: 'draft' | 'scheduled' | 'published' | undefined;
           try {
             const raw = await fs.readFile(path.join(blogDir, file), 'utf-8');
             const parsed = JSON.parse(raw);
             title = typeof parsed.title === 'string' ? parsed.title : '';
             publishDate =
               typeof parsed.publishDate === 'string' ? parsed.publishDate : '';
+            publishAt =
+              typeof parsed.publishAt === 'string' ? parsed.publishAt : '';
+            status = getBlogPostStatus(parsed);
           } catch (error) {
             // ignore parse errors
           }
@@ -214,6 +226,8 @@ export async function listContentFiles(
             path: `blog/${file}`,
             scope: 'locale',
             publishDate: publishDate || undefined,
+            publishAt: publishAt || undefined,
+            status,
           });
         })
     );
