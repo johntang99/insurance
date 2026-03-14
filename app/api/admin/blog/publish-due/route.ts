@@ -21,17 +21,20 @@ async function listSiteIds(): Promise<string[]> {
   }
 }
 
-async function listBlogFilesForSite(siteId: string): Promise<Array<{ locale: string; path: string; data: any }>> {
-  const results: Array<{ locale: string; path: string; data: any }> = [];
+async function listBlogFilesForSite(
+  siteId: string,
+  directory: 'blog' | 'blog-scheduled' = 'blog'
+): Promise<Array<{ locale: string; path: string; data: any; sourceDirectory: 'blog' | 'blog-scheduled' }>> {
+  const results: Array<{ locale: string; path: string; data: any; sourceDirectory: 'blog' | 'blog-scheduled' }> = [];
   for (const locale of ['en', 'zh']) {
-    const blogDir = path.join(CONTENT_DIR, siteId, locale, 'blog');
+    const blogDir = path.join(CONTENT_DIR, siteId, locale, directory);
     try {
       const files = await fs.readdir(blogDir);
       for (const file of files.filter((entry) => entry.endsWith('.json'))) {
         const filePath = path.join(blogDir, file);
         try {
           const raw = await fs.readFile(filePath, 'utf-8');
-          results.push({ locale, path: `blog/${file}`, data: JSON.parse(raw) });
+          results.push({ locale, path: `${directory}/${file}`, data: JSON.parse(raw), sourceDirectory: directory });
         } catch {
           // ignore bad file
         }
@@ -64,20 +67,21 @@ export async function POST(request: NextRequest) {
   const published: Array<{ siteId: string; locale: string; path: string; title?: string }> = [];
 
   for (const siteId of siteIds) {
-    const rowsMap = new Map<string, { locale: string; path: string; data: any }>();
+    const rowsMap = new Map<string, { locale: string; path: string; data: any; sourceDirectory: 'blog' | 'blog-scheduled' }>();
     if (canUseContentDb()) {
       const entries = await listContentEntriesForSite(siteId);
-      for (const entry of entries.filter((item) => item.path.startsWith('blog/'))) {
+      for (const entry of entries.filter((item) => item.path.startsWith('blog-scheduled/'))) {
         rowsMap.set(`${entry.locale}:${entry.path}`, {
           locale: entry.locale,
           path: entry.path,
           data: entry.data as any,
+          sourceDirectory: 'blog-scheduled',
         });
       }
     }
 
-    const fileRows = await listBlogFilesForSite(siteId);
-    for (const row of fileRows) {
+    const scheduledFileRows = await listBlogFilesForSite(siteId, 'blog-scheduled');
+    for (const row of scheduledFileRows) {
       if (!rowsMap.has(`${row.locale}:${row.path}`)) {
         rowsMap.set(`${row.locale}:${row.path}`, row);
       }
@@ -86,23 +90,28 @@ export async function POST(request: NextRequest) {
     for (const row of rowsMap.values()) {
       if (!isBlogPostDue(row.data, now)) continue;
       const normalized = normalizeBlogPostForPublish(row.data);
+      const destinationPath = row.path.replace(/^blog-scheduled\//, 'blog/');
       if (canUseContentDb()) {
         await upsertContentEntry({
           siteId,
           locale: row.locale,
-          path: row.path,
+          path: destinationPath,
           data: normalized,
           updatedBy: session?.user.email || 'cron',
         });
       }
-      const resolved = path.join(CONTENT_DIR, siteId, row.locale, row.path);
+      const sourceResolved = path.join(CONTENT_DIR, siteId, row.locale, row.path);
+      const destinationResolved = path.join(CONTENT_DIR, siteId, row.locale, destinationPath);
       try {
-        await fs.mkdir(path.dirname(resolved), { recursive: true });
-        await fs.writeFile(resolved, JSON.stringify(normalized, null, 2));
+        await fs.mkdir(path.dirname(destinationResolved), { recursive: true });
+        await fs.writeFile(destinationResolved, JSON.stringify(normalized, null, 2));
+        if (row.sourceDirectory === 'blog-scheduled') {
+          await fs.unlink(sourceResolved).catch(() => {});
+        }
       } catch {
         // best-effort file sync
       }
-      published.push({ siteId, locale: row.locale, path: row.path, title: normalized.title });
+      published.push({ siteId, locale: row.locale, path: destinationPath, title: normalized.title });
     }
   }
 
