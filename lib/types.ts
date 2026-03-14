@@ -24,6 +24,8 @@ export interface SiteConfig {
   enabled: boolean;
   defaultLocale: Locale;
   supportedLocales: Locale[];
+  /** Slug of the linked store in pureherbhealth (herb store platform). Defaults to site id. */
+  herbStoreSlug?: string;
   createdAt: string;
   updatedAt: string;
 }

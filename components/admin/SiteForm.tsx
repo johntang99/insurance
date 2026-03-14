@@ -14,6 +14,7 @@ const siteSchemaBase = z.object({
   enabled: z.boolean(),
   defaultLocale: z.enum(['en', 'zh']),
   supportedLocales: z.array(z.enum(['en', 'zh'])).min(1, 'Select at least one locale'),
+  herbStoreSlug: z.string().optional(),
 });
 
 const createSchema = siteSchemaBase.extend({
@@ -67,6 +68,7 @@ export function SiteForm({ site, mode = 'edit', sites = [] }: SiteFormProps) {
        enabled: site.enabled,
        defaultLocale: site.defaultLocale,
        supportedLocales: site.supportedLocales,
+      herbStoreSlug: site.herbStoreSlug || '',
       cloneFrom: '',
      },
    });
@@ -383,6 +385,39 @@ export function SiteForm({ site, mode = 'edit', sites = [] }: SiteFormProps) {
          )}
        </div>
  
+      {/* ── Herb Store Integration ──────────────────────────────────── */}
+      {!isCreate && (
+        <div className="space-y-3 rounded-lg border border-green-100 bg-green-50 p-4">
+          <div>
+            <label className="block text-sm font-semibold text-green-800">🌿 Herb Store Integration</label>
+            <p className="text-xs text-green-700 mt-0.5">
+              Links this clinic site to a store in the pureherbhealth platform.
+              Visitors to <code className="bg-green-100 px-1 rounded">/{'{locale}'}/shop</code> will see
+              products curated for this store.
+            </p>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-green-800 mb-1">
+              Store Slug <span className="font-normal text-green-600">(leave blank to use site ID: <strong>{site.id}</strong>)</span>
+            </label>
+            <Input
+              className="bg-white"
+              placeholder={site.id}
+              {...form.register('herbStoreSlug')}
+            />
+            <p className="text-xs text-green-700 mt-1">
+              Must match a store slug in pureherbhealth admin → Stores.
+            </p>
+          </div>
+          <div className="rounded-md border border-green-200 bg-white p-3 text-xs text-gray-600 space-y-1">
+            <p className="font-semibold text-gray-700">How routing works:</p>
+            <p>1. This site's domains (above) map to this store slug in <code>lib/store-map.ts</code></p>
+            <p>2. Shop requests are proxied to pureherbhealth with <code>x-store-slug</code> header</p>
+            <p>3. After saving, update <code>lib/store-map.ts</code> if domains changed</p>
+          </div>
+        </div>
+      )}
+
        <div className="flex items-center gap-3">
          <Button type="submit">Save Changes</Button>
          <button

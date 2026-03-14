@@ -17,6 +17,7 @@ const navigation: Array<{
   { name: 'Conditions', href: '/admin/conditions', iconKey: 'fileText', group: 'site' },
   { name: 'Case Studies', href: '/admin/case-studies', iconKey: 'fileText', group: 'site' },
   { name: 'Blog Posts', href: '/admin/blog-posts', iconKey: 'bookOpen', group: 'site' },
+  { name: 'Shop', href: '/admin/shop', iconKey: 'shoppingBag', group: 'site' },
   { name: 'Bookings', href: '/admin/bookings', iconKey: 'calendar', group: 'site' },
   { name: 'Booking Settings', href: '/admin/booking-settings', iconKey: 'slidersHorizontal', group: 'site' },
   { name: 'Media', href: '/admin/media', iconKey: 'image', group: 'site' },

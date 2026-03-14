@@ -9,6 +9,7 @@ interface SiteRow {
   enabled: boolean;
   default_locale: string;
   supported_locales: string[];
+  herb_store_slug: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -21,6 +22,7 @@ function mapSiteRow(row: SiteRow): SiteConfig {
     enabled: row.enabled,
     defaultLocale: row.default_locale as SiteConfig['defaultLocale'],
     supportedLocales: (row.supported_locales || []) as SiteConfig['supportedLocales'],
+    herbStoreSlug: row.herb_store_slug || undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -126,6 +128,7 @@ export async function updateSiteDb(
     enabled: updates.enabled,
     default_locale: updates.defaultLocale,
     supported_locales: updates.supportedLocales,
+    herb_store_slug: updates.herbStoreSlug !== undefined ? (updates.herbStoreSlug || null) : undefined,
     updated_at: new Date().toISOString(),
   };
 

@@ -14,6 +14,7 @@ import {
   LayoutGrid,
   Rocket,
   Settings,
+  ShoppingBag,
   SlidersHorizontal,
   Users,
 } from 'lucide-react';
@@ -30,6 +31,7 @@ export type IconKey =
   | 'layoutGrid'
   | 'rocket'
   | 'settings'
+  | 'shoppingBag'
   | 'slidersHorizontal'
   | 'users';
 
@@ -45,6 +47,7 @@ const ICONS: Record<IconKey, React.ComponentType<{ className?: string }>> = {
   layoutGrid: LayoutGrid,
   rocket: Rocket,
   settings: Settings,
+  shoppingBag: ShoppingBag,
   slidersHorizontal: SlidersHorizontal,
   users: Users,
 };

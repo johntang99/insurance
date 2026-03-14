@@ -156,7 +156,14 @@ export default function Header({
     topbarConfig?.address ||
     (siteInfo?.address ? `${siteInfo.address}, ${siteInfo.city}, ${siteInfo.state} ${siteInfo.zip}` : undefined);
   const topbarAddressHref = topbarConfig?.addressHref || siteInfo?.addressMapUrl || '#';
-  const topbarBadge = topbarConfig?.badge || (locale === 'en' ? 'Now accepting new customers' : '欢迎新客户');
+  const hasExplicitBadgeConfig = Object.prototype.hasOwnProperty.call(topbarConfig || {}, 'badge');
+  const configuredBadge =
+    typeof topbarConfig?.badge === 'string' ? topbarConfig.badge.trim() : '';
+  const topbarBadge = hasExplicitBadgeConfig
+    ? configuredBadge
+    : locale === 'en'
+      ? 'Now accepting new customers'
+      : '欢迎新客户';
   
   useEffect(() => {
     if (variant !== 'transparent') return;
@@ -224,9 +231,11 @@ export default function Header({
                 </a>
               )}
             </div>
-            <span className="badge bg-white/20 text-white">
-              {topbarBadge}
-            </span>
+            {topbarBadge && (
+              <span className="badge bg-white/20 text-white">
+                {topbarBadge}
+              </span>
+            )}
           </div>
         </div>
       </div>

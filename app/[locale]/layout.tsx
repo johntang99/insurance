@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/lib/i18n';
+import { defaultLocale, isValidLocale, locales, type Locale } from '@/lib/i18n';
 import { getDefaultSite, getSiteById } from '@/lib/sites';
 import {
   getRequestSiteId,
@@ -29,7 +29,7 @@ export async function generateMetadata({
   const baseUrl = getBaseUrlFromHost(host);
   const requestSiteId = await getRequestSiteId();
   const site = (await getSiteById(requestSiteId)) || (await getDefaultSite());
-  const locale = params.locale as Locale;
+  const locale = isValidLocale(params.locale) ? params.locale : defaultLocale;
 
   if (!site) {
     return {

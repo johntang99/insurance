@@ -7,6 +7,7 @@ create table if not exists public.sites (
   enabled boolean not null default true,
   default_locale text not null default 'en',
   supported_locales text[] not null default array['en']::text[],
+  herb_store_slug text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -118,3 +119,5 @@ alter table public.bookings
   add column if not exists service_type text;
 alter table public.bookings
   add column if not exists details jsonb not null default '{}'::jsonb;
+alter table public.sites
+  add column if not exists herb_store_slug text;

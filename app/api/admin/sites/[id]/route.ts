@@ -65,6 +65,7 @@ export async function PUT(
     enabled: payload.enabled,
     defaultLocale: payload.defaultLocale,
     supportedLocales: payload.supportedLocales,
+    herbStoreSlug: payload.herbStoreSlug,
   };
 
   const updated = await updateSite(params.id, allowed);
