@@ -15,6 +15,7 @@ const navigation: Array<{
   // Site-level admin modules
   { name: 'Site Settings', href: '/admin/site-settings', iconKey: 'slidersHorizontal', group: 'site' },
   { name: 'Content', href: '/admin/content', iconKey: 'fileText', group: 'site' },
+  { name: 'Quote Requests', href: '/admin/quote-requests', iconKey: 'fileText', group: 'site' },
   { name: 'Blog Posts', href: '/admin/blog-posts', iconKey: 'bookOpen', group: 'site' },
   // Insurance-specific modules (added in Phase 0C):
   { name: 'Services', href: '/admin/services', iconKey: 'fileText', group: 'site' },
