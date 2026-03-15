@@ -1,53 +1,133 @@
 {
+  "cta": {
+    "note": "Quote within 2 hours during business hours",
+    "subline": "Get a free quote in minutes. We'll shop 30+ carriers to find your best rate.",
+    "headline": "Ready to Save on Insurance?",
+    "ctaPrimary": {
+      "href": "/en/quote",
+      "label": "Get a Free Quote"
+    },
+    "ctaSecondary": {
+      "href": "tel:+17187990472",
+      "label": "Call (718) 799-0472"
+    }
+  },
   "hero": {
-    "variant": "animated-stats",
     "badge": "Licensed & Independent",
-    "headline": "Your Trusted Independent Insurance Broker",
-    "subline": "We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.",
     "stats": [
       {
-        "value": "25",
         "label": "Years in Business",
+        "value": "25",
         "suffix": "+"
       },
       {
-        "value": "30",
         "label": "Carriers",
+        "value": "30",
         "suffix": "+"
       },
       {
-        "value": "5,000",
         "label": "Clients Served",
+        "value": "5,000",
         "suffix": "+"
       },
       {
-        "value": "10,000",
         "label": "Policies Written",
+        "value": "10,000",
         "suffix": "+"
       }
     ],
+    "subline": "We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.",
+    "variant": "gallery-background",
+    "headline": "Your Trusted Independent Insurance Broker",
     "ctaPrimary": {
-      "label": "Get a Free Quote",
-      "href": "/en/quote"
+      "href": "/en/quote",
+      "label": "Get a Free Quote"
     },
     "ctaSecondary": {
-      "label": "Call (718) 799-0472",
-      "href": "tel:+17187990472"
+      "href": "tel:+17187990472",
+      "label": "Call (718) 799-0472"
     },
-    "backgroundImage": ""
+    "backgroundImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg",
+    "galleryImages": [
+      "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg",
+      "",
+      ""
+    ]
+  },
+  "stats": {
+    "items": [
+      {
+        "label": "Years in Business",
+        "value": "25",
+        "suffix": "+"
+      },
+      {
+        "label": "Carriers Accessed",
+        "value": "30",
+        "suffix": "+"
+      },
+      {
+        "label": "Clients Served",
+        "value": "5,000",
+        "suffix": "+"
+      },
+      {
+        "label": "Google Rating",
+        "value": "4.9",
+        "suffix": "★"
+      }
+    ],
+    "variant": "dark-band"
+  },
+  "carriers": {
+    "subline": "We shop them all to get you the best rate",
+    "variant": "auto-scroll",
+    "headline": "Carriers We Work With"
+  },
+  "howItWorks": {
+    "cta": {
+      "href": "/en/quote",
+      "label": "Start My Free Quote"
+    },
+    "steps": [
+      {
+        "title": "Tell Us What You Need",
+        "number": "01",
+        "duration": "2 minutes",
+        "description": "Fill out our quick quote form or give us a call. Takes less than 2 minutes."
+      },
+      {
+        "title": "We Shop 30+ Carriers",
+        "number": "02",
+        "duration": "Same day",
+        "description": "Our licensed brokers compare rates from over 30 insurance companies on your behalf."
+      },
+      {
+        "title": "You Choose the Best Rate",
+        "number": "03",
+        "duration": "You decide",
+        "description": "We present your options clearly. You pick the coverage that fits your needs and budget."
+      }
+    ],
+    "subline": "Getting your best insurance rate has never been easier.",
+    "headline": "How It Works — 3 Simple Steps"
+  },
+  "testimonials": {
+    "limit": 3,
+    "variant": "featured-3",
+    "headline": "What Our Clients Say",
+    "showRating": true,
+    "showCoverageType": true
   },
   "insuranceLines": {
-    "variant": "featured-plus-grid",
-    "headline": "We Cover Everything",
     "subline": "Personal, business, and specialty coverage under one roof.",
+    "variant": "featured-plus-grid",
+    "ctaLabel": "Learn More",
+    "headline": "We Cover Everything",
     "showIcons": true,
-    "showDescriptions": true,
-    "ctaLabel": "Learn More"
+    "showDescriptions": true
   },
   "whyIndependent": {
-    "variant": "three-columns",
-    "headline": "Why Choose an Independent Broker?",
-    "subline": "Unlike captive agents who represent one company, we work for you.",
     "points": [
       {
         "icon": "🔍",
@@ -64,84 +144,9 @@
         "title": "One Broker for All Your Needs",
         "description": "Auto, home, business, specialty — one call and one trusted relationship handles everything."
       }
-    ]
-  },
-  "stats": {
-    "variant": "dark-band",
-    "items": [
-      {
-        "value": "25",
-        "label": "Years in Business",
-        "suffix": "+"
-      },
-      {
-        "value": "30",
-        "label": "Carriers Accessed",
-        "suffix": "+"
-      },
-      {
-        "value": "5,000",
-        "label": "Clients Served",
-        "suffix": "+"
-      },
-      {
-        "value": "4.9",
-        "label": "Google Rating",
-        "suffix": "★"
-      }
-    ]
-  },
-  "carriers": {
-    "variant": "auto-scroll",
-    "headline": "Carriers We Work With",
-    "subline": "We shop them all to get you the best rate"
-  },
-  "howItWorks": {
-    "headline": "How It Works — 3 Simple Steps",
-    "subline": "Getting your best insurance rate has never been easier.",
-    "steps": [
-      {
-        "number": "01",
-        "title": "Tell Us What You Need",
-        "description": "Fill out our quick quote form or give us a call. Takes less than 2 minutes.",
-        "duration": "2 minutes"
-      },
-      {
-        "number": "02",
-        "title": "We Shop 30+ Carriers",
-        "description": "Our licensed brokers compare rates from over 30 insurance companies on your behalf.",
-        "duration": "Same day"
-      },
-      {
-        "number": "03",
-        "title": "You Choose the Best Rate",
-        "description": "We present your options clearly. You pick the coverage that fits your needs and budget.",
-        "duration": "You decide"
-      }
     ],
-    "cta": {
-      "label": "Start My Free Quote",
-      "href": "/en/quote"
-    }
-  },
-  "testimonials": {
-    "variant": "featured-3",
-    "headline": "What Our Clients Say",
-    "showRating": true,
-    "showCoverageType": true,
-    "limit": 3
-  },
-  "cta": {
-    "headline": "Ready to Save on Insurance?",
-    "subline": "Get a free quote in minutes. We'll shop 30+ carriers to find your best rate.",
-    "ctaPrimary": {
-      "label": "Get a Free Quote",
-      "href": "/en/quote"
-    },
-    "ctaSecondary": {
-      "label": "Call (718) 799-0472",
-      "href": "tel:+17187990472"
-    },
-    "note": "Quote within 2 hours during business hours"
+    "subline": "Unlike captive agents who represent one company, we work for you.",
+    "variant": "three-columns",
+    "headline": "Why Choose an Independent Broker?"
   }
 }

@@ -1228,7 +1228,7 @@ export function ContentEditor({
     if (!isHomePageFile || !formData) return [] as Array<{ path: string[]; label: string }>;
 
     const fields: Array<{ path: string[]; label: string }> = [];
-    const IMAGE_KEYS = new Set(['image', 'backgroundImage', 'beforeImage', 'afterImage', 'src']);
+    const IMAGE_KEYS = new Set(['image', 'backgroundImage', 'beforeImage', 'afterImage', 'src', 'photo', 'avatar', 'logo']);
     const EXCLUDED_ROOT_KEYS = new Set(['menu', 'topBar', 'topbar']);
     const DISPLAY_KEYS = [
       'title',
@@ -1281,6 +1281,17 @@ export function ContentEditor({
 
         const nextPath = [...path, key];
         const isImageField = IMAGE_KEYS.has(key);
+
+        // Handle array of image strings (e.g. galleryImages: ["url1", "url2"])
+        if (key === 'galleryImages' && Array.isArray(value)) {
+          (value as string[]).forEach((item, index) => {
+            fields.push({
+              path: [...nextPath, String(index)],
+              label: `Gallery Image ${index + 1}`,
+            });
+          });
+          return;
+        }
 
         if (isImageField && typeof value === 'string') {
           const sectionLabel = nextPath

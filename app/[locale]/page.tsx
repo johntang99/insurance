@@ -73,13 +73,23 @@ export default async function HomePage({ params }: PageProps) {
            Set hero.image in home.json to switch to 'split-image' with photo on right.
            Set hero.variant = 'split-image' to force split even before image is uploaded.
       */}
+      {/*
+        HOME HERO — All variants resolved by InsuranceHero.
+        Admin sets hero.variant + image fields. Resolution priority:
+          split-gallery-right  → hero.variant='split-gallery-right' OR hero.galleryImages
+          gallery-background   → hero.variant='gallery-background' OR hero.backgroundImage
+          split-image          → hero.variant='split-image' OR hero.image
+          home (centered)      → default
+      */}
       <InsuranceHero
-        variant={hero.image ? 'split-image' : 'home'}
+        variant={hero.variant || 'home'}
         badge={`★ ${hero.badge || 'Licensed & Independent'}`}
         headline={hero.headline || 'Your Trusted Independent Insurance Broker'}
         subline={hero.subline || 'We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.'}
         image={hero.image}
         imageAlt={hero.imageAlt}
+        backgroundImage={hero.backgroundImage}
+        galleryImages={hero.galleryImages || []}
         stats={hero.stats?.length > 0 ? hero.stats : (stats.items || [])}
         ctaPrimary={{ label: hero.ctaPrimary?.label || 'Get a Free Quote', href: hero.ctaPrimary?.href || `/${locale}/quote` }}
         ctaSecondary={{ label: hero.ctaSecondary?.label || `Call ${phone}`, href: hero.ctaSecondary?.href || phoneHref }}
