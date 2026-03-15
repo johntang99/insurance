@@ -68,7 +68,7 @@ const SITUATION_PRESETS: Record<string, string[]> = {
   'other':           [],
 };
 
-export default function QuoteForm({ insuranceLines, phone = '+1 (718) 555-0100', phoneHref = 'tel:+17185550100', locale = 'en', coverageTypes: ctProp }: QuoteFormProps) {
+export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), phoneHref = 'tel:+17187990472', locale = 'en', coverageTypes: ctProp }: QuoteFormProps) {
   const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<FormData>({ ...INITIAL, agentId: searchParams.get('agent') || '' });
@@ -384,7 +384,7 @@ export default function QuoteForm({ insuranceLines, phone = '+1 (718) 555-0100',
                 <label className="form-label" style={{ display: 'block', fontSize: '.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 6 }}>
                   Phone Number <span style={{ color: 'var(--red-500)' }}>*</span>
                 </label>
-                <input className="form-input" type="tel" placeholder="(718) 555-0100"
+                <input className="form-input" type="tel" placeholder="(718) 799-0472"
                   value={form.phone}
                   onChange={e => { setForm(f => ({ ...f, phone: formatPhone(e.target.value) })); if (errors.phone) setErrors(e2 => ({ ...e2, phone: '' })); }}
                   onBlur={() => { if (form.phone.replace(/\D/g, '').length < 10) setErrors(e => ({ ...e, phone: 'Enter a valid 10-digit phone number' })); }}
@@ -506,7 +506,7 @@ export default function QuoteForm({ insuranceLines, phone = '+1 (718) 555-0100',
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }} className="grid-1col-mobile">
                   <div>
                     <label style={{ display: 'block', fontSize: '.82rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 6 }}>Property City / ZIP</label>
-                    <input className="form-input" type="text" placeholder="e.g. Brooklyn, NY 11201" value={form.propertyAddress} onChange={e => setForm(f => ({ ...f, propertyAddress: e.target.value }))} />
+                    <input className="form-input" type="text" placeholder="e.g. Flushing, NY 11201" value={form.propertyAddress} onChange={e => setForm(f => ({ ...f, propertyAddress: e.target.value }))} />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '.82rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 6 }}>Year Built (approx.)</label>

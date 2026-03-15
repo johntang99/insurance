@@ -31,8 +31,8 @@ export default async function TestimonialsPage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
 
   const supabase = getSupabaseServerClient();
   const testimonialsRes = await supabase?.from('testimonials').select('*').eq('site_id', siteId).order('is_featured', { ascending: false }).order('created_at', { ascending: false });

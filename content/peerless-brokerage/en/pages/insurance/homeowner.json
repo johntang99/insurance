@@ -5,25 +5,63 @@
     "headline": "Homeowner Insurance",
     "subline": "Protect your most valuable asset. We compare leading carriers to find the best rate on comprehensive home coverage.",
     "stats": [
-      { "value": "30", "label": "Carriers Compared", "suffix": "+" },
-      { "value": "23", "label": "Avg. Client Savings", "suffix": "%" }
+      {
+        "value": "30",
+        "label": "Carriers Compared",
+        "suffix": "+"
+      },
+      {
+        "value": "23",
+        "label": "Avg. Client Savings",
+        "suffix": "%"
+      }
     ],
-    "ctaPrimary": { "label": "Get a Home Quote", "href": "/en/quote?type=homeowner" },
-    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" }
+    "ctaPrimary": {
+      "label": "Get a Home Quote",
+      "href": "/en/quote?type=homeowner"
+    },
+    "ctaSecondary": {
+      "label": "Call (718) 799-0472",
+      "href": "tel:+17187990472"
+    }
   },
   "whatItCovers": {
     "headline": "What Homeowner Insurance Covers",
     "included": [
-      { "title": "Dwelling Coverage",          "description": "Rebuilds or repairs your home's structure if damaged by covered perils like fire, windstorm, or vandalism." },
-      { "title": "Personal Property",          "description": "Replaces your belongings — furniture, electronics, clothing — if stolen or damaged." },
-      { "title": "Liability Protection",       "description": "Covers legal expenses and medical bills if someone is injured on your property." },
-      { "title": "Additional Living Expenses", "description": "Pays for temporary housing and extra costs if your home is uninhabitable after a covered loss." },
-      { "title": "Other Structures",           "description": "Covers detached garages, sheds, fences, and other structures on your property." }
+      {
+        "title": "Dwelling Coverage",
+        "description": "Rebuilds or repairs your home's structure if damaged by covered perils like fire, windstorm, or vandalism."
+      },
+      {
+        "title": "Personal Property",
+        "description": "Replaces your belongings — furniture, electronics, clothing — if stolen or damaged."
+      },
+      {
+        "title": "Liability Protection",
+        "description": "Covers legal expenses and medical bills if someone is injured on your property."
+      },
+      {
+        "title": "Additional Living Expenses",
+        "description": "Pays for temporary housing and extra costs if your home is uninhabitable after a covered loss."
+      },
+      {
+        "title": "Other Structures",
+        "description": "Covers detached garages, sheds, fences, and other structures on your property."
+      }
     ],
     "excluded": [
-      { "title": "Flood Damage",               "description": "Standard homeowner policies do not cover flooding. Separate flood insurance is available through NFIP or private carriers." },
-      { "title": "Earthquake",                 "description": "Earthquake coverage requires a separate policy or endorsement." },
-      { "title": "Normal Wear & Tear",         "description": "Gradual deterioration, mold, and maintenance issues are not covered." }
+      {
+        "title": "Flood Damage",
+        "description": "Standard homeowner policies do not cover flooding. Separate flood insurance is available through NFIP or private carriers."
+      },
+      {
+        "title": "Earthquake",
+        "description": "Earthquake coverage requires a separate policy or endorsement."
+      },
+      {
+        "title": "Normal Wear & Tear",
+        "description": "Gradual deterioration, mold, and maintenance issues are not covered."
+      }
     ],
     "whoNeedsIt": "If you own a home, condo, or co-op, you need homeowner or dwelling insurance. Most mortgage lenders require it as a condition of the loan. Even if your home is paid off, the risk of fire, storm damage, or liability without coverage is significant."
   },
@@ -31,29 +69,74 @@
     "variant": "three-columns",
     "headline": "Why Get Home Insurance Through Peerless?",
     "points": [
-      { "icon": "dollar-sign", "title": "Bundle & Save",       "description": "Bundle your home and auto insurance and save 10–25% on both policies." },
-      { "icon": "search",      "title": "30+ Carrier Options", "description": "We compare Travelers, Nationwide, Chubb, Liberty Mutual, and more to find your best rate." },
-      { "icon": "life-buoy",   "title": "Claims Advocacy",     "description": "When you file a claim, we're in your corner — helping navigate the process and advocate for a fair settlement." }
+      {
+        "icon": "dollar-sign",
+        "title": "Bundle & Save",
+        "description": "Bundle your home and auto insurance and save 10–25% on both policies."
+      },
+      {
+        "icon": "search",
+        "title": "30+ Carrier Options",
+        "description": "We compare Travelers, Nationwide, Chubb, Liberty Mutual, and more to find your best rate."
+      },
+      {
+        "icon": "life-buoy",
+        "title": "Claims Advocacy",
+        "description": "When you file a claim, we're in your corner — helping navigate the process and advocate for a fair settlement."
+      }
     ]
   },
   "quoteProcess": {
     "headline": "How to Get a Home Insurance Quote",
     "steps": [
-      { "title": "Property Details",       "description": "Address, year built, square footage, and construction type." },
-      { "title": "Current Coverage",       "description": "Who you're currently insured with and what you're paying." },
-      { "title": "Coverage Preferences",   "description": "Dwelling replacement cost, desired deductible, and any valuable items to schedule separately." }
+      {
+        "title": "Property Details",
+        "description": "Address, year built, square footage, and construction type."
+      },
+      {
+        "title": "Current Coverage",
+        "description": "Who you're currently insured with and what you're paying."
+      },
+      {
+        "title": "Coverage Preferences",
+        "description": "Dwelling replacement cost, desired deductible, and any valuable items to schedule separately."
+      }
     ],
     "duration": "2 hours"
   },
   "rateFactors": {
     "headline": "What Affects Your Home Insurance Rate",
     "factors": [
-      { "factor": "Home Age & Condition",  "impact": "high",   "description": "Older homes with outdated systems (electrical, plumbing, roof) cost more to insure." },
-      { "factor": "Location",              "impact": "high",   "description": "Proximity to fire stations, flood zones, and high-crime areas affects your premium." },
-      { "factor": "Coverage Amount",       "impact": "high",   "description": "Insuring for full replacement cost vs. actual cash value significantly affects your premium." },
-      { "factor": "Deductible",            "impact": "medium", "description": "Higher deductibles lower your premium but increase out-of-pocket costs after a claim." },
-      { "factor": "Claims History",        "impact": "medium", "description": "A history of prior claims can increase your rate or limit carrier options." },
-      { "factor": "Security Features",     "impact": "low",    "description": "Smoke detectors, alarm systems, and deadbolt locks may qualify for discounts." }
+      {
+        "factor": "Home Age & Condition",
+        "impact": "high",
+        "description": "Older homes with outdated systems (electrical, plumbing, roof) cost more to insure."
+      },
+      {
+        "factor": "Location",
+        "impact": "high",
+        "description": "Proximity to fire stations, flood zones, and high-crime areas affects your premium."
+      },
+      {
+        "factor": "Coverage Amount",
+        "impact": "high",
+        "description": "Insuring for full replacement cost vs. actual cash value significantly affects your premium."
+      },
+      {
+        "factor": "Deductible",
+        "impact": "medium",
+        "description": "Higher deductibles lower your premium but increase out-of-pocket costs after a claim."
+      },
+      {
+        "factor": "Claims History",
+        "impact": "medium",
+        "description": "A history of prior claims can increase your rate or limit carrier options."
+      },
+      {
+        "factor": "Security Features",
+        "impact": "low",
+        "description": "Smoke detectors, alarm systems, and deadbolt locks may qualify for discounts."
+      }
     ],
     "tips": [
       "Bundle with your auto policy for the biggest single discount",
@@ -72,15 +155,34 @@
   "faq": {
     "headline": "Homeowner Insurance FAQs",
     "items": [
-      { "question": "How much home insurance do I need?", "answer": "Your dwelling coverage should equal the full replacement cost of your home — what it would cost to rebuild from scratch, not the market value. We'll calculate this for you." },
-      { "question": "Does homeowner insurance cover flooding?", "answer": "No. Standard homeowner policies exclude flood damage. If you're in a flood zone, separate flood insurance through NFIP or private carriers is essential." },
-      { "question": "Will my premium go up after I file a claim?", "answer": "Filing a claim can increase your premium, particularly for at-fault or water damage claims. We advise clients on when it makes sense to file vs. pay out of pocket." },
-      { "question": "What is an umbrella policy and do I need one?", "answer": "An umbrella policy provides additional liability coverage above your home and auto limits. It's recommended if you have significant assets to protect." },
-      { "question": "How often should I review my homeowner coverage?", "answer": "We recommend annual reviews, especially after renovations, major purchases, or when home values change significantly in your area." }
+      {
+        "question": "How much home insurance do I need?",
+        "answer": "Your dwelling coverage should equal the full replacement cost of your home — what it would cost to rebuild from scratch, not the market value. We'll calculate this for you."
+      },
+      {
+        "question": "Does homeowner insurance cover flooding?",
+        "answer": "No. Standard homeowner policies exclude flood damage. If you're in a flood zone, separate flood insurance through NFIP or private carriers is essential."
+      },
+      {
+        "question": "Will my premium go up after I file a claim?",
+        "answer": "Filing a claim can increase your premium, particularly for at-fault or water damage claims. We advise clients on when it makes sense to file vs. pay out of pocket."
+      },
+      {
+        "question": "What is an umbrella policy and do I need one?",
+        "answer": "An umbrella policy provides additional liability coverage above your home and auto limits. It's recommended if you have significant assets to protect."
+      },
+      {
+        "question": "How often should I review my homeowner coverage?",
+        "answer": "We recommend annual reviews, especially after renovations, major purchases, or when home values change significantly in your area."
+      }
     ]
   },
   "related": {
     "headline": "Homeowners Also Ask About",
-    "slugs": ["auto", "business", "construction"]
+    "slugs": [
+      "auto",
+      "business",
+      "construction"
+    ]
   }
 }

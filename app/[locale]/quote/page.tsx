@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps) {
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
-  const city = (siteInfo as any)?.city || 'Brooklyn';
+  const city = (siteInfo as any)?.city || 'Flushing';
   return buildPageMetadata({
     siteId, locale, slug: 'quote',
     title: `Get a Free Insurance Quote | ${siteName}`,
@@ -33,8 +33,8 @@ export default async function QuotePage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
 
   const supabase = getSupabaseServerClient();

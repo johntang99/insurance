@@ -1,18 +1,18 @@
 {
   "titleTemplate": "%s | Peerless Brokerage Inc",
-  "defaultTitle": "Peerless Brokerage Inc — Independent Insurance Broker in Brooklyn, NY",
-  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Brooklyn, Queens, NYC since 1999.",
-  "ogImage": "/uploads/peerless-brokerage/og-default.jpg",
+  "defaultTitle": "Peerless Brokerage Inc — Independent Insurance Broker in Flushing, NY",
+  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Flushing, Queens, NYC since 1999.",
+  "ogImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/og-default.jpg",
   "twitterHandle": "",
   "canonicalBase": "https://pbiny.com",
   "pages": {
     "home": {
-      "title": "Independent Insurance Broker in Brooklyn, NY | Free Quotes",
-      "description": "Peerless Brokerage shops 30+ carriers for the best rate on auto, home, business, TLC, and more. Licensed in NY, NJ, CT, PA. Get a free quote today."
+      "title": "Independent Insurance Broker in Flushing, NY | Free Quotes",
+      "description": "Peerless Brokerage shops 30+ carriers for the best rate on auto, home, business, TLC, and more. Licensed in NY, NJ, CT, PA. Get a free quote today. Call (718) 799-0472."
     },
     "insurance": {
       "title": "Insurance Coverage | All 15 Lines",
-      "description": "Auto, TLC, homeowner, business, workers comp, and 10 more insurance lines. One broker for all your coverage needs."
+      "description": "Auto, TLC, homeowner, business, workers comp, and 10 more insurance lines. One broker for all your coverage needs in Flushing and Queens."
     },
     "quote": {
       "title": "Get a Free Insurance Quote",
@@ -20,11 +20,11 @@
     },
     "about": {
       "title": "About Us | Licensed Since 1999",
-      "description": "25+ years serving Brooklyn, Queens, and NYC. Licensed in NY, NJ, CT, PA. Independent brokers who work for you, not the insurance company."
+      "description": "25+ years serving Flushing, Queens, and NYC. Licensed in NY, NJ, CT, PA. Independent brokers who work for you, not the insurance company."
     },
     "contact": {
-      "title": "Contact Us | Brooklyn, NY",
-      "description": "Visit our office at 123 Main Street, Brooklyn, NY. Call (718) 555-0100. Mon–Fri 9am–6pm, Sat 10am–3pm."
+      "title": "Contact Us | Flushing, NY",
+      "description": "Visit our office at 136-31 41st Ave, Flushing, NY 11355. Call (718) 799-0472. Mon–Fri 9am–6pm, Sat 10am–3pm."
     }
   }
 }

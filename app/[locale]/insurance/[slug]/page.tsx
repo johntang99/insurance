@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps) {
     loadSiteInfo(siteId, locale) as Promise<SiteInfo | null>,
   ]);
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
-  const city = (siteInfo as any)?.city || 'Brooklyn';
+  const city = (siteInfo as any)?.city || 'Flushing';
   const lineName = content?.serviceHero?.headline || LINE_NAMES[slug] || `${slug} Insurance`;
   return buildPageMetadata({
     siteId, locale, slug: `insurance/${slug}`,
@@ -60,8 +60,8 @@ export default async function InsuranceServicePage({ params }: PageProps) {
   if (!lineRes?.data || lineRes.data.is_enabled === false) notFound();
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
 
   const hero = content?.serviceHero || {};

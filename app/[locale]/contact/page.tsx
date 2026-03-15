@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: PageProps) {
   const si = siteInfo as any;
   return buildPageMetadata({
     siteId, locale, slug: 'contact',
-    title: `Contact ${siteName} | Insurance Broker in ${si?.city || 'Brooklyn'}`,
-    description: `Reach ${siteName} by phone, email, or visit our ${si?.city || 'Brooklyn'} office. Free insurance quotes. ${si?.phone || '(718) 555-0100'}.`,
+    title: `Contact ${siteName} | Insurance Broker in ${si?.city || 'Flushing'}`,
+    description: `Reach ${siteName} by phone, email, or visit our ${si?.city || 'Flushing'} office. Free insurance quotes. ${si?.phone || '(718) 799-0472'}.`,
   });
 }
 
@@ -32,10 +32,10 @@ export default async function ContactPage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const email = si?.email || 'info@pbiny.com';
-  const address = si?.address ? `${si.address}, ${si.city}, ${si.state} ${si.zip}` : '123 Main Street, Brooklyn, NY 11201';
+  const address = si?.address ? `${si.address}, ${si.city}, ${si.state} ${si.zip}` : '123 Main Street, Flushing, NY 11201';
   const languages = si?.languages || ['English', 'Spanish', 'Chinese'];
   const hours = content?.contactInfo?.hours || [
     { days: 'Monday – Friday', hours: '9:00am – 6:00pm' },
@@ -169,7 +169,7 @@ export default async function ContactPage({ params }: PageProps) {
         <div className="container-custom" style={{ textAlign: 'center' }}>
           <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 12 }}>Service Area</h4>
           <p style={{ color: 'var(--text-muted)', fontSize: '.9rem', maxWidth: 600, margin: '0 auto' }}>
-            {content?.serviceArea?.text || 'We serve clients throughout New York, New Jersey, Connecticut, and Pennsylvania. Our Brooklyn office is conveniently located for clients in Brooklyn, Queens, Manhattan, Staten Island, and the Bronx.'}
+            {content?.serviceArea?.text || 'We serve clients throughout New York, New Jersey, Connecticut, and Pennsylvania. Our Flushing office is conveniently located for clients in Flushing, Queens, Manhattan, Staten Island, and the Bronx.'}
           </p>
         </div>
       </section>

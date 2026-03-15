@@ -29,8 +29,8 @@ const ICONS: Record<string, React.ComponentType<{ className?: string; style?: Re
 export default function QuoteTrustPanel({
   headline = 'Why Get a Quote From Us?',
   points = DEFAULT_POINTS,
-  phone = '+1 (718) 555-0100',
-  phoneHref = 'tel:+17185550100',
+  phone = ("(718) 799-0472"),
+  phoneHref = 'tel:+17187990472',
   phoneLabel = 'Prefer to call?',
   responsePromise = 'We respond to all quote requests within 2 business hours.',
   googleRating,

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps) {
     loadSiteInfo(siteId, locale) as Promise<SiteInfo | null>,
   ]);
   const siteName = getSiteDisplayName(siteInfo, 'Insurance Brokerage');
-  const city = (siteInfo as any)?.city || 'Brooklyn';
+  const city = (siteInfo as any)?.city || 'Flushing';
   return buildPageMetadata({
     siteId, locale, slug: 'home',
     title: `${siteName} — Independent Insurance Broker in ${city} | Free Quotes`,
@@ -41,8 +41,8 @@ export default async function HomePage({ params }: PageProps) {
   if (!content) notFound();
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
 
   // Load DB data

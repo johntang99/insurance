@@ -7,16 +7,32 @@
   "process": {
     "headline": "How We Help with Claims",
     "steps": [
-      { "step": 1, "title": "Contact Us First", "description": "Call or email us before contacting your insurance carrier directly. We'll advise on the best approach for your situation." },
-      { "step": 2, "title": "Document Everything", "description": "We'll help you gather the right documentation — photos, police reports, medical records — to support your claim." },
-      { "step": 3, "title": "File Your Claim", "description": "We file on your behalf or guide you through the carrier's claims process to ensure nothing is missed." },
-      { "step": 4, "title": "Follow Up", "description": "We monitor your claim and advocate for a fair and timely resolution." }
+      {
+        "step": 1,
+        "title": "Contact Us First",
+        "description": "Call or email us before contacting your insurance carrier directly. We'll advise on the best approach for your situation."
+      },
+      {
+        "step": 2,
+        "title": "Document Everything",
+        "description": "We'll help you gather the right documentation — photos, police reports, medical records — to support your claim."
+      },
+      {
+        "step": 3,
+        "title": "File Your Claim",
+        "description": "We file on your behalf or guide you through the carrier's claims process to ensure nothing is missed."
+      },
+      {
+        "step": 4,
+        "title": "Follow Up",
+        "description": "We monitor your claim and advocate for a fair and timely resolution."
+      }
     ]
   },
   "contact": {
     "headline": "Start Your Claim",
-    "phone": "+1 (718) 555-0100",
-    "phoneHref": "tel:+17185550100",
+    "phone": "+1 (718) 799-0472",
+    "phoneHref": "tel:+17187990472",
     "email": "claims@pbiny.com",
     "note": "For life-threatening emergencies, always call 911 first."
   }

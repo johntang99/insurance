@@ -49,8 +49,8 @@ export default async function ResourceArticlePage({ params }: PageProps) {
   if (!post) notFound();
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
 
   // Related articles (same category, exclude current)

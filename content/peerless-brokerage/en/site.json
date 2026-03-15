@@ -1,12 +1,12 @@
 {
   "name": "Peerless Brokerage Inc",
   "tagline": "Your Trusted Independent Insurance Broker",
-  "phone": "+1-718-555-0100",
+  "phone": "(718) 799-0472",
   "email": "info@pbiny.com",
-  "address": "123 Main Street, Brooklyn, NY 11201",
-  "city": "Brooklyn",
+  "address": "136-31 41st Ave",
+  "city": "Flushing",
   "state": "NY",
-  "zip": "11201",
+  "zip": "11355",
   "hours": "Mon–Fri 9am–6pm, Sat 10am–3pm",
   "licenseNumber": "LA-1234567",
   "licensedStates": [
@@ -28,10 +28,11 @@
   "googleReviewsCount": 312,
   "logoUrl": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/logo.png",
   "faviconUrl": "/favicon.ico",
+  "addressMapUrl": "https://www.google.com/maps/search/?api=1&query=136-31+41st+Ave+Flushing+NY+11355",
   "social": {
     "facebook": "",
     "google": ""
   },
-  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Brooklyn, Queens, NYC since 1999.",
+  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Flushing, Queens, NYC since 1999.",
   "headerVariant": "default"
 }

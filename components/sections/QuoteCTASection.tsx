@@ -47,8 +47,8 @@ export default function QuoteCTASection({
   ctaSecondary,
   note,
   coverageType = '',
-  phone = '+1 (718) 555-0100',
-  phoneHref = 'tel:+17185550100',
+  phone = ("(718) 799-0472"),
+  phoneHref = 'tel:+17187990472',
   insuranceLines = [],
   locale = 'en',
 }: QuoteCTASectionProps) {
@@ -170,7 +170,7 @@ export default function QuoteCTASection({
                     Phone Number <span style={{ color: 'var(--red-500)' }}>*</span>
                   </label>
                   <input
-                    type="tel" required placeholder="(718) 555-0100"
+                    type="tel" required placeholder="(718) 799-0472"
                     value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                     style={{ width: '100%', padding: '11px 14px', border: '1.5px solid rgba(255,255,255,.15)', borderRadius: 8, background: 'rgba(255,255,255,.08)', color: '#fff', fontSize: '.9375rem', outline: 'none' }}
                     onFocus={e => (e.currentTarget.style.borderColor = 'var(--gold-500)')}

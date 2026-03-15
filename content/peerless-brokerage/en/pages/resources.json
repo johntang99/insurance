@@ -7,7 +7,13 @@
   "cta": {
     "headline": "Have Questions About Your Coverage?",
     "subline": "Our licensed agents are happy to help.",
-    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
-    "ctaSecondary": { "label": "Call Us", "href": "tel:+17185550100" }
+    "ctaPrimary": {
+      "label": "Get a Free Quote",
+      "href": "/en/quote"
+    },
+    "ctaSecondary": {
+      "label": "Call Us",
+      "href": "tel:+17187990472"
+    }
   }
 }

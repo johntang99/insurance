@@ -13,10 +13,26 @@
   "whyUs": {
     "headline": "Why Peerless Brokerage?",
     "points": [
-      { "icon": "search",     "title": "30+ Carriers",        "description": "We shop the market so you don't have to." },
-      { "icon": "shield",     "title": "Independent Advice",  "description": "We work for you — no bias toward any one carrier." },
-      { "icon": "clock",      "title": "Fast Quotes",         "description": "Quote within 2 hours during business hours." },
-      { "icon": "map-pin",    "title": "Local Expertise",     "description": "25+ years serving Brooklyn, Queens, and NYC." }
+      {
+        "icon": "search",
+        "title": "30+ Carriers",
+        "description": "We shop the market so you don't have to."
+      },
+      {
+        "icon": "shield",
+        "title": "Independent Advice",
+        "description": "We work for you — no bias toward any one carrier."
+      },
+      {
+        "icon": "clock",
+        "title": "Fast Quotes",
+        "description": "Quote within 2 hours during business hours."
+      },
+      {
+        "icon": "map-pin",
+        "title": "Local Expertise",
+        "description": "25+ years serving Brooklyn, Queens, and NYC."
+      }
     ]
   },
   "faq": {
@@ -39,7 +55,13 @@
   "cta": {
     "headline": "Ready to Get Started?",
     "subline": "Tell us what you need and we'll find your best rate.",
-    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
-    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" }
+    "ctaPrimary": {
+      "label": "Get a Free Quote",
+      "href": "/en/quote"
+    },
+    "ctaSecondary": {
+      "label": "Call (718) 799-0472",
+      "href": "tel:+17187990472"
+    }
   }
 }

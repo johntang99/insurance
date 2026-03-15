@@ -34,8 +34,8 @@ export default async function InsurancePage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
 
   const supabase = getSupabaseServerClient();
   const linesRes = await supabase?.from('insurance_lines').select('*').eq('site_id', siteId).eq('is_enabled', true).order('sort_order');
@@ -74,7 +74,7 @@ export default async function InsurancePage({ params }: PageProps) {
               { icon: '🔍', title: '30+ Carriers', desc: 'We shop the market so you don\'t have to.' },
               { icon: '🛡️', title: 'Independent Advice', desc: 'We work for you — no bias toward any one carrier.' },
               { icon: '⚡', title: 'Fast Quotes', desc: 'Quote within 2 hours during business hours.' },
-              { icon: '📍', title: 'Local Expertise', desc: '25+ years serving Brooklyn, Queens, and NYC.' },
+              { icon: '📍', title: 'Local Expertise', desc: '25+ years serving Flushing, Queens, and NYC.' },
             ].map((item, i) => (
               <div key={i} style={{ textAlign: 'center', padding: '28px 20px', background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius)' }}>
                 <span style={{ fontSize: '2rem', display: 'block', marginBottom: 12 }}>{item.icon}</span>

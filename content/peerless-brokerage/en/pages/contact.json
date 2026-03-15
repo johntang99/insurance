@@ -2,28 +2,47 @@
   "hero": {
     "variant": "centered",
     "headline": "Contact Us",
-    "subline": "We're here to help. Reach out by phone, email, or stop by our office."
+    "subline": "We're here to help. Reach out by phone, email, or stop by our Flushing office."
   },
   "contactInfo": {
-    "phone": "+1 (718) 555-0100",
-    "phoneHref": "tel:+17185550100",
+    "phone": "(718) 799-0472",
+    "phoneHref": "tel:+17187990472",
     "email": "info@pbiny.com",
-    "address": "123 Main Street, Brooklyn, NY 11201",
+    "address": "136-31 41st Ave, Flushing, NY 11355",
     "hours": [
-      { "days": "Monday – Friday", "hours": "9:00am – 6:00pm" },
-      { "days": "Saturday",        "hours": "10:00am – 3:00pm" },
-      { "days": "Sunday",          "hours": "Closed" }
+      {
+        "days": "Monday – Friday",
+        "hours": "9:00am – 6:00pm"
+      },
+      {
+        "days": "Saturday",
+        "hours": "10:00am – 3:00pm"
+      },
+      {
+        "days": "Sunday",
+        "hours": "Closed"
+      }
     ],
-    "languages": ["English", "Spanish", "Chinese"],
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.11976397304903!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1679415844082!5m2!1sen!2s"
+    "languages": [
+      "English",
+      "Spanish",
+      "Chinese"
+    ],
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9476519598343!2d-73.83433928441847!3d40.75942897932778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2600d9c4b5f2b%3A0xa68de58d4f2f0e2d!2s136-31%2041st%20Ave%2C%20Flushing%2C%20NY%2011355!5e0!3m2!1sen!2sus!4v1710000000000!5m2!1sen!2sus"
   },
   "form": {
     "headline": "Send Us a Message",
     "subline": "We'll get back to you within one business day.",
-    "fields": ["name", "phone", "email", "coverageType", "message"]
+    "fields": [
+      "name",
+      "phone",
+      "email",
+      "coverageType",
+      "message"
+    ]
   },
   "serviceArea": {
     "headline": "Service Area",
-    "text": "We serve clients throughout New York, New Jersey, Connecticut, and Pennsylvania. Our Brooklyn office is conveniently located for clients in Brooklyn, Queens, Manhattan, Staten Island, and the Bronx."
+    "text": "We serve clients throughout New York, New Jersey, Connecticut, and Pennsylvania. Our Flushing office is conveniently located for clients in Queens, Flushing, Jackson Heights, Jamaica, Brooklyn, and all of NYC."
   }
 }

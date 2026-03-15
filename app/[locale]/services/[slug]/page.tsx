@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps) {
   return buildPageMetadata({
     siteId, locale, slug: `services/${slug}`,
     title: `${meta.name} | ${siteName}`,
-    description: `${meta.description} Available at ${siteName}, Brooklyn, NY.`,
+    description: `${meta.description} Available at ${siteName}, Flushing, NY.`,
   });
 }
 
@@ -39,8 +39,8 @@ export default async function ServiceSlugPage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const meta = SERVICE_META[slug];
 
   const hero = content?.hero || {};

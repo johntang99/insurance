@@ -10,34 +10,80 @@
     "founded": "1999",
     "body": "Peerless Brokerage was founded in 1999 with a simple mission: give Brooklyn families and businesses the same access to insurance options that large corporations enjoy. As an independent broker, we represent you — not any single insurance company.",
     "milestones": [
-      { "year": "1999", "text": "Founded in Brooklyn, NY" },
-      { "year": "2005", "text": "Expanded to commercial and TLC insurance" },
-      { "year": "2012", "text": "Reached 2,000 clients served" },
-      { "year": "2018", "text": "Opened second location in Queens" },
-      { "year": "2024", "text": "5,000+ clients, 30+ carrier partnerships" }
+      {
+        "year": "1999",
+        "text": "Founded in Brooklyn, NY"
+      },
+      {
+        "year": "2005",
+        "text": "Expanded to commercial and TLC insurance"
+      },
+      {
+        "year": "2012",
+        "text": "Reached 2,000 clients served"
+      },
+      {
+        "year": "2018",
+        "text": "Opened second location in Queens"
+      },
+      {
+        "year": "2024",
+        "text": "5,000+ clients, 30+ carrier partnerships"
+      }
     ]
   },
   "mission": {
     "headline": "Our Mission",
     "body": "We believe every family and business deserves access to the best insurance options at the best price. As independent brokers, we shop multiple carriers on your behalf — so you never overpay or under-protect.",
     "pillars": [
-      { "title": "Independent Advice", "text": "We work for you, not the insurance company." },
-      { "title": "Best Rate", "text": "We shop 30+ carriers to find the lowest price for your coverage." },
-      { "title": "Local Expertise", "text": "We know Brooklyn, Queens, and the NYC market inside and out." }
+      {
+        "title": "Independent Advice",
+        "text": "We work for you, not the insurance company."
+      },
+      {
+        "title": "Best Rate",
+        "text": "We shop 30+ carriers to find the lowest price for your coverage."
+      },
+      {
+        "title": "Local Expertise",
+        "text": "We know Brooklyn, Queens, and the NYC market inside and out."
+      }
     ]
   },
   "licenses": {
     "headline": "Licenses & Credentials",
     "items": [
-      { "state": "New York",      "licenseNumber": "LA-1234567", "verifyUrl": "https://www.dfs.ny.gov" },
-      { "state": "New Jersey",    "licenseNumber": "NJ-7654321", "verifyUrl": "https://www.nj.gov/dobi" },
-      { "state": "Connecticut",   "licenseNumber": "CT-1122334", "verifyUrl": "https://portal.ct.gov/cid" },
-      { "state": "Pennsylvania",  "licenseNumber": "PA-4433221", "verifyUrl": "https://www.insurance.pa.gov" }
+      {
+        "state": "New York",
+        "licenseNumber": "LA-1234567",
+        "verifyUrl": "https://www.dfs.ny.gov"
+      },
+      {
+        "state": "New Jersey",
+        "licenseNumber": "NJ-7654321",
+        "verifyUrl": "https://www.nj.gov/dobi"
+      },
+      {
+        "state": "Connecticut",
+        "licenseNumber": "CT-1122334",
+        "verifyUrl": "https://portal.ct.gov/cid"
+      },
+      {
+        "state": "Pennsylvania",
+        "licenseNumber": "PA-4433221",
+        "verifyUrl": "https://www.insurance.pa.gov"
+      }
     ],
     "memberships": [
-      { "name": "Professional Insurance Agents (PIANY)" },
-      { "name": "Independent Insurance Agents of NY (IIABNY)" },
-      { "name": "Better Business Bureau (BBB)" }
+      {
+        "name": "Professional Insurance Agents (PIANY)"
+      },
+      {
+        "name": "Independent Insurance Agents of NY (IIABNY)"
+      },
+      {
+        "name": "Better Business Bureau (BBB)"
+      }
     ],
     "disclaimer": "E&O insurance holder. All licenses verified and in good standing."
   },
@@ -52,7 +98,13 @@
   "cta": {
     "headline": "Ready to Work with Peerless?",
     "subline": "Get a free quote today and see how much you can save.",
-    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
-    "ctaSecondary": { "label": "Call Us", "href": "tel:+17185550100" }
+    "ctaPrimary": {
+      "label": "Get a Free Quote",
+      "href": "/en/quote"
+    },
+    "ctaSecondary": {
+      "label": "Call Us",
+      "href": "tel:+17187990472"
+    }
   }
 }

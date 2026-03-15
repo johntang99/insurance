@@ -5,13 +5,35 @@
     "headline": "Your Trusted Independent Insurance Broker",
     "subline": "We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.",
     "stats": [
-      { "value": "25", "label": "Years in Business", "suffix": "+" },
-      { "value": "30", "label": "Carriers", "suffix": "+" },
-      { "value": "5,000", "label": "Clients Served", "suffix": "+" },
-      { "value": "10,000", "label": "Policies Written", "suffix": "+" }
+      {
+        "value": "25",
+        "label": "Years in Business",
+        "suffix": "+"
+      },
+      {
+        "value": "30",
+        "label": "Carriers",
+        "suffix": "+"
+      },
+      {
+        "value": "5,000",
+        "label": "Clients Served",
+        "suffix": "+"
+      },
+      {
+        "value": "10,000",
+        "label": "Policies Written",
+        "suffix": "+"
+      }
     ],
-    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
-    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" },
+    "ctaPrimary": {
+      "label": "Get a Free Quote",
+      "href": "/en/quote"
+    },
+    "ctaSecondary": {
+      "label": "Call (718) 799-0472",
+      "href": "tel:+17187990472"
+    },
     "backgroundImage": ""
   },
   "insuranceLines": {
@@ -47,10 +69,26 @@
   "stats": {
     "variant": "dark-band",
     "items": [
-      { "value": "25", "label": "Years in Business", "suffix": "+" },
-      { "value": "30", "label": "Carriers Accessed", "suffix": "+" },
-      { "value": "5,000", "label": "Clients Served", "suffix": "+" },
-      { "value": "4.9", "label": "Google Rating", "suffix": "★" }
+      {
+        "value": "25",
+        "label": "Years in Business",
+        "suffix": "+"
+      },
+      {
+        "value": "30",
+        "label": "Carriers Accessed",
+        "suffix": "+"
+      },
+      {
+        "value": "5,000",
+        "label": "Clients Served",
+        "suffix": "+"
+      },
+      {
+        "value": "4.9",
+        "label": "Google Rating",
+        "suffix": "★"
+      }
     ]
   },
   "carriers": {
@@ -81,7 +119,10 @@
         "duration": "You decide"
       }
     ],
-    "cta": { "label": "Start My Free Quote", "href": "/en/quote" }
+    "cta": {
+      "label": "Start My Free Quote",
+      "href": "/en/quote"
+    }
   },
   "testimonials": {
     "variant": "featured-3",
@@ -93,8 +134,14 @@
   "cta": {
     "headline": "Ready to Save on Insurance?",
     "subline": "Get a free quote in minutes. We'll shop 30+ carriers to find your best rate.",
-    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
-    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" },
+    "ctaPrimary": {
+      "label": "Get a Free Quote",
+      "href": "/en/quote"
+    },
+    "ctaSecondary": {
+      "label": "Call (718) 799-0472",
+      "href": "tel:+17187990472"
+    },
     "note": "Quote within 2 hours during business hours"
   }
 }

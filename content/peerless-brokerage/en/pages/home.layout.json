@@ -1,12 +1,28 @@
 {
   "sections": [
-    { "id": "hero" },
-    { "id": "insuranceLines" },
-    { "id": "whyIndependent" },
-    { "id": "stats" },
-    { "id": "carriers" },
-    { "id": "howItWorks" },
-    { "id": "testimonials" },
-    { "id": "cta" }
+    {
+      "id": "hero"
+    },
+    {
+      "id": "insuranceLines"
+    },
+    {
+      "id": "whyIndependent"
+    },
+    {
+      "id": "stats"
+    },
+    {
+      "id": "carriers"
+    },
+    {
+      "id": "howItWorks"
+    },
+    {
+      "id": "testimonials"
+    },
+    {
+      "id": "cta"
+    }
   ]
 }

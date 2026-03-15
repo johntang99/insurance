@@ -3,8 +3,14 @@
     "variant": "service-hero",
     "headline": "Business Insurance",
     "subline": "Get a free quote from Peerless Brokerage — we shop 30+ carriers for the best rate.",
-    "ctaPrimary": { "label": "Get a Quote", "href": "/en/quote?type=business" },
-    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" }
+    "ctaPrimary": {
+      "label": "Get a Quote",
+      "href": "/en/quote?type=business"
+    },
+    "ctaSecondary": {
+      "label": "Call (718) 799-0472",
+      "href": "tel:+17187990472"
+    }
   },
   "_note": "Full content coming in Phase 1D/2G"
 }

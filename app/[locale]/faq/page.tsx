@@ -34,7 +34,7 @@ const DEFAULT_FAQ: FAQItem[] = [
   { category: 'tlc', question: 'How fast can you bind TLC insurance?', answer: 'In most cases, same day. Once we have your information, we can bind coverage and provide proof of insurance to TLC the same business day.' },
   { category: 'claims', question: 'What do I do after an accident or loss?', answer: 'Call us first before contacting your carrier directly. We\'ll advise on the best approach, help gather documentation, and file on your behalf or guide you through the process.' },
   { category: 'claims', question: 'Will filing a claim raise my rates?', answer: 'Filing a claim can increase your premium, particularly for at-fault accidents or water damage claims. We advise clients on when it makes sense to file vs. pay out of pocket.' },
-  { category: 'about', question: 'How long have you been in business?', answer: 'Peerless Brokerage has been serving Brooklyn, Queens, and the NYC area since 1999 — over 25 years of independent insurance expertise.' },
+  { category: 'about', question: 'How long have you been in business?', answer: 'Peerless Brokerage has been serving Flushing, Queens, and the NYC area since 1999 — over 25 years of independent insurance expertise.' },
   { category: 'about', question: 'Are you licensed in my state?', answer: 'We are licensed in New York, New Jersey, Connecticut, and Pennsylvania. We can help clients throughout these states.' },
 ];
 
@@ -60,8 +60,8 @@ export default async function FAQPage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const email = si?.email || 'info@pbiny.com';
 
   // Use items from content JSON, fallback to defaults

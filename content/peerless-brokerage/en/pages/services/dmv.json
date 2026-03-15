@@ -27,7 +27,13 @@
   "cta": {
     "headline": "Need DMV Help?",
     "subline": "Stop by our office or call ahead to confirm what documents you'll need.",
-    "ctaPrimary": { "label": "Call Us", "href": "tel:+17185550100" },
-    "ctaSecondary": { "label": "Get Directions", "href": "/en/contact" }
+    "ctaPrimary": {
+      "label": "Call Us",
+      "href": "tel:+17187990472"
+    },
+    "ctaSecondary": {
+      "label": "Get Directions",
+      "href": "/en/contact"
+    }
   }
 }

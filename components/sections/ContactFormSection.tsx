@@ -14,8 +14,8 @@ interface ContactFormSectionProps {
 
 export default function ContactFormSection({
   locale = 'en',
-  phone = '+1 (718) 555-0100',
-  phoneHref = 'tel:+17185550100',
+  phone = ("(718) 799-0472"),
+  phoneHref = 'tel:+17187990472',
   hours = [],
   languages = [],
   insuranceLines = [],
@@ -83,7 +83,7 @@ export default function ContactFormSection({
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 6 }}>Phone Number *</label>
-                    <input required type="tel" placeholder="(718) 555-0100" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                    <input required type="tel" placeholder="(718) 799-0472" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                       style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--border)', borderRadius: 8, fontSize: '.9375rem', outline: 'none' }}
                       onFocus={e => (e.currentTarget.style.borderColor = 'var(--navy-600)')}
                       onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')} />

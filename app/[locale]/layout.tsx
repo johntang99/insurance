@@ -194,8 +194,8 @@ export default async function LocaleLayout({
           footer={footer as any}
         />
         <MobileStickyPhoneBar
-          phone={(siteInfo as any)?.phone || '+1 (718) 555-0100'}
-          phoneHref={(siteInfo as any)?.phone ? `tel:${((siteInfo as any).phone as string).replace(/\D/g, '')}` : 'tel:+17185550100'}
+          phone={(siteInfo as any)?.phone || ("(718) 799-0472")}
+          phoneHref={(siteInfo as any)?.phone ? `tel:${((siteInfo as any).phone as string).replace(/\D/g, '')}` : 'tel:+17187990472'}
           quoteHref={`/${locale}/quote`}
         />
       </div>

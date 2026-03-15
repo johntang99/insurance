@@ -30,7 +30,7 @@ export default function LocationsPage() {
             We Serve New York City and Surrounding Areas
           </h1>
           <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '1.05rem', maxWidth: 560, margin: '0 auto 28px', lineHeight: 1.65 }}>
-            Licensed insurance broker serving Brooklyn, Queens, Manhattan, the Bronx, Staten Island, and throughout NY, NJ, CT, and PA.
+            Licensed insurance broker serving Flushing, Queens, Manhattan, the Bronx, Staten Island, and throughout NY, NJ, CT, and PA.
           </p>
           <Link href={`/${locale}/quote`} className="btn-gold">Get a Free Quote</Link>
         </div>
@@ -126,7 +126,7 @@ export default function LocationsPage() {
           <p style={{ color: 'rgba(255,255,255,.7)', marginBottom: 24 }}>Call us — we serve all of NY, NJ, CT, and PA.</p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href={`/${locale}/quote`} className="btn-gold">Get a Free Quote</Link>
-            <a href="tel:+17185550100" className="btn-navy-outline">📞 +1 (718) 555-0100</a>
+            <a href="tel:+17187990472" className="btn-navy-outline">📞 (718) 799-0472</a>
           </div>
         </div>
       </section>

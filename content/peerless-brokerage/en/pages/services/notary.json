@@ -21,14 +21,26 @@
     "headline": "Pricing",
     "note": "Notary fees are set by New York State law.",
     "items": [
-      { "service": "First signature",      "price": "$2.00" },
-      { "service": "Each additional signature", "price": "$2.00" }
+      {
+        "service": "First signature",
+        "price": "$2.00"
+      },
+      {
+        "service": "Each additional signature",
+        "price": "$2.00"
+      }
     ]
   },
   "cta": {
     "headline": "Need a Notary?",
     "subline": "Walk-ins welcome during business hours. Large documents — call ahead.",
-    "ctaPrimary": { "label": "Call Ahead", "href": "tel:+17185550100" },
-    "ctaSecondary": { "label": "Get Directions", "href": "/en/contact" }
+    "ctaPrimary": {
+      "label": "Call Ahead",
+      "href": "tel:+17187990472"
+    },
+    "ctaSecondary": {
+      "label": "Get Directions",
+      "href": "/en/contact"
+    }
   }
 }

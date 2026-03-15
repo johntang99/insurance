@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps) {
   return buildPageMetadata({
     siteId, locale, slug: 'about',
     title: `About ${siteName} | Licensed Insurance Broker Since ${year}`,
-    description: `${siteName} is a licensed independent insurance broker serving Brooklyn since ${year}. 25+ years experience, 30+ carriers, 5,000+ clients.`,
+    description: `${siteName} is a licensed independent insurance broker serving Flushing since ${year}. 25+ years experience, 30+ carriers, 5,000+ clients.`,
   });
 }
 
@@ -47,8 +47,8 @@ export default async function AboutPage({ params }: PageProps) {
   if (!content) notFound();
 
   const si = siteInfo as any;
-  const phone = si?.phone || '+1 (718) 555-0100';
-  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const phone = si?.phone || ("(718) 799-0472");
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
 
   const supabase = getSupabaseServerClient();
@@ -100,10 +100,10 @@ export default async function AboutPage({ params }: PageProps) {
             <div>
               <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Our Story</p>
               <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 20 }}>
-                {story.heading || `Serving Brooklyn Since ${story.foundedYear || story.founded || '1999'}`}
+                {story.heading || `Serving Flushing Since ${story.foundedYear || story.founded || '1999'}`}
               </h2>
               <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '.9375rem', marginBottom: 32 }}>
-                {story.body || `Peerless Brokerage was founded in ${story.foundedYear || story.founded || '1999'} with a simple mission: give Brooklyn families and businesses the same access to insurance options that large corporations enjoy. As an independent broker, we represent you — not any single insurance company.`}
+                {story.body || `Peerless Brokerage was founded in ${story.foundedYear || story.founded || '1999'} with a simple mission: give Flushing families and businesses the same access to insurance options that large corporations enjoy. As an independent broker, we represent you — not any single insurance company.`}
               </div>
 
               {/* Milestones timeline */}

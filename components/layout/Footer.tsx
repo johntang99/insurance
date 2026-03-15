@@ -132,7 +132,7 @@ export default function Footer({ locale, footer }: FooterProps) {
                     <div className="w-9 h-9 rounded-md flex items-center justify-center font-bold" style={{ background: 'var(--navy-700)', color: 'var(--gold-400)', fontFamily: 'var(--font-heading)' }}>P</div>
                     <span className="font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Peerless Brokerage</span>
                   </div>
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,.5)', lineHeight: 1.6 }}>Your trusted independent insurance broker in Brooklyn, NY.</p>
+                  <p className="text-sm" style={{ color: 'rgba(255,255,255,.5)', lineHeight: 1.6 }}>Your trusted independent insurance broker in Flushing, NY.</p>
                 </div>
                 <div>
                   <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>Insurance</p>
