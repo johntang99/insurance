@@ -38,25 +38,27 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 // Reusable 16:9 image block — shows real photo or gradient fallback
+// Checks both `image` (admin PostsPanel field) and `coverImage` (JSON field)
 function CardImage({ post, minHeight, large = false }: { post: BlogPost; minHeight?: number; large?: boolean }) {
   const cat = post.category || 'general';
   const bg = CATEGORY_COLORS[cat] || CATEGORY_COLORS.general;
   const icon = CATEGORY_ICONS[cat] || '📄';
+  const photoUrl = (post as any).image || post.coverImage || '';
 
   return (
     <div style={{
       position: 'relative',
       width: '100%',
-      aspectRatio: '16/9',          // ← proper 16:9 ratio
+      aspectRatio: '16/9',
       minHeight: minHeight,
       overflow: 'hidden',
-      background: bg,               // gradient fallback (always visible under image)
+      background: bg,
       flexShrink: 0,
     }}>
-      {/* Real cover image — rendered on top of gradient */}
-      {post.coverImage && (
+      {/* Real cover image — checks both `image` and `coverImage` fields */}
+      {photoUrl && (
         <Image
-          src={post.coverImage}
+          src={photoUrl}
           alt={post.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -66,7 +68,7 @@ function CardImage({ post, minHeight, large = false }: { post: BlogPost; minHeig
       )}
 
       {/* Fallback icon (only when no real image) */}
-      {!post.coverImage && (
+      {!photoUrl && (
         <span style={{ fontSize: large ? '5rem' : '3rem', opacity: .2, position: 'absolute', right: large ? 24 : 16, top: '50%', transform: 'translateY(-60%)', userSelect: 'none' }}>
           {icon}
         </span>
