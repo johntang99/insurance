@@ -14,6 +14,7 @@ import { SectionVariantsPanel } from '@/components/admin/panels/SectionVariantsP
 import { ConditionsLayoutPanel } from '@/components/admin/panels/ConditionsLayoutPanel';
 import { HomeSectionPhotosPanel } from '@/components/admin/panels/HomeSectionPhotosPanel';
 import { HeroPanel } from '@/components/admin/panels/HeroPanel';
+import { ServiceHeroPanel } from '@/components/admin/panels/ServiceHeroPanel';
 import { ProfilePanel } from '@/components/admin/panels/ProfilePanel';
 import { IntroductionPanel } from '@/components/admin/panels/IntroductionPanel';
 import { AboutAdditionalPanel } from '@/components/admin/panels/AboutAdditionalPanel';
@@ -2454,6 +2455,15 @@ export function ContentEditor({
               {showSharedPanels && formData?.hero && (
                 <HeroPanel
                   hero={formData.hero}
+                  updateFormValue={updateFormValue}
+                  openImagePicker={openImagePicker}
+                />
+              )}
+
+              {/* Insurance service page hero — triggers on serviceHero key */}
+              {showSharedPanels && formData?.serviceHero && (
+                <ServiceHeroPanel
+                  serviceHero={formData.serviceHero}
                   updateFormValue={updateFormValue}
                   openImagePicker={openImagePicker}
                 />

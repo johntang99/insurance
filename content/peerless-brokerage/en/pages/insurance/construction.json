@@ -10,7 +10,9 @@
     "ctaSecondary": {
       "label": "Call (718) 799-0472",
       "href": "tel:+17187990472"
-    }
+    },
+    "image": "",
+    "imageAlt": ""
   },
   "_note": "Full content coming in Phase 1D/2G"
 }

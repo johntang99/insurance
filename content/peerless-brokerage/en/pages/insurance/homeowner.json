@@ -23,7 +23,9 @@
     "ctaSecondary": {
       "label": "Call (718) 799-0472",
       "href": "tel:+17187990472"
-    }
+    },
+    "image": "",
+    "imageAlt": ""
   },
   "whatItCovers": {
     "headline": "What Homeowner Insurance Covers",
