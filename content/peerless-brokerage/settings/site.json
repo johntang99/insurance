@@ -1,0 +1,28 @@
+{
+  "name": "Peerless Brokerage Inc",
+  "tagline": "Your Trusted Independent Insurance Broker",
+  "phone": "+1-718-555-0100",
+  "email": "info@pbiny.com",
+  "address": "123 Main Street, Brooklyn, NY 11201",
+  "city": "Brooklyn",
+  "state": "NY",
+  "zip": "11201",
+  "hours": "Mon–Fri 9am–6pm, Sat 10am–3pm",
+  "licenseNumber": "LA-1234567",
+  "licensedStates": ["NY", "NJ", "CT", "PA"],
+  "languages": ["English", "Spanish", "Chinese"],
+  "yearsInBusiness": 25,
+  "carriersCount": 30,
+  "clientsCount": 5000,
+  "policiesCount": 10000,
+  "googleReviewsRating": 4.9,
+  "googleReviewsCount": 312,
+  "logoUrl": "/uploads/peerless-brokerage/logo.png",
+  "faviconUrl": "/favicon.ico",
+  "social": {
+    "facebook": "",
+    "google": ""
+  },
+  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Brooklyn, Queens, NYC since 1999.",
+  "headerVariant": "default"
+}

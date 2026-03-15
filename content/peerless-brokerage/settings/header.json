@@ -1,0 +1,43 @@
+{
+  "menu": {
+    "variant": "default",
+    "logo": {
+      "text": "Peerless Brokerage",
+      "subtext": "Independent Insurance Broker"
+    },
+    "items": [
+      { "text": "Insurance", "url": "/en/insurance" },
+      { "text": "About", "url": "/en/about" },
+      { "text": "Resources", "url": "/en/resources" },
+      { "text": "Contact", "url": "/en/contact" }
+    ]
+  },
+  "cta": {
+    "text": "Get a Free Quote",
+    "link": "/en/quote"
+  },
+  "topbar": {
+    "phone": "+1 (718) 555-0100",
+    "phoneHref": "tel:+17185550100",
+    "badge": "Free quote within 2 hours"
+  },
+  "phoneDisplay": "+1 (718) 555-0100",
+  "phoneHref": "tel:+17185550100",
+  "stickyOnMobile": true,
+  "showPhoneInHeader": true,
+  "insuranceDropdown": [
+    { "label": "Auto Insurance", "href": "/en/insurance/auto" },
+    { "label": "TLC Insurance", "href": "/en/insurance/tlc" },
+    { "label": "Commercial Auto", "href": "/en/insurance/commercial-auto" },
+    { "label": "Homeowner Insurance", "href": "/en/insurance/homeowner" },
+    { "label": "Business Insurance", "href": "/en/insurance/business" },
+    { "label": "Workers Compensation", "href": "/en/insurance/workers-comp" },
+    { "label": "Disability Insurance", "href": "/en/insurance/disability" },
+    { "label": "Construction Insurance", "href": "/en/insurance/construction" },
+    { "label": "Motorcycle Insurance", "href": "/en/insurance/motorcycle" },
+    { "label": "Boat Insurance", "href": "/en/insurance/boat" },
+    { "label": "Travel Insurance", "href": "/en/insurance/travel" },
+    { "label": "Group Health", "href": "/en/insurance/group-health" },
+    { "label": "View All →", "href": "/en/insurance", "isViewAll": true }
+  ]
+}

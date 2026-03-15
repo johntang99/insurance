@@ -3,47 +3,66 @@
 @tailwind utilities;
 
 /* ============================================
-   TCM THEME VARIABLES
-   These can be customized per clinic
+   BAAM SYSTEM I — INSURANCE PLATFORM
+   Default theme: Navy #0B1F3A + Gold #C9933A
+   Per-site overrides injected by [locale]/layout.tsx
+   via theme.json → CSS variables
    ============================================ */
 
 :root {
   /* TYPOGRAPHY */
-  --text-display: 3rem;        /* 48px - Hero titles */
-  --text-heading: 2.25rem;     /* 36px - Section titles */
-  --text-subheading: 1.25rem;  /* 20px - Card titles */
+  --text-display: 3.5rem;      /* 56px - Hero titles */
+  --text-heading: 2.5rem;      /* 40px - Page H1 */
+  --text-subheading: 2rem;     /* 32px - Section H2 */
   --text-body: 1rem;           /* 16px - Body text */
-  --text-small: 0.875rem;      /* 14px - Meta/tags */
-  --font-body-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  --font-display: var(--font-body-default);
-  --font-heading: var(--font-body-default);
-  --font-subheading: var(--font-body-default);
-  --font-body: var(--font-body-default);
-  --font-small: var(--font-body-default);
+  --text-small: 0.875rem;      /* 14px - Meta/labels */
 
-  /* PRIMARY COLORS - Green Theme (Default) */
-  --primary: #166534;          /* Green-700 - Main brand */
-  --primary-dark: #14532d;     /* Green-800 - Hover states */
-  --primary-light: #22c55e;    /* Green-500 - Light accents */
-  --primary-50: #f0fdf4;       /* Green-50 - Very light tint */
-  --primary-100: #dcfce7;      /* Green-100 - Light tint */
+  /* Font stacks — overridden by next/font CSS variables loaded in layout.tsx */
+  --font-body-default: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-heading, var(--font-body-default));
+  --font-heading: var(--font-heading, 'Playfair Display', Georgia, serif);
+  --font-subheading: var(--font-body, var(--font-body-default));
+  --font-body: var(--font-body, var(--font-body-default));
+  --font-small: var(--font-body, var(--font-body-default));
 
-  /* SECONDARY COLORS - Amber Theme */
-  --secondary: #78350f;        /* Amber-900 - Accent color */
-  --secondary-dark: #451a03;   /* Amber-950 - Darker accent */
-  --secondary-light: #f59e0b;  /* Amber-500 - Light accent */
-  --secondary-50: #fffbeb;     /* Amber-50 - Light tint */
+  /* PRIMARY: Deep Navy — #0B1F3A */
+  --primary: #0B1F3A;
+  --primary-dark: #071529;
+  --primary-light: #1A3352;
+  --primary-50: #EBF0F7;
+  --primary-100: #C5D4E8;
 
-  /* BACKDROP COLORS */
-  --backdrop-primary: #f0fdf4;    /* Light green background */
-  --backdrop-secondary: #fffbeb;  /* Light amber background */
+  /* SECONDARY: Warm Gold — #C9933A */
+  --secondary: #C9933A;
+  --secondary-dark: #A87830;
+  --secondary-light: #DFB060;
+  --secondary-50: #FDF6EC;
 
-  /* SHAPE + LAYOUT TOKENS */
+  /* BACKDROP */
+  --backdrop-primary: #F7F8FA;
+  --backdrop-secondary: #FDF6EC;
+
+  /* INSURANCE-SPECIFIC TOKENS */
+  --color-accent: #C9933A;
+  --color-success: #1A7A4A;
+  --color-danger: #C74B4B;
+  --color-warning: #E8A020;
+  --color-bg: #F7F8FA;
+  --color-bg-dark: #0B1F3A;
+  --color-bg-card: #FFFFFF;
+  --color-text: #2C3E50;
+  --color-text-muted: #7A8A9A;
+  --color-text-on-dark: #F7F8FA;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #EDF2F7;
+
+  /* SHAPE + LAYOUT */
   --radius-base: 8px;
-  --shadow-base: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --radius-card: 12px;
+  --shadow-base: 0 2px 12px rgba(11, 31, 58, 0.08);
+  --shadow-hover: 0 8px 32px rgba(11, 31, 58, 0.14);
   --section-padding-y: 5rem;
+  --container-max-width: 1280px;
 }
 
 /* Responsive Typography */
@@ -51,7 +70,8 @@
   :root {
     --text-display: 2.25rem;     /* 36px on mobile */
     --text-heading: 1.875rem;    /* 30px on mobile */
-    --text-subheading: 1.125rem; /* 18px on mobile */
+    --text-subheading: 1.5rem;   /* 24px on mobile */
+    --section-padding-y: 3rem;
   }
 }
 
@@ -62,20 +82,40 @@
 @layer base {
   * {
     @apply border-gray-200;
+    box-sizing: border-box;
   }
-  
+
   body {
-    @apply bg-white text-gray-900 antialiased;
+    @apply antialiased;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: var(--font-body, var(--font-body-default));
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-gray-900;
-    font-family: var(--font-heading, var(--font-body-default));
+    font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.25;
+    letter-spacing: 0.01em;
   }
 
+  h1 { font-size: var(--text-heading); }
+  h2 { font-size: var(--text-subheading); font-weight: 600; }
+  h3 { font-size: 1.5rem; font-weight: 600; }
+
   a {
-    @apply text-primary hover:text-primary-dark transition-colors;
+    color: var(--primary);
+    transition: color 150ms ease;
+  }
+  a:hover {
+    color: var(--secondary);
+  }
+
+  p {
+    color: var(--color-text);
+    line-height: 1.7;
   }
 }
 
@@ -84,27 +124,29 @@
    ============================================ */
 
 @layer utilities {
-  .text-display {
-    font-family: var(--font-display, var(--font-body-default));
+  /* Typography helpers */
+  .font-heading {
+    font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
+  }
+  .font-body {
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
   }
 
-  .text-heading {
-    font-family: var(--font-heading, var(--font-body-default));
-  }
+  /* Legacy font utilities */
+  .text-display { font-family: var(--font-display, var(--font-body-default)); }
+  .text-heading  { font-family: var(--font-heading, var(--font-body-default)); }
+  .text-subheading { font-family: var(--font-subheading, var(--font-body-default)); }
+  .text-body     { font-family: var(--font-body, var(--font-body-default)); }
+  .text-small    { font-family: var(--font-small, var(--font-body-default)); }
 
-  .text-subheading {
-    font-family: var(--font-subheading, var(--font-body-default));
-  }
-
-  .text-body {
-    font-family: var(--font-body, var(--font-body-default));
-  }
-
-  .text-small {
-    font-family: var(--font-small, var(--font-body-default));
-  }
+  /* Layout */
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    width: 100%;
+    max-width: var(--container-max-width, 1280px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .section-padding {
@@ -112,23 +154,60 @@
     padding-bottom: var(--section-padding-y);
   }
 
+  /* Insurance section backgrounds */
+  .section-navy {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-on-dark);
+  }
+  .section-navy h1,
+  .section-navy h2,
+  .section-navy h3 {
+    color: #FFFFFF;
+  }
+
+  .section-light {
+    background-color: var(--color-bg);
+  }
+
+  .section-white {
+    background-color: #FFFFFF;
+  }
+
+  /* Gold accent bar */
+  .accent-bar {
+    display: block;
+    width: 3rem;
+    height: 3px;
+    background-color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  /* Gradient backdrops */
   .gradient-backdrop {
     background: linear-gradient(135deg, var(--backdrop-primary) 0%, var(--backdrop-secondary) 100%);
+  }
+
+  /* Scrollbar hiding */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Carrier carousel infinite scroll */
+  .carousel-track {
+    display: flex;
+    animation: carousel-scroll 30s linear infinite;
+  }
+  .carousel-track:hover {
+    animation-play-state: paused;
   }
 
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
-  }
-
-  /* Hide scrollbar but keep functionality */
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
   }
 }
 
@@ -137,14 +216,29 @@
    ============================================ */
 
 @layer components {
-  /* Button base styles */
+  /* Buttons */
   .btn {
     @apply inline-flex items-center justify-center px-6 py-3 font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
     border-radius: var(--radius-base);
+    font-family: var(--font-body, var(--font-body-default));
   }
 
   .btn-primary {
-    @apply btn bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+    background-color: var(--primary);
+    color: #FFFFFF;
+    @apply btn focus:ring-primary;
+  }
+  .btn-primary:hover {
+    background-color: var(--secondary);
+  }
+
+  .btn-gold {
+    background-color: var(--secondary);
+    color: #FFFFFF;
+    @apply btn;
+  }
+  .btn-gold:hover {
+    background-color: var(--secondary-dark);
   }
 
   .btn-secondary {
@@ -155,16 +249,50 @@
     @apply btn border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary;
   }
 
-  /* Card base styles */
-  .card {
-    @apply bg-white p-6 transition-shadow duration-200;
-    border-radius: var(--radius-base);
-    box-shadow: var(--shadow-base);
+  .btn-outline-gold {
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    @apply btn;
+  }
+  .btn-outline-gold:hover {
+    background-color: var(--color-accent);
+    color: #FFFFFF;
   }
 
-  /* Badge styles */
+  /* Cards */
+  .card {
+    background-color: var(--color-bg-card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-base);
+    padding: 1.5rem;
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card-navy {
+    background-color: var(--primary);
+    color: var(--color-text-on-dark);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+  }
+
+  /* Badges */
   .badge {
     @apply inline-block px-3 py-1 text-sm font-semibold rounded-full;
+  }
+
+  .badge-navy {
+    background-color: var(--primary);
+    color: #FFFFFF;
+    @apply badge;
+  }
+
+  .badge-gold {
+    background-color: var(--secondary);
+    color: #FFFFFF;
+    @apply badge;
   }
 
   .badge-primary {
@@ -174,6 +302,47 @@
   .badge-secondary {
     @apply badge bg-secondary-50 text-secondary;
   }
+
+  .badge-success {
+    background-color: #D1FAE5;
+    color: var(--color-success);
+    @apply badge;
+  }
+
+  /* Insurance trust badge */
+  .trust-badge {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold;
+    background-color: rgba(201, 147, 58, 0.12);
+    color: var(--secondary-dark);
+    border: 1px solid rgba(201, 147, 58, 0.3);
+  }
+
+  /* Form inputs */
+  .input {
+    @apply w-full px-4 py-3 border text-sm transition-colors focus:outline-none focus:ring-2;
+    border-color: var(--color-border);
+    border-radius: var(--radius-base);
+    background-color: #FFFFFF;
+    color: var(--color-text);
+  }
+  .input:focus {
+    border-color: var(--primary);
+    @apply focus:ring-primary;
+  }
+
+  /* Section heading helper */
+  .section-heading {
+    font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .section-subheading {
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
 }
 
 /* ============================================
@@ -181,42 +350,32 @@
    ============================================ */
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+@keyframes carousel-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+@keyframes counter-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Stagger animation delays */
-.animate-delay-100 {
-  animation-delay: 100ms;
-}
+.animate-fade-in   { animation: fadeIn 0.6s ease-out forwards; }
+.animate-float     { animation: float 3s ease-in-out infinite; }
+.animate-counter   { animation: counter-up 0.5s ease-out forwards; }
 
-.animate-delay-200 {
-  animation-delay: 200ms;
-}
-
-.animate-delay-300 {
-  animation-delay: 300ms;
-}
+/* Stagger helpers */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }
