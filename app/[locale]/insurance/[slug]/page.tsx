@@ -79,150 +79,147 @@ export default async function InsuranceServicePage({ params }: PageProps) {
 
   return (
     <main>
-      {/* ── SECTION 1: SERVICE HERO (split layout — matches prototypes/service-auto.html) */}
-      <section className="service-hero-split">
-        {/* LEFT: Text — white background, content aligned to container right edge */}
-        <div className="service-hero-left">
-          <div className="service-hero-inner">
-            {/* Eyebrow badge */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--gold-100)', color: 'var(--gold-600)', border: '1px solid var(--gold-300)', borderRadius: 100, padding: '5px 14px', fontSize: '.775rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 20 }}>
-              {icon} {hero.badge || `${lineName}`}
-            </div>
+      {/* ── SECTION 1: FULL-WIDTH NAVY HERO ──────────────────────
+          Full-width navy background (like home page hero).
+          Content inside container-custom: text left, card right.
+          Nothing bleeds to the browser edge awkwardly.
+      ─────────────────────────────────────────────────────── */}
+      <section style={{
+        position: 'relative',
+        background: `linear-gradient(160deg, rgba(6,15,29,.97) 0%, rgba(11,31,58,.95) 50%, rgba(17,42,77,.92) 100%)`,
+        padding: '72px 0 64px',
+        overflow: 'hidden',
+      }}>
+        {/* Subtle grid texture */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px)', backgroundSize: '48px 48px', pointerEvents: 'none' }} />
+        {/* Gold radial glow top-right */}
+        <div style={{ position: 'absolute', top: -80, right: -80, width: 480, height: 480, background: 'radial-gradient(circle,rgba(201,147,58,.08) 0%,transparent 65%)', pointerEvents: 'none' }} />
 
-            {/* Headline */}
-            <h1 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: 'clamp(1.8rem,3vw,2.8rem)', marginBottom: 16, letterSpacing: '-.01em', lineHeight: 1.15 }}>
-              {lineName}
-              <br />
-              <span style={{ fontSize: '.65em', color: 'var(--text-muted)', fontWeight: 400 }}>in Flushing, NY</span>
-            </h1>
+        <div className="container-custom" style={{ position: 'relative', zIndex: 2 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 420px', gap: 48, alignItems: 'center' }}
+               className="service-hero-grid">
 
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 24, maxWidth: 520 }}>
-              {hero.subline || `Compare rates from 30+ carriers. We find your best deal — same-day quotes, no hassle.`}
-            </p>
-
-            {/* TLC urgency callout */}
-            {isTLC && (
-              <div style={{ background: 'var(--gold-100)', border: '1px solid var(--gold-300)', borderRadius: 10, padding: '14px 18px', marginBottom: 24, fontSize: '.9rem', color: 'var(--gold-600)', fontWeight: 600, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span>⚡</span>
-                <span>TLC plate renewal deadline? We specialize in fast TLC compliance — <strong>same-day binding available.</strong></span>
+            {/* ── LEFT: All text content ─────────────────────── */}
+            <div>
+              {/* Eyebrow badge */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(201,147,58,.15)', border: '1px solid rgba(201,147,58,.3)', color: 'var(--gold-300)', borderRadius: 100, padding: '5px 14px', fontSize: '.775rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 20 }}>
+                {icon} {hero.badge || `${lineName} Coverage`}
               </div>
-            )}
 
-            {/* Stat pills */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
-              {(hero.stats && hero.stats.length > 0 ? hero.stats.map((s: any) => `${s.value}${s.suffix || ''} ${s.label}`) : [
-                isTLC ? 'Same-Day Binding' : '30+ Carriers Compared',
-                isTLC ? 'TLC-Compliant Coverage' : '2-Hour Quote',
-                'NY, NJ, CT, PA',
-              ]).map((pill: string, i: number) => (
-                <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 16px', background: 'var(--navy-50)', border: '1px solid var(--navy-100)', borderRadius: 100, fontSize: '.825rem', fontWeight: 600, color: 'var(--navy-700)' }}>
-                  <span style={{ color: 'var(--gold-500)', fontSize: '.65rem' }}>✦</span> {pill}
-                </div>
-              ))}
-            </div>
-
-            {/* CTA buttons */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
-              <Link href={`/${locale}/quote?type=${slug}`} className="btn-gold"
-                style={{ padding: '13px 28px', fontSize: '.95rem', borderRadius: 10 }}>
-                {hero.ctaPrimary?.label || `Get a ${lineName} Quote`}
-              </Link>
-              <a href={phoneHref}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--navy-800)', border: '2px solid var(--navy-800)', borderRadius: 10, padding: '13px 28px', fontWeight: 600, fontSize: '.95rem', textDecoration: 'none' }}>
-                <Phone className="w-4 h-4" />
-                Call (718) 799-0472
-              </a>
-            </div>
-
-            <p style={{ fontSize: '.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
-              🔒 No obligation · Free quote · Licensed broker
-            </p>
-          </div>
-        </div>
-
-        {/* RIGHT: Navy panel — shield icon + benefit bullets (matches prototype) */}
-        <div className="service-hero-right">
-          {/* Shield icon in gold-tinted circle */}
-          <div style={{ width: 72, height: 72, background: 'rgba(201,147,58,.15)', border: '2px solid rgba(201,147,58,.35)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: 24 }}>
-            {icon}
-          </div>
-
-          <h3 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: '1.15rem', marginBottom: 22, lineHeight: 1.3 }}>
-            Why clients choose Peerless:
-          </h3>
-
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {[
-              isTLC
-                ? 'Same-day binding for TLC plate renewals — we know the deadlines'
-                : `Multi-carrier comparison — we shop 30+ carriers so you don't have to`,
-              isTLC
-                ? 'Multilingual staff — English, Spanish, Mandarin, Cantonese'
-                : 'Clean record discounts — we know which carriers reward safe drivers best',
-              isTLC
-                ? 'Full TLC compliance — NY TLC minimums always met'
-                : 'Bundle & save up to 20% — combine with home or renters insurance',
-            ].map((bullet, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, color: 'rgba(255,255,255,.85)', fontSize: '.9375rem', lineHeight: 1.5 }}>
-                <span style={{ flexShrink: 0, width: 22, height: 22, background: 'var(--gold-500)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem', color: '#fff', fontWeight: 700, marginTop: 1 }}>
-                  ✓
+              {/* Headline */}
+              <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(2rem,4vw,3rem)', marginBottom: 16, letterSpacing: '-.01em', lineHeight: 1.1 }}>
+                {lineName}
+                <span style={{ display: 'block', fontSize: '.55em', color: 'rgba(255,255,255,.55)', fontWeight: 400, marginTop: 6, fontFamily: 'var(--font-body)', letterSpacing: 0 }}>
+                  in Flushing, Queens, and all of NYC
                 </span>
-                {bullet}
-              </li>
-            ))}
-          </ul>
+              </h1>
 
-          {/* Divider + stats row */}
-          <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,.12)', display: 'flex', gap: 0 }}>
-            {[
-              { value: '30+', label: 'Carriers' },
-              { value: isTLC ? 'Same Day' : '2 hrs', label: 'Quote Speed' },
-              { value: '25+', label: 'Years Exp.' },
-            ].map((stat, i) => (
-              <div key={stat.label} style={{ flex: 1, textAlign: 'center', padding: '0 12px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.12)' : 'none' }}>
-                <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--gold-400)', lineHeight: 1 }}>{stat.value}</div>
-                <div style={{ fontSize: '.72rem', color: 'rgba(255,255,255,.5)', marginTop: 4, fontWeight: 500 }}>{stat.label}</div>
+              <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,.75)', lineHeight: 1.75, marginBottom: 28, maxWidth: 520 }}>
+                {hero.subline || `Free quotes from 30+ carriers. Same-day service. Licensed in NY · NJ · CT · PA.`}
+              </p>
+
+              {/* TLC urgency callout */}
+              {isTLC && (
+                <div style={{ background: 'rgba(201,147,58,.15)', border: '1px solid rgba(201,147,58,.35)', borderRadius: 10, padding: '14px 18px', marginBottom: 24, fontSize: '.9rem', color: 'var(--gold-300)', fontWeight: 600, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <span style={{ flexShrink: 0 }}>⚡</span>
+                  <span>TLC plate renewal deadline? We specialize in fast TLC compliance — <strong style={{ color: 'var(--gold-400)' }}>same-day binding available.</strong></span>
+                </div>
+              )}
+
+              {/* Stat pills */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
+                {(hero.stats && hero.stats.length > 0
+                  ? hero.stats.map((s: any) => `${s.value}${s.suffix || ''} ${s.label}`)
+                  : [
+                      isTLC ? 'Same-Day Binding' : '30+ Carriers Compared',
+                      isTLC ? 'TLC Compliant' : '2-Hour Quote',
+                      'NY · NJ · CT · PA',
+                    ]
+                ).map((pill: string, i: number) => (
+                  <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 16px', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 100, fontSize: '.825rem', fontWeight: 600, color: 'rgba(255,255,255,.85)' }}>
+                    <span style={{ color: 'var(--gold-400)', fontSize: '.65rem' }}>✦</span> {pill}
+                  </div>
+                ))}
               </div>
-            ))}
+
+              {/* CTA buttons */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
+                <Link href={`/${locale}/quote?type=${slug}`}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--gold-500)', color: '#fff', border: 'none', borderRadius: 10, padding: '14px 30px', fontWeight: 700, fontSize: '1rem', textDecoration: 'none' }}>
+                  {hero.ctaPrimary?.label || `Get a ${lineName} Quote`}
+                </Link>
+                <a href={phoneHref}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: '#fff', border: '2px solid rgba(255,255,255,.35)', borderRadius: 10, padding: '14px 28px', fontWeight: 600, fontSize: '1rem', textDecoration: 'none' }}>
+                  <Phone className="w-4 h-4" />
+                  Call (718) 799-0472
+                </a>
+              </div>
+
+              <p style={{ fontSize: '.8rem', color: 'rgba(255,255,255,.4)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                🔒 No obligation · Free quote · Licensed broker
+              </p>
+            </div>
+
+            {/* ── RIGHT: Floating benefit card (inside container, not edge-to-edge) ── */}
+            <div style={{ background: 'rgba(255,255,255,.06)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 20, padding: '32px 28px' }}
+                 className="service-hero-card">
+
+              {/* Icon circle */}
+              <div style={{ width: 64, height: 64, background: 'rgba(201,147,58,.15)', border: '2px solid rgba(201,147,58,.35)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem', marginBottom: 20 }}>
+                {icon}
+              </div>
+
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: '1.1rem', marginBottom: 20, lineHeight: 1.3 }}>
+                Why clients choose Peerless:
+              </h3>
+
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  isTLC
+                    ? 'Same-day binding for TLC plate renewals'
+                    : `We shop 30+ carriers — you get the best rate`,
+                  isTLC
+                    ? 'Multilingual: English, Spanish, Mandarin'
+                    : 'Safe driver discounts we know how to find',
+                  isTLC
+                    ? 'Full TLC compliance, always'
+                    : 'Bundle with home insurance — save up to 20%',
+                ].map((bullet, i) => (
+                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, color: 'rgba(255,255,255,.82)', fontSize: '.9rem', lineHeight: 1.55 }}>
+                    <span style={{ flexShrink: 0, width: 20, height: 20, background: 'var(--gold-500)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.6rem', color: '#fff', fontWeight: 700, marginTop: 2 }}>
+                      ✓
+                    </span>
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Stats strip */}
+              <div style={{ display: 'flex', borderTop: '1px solid rgba(255,255,255,.1)', paddingTop: 20, gap: 0 }}>
+                {[
+                  { value: '30+', label: 'Carriers' },
+                  { value: isTLC ? 'Same Day' : '2 hrs', label: 'Quote' },
+                  { value: '25+', label: 'Yrs Exp.' },
+                ].map((s, i) => (
+                  <div key={s.label} style={{ flex: 1, textAlign: 'center', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.1)' : 'none', padding: '0 8px' }}>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.35rem', fontWeight: 700, color: 'var(--gold-400)', lineHeight: 1 }}>{s.value}</div>
+                    <div style={{ fontSize: '.7rem', color: 'rgba(255,255,255,.45)', marginTop: 4, fontWeight: 500 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Hero responsive styles */}
+      {/* Responsive: stack on tablet/mobile */}
       <style>{`
-        .service-hero-split {
-          display: grid;
-          grid-template-columns: 60fr 40fr;
-          min-height: 560px;
+        @media (max-width: 900px) {
+          .service-hero-grid { grid-template-columns: 1fr !important; }
         }
-        .service-hero-left {
-          background: var(--bg-white);
-          padding: 72px 64px 72px 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-        .service-hero-inner {
-          max-width: 640px;
-          margin-left: auto;
-          padding-left: 24px;
-        }
-        .service-hero-right {
-          background: linear-gradient(145deg, var(--navy-800) 0%, var(--navy-900) 100%);
-          padding: 64px 48px 64px 52px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-        @media (max-width: 1024px) {
-          .service-hero-split { grid-template-columns: 1fr; min-height: auto; }
-          .service-hero-left { padding: 56px 24px 48px; }
-          .service-hero-inner { max-width: 100%; margin: 0; padding: 0; }
-          .service-hero-right { padding: 48px 24px; }
-        }
-        @media (max-width: 768px) {
-          .service-hero-left { padding: 40px 20px; }
-          .service-hero-right { padding: 36px 20px; }
+        @media (max-width: 640px) {
+          .service-hero-card { padding: 24px 20px !important; }
         }
       `}</style>
 
