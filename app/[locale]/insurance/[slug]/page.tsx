@@ -79,75 +79,152 @@ export default async function InsuranceServicePage({ params }: PageProps) {
 
   return (
     <main>
-      {/* ── SECTION 1: SERVICE HERO (split layout) ─────────────── */}
-      <section style={{ display: 'grid', gridTemplateColumns: '60fr 40fr', minHeight: 560 }}>
-        {/* Left: Text */}
-        <div style={{ background: 'var(--bg-white)', padding: '72px 0', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <div style={{ maxWidth: 600, marginLeft: 'auto', paddingLeft: 24, paddingRight: 48 }}>
+      {/* ── SECTION 1: SERVICE HERO (split layout — matches prototypes/service-auto.html) */}
+      <section className="service-hero-split">
+        {/* LEFT: Text — white background, content aligned to container right edge */}
+        <div className="service-hero-left">
+          <div className="service-hero-inner">
+            {/* Eyebrow badge */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--gold-100)', color: 'var(--gold-600)', border: '1px solid var(--gold-300)', borderRadius: 100, padding: '5px 14px', fontSize: '.775rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 20 }}>
-              {icon} {hero.badge || 'Insurance Coverage'}
+              {icon} {hero.badge || `${lineName}`}
             </div>
-            <h1 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: 'clamp(1.8rem,3vw,2.8rem)', marginBottom: 16, letterSpacing: '-.01em' }}>
+
+            {/* Headline */}
+            <h1 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: 'clamp(1.8rem,3vw,2.8rem)', marginBottom: 16, letterSpacing: '-.01em', lineHeight: 1.15 }}>
               {lineName}
+              <br />
+              <span style={{ fontSize: '.65em', color: 'var(--text-muted)', fontWeight: 400 }}>in Flushing, NY</span>
             </h1>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 24, maxWidth: 520 }}>
-              {hero.subline || `Get a free ${lineName.toLowerCase()} quote. We compare 30+ carriers to find your best rate.`}
+
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 24, maxWidth: 520 }}>
+              {hero.subline || `Compare rates from 30+ carriers. We find your best deal — same-day quotes, no hassle.`}
             </p>
 
             {/* TLC urgency callout */}
             {isTLC && (
-              <div style={{ background: 'var(--gold-100)', border: '1px solid var(--gold-300)', borderRadius: 10, padding: '14px 18px', marginBottom: 24, fontSize: '.9rem', color: 'var(--gold-600)', fontWeight: 600 }}>
-                ⚡ TLC plate renewal deadline? We specialize in fast TLC compliance — <strong>same-day binding available.</strong>
+              <div style={{ background: 'var(--gold-100)', border: '1px solid var(--gold-300)', borderRadius: 10, padding: '14px 18px', marginBottom: 24, fontSize: '.9rem', color: 'var(--gold-600)', fontWeight: 600, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                <span>⚡</span>
+                <span>TLC plate renewal deadline? We specialize in fast TLC compliance — <strong>same-day binding available.</strong></span>
               </div>
             )}
 
             {/* Stat pills */}
-            {hero.stats && hero.stats.length > 0 && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 28 }}>
-                {hero.stats.map((s: any, i: number) => (
-                  <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 16px', background: 'var(--navy-50)', border: '1px solid var(--navy-100)', borderRadius: 100, fontSize: '.825rem', fontWeight: 600, color: 'var(--navy-700)' }}>
-                    ✦ {s.value}{s.suffix} {s.label}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
+              {(hero.stats && hero.stats.length > 0 ? hero.stats.map((s: any) => `${s.value}${s.suffix || ''} ${s.label}`) : [
+                isTLC ? 'Same-Day Binding' : '30+ Carriers Compared',
+                isTLC ? 'TLC-Compliant Coverage' : '2-Hour Quote',
+                'NY, NJ, CT, PA',
+              ]).map((pill: string, i: number) => (
+                <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 16px', background: 'var(--navy-50)', border: '1px solid var(--navy-100)', borderRadius: 100, fontSize: '.825rem', fontWeight: 600, color: 'var(--navy-700)' }}>
+                  <span style={{ color: 'var(--gold-500)', fontSize: '.65rem' }}>✦</span> {pill}
+                </div>
+              ))}
+            </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-              <Link href={`/${locale}/quote?type=${slug}`}
-                className="btn-gold"
+            {/* CTA buttons */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
+              <Link href={`/${locale}/quote?type=${slug}`} className="btn-gold"
                 style={{ padding: '13px 28px', fontSize: '.95rem', borderRadius: 10 }}>
                 {hero.ctaPrimary?.label || `Get a ${lineName} Quote`}
               </Link>
               <a href={phoneHref}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--navy-800)', border: '2px solid var(--navy-800)', borderRadius: 10, padding: '13px 28px', fontWeight: 600, fontSize: '.95rem', textDecoration: 'none' }}>
                 <Phone className="w-4 h-4" />
-                {hero.ctaSecondary?.label || 'Call for Instant Quote'}
+                Call (718) 799-0472
               </a>
             </div>
-            <div style={{ marginTop: 20, fontSize: '.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
+
+            <p style={{ fontSize: '.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6 }}>
               🔒 No obligation · Free quote · Licensed broker
-            </div>
+            </p>
           </div>
         </div>
 
-        {/* Right: Navy panel */}
-        <div style={{ background: 'linear-gradient(145deg,var(--navy-800) 0%,var(--navy-900) 100%)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 48 }}>
-          <span style={{ fontSize: '5rem', marginBottom: 24, display: 'block' }}>{icon}</span>
-          <h3 style={{ fontFamily: 'var(--font-heading)', color: '#fff', textAlign: 'center', marginBottom: 12 }}>Quick Facts</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 260 }}>
+        {/* RIGHT: Navy panel — shield icon + benefit bullets (matches prototype) */}
+        <div className="service-hero-right">
+          {/* Shield icon in gold-tinted circle */}
+          <div style={{ width: 72, height: 72, background: 'rgba(201,147,58,.15)', border: '2px solid rgba(201,147,58,.35)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: 24 }}>
+            {icon}
+          </div>
+
+          <h3 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: '1.15rem', marginBottom: 22, lineHeight: 1.3 }}>
+            Why clients choose Peerless:
+          </h3>
+
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
             {[
-              { label: 'Carriers Compared', value: '30+' },
-              { label: 'Quote Turnaround', value: isTLC ? 'Same Day' : '2 Hours' },
-              { label: 'Service Area', value: 'NY, NJ, CT, PA' },
-            ].map((item) => (
-              <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,.08)', borderRadius: 8, padding: '10px 16px' }}>
-                <span style={{ fontSize: '.85rem', color: 'rgba(255,255,255,.65)' }}>{item.label}</span>
-                <span style={{ fontWeight: 700, color: 'var(--gold-400)', fontSize: '.95rem' }}>{item.value}</span>
+              isTLC
+                ? 'Same-day binding for TLC plate renewals — we know the deadlines'
+                : `Multi-carrier comparison — we shop 30+ carriers so you don't have to`,
+              isTLC
+                ? 'Multilingual staff — English, Spanish, Mandarin, Cantonese'
+                : 'Clean record discounts — we know which carriers reward safe drivers best',
+              isTLC
+                ? 'Full TLC compliance — NY TLC minimums always met'
+                : 'Bundle & save up to 20% — combine with home or renters insurance',
+            ].map((bullet, i) => (
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, color: 'rgba(255,255,255,.85)', fontSize: '.9375rem', lineHeight: 1.5 }}>
+                <span style={{ flexShrink: 0, width: 22, height: 22, background: 'var(--gold-500)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.65rem', color: '#fff', fontWeight: 700, marginTop: 1 }}>
+                  ✓
+                </span>
+                {bullet}
+              </li>
+            ))}
+          </ul>
+
+          {/* Divider + stats row */}
+          <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,.12)', display: 'flex', gap: 0 }}>
+            {[
+              { value: '30+', label: 'Carriers' },
+              { value: isTLC ? 'Same Day' : '2 hrs', label: 'Quote Speed' },
+              { value: '25+', label: 'Years Exp.' },
+            ].map((stat, i) => (
+              <div key={stat.label} style={{ flex: 1, textAlign: 'center', padding: '0 12px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,.12)' : 'none' }}>
+                <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--gold-400)', lineHeight: 1 }}>{stat.value}</div>
+                <div style={{ fontSize: '.72rem', color: 'rgba(255,255,255,.5)', marginTop: 4, fontWeight: 500 }}>{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Hero responsive styles */}
+      <style>{`
+        .service-hero-split {
+          display: grid;
+          grid-template-columns: 60fr 40fr;
+          min-height: 560px;
+        }
+        .service-hero-left {
+          background: var(--bg-white);
+          padding: 72px 64px 72px 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .service-hero-inner {
+          max-width: 640px;
+          margin-left: auto;
+          padding-left: 24px;
+        }
+        .service-hero-right {
+          background: linear-gradient(145deg, var(--navy-800) 0%, var(--navy-900) 100%);
+          padding: 64px 48px 64px 52px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        @media (max-width: 1024px) {
+          .service-hero-split { grid-template-columns: 1fr; min-height: auto; }
+          .service-hero-left { padding: 56px 24px 48px; }
+          .service-hero-inner { max-width: 100%; margin: 0; padding: 0; }
+          .service-hero-right { padding: 48px 24px; }
+        }
+        @media (max-width: 768px) {
+          .service-hero-left { padding: 40px 20px; }
+          .service-hero-right { padding: 36px 20px; }
+        }
+      `}</style>
 
       {/* ── SECTION 2: WHAT IT COVERS ──────────────────────────── */}
       <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>

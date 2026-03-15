@@ -344,6 +344,21 @@ p  { color: var(--text-secondary); line-height: 1.75; }
   .hide-desktop { display: none !important; }
 }
 
+/* ─── Service page hero responsive (applied via <style> tag in page) ── */
+/* Also ensure no page-level grids overflow on very narrow screens */
+@media (max-width: 640px) {
+  /* Insurance service page stat pills */
+  .service-hero-split { min-height: auto !important; }
+  /* Quote page layout */
+  .quote-layout { grid-template-columns: 1fr !important; }
+  /* Article sidebar */
+  .article-layout { grid-template-columns: 1fr !important; }
+  /* About page grid */
+  .grid-1col-mobile { grid-template-columns: 1fr !important; }
+  /* Contact form grid */
+  .contact-form-grid { grid-template-columns: 1fr !important; }
+}
+
 /* ─── Print ──────────────────────────────────────────────────── */
 @media print {
   .mobile-sticky-bar, nav, footer { display: none !important; }
