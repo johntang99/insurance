@@ -1,10 +1,10 @@
 {
-  "name": "multi-site-content-platform",
-  "version": "1.0.0",
-  "description": "Multi-site content management template",
+  "name": "baam-insurance-platform",
+  "version": "0.1.0",
+  "description": "BAAM System I — Insurance Brokerage Platform Template",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3003",
+    "dev": "next dev -p 3007",
     "dev:default": "next dev",
     "build": "next build",
     "start": "next start",

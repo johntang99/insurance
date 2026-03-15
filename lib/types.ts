@@ -2,7 +2,8 @@
 // TYPE DEFINITIONS FOR MULTI-SITE CONTENT SYSTEM
 // ============================================
 
-export type Locale = 'en' | 'zh';
+// Phase 0: English only. Spanish/Chinese added in Phase 2+.
+export type Locale = 'en';
 export type RuntimeEnvironment = 'dev' | 'staging' | 'prod';
 
 export interface SiteDomainAlias {

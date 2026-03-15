@@ -7,11 +7,8 @@ import type { SiteInfo } from '@/lib/types';
 import HeroSection, { CredentialsSection } from '@/components/sections/HeroSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import HowItWorksSection from '@/components/sections/HowItWorksSection';
-import ConditionsSection from '@/components/sections/ConditionsSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import BlogPreviewSection from '@/components/sections/BlogPreviewSection';
-import GalleryPreviewSection from '@/components/sections/GalleryPreviewSection';
-import FirstVisitSection from '@/components/sections/FirstVisitSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import CTASection from '@/components/sections/CTASection';
 import { getSiteDisplayName } from '@/lib/siteInfo';
@@ -38,7 +35,6 @@ interface HomePageContent {
   hero: {
     variant: 'centered' | 'split-photo-right' | 'split-photo-left' | 'overlap' | 'photo-background' | 'video-background';
     businessName?: string;
-    clinicName?: string;
     tagline: string;
     description: string;
     primaryCta?: { text: string; link: string };
@@ -58,11 +54,8 @@ interface HomePageContent {
   };
   testimonials?: any;
   howItWorks?: any;
-  conditions?: any;
   services?: any;
   blog?: any;
-  gallery?: any;
-  firstVisit?: any;
   whyChooseUs?: any;
   cta?: any;
 }
@@ -106,7 +99,6 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function HomePage({ params }: PageProps) {
   const { locale } = params;
   
-  // Load homepage content
   const siteId = await getRequestSiteId();
   const content = await loadPageContent<HomePageContent>('home', locale, siteId);
   const layout = await loadPageContent<PageLayoutConfig>('home.layout', locale, siteId);
@@ -121,17 +113,14 @@ export default async function HomePage({ params }: PageProps) {
     Boolean(content.topBar?.address) ||
     Boolean(content.topBar?.phone) ||
     Boolean(content.topBar?.email);
-  const heroBusinessName = hero.businessName || hero.clinicName || 'Business';
+  const heroBusinessName = hero.businessName || 'Business';
   const defaultSections = [
     'hero',
     'credentials',
     'testimonials',
     'howItWorks',
-    'conditions',
     'services',
     'blog',
-    'gallery',
-    'firstVisit',
     'whyChooseUs',
     'cta',
   ];
@@ -167,16 +156,10 @@ export default async function HomePage({ params }: PageProps) {
         ) : null;
       case 'howItWorks':
         return content.howItWorks ? <HowItWorksSection {...content.howItWorks} /> : null;
-      case 'conditions':
-        return content.conditions ? <ConditionsSection {...content.conditions} /> : null;
       case 'services':
         return content.services ? <ServicesSection {...content.services} /> : null;
       case 'blog':
         return content.blog ? <BlogPreviewSection locale={locale} {...content.blog} /> : null;
-      case 'gallery':
-        return content.gallery ? <GalleryPreviewSection {...content.gallery} /> : null;
-      case 'firstVisit':
-        return content.firstVisit ? <FirstVisitSection {...content.firstVisit} /> : null;
       case 'whyChooseUs':
         return content.whyChooseUs ? <WhyChooseUsSection {...content.whyChooseUs} /> : null;
       case 'cta':

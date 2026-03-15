@@ -1,56 +1,31 @@
 {
-  "sites": [
-    {
-      "id": "dr-huang-clinic",
-      "name": "Dr Huang Clinic",
-      "domain": "drhuangclinic.com",
-      "enabled": true,
-      "defaultLocale": "en",
-      "supportedLocales": [
-        "en",
-        "zh"
-      ],
-      "createdAt": "2025-01-15T00:00:00Z",
-      "updatedAt": "2026-02-04T06:45:02.741Z"
-    },
-    {
-      "id": "golden-lotus-test",
-      "name": "Golden Lotus Acupuncture",
-      "domain": "",
-      "enabled": true,
-      "defaultLocale": "en",
-      "supportedLocales": [
-        "en",
-        "zh"
-      ],
-      "createdAt": "2026-03-03T08:53:57.606Z",
-      "updatedAt": "2026-03-03T08:53:57.607Z"
-    },
-    {
-      "id": "acu-flushing",
-      "name": "Flushing Acupuncture",
-      "domain": "acupunctureflushing.com",
-      "enabled": true,
-      "defaultLocale": "en",
-      "supportedLocales": [
-        "en",
-        "zh"
-      ],
-      "createdAt": "2026-03-09T09:09:24.250Z",
-      "updatedAt": "2026-03-09T09:09:24.250Z"
-    },
-    {
-      "id": "acu-gangshi",
-      "name": "Gang Shi Acupuncture",
-      "domain": "shiacupuncture.com",
-      "enabled": true,
-      "defaultLocale": "en",
-      "supportedLocales": [
-        "en",
-        "zh"
-      ],
-      "createdAt": "2026-03-09T21:24:04.401Z",
-      "updatedAt": "2026-03-09T21:24:04.401Z"
+  "peerless-brokerage": {
+    "id": "peerless-brokerage",
+    "name": "Peerless Brokerage Inc",
+    "domain": "pbiny.local",
+    "locale": "en",
+    "defaultLocale": "en",
+    "enabled": true,
+    "type": "insurance-brokerage",
+    "phone": "+1-718-555-0100",
+    "address": "123 Main Street, Brooklyn, NY 11201",
+    "licenseNumber": "LA-1234567",
+    "licensedStates": ["NY", "NJ", "CT", "PA"],
+    "yearsInBusiness": 25,
+    "carriersCount": 30,
+    "clientsCount": 5000,
+    "features": {
+      "quote_form": true,
+      "agents_page": true,
+      "carriers_page": true,
+      "tlc_specialty": true,
+      "multilingual_staff": true,
+      "claims_assistance": true,
+      "dmv_services": true,
+      "notary_services": true,
+      "blog": true,
+      "testimonials": true,
+      "programmatic_seo": false
     }
-  ]
+  }
 }

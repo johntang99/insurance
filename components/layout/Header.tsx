@@ -8,7 +8,7 @@ import { Menu, X, Phone, Mail, MapPin, Facebook, Instagram, Youtube, MessageCirc
 import { Locale } from '@/lib/i18n';
 import { SiteInfo } from '@/lib/types';
 import { getSiteDisplayName } from '@/lib/siteInfo';
-import LanguageSwitcher from '../i18n/LanguageSwitcher';
+// LanguageSwitcher removed — insurance platform is English-only in Phase 0 (Spanish/Chinese in Phase 2+)
 
 export interface HeaderConfig {
   topbar?: {
@@ -80,29 +80,24 @@ export default function Header({
       : headerConfig?.menu?.items && headerConfig.menu.items.length > 0
       ? headerConfig.menu.items
       : [
-          { text: locale === 'en' ? 'Home' : '首页', url: `/${locale}` },
-          { text: locale === 'en' ? 'Services' : '服务项目', url: `/${locale}/services` },
-          { text: locale === 'en' ? 'Conditions' : '治疗病症', url: `/${locale}/conditions` },
-          { text: locale === 'en' ? 'About' : '关于我们', url: `/${locale}/about` },
-          { text: locale === 'en' ? 'Case Studies' : '案例研究', url: `/${locale}/case-studies` },
-          { text: locale === 'en' ? 'Gallery' : '图库', url: `/${locale}/gallery` },
-          { text: locale === 'en' ? 'Getting Started' : '新用户指南', url: `/${locale}/new-patients` },
-          { text: locale === 'en' ? 'Pricing' : '收费', url: `/${locale}/pricing` },
-          { text: locale === 'en' ? 'Blog' : '博客', url: `/${locale}/blog` },
-          { text: locale === 'en' ? 'Contact' : '联系我们', url: `/${locale}/contact` },
+          // Default insurance navigation — overridden by header.json content
+          { text: 'Insurance', url: `/${locale}/insurance` },
+          { text: 'Get a Quote', url: `/${locale}/quote` },
+          { text: 'About', url: `/${locale}/about` },
+          { text: 'Resources', url: `/${locale}/resources` },
+          { text: 'Contact', url: `/${locale}/contact` },
         ];
 
   const cta = menu?.cta || {
-    text: headerConfig?.cta?.text || (locale === 'en' ? 'Book Online' : '在线预约'),
-    link: headerConfig?.cta?.link || `/${locale}/contact`,
+    text: headerConfig?.cta?.text || 'Get a Free Quote',
+    link: headerConfig?.cta?.link || `/${locale}/quote`,
   };
   const menuFontWeightClass =
     (menu?.fontWeight || headerConfig?.menu?.fontWeight || 'semibold') === 'regular'
       ? 'font-normal'
       : 'font-semibold';
-  const showLanguageSwitcher = Array.isArray(supportedLocales)
-    ? supportedLocales.length > 1
-    : true;
+  // English-only in Phase 0 — no language switcher needed
+  const showLanguageSwitcher = false;
 
   const normalizePath = (value?: string | null) => {
     if (!value) return '';
@@ -161,9 +156,7 @@ export default function Header({
     typeof topbarConfig?.badge === 'string' ? topbarConfig.badge.trim() : '';
   const topbarBadge = hasExplicitBadgeConfig
     ? configuredBadge
-    : locale === 'en'
-      ? 'Now accepting new customers'
-      : '欢迎新客户';
+    : 'Free quote in 2 hours';
   
   useEffect(() => {
     if (variant !== 'transparent') return;
@@ -276,11 +269,6 @@ export default function Header({
                   {item.text}
                 </Link>
               ))}
-              
-              {showLanguageSwitcher && (
-                <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
-              )}
-              
               <Link href={cta.link} className="btn-primary text-sm px-5 py-2.5 ml-4">
                 {cta.text}
               </Link>
@@ -288,9 +276,6 @@ export default function Header({
             
             {/* Mobile Menu Button - Centered variant */}
             <div className="flex lg:hidden justify-center gap-4 mt-4">
-              {showLanguageSwitcher && (
-                <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
-              )}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 text-gray-700 hover:text-primary"
@@ -328,9 +313,6 @@ export default function Header({
                 ))}
               </div>
               <div className="hidden xl:flex items-center gap-4">
-                {showLanguageSwitcher && (
-                  <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
-                )}
                 <Link href={cta.link} className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap">
                   {cta.text}
                 </Link>
@@ -338,9 +320,6 @@ export default function Header({
             
               {/* Mobile Menu Button */}
               <div className="flex xl:hidden items-center gap-4">
-                {showLanguageSwitcher && (
-                  <LanguageSwitcher currentLocale={locale} availableLocales={supportedLocales} />
-                )}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                   className="p-2 text-gray-700 hover:text-primary"
