@@ -55,17 +55,22 @@ function isCronAuthorized(request: NextRequest): boolean {
   const configured = process.env.BLOG_PUBLISH_CRON_SECRET;
   if (!configured) return false;
   const provided = request.headers.get('x-cron-secret');
-  return Boolean(provided && provided === configured);
+  if (provided && provided === configured) return true;
+  const authHeader = request.headers.get('authorization');
+  if (authHeader?.startsWith('Bearer ')) {
+    const bearerToken = authHeader.slice('Bearer '.length).trim();
+    if (bearerToken === configured) return true;
+  }
+  return false;
 }
 
-export async function POST(request: NextRequest) {
+async function runDuePublisher(request: NextRequest, payload: any) {
   const session = await getSessionFromRequest(request);
   const cronAuthorized = isCronAuthorized(request);
   if (!cronAuthorized && (!session || !canWriteContent(session.user))) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
 
-  const payload = await request.json().catch(() => ({}));
   const requestedSiteId = typeof payload.siteId === 'string' ? payload.siteId : '';
   const siteIds = requestedSiteId ? [requestedSiteId] : await listSiteIds();
   const now = new Date();
@@ -135,4 +140,13 @@ export async function POST(request: NextRequest) {
       ? `Published ${published.length} scheduled blog post${published.length === 1 ? '' : 's'}.`
       : 'No scheduled blog posts were due.',
   });
+}
+
+export async function POST(request: NextRequest) {
+  const payload = await request.json().catch(() => ({}));
+  return runDuePublisher(request, payload);
+}
+
+export async function GET(request: NextRequest) {
+  return runDuePublisher(request, {});
 }
