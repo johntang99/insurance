@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import '../styles/globals.css';
 
 // BAAM System I — Insurance Brokerage Platform
@@ -21,14 +22,39 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Insurance Brokerage Platform',
-  description: 'BAAM System I — Independent Insurance Broker',
+  title: {
+    default: 'Peerless Brokerage Inc — Independent Insurance Broker in Flushing, NY',
+    template: '%s | Peerless Brokerage Inc',
+  },
+  description: 'Get free insurance quotes for auto, home, business, TLC & more. Peerless Brokerage shops 30+ carriers. Serving Flushing, Queens & NYC. Call (718) 799-0472.',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://pbiny.com'),
   icons: {
     icon: '/icon',
     shortcut: '/icon',
     apple: '/icon',
   },
+  openGraph: {
+    siteName: 'Peerless Brokerage Inc',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 export default function RootLayout({
   children,
@@ -41,7 +67,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${playfairDisplay.variable} ${inter.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Google Analytics 4 — only loads when GA_ID is configured */}
+        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
+      </body>
     </html>
   );
 }

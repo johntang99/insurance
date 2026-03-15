@@ -2194,7 +2194,7 @@ export function ContentEditor({
                         {(file.publishAt || file.publishDate) && (
                           <div>
                             {new Date(file.publishAt || file.publishDate || '').toLocaleDateString(
-                              locale === 'zh' ? 'zh-CN' : 'en-US',
+                              'en-US',
                               { year: 'numeric', month: 'short', day: 'numeric' }
                             )}
                           </div>

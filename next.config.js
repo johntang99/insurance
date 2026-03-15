@@ -1,82 +1,109 @@
 /** @type {import('next').NextConfig} */
+
+// ============================================================
+// BAAM System I — Insurance Brokerage Platform
+// next.config.js — production-optimized configuration
+// ============================================================
+
 const supabaseUrls = [
   process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_PROD_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_STAGING_URL,
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_PROD_URL,
-  process.env.SUPABASE_STAGING_URL,
-].filter(Boolean)
+].filter(Boolean);
 
 const supabaseHostnames = Array.from(
   new Set(
     supabaseUrls
       .map((value) => {
-        try {
-          return value ? new URL(value).hostname : undefined
-        } catch {
-          return undefined
-        }
+        try { return value ? new URL(value).hostname : undefined; } catch { return undefined; }
       })
       .filter(Boolean)
   )
-)
+);
 
-const remotePatterns = []
+const remotePatterns = [];
 for (const hostname of supabaseHostnames) {
   remotePatterns.push({
     protocol: 'https',
     hostname,
     pathname: '/storage/v1/object/public/**',
-  })
+  });
 }
-
-// URL of the pureherbhealth herb store platform
-// Local dev: http://localhost:3005   Production: https://pureherbhealth.com
-const HERB_STORE_URL = process.env.HERB_STORE_URL || 'http://localhost:3005'
 
 const nextConfig = {
   reactStrictMode: true,
 
-  /**
-   * Proxy ONLY the backend APIs to the herb store platform.
-   * Shop/cart/checkout HTML pages are rendered natively in this app
-   * using the clinic's own header, theme, and layout.
-   * The x-store-slug header injected by middleware scopes each API call to the correct store.
-   */
-  async rewrites() {
-    return [
-      // Checkout pages stay proxied so the cart session cookie works seamlessly.
-      // pureherbhealth uses assetPrefix=NEXT_PUBLIC_APP_URL so JS chunks load
-      // from localhost:3005 directly — no ChunkLoadError.
-      { source: '/:locale/checkout',        destination: `${HERB_STORE_URL}/:locale/checkout`        },
-      { source: '/:locale/checkout/:path*', destination: `${HERB_STORE_URL}/:locale/checkout/:path*` },
-      { source: '/:locale/login',           destination: `${HERB_STORE_URL}/:locale/login`           },
-      { source: '/:locale/login/:path*',    destination: `${HERB_STORE_URL}/:locale/login/:path*`    },
-      { source: '/:locale/register',        destination: `${HERB_STORE_URL}/:locale/register`        },
-      { source: '/:locale/register/:path*', destination: `${HERB_STORE_URL}/:locale/register/:path*` },
-      // Backend APIs only — shop/cart HTML pages are now native in this app
-      { source: '/api/cart/:path*',         destination: `${HERB_STORE_URL}/api/cart/:path*`         },
-      { source: '/api/products/:path*',     destination: `${HERB_STORE_URL}/api/products/:path*`     },
-      { source: '/api/reviews/:path*',      destination: `${HERB_STORE_URL}/api/reviews/:path*`      },
-      { source: '/api/ai/:path*',           destination: `${HERB_STORE_URL}/api/ai/:path*`           },
-      { source: '/api/checkout/:path*',     destination: `${HERB_STORE_URL}/api/checkout/:path*`     },
-      { source: '/api/shipping/:path*',     destination: `${HERB_STORE_URL}/api/shipping/:path*`     },
-      { source: '/api/account/:path*',      destination: `${HERB_STORE_URL}/api/account/:path*`      },
-      { source: '/api/orders/:path*',       destination: `${HERB_STORE_URL}/api/orders/:path*`       },
-      { source: '/api/stores/:path*',       destination: `${HERB_STORE_URL}/api/stores/:path*`       },
-      { source: '/api/stores',              destination: `${HERB_STORE_URL}/api/stores`               },
-      { source: '/api/recommendations/:path*', destination: `${HERB_STORE_URL}/api/recommendations/:path*` },
-    ]
-  },
-
+  // ── Image optimization ────────────────────────────────────
   images: {
-    domains: ['localhost', 'images.unsplash.com'],
-    remotePatterns,
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      // Supabase storage
+      ...remotePatterns,
+      // Stock photo providers (for admin media browser)
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'images.pexels.com' },
+      { protocol: 'https', hostname: 'www.pexels.com' },
+    ],
+    // Optimize images in production; skip in dev for speed
     unoptimized: process.env.NODE_ENV === 'development',
+    // Insurance site images don't need to be huge
+    deviceSizes: [375, 640, 768, 1024, 1280, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 160, 200],
   },
-  // Enable static exports for ISR
-  output: 'standalone',
-}
 
-module.exports = nextConfig
+  // ── HTTP headers ──────────────────────────────────────────
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+      {
+        // Cache static assets aggressively
+        source: '/uploads/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Cache Next.js static files
+        source: '/_next/static/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+    ];
+  },
+
+  // ── Redirects ─────────────────────────────────────────────
+  async redirects() {
+    return [
+      // Redirect old /blog paths to /resources
+      { source: '/en/blog', destination: '/en/resources', permanent: true },
+      { source: '/en/blog/:slug', destination: '/en/resources/:slug', permanent: true },
+      { source: '/:locale/blog', destination: '/:locale/resources', permanent: true },
+      { source: '/:locale/blog/:slug', destination: '/:locale/resources/:slug', permanent: true },
+    ];
+  },
+
+  // ── Build output ──────────────────────────────────────────
+  output: 'standalone',
+
+  // ── Compiler options ──────────────────────────────────────
+  compiler: {
+    // Remove console.log in production
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
+  },
+
+  // ── Experimental ─────────────────────────────────────────
+  experimental: {
+    // Optimize server actions
+    serverActions: { allowedOrigins: ['localhost:3007', 'pbiny.com', '*.pbiny.com'] },
+  },
+};
+
+module.exports = nextConfig;

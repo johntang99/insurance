@@ -8,7 +8,7 @@ import { INSURANCE_LINE_META, getLineName, getLineIcon, css } from '@/lib/insura
 
 interface InsuranceLine {
   line_slug: string;
-  name?: string;
+  name?: string | null;
   is_enabled?: boolean;
   sort_order?: number;
 }
@@ -86,7 +86,7 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
 
   const lines = insuranceLines.length > 0
     ? insuranceLines.filter(l => l.is_enabled !== false)
-    : Object.keys(INSURANCE_LINE_META).map(slug => ({ line_slug: slug }));
+    : Object.keys(INSURANCE_LINE_META).map(slug => ({ line_slug: slug, name: undefined }));
 
   const toggleCoverage = (slug: string) => {
     setForm(f => ({

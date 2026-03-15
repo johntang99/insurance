@@ -24,7 +24,7 @@ interface ContactEmailContext {
 }
 
 function toLocale(rawLocale: unknown): Locale {
-  return rawLocale === 'zh' ? 'zh' : 'en';
+  return 'en' as Locale;
 }
 
 async function resolveRequestSiteInfo(request: NextRequest, locale: Locale): Promise<SiteInfo | null> {
@@ -47,7 +47,7 @@ function createEmailHTML(data: ContactFormData, context: ContactEmailContext): s
   const { name, email, phone, reason, message } = data;
   const { businessName, locale } = context;
   const reasonLabel = getReasonLabel(reason);
-  const timestamp = new Date().toLocaleString(locale === 'zh' ? 'zh-CN' : 'en-US', { 
+  const timestamp = new Date().toLocaleString(( 'en-US'), { 
     timeZone: 'America/New_York',
     dateStyle: 'full',
     timeStyle: 'short'
@@ -286,7 +286,7 @@ export async function POST(request: NextRequest) {
     const autoReplyEmail = await resend.emails.send({
       from: process.env.RESEND_FROM || 'No-Reply<no-reply@baamplatform.com>',
       to: email,
-      subject: locale === 'zh' ? `感谢联系${businessName}` : `Thank you for contacting ${businessName}`,
+      subject: `Thank you for contacting ${businessName}`,
       html: autoReplyHTML,
     });
 
@@ -299,7 +299,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         success: true, 
-        message: locale === 'zh'
+        message: false // locale === 'zh'
           ? '您的消息已发送成功。我们的团队将尽快与您联系，并请留意邮箱确认邮件。'
           : 'Your message has been sent successfully. Our team will contact you soon. Please check your email for confirmation.',
       },
