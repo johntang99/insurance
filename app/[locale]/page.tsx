@@ -9,6 +9,7 @@ import { getSupabaseServerClient } from '@/lib/supabase/server';
 import InsuranceLineGrid from '@/components/sections/InsuranceLineGrid';
 import CarrierLogoCarousel from '@/components/sections/CarrierLogoCarousel';
 import QuoteCTASection from '@/components/sections/QuoteCTASection';
+import InsuranceHero from '@/components/sections/InsuranceHero';
 import { CheckCircle, Phone } from 'lucide-react';
 
 interface PageProps { params: { locale: Locale } }
@@ -67,77 +68,24 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <main>
-      {/* ── SECTION 1: HERO ─────────────────────────────────────── */}
-      <section style={{
-        position: 'relative',
-        minHeight: '88vh',
-        display: 'flex',
-        alignItems: 'center',
-        overflow: 'hidden',
-        background: `linear-gradient(160deg,rgba(6,15,29,.95) 0%,rgba(11,31,58,.9) 40%,rgba(17,42,77,.85) 75%,rgba(23,53,96,.82) 100%)`,
-      }}>
-        {/* Grid texture */}
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px)', backgroundSize: '48px 48px', pointerEvents: 'none' }} />
-        {/* Gold radial glow */}
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 80% 60% at 70% 50%,rgba(201,147,58,.07) 0%,transparent 60%)', pointerEvents: 'none' }} />
-
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: '100px 0 80px' }}>
-          <div className="container-custom">
-            <div style={{ maxWidth: 760 }}>
-              {/* Eyebrow */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(201,147,58,.15)', border: '1px solid rgba(201,147,58,.3)', color: 'var(--gold-300)', fontSize: '.8rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', padding: '6px 14px', borderRadius: 100, marginBottom: 24 }}>
-                ★ {hero.badge || 'Licensed & Independent'}
-              </div>
-
-              {/* Headline */}
-              <h1 style={{ color: '#fff', fontSize: 'clamp(2.4rem,5vw,3.75rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 20, letterSpacing: '-.01em', fontFamily: 'var(--font-heading)' }}>
-                {(hero.headline || 'Your Trusted Independent Insurance Broker').split('Insurance').map((part: string, i: number, arr: string[]) =>
-                  i < arr.length - 1
-                    ? <span key={i}>{part}<span style={{ color: 'var(--gold-400)' }}>Insurance</span></span>
-                    : <span key={i}>{part}</span>
-                )}
-              </h1>
-
-              {/* Subline */}
-              <p style={{ fontSize: 'clamp(1rem,2vw,1.2rem)', color: 'rgba(255,255,255,.78)', maxWidth: 580, lineHeight: 1.65, marginBottom: 36 }}>
-                {hero.subline || 'We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.'}
-              </p>
-
-              {/* CTAs */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center', marginBottom: 28 }}>
-                <Link href={hero.ctaPrimary?.href || `/${locale}/quote`}
-                  className="btn-gold"
-                  style={{ padding: '15px 32px', fontSize: '1rem', borderRadius: 10 }}>
-                  {hero.ctaPrimary?.label || 'Get a Free Quote'}
-                </Link>
-                <a href={phoneHref} className="btn-navy-outline">
-                  <Phone className="w-4 h-4" />
-                  {hero.ctaSecondary?.label || 'Call Us Now'}
-                </a>
-              </div>
-
-              {/* Trust badge */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: 'rgba(255,255,255,.55)', fontSize: '.82rem', fontWeight: 500, letterSpacing: '.05em' }}>
-                <span style={{ display: 'block', width: 32, height: 1, background: 'rgba(255,255,255,.2)' }} />
-                Licensed · Independent · Local
-                <span style={{ display: 'block', width: 32, height: 1, background: 'rgba(255,255,255,.2)' }} />
-              </div>
-
-              {/* Stats bar */}
-              {(hero.stats || stats.items) && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 56, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,.1)' }}>
-                  {(hero.stats || stats.items || []).map((s: any, i: number) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', backdropFilter: 'blur(4px)', padding: '9px 18px', borderRadius: 100, color: '#fff', fontSize: '.85rem', fontWeight: 500 }}>
-                      <strong style={{ color: 'var(--gold-400)', fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 700 }}>{s.value}{s.suffix}</strong>
-                      {s.label}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/*
+        ── HOME HERO — InsuranceHero 'home' variant (= 'centered' + taller)
+           Set hero.image in home.json to switch to 'split-image' with photo on right.
+           Set hero.variant = 'split-image' to force split even before image is uploaded.
+      */}
+      <InsuranceHero
+        variant={hero.image ? 'split-image' : 'home'}
+        badge={`★ ${hero.badge || 'Licensed & Independent'}`}
+        headline={hero.headline || 'Your Trusted Independent Insurance Broker'}
+        subline={hero.subline || 'We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.'}
+        image={hero.image}
+        imageAlt={hero.imageAlt}
+        stats={hero.stats?.length > 0 ? hero.stats : (stats.items || [])}
+        ctaPrimary={{ label: hero.ctaPrimary?.label || 'Get a Free Quote', href: hero.ctaPrimary?.href || `/${locale}/quote` }}
+        ctaSecondary={{ label: hero.ctaSecondary?.label || `Call ${phone}`, href: hero.ctaSecondary?.href || phoneHref }}
+        trustBadge="Licensed · Independent · Local"
+        minHeight={520}
+      />
 
       {/* ── SECTION 2: INSURANCE LINE GRID ─────────────────────── */}
       <InsuranceLineGrid
