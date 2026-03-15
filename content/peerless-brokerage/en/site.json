@@ -9,15 +9,24 @@
   "zip": "11201",
   "hours": "Mon–Fri 9am–6pm, Sat 10am–3pm",
   "licenseNumber": "LA-1234567",
-  "licensedStates": ["NY", "NJ", "CT", "PA"],
-  "languages": ["English", "Spanish", "Chinese"],
+  "licensedStates": [
+    "NY",
+    "NJ",
+    "CT",
+    "PA"
+  ],
+  "languages": [
+    "English",
+    "Spanish",
+    "Chinese"
+  ],
   "yearsInBusiness": 25,
   "carriersCount": 30,
   "clientsCount": 5000,
   "policiesCount": 10000,
   "googleReviewsRating": 4.9,
   "googleReviewsCount": 312,
-  "logoUrl": "/uploads/peerless-brokerage/logo.png",
+  "logoUrl": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/logo.png",
   "faviconUrl": "/favicon.ico",
   "social": {
     "facebook": "",

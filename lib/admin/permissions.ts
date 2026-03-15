@@ -1,11 +1,17 @@
 import type { SiteConfig, User } from '@/lib/types';
 
+// BAAM System I — Insurance Platform
+// Super admin roles: 'super_admin' (medical legacy) + 'platform_super_admin' (insurance platform)
+const SUPER_ADMIN_ROLES = ['super_admin', 'platform_super_admin'] as const;
+const WRITE_ROLES = ['super_admin', 'platform_super_admin', 'site_admin', 'editor'] as const;
+const MANAGE_ROLES = ['super_admin', 'platform_super_admin', 'site_admin'] as const;
+
 function normalizeSiteId(siteId: string) {
   return siteId.trim().toLowerCase();
 }
 
 export function isSuperAdmin(user: User) {
-  return user.role === 'super_admin';
+  return SUPER_ADMIN_ROLES.includes(user.role as any);
 }
 
 export function canAccessSite(user: User, siteId: string) {
@@ -35,13 +41,13 @@ export function requireSiteAccess(user: User, siteId: string) {
 }
 
 export function canWriteContent(user: User) {
-  return ['super_admin', 'site_admin', 'editor'].includes(user.role);
+  return WRITE_ROLES.includes(user.role as any);
 }
 
 export function canManageBookings(user: User) {
-  return ['super_admin', 'site_admin'].includes(user.role);
+  return MANAGE_ROLES.includes(user.role as any);
 }
 
 export function canManageMedia(user: User) {
-  return ['super_admin', 'site_admin', 'editor'].includes(user.role);
+  return WRITE_ROLES.includes(user.role as any);
 }
