@@ -2460,8 +2460,10 @@ export function ContentEditor({
                 />
               )}
 
-              {/* Insurance service page hero — triggers on serviceHero key */}
-              {showSharedPanels && formData?.serviceHero && (
+              {/* Insurance service page hero — triggers on serviceHero key.
+                  Uses formData directly (no showSharedPanels guard) so it always shows
+                  when editing any insurance page JSON. */}
+              {formData?.serviceHero && (
                 <ServiceHeroPanel
                   serviceHero={formData.serviceHero}
                   updateFormValue={updateFormValue}
@@ -2695,7 +2697,7 @@ export function ContentEditor({
                 </div>
               )}
 
-              {formData && !isSiteInfoFile && !formData.hero && !formData.introduction && !formData.cta && (
+              {formData && !isSiteInfoFile && !formData.hero && !formData.introduction && !formData.cta && !formData.serviceHero && (
                 <div className="text-sm text-gray-500">
                   No schema panels available for this file yet. Use the JSON tab.
                 </div>
