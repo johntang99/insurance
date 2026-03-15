@@ -19,6 +19,37 @@ const LINE_ICONS: Record<string, string> = {
   'commercial-property': '🏢',
 };
 
+// Resolves icon names (from content JSON) to emoji — handles both emoji and
+// legacy Lucide icon name strings that were accidentally stored in content.
+const ICON_NAMES_TO_EMOJI: Record<string, string> = {
+  // Search / discovery
+  search: '🔍', magnify: '🔍', compare: '🔍',
+  // Approval / quality
+  star: '⭐', award: '🏆', check: '✅', badge: '🏅', certificate: '📜',
+  // Speed / time
+  clock: '⏱️', zap: '⚡', lightning: '⚡', speed: '🚀',
+  // Protection / security
+  shield: '🛡️', lock: '🔒', security: '🔐',
+  // Money / savings
+  'dollar-sign': '💰', dollar: '💰', money: '💰', savings: '💰', percent: '💲',
+  // People / service
+  users: '👥', user: '👤', handshake: '🤝', 'hand-shake': '🤝',
+  // Communication / language
+  globe: '🌐', world: '🌐', language: '🗣️', phone: '📞',
+  // Misc
+  'life-buoy': '🤝', store: '🏪', stack: '📚', 'phone-call': '📞',
+  building: '🏢', home: '🏠', car: '🚗', truck: '🚛',
+  heart: '❤️', hammer: '🔨', tool: '🔧',
+};
+
+function resolveIcon(icon: string | undefined): string {
+  if (!icon) return '✦';
+  // Already an emoji (contains non-ASCII Unicode) — return as-is
+  if (/\p{Emoji}/u.test(icon)) return icon;
+  // Known icon name → emoji
+  return ICON_NAMES_TO_EMOJI[icon.toLowerCase()] || '✦';
+}
+
 const LINE_NAMES: Record<string, string> = {
   auto: 'Auto Insurance', tlc: 'TLC Insurance', 'commercial-auto': 'Commercial Auto Insurance',
   homeowner: 'Homeowner Insurance', business: 'Business Insurance', 'workers-comp': 'Workers Compensation',
@@ -204,7 +235,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
               { icon: '🏆', title: '25 Years Experience', description: 'Decades of expertise means we know which carriers provide the best value for each situation.' },
             ]).map((point: any, i: number) => (
               <div key={i} style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '32px 24px', textAlign: 'center' }}>
-                <span style={{ fontSize: '2rem', display: 'block', marginBottom: 14 }}>{point.icon}</span>
+                <span style={{ fontSize: '2rem', display: 'block', marginBottom: 14 }}>{resolveIcon(point.icon)}</span>
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 10, fontSize: '1.1rem' }}>{point.title}</h3>
                 <p style={{ fontSize: '.9rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{point.description}</p>
               </div>

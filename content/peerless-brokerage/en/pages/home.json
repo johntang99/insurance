@@ -50,17 +50,17 @@
     "subline": "Unlike captive agents who represent one company, we work for you.",
     "points": [
       {
-        "icon": "search",
+        "icon": "🔍",
         "title": "We Shop 30+ Carriers",
         "description": "We compare rates from over 30 insurance companies to find you the best coverage at the lowest price."
       },
       {
-        "icon": "user-check",
+        "icon": "🤝",
         "title": "We Work for You",
         "description": "Our loyalty is to you, not to any single insurance company. We give unbiased advice based on your needs."
       },
       {
-        "icon": "phone-call",
+        "icon": "📞",
         "title": "One Broker for All Your Needs",
         "description": "Auto, home, business, specialty — one call and one trusted relationship handles everything."
       }

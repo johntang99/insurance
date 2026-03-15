@@ -1,113 +1,65 @@
 {
-  "serviceHero": {
-    "variant": "service-hero",
-    "badge": "Personal Auto Insurance",
-    "headline": "Auto Insurance",
-    "subline": "Get the best rate on personal auto coverage. We compare 30+ carriers so you don't have to.",
-    "stats": [
+  "faq": {
+    "items": [
       {
-        "value": "30",
-        "label": "Carriers Compared",
-        "suffix": "+"
+        "answer": "New York requires Bodily Injury Liability (25/50/10), Personal Injury Protection ($50,000 minimum), and Uninsured Motorist coverage (25/50).",
+        "question": "What is the minimum auto insurance required in NY?"
       },
       {
-        "value": "2",
-        "label": "Hour Quote",
-        "suffix": "hr"
+        "answer": "Yes. Leased vehicles typically require full coverage plus gap insurance, which covers the remaining loan balance if the car is totaled.",
+        "question": "Can I insure a leased vehicle?"
+      },
+      {
+        "answer": "Insuring two or more vehicles on the same policy typically earns a 10–25% discount on each vehicle's premium.",
+        "question": "How does multi-car discounts work?"
+      },
+      {
+        "answer": "Yes. NY allows carriers to use credit-based insurance scores as a rating factor. A better credit score generally means a lower premium.",
+        "question": "Does my credit score affect my auto insurance rate in NY?"
+      },
+      {
+        "answer": "An at-fault accident typically increases your rate for 3–5 years depending on the carrier. We can often find you a better rate by switching carriers after an accident.",
+        "question": "What happens to my rate after an accident?"
       }
     ],
-    "ctaPrimary": {
-      "label": "Get an Auto Quote",
-      "href": "/en/quote?type=auto"
-    },
-    "ctaSecondary": {
-      "label": "Call (718) 799-0472",
-      "href": "tel:+17187990472"
-    },
-    "image": "",
-    "imageAlt": ""
-  },
-  "whatItCovers": {
-    "headline": "What Auto Insurance Covers",
-    "included": [
-      {
-        "title": "Liability Coverage",
-        "description": "Pays for injuries and property damage you cause to others in an accident."
-      },
-      {
-        "title": "Collision Coverage",
-        "description": "Pays to repair or replace your car after a collision, regardless of fault."
-      },
-      {
-        "title": "Comprehensive Coverage",
-        "description": "Covers theft, vandalism, weather damage, fire, and other non-collision events."
-      },
-      {
-        "title": "Personal Injury Protection (PIP)",
-        "description": "Required in NY. Pays medical bills for you and your passengers regardless of fault."
-      },
-      {
-        "title": "Uninsured Motorist",
-        "description": "Protects you if you're hit by a driver without insurance or a hit-and-run."
-      },
-      {
-        "title": "Rental Reimbursement",
-        "description": "Covers rental car costs while your vehicle is being repaired after a covered claim."
-      }
-    ],
-    "excluded": [
-      {
-        "title": "Mechanical Breakdown",
-        "description": "Normal wear and maintenance is not covered by auto insurance."
-      },
-      {
-        "title": "Commercial Use",
-        "description": "Personal auto policies do not cover vehicles used for commercial delivery or rideshare without endorsement."
-      }
-    ],
-    "whoNeedsIt": "Any licensed driver who owns or leases a vehicle in New York is required by law to carry auto insurance. NY minimum requirements include Bodily Injury Liability (25/50/10), PIP, and Uninsured Motorist coverage."
+    "headline": "Auto Insurance FAQs"
   },
   "whyUs": {
-    "variant": "three-columns",
-    "headline": "Why Get Auto Insurance Through Peerless?",
     "points": [
       {
-        "icon": "search",
+        "icon": "🔍",
         "title": "We Shop 30+ Carriers",
         "description": "We compare Progressive, Nationwide, Mercury, Bristol West, and 25+ more carriers to find your lowest rate."
       },
       {
-        "icon": "star",
+        "icon": "⭐",
         "title": "Safe Driver Discounts",
         "description": "We know which carriers offer the best discounts for clean driving records, defensive driving courses, and multi-policy bundles."
       },
       {
-        "icon": "clock",
+        "icon": "⚡",
         "title": "Fast Turnaround",
         "description": "Most auto insurance quotes are ready within 2 hours. We can often bind same-day coverage."
       }
-    ]
-  },
-  "quoteProcess": {
-    "headline": "How to Get an Auto Quote",
-    "steps": [
-      {
-        "title": "Tell Us About Your Vehicle",
-        "description": "Year, make, model, and how many miles you drive annually."
-      },
-      {
-        "title": "Share Your Driver Info",
-        "description": "All drivers on the policy, driving history, and current insurer."
-      },
-      {
-        "title": "Get Your Options",
-        "description": "We present quotes from multiple carriers with coverage comparison."
-      }
     ],
-    "duration": "2 hours"
+    "variant": "three-columns",
+    "headline": "Why Get Auto Insurance Through Peerless?"
+  },
+  "related": {
+    "slugs": [
+      "homeowner",
+      "commercial-auto",
+      "motorcycle"
+    ],
+    "headline": "Clients with Auto Insurance Also Need"
   },
   "rateFactors": {
-    "headline": "What Affects Your Auto Insurance Rate",
+    "tips": [
+      "Bundle your auto and home insurance for 10–25% savings",
+      "Take a defensive driving course for an additional 10% discount",
+      "Raise your deductible to lower your premium",
+      "Ask about telematics/usage-based programs if you're a safe driver"
+    ],
     "factors": [
       {
         "factor": "Driving Record",
@@ -140,51 +92,99 @@
         "description": "Driving fewer miles annually can qualify you for low-mileage discounts."
       }
     ],
-    "tips": [
-      "Bundle your auto and home insurance for 10–25% savings",
-      "Take a defensive driving course for an additional 10% discount",
-      "Raise your deductible to lower your premium",
-      "Ask about telematics/usage-based programs if you're a safe driver"
-    ]
+    "headline": "What Affects Your Auto Insurance Rate"
+  },
+  "serviceHero": {
+    "badge": "Personal Auto Insurance",
+    "image": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557408598-photo-1565043666747-69f6646db940.jpg",
+    "stats": [
+      {
+        "label": "Carriers Compared",
+        "value": "30",
+        "suffix": "+"
+      },
+      {
+        "label": "Hour Quote",
+        "value": "2",
+        "suffix": "hr"
+      }
+    ],
+    "subline": "Get the best rate on personal auto coverage. We compare 30+ carriers so you don't have to.",
+    "variant": "service-hero",
+    "headline": "Auto Insurance",
+    "imageAlt": "",
+    "ctaPrimary": {
+      "href": "/en/quote?type=auto",
+      "label": "Get an Auto Quote"
+    },
+    "ctaSecondary": {
+      "href": "tel:+17187990472",
+      "label": "Call (718) 799-0472"
+    }
+  },
+  "quoteProcess": {
+    "steps": [
+      {
+        "title": "Tell Us About Your Vehicle",
+        "description": "Year, make, model, and how many miles you drive annually."
+      },
+      {
+        "title": "Share Your Driver Info",
+        "description": "All drivers on the policy, driving history, and current insurer."
+      },
+      {
+        "title": "Get Your Options",
+        "description": "We present quotes from multiple carriers with coverage comparison."
+      }
+    ],
+    "duration": "2 hours",
+    "headline": "How to Get an Auto Quote"
   },
   "testimonials": {
-    "variant": "featured-3",
-    "filterByCoverageType": "auto",
     "limit": 3,
+    "variant": "carousel",
     "showRating": true,
-    "showCoverageType": false
+    "showCoverageType": false,
+    "filterByCoverageType": "auto"
   },
-  "faq": {
-    "headline": "Auto Insurance FAQs",
-    "items": [
+  "whatItCovers": {
+    "excluded": [
       {
-        "question": "What is the minimum auto insurance required in NY?",
-        "answer": "New York requires Bodily Injury Liability (25/50/10), Personal Injury Protection ($50,000 minimum), and Uninsured Motorist coverage (25/50)."
+        "title": "Mechanical Breakdown",
+        "description": "Normal wear and maintenance is not covered by auto insurance."
       },
       {
-        "question": "Can I insure a leased vehicle?",
-        "answer": "Yes. Leased vehicles typically require full coverage plus gap insurance, which covers the remaining loan balance if the car is totaled."
-      },
-      {
-        "question": "How does multi-car discounts work?",
-        "answer": "Insuring two or more vehicles on the same policy typically earns a 10–25% discount on each vehicle's premium."
-      },
-      {
-        "question": "Does my credit score affect my auto insurance rate in NY?",
-        "answer": "Yes. NY allows carriers to use credit-based insurance scores as a rating factor. A better credit score generally means a lower premium."
-      },
-      {
-        "question": "What happens to my rate after an accident?",
-        "answer": "An at-fault accident typically increases your rate for 3–5 years depending on the carrier. We can often find you a better rate by switching carriers after an accident."
+        "title": "Commercial Use",
+        "description": "Personal auto policies do not cover vehicles used for commercial delivery or rideshare without endorsement."
       }
-    ]
-  },
-  "related": {
-    "headline": "Clients with Auto Insurance Also Need",
-    "slugs": [
-      "homeowner",
-      "commercial-auto",
-      "motorcycle"
-    ]
+    ],
+    "headline": "What Auto Insurance Covers",
+    "included": [
+      {
+        "title": "Liability Coverage",
+        "description": "Pays for injuries and property damage you cause to others in an accident."
+      },
+      {
+        "title": "Collision Coverage",
+        "description": "Pays to repair or replace your car after a collision, regardless of fault."
+      },
+      {
+        "title": "Comprehensive Coverage",
+        "description": "Covers theft, vandalism, weather damage, fire, and other non-collision events."
+      },
+      {
+        "title": "Personal Injury Protection (PIP)",
+        "description": "Required in NY. Pays medical bills for you and your passengers regardless of fault."
+      },
+      {
+        "title": "Uninsured Motorist",
+        "description": "Protects you if you're hit by a driver without insurance or a hit-and-run."
+      },
+      {
+        "title": "Rental Reimbursement",
+        "description": "Covers rental car costs while your vehicle is being repaired after a covered claim."
+      }
+    ],
+    "whoNeedsIt": "Any licensed driver who owns or leases a vehicle in New York is required by law to carry auto insurance. NY minimum requirements include Bodily Injury Liability (25/50/10), PIP, and Uninsured Motorist coverage."
   }
 }

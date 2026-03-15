@@ -117,7 +117,9 @@ export default async function HomePage({ params }: PageProps) {
               { icon: '📋', title: 'One Broker for Everything', description: 'Auto, home, business, specialty — one call and one trusted relationship handles everything.' },
             ]).map((point: any, i: number) => (
               <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '36px 28px' }}>
-                <span style={{ fontSize: '2.2rem', display: 'block', marginBottom: 16 }}>{point.icon}</span>
+                <span style={{ fontSize: '2.2rem', display: 'block', marginBottom: 16 }}>
+                  {/\p{Emoji}/u.test(point.icon || '') ? point.icon : ({ search:'🔍', star:'⭐', 'user-check':'🤝', 'phone-call':'📞', shield:'🛡️', zap:'⚡', clock:'⏱️', globe:'🌐', 'dollar-sign':'💰', 'life-buoy':'🤝', handshake:'🤝' } as Record<string,string>)[point.icon] || point.icon || '✦'}
+                </span>
                 <h3 style={{ color: 'var(--navy-800)', marginBottom: 10, fontFamily: 'var(--font-heading)' }}>{point.title}</h3>
                 <p style={{ fontSize: '.9375rem', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{point.description}</p>
               </div>
