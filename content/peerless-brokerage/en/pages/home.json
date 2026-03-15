@@ -37,7 +37,7 @@
       }
     ],
     "subline": "We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.",
-    "variant": "gallery-background",
+    "variant": "split-gallery-right",
     "headline": "Your Trusted Independent Insurance Broker",
     "ctaPrimary": {
       "href": "/en/quote",
@@ -47,12 +47,12 @@
       "href": "tel:+17187990472",
       "label": "Call (718) 799-0472"
     },
-    "backgroundImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg",
     "galleryImages": [
       "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg",
-      "",
-      ""
-    ]
+      "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557655209-photo-1605281317010-fe5ffe798166.jpg",
+      "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773559113044-photo-1595670322505-4de61b9cdf47.jpg"
+    ],
+    "backgroundImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg"
   },
   "stats": {
     "items": [

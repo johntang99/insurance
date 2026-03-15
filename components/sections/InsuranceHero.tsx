@@ -194,7 +194,6 @@ function SplitImageHero(props: InsuranceHeroProps) {
           </div>
         </div>
       </div>
-      <style>{`@media(max-width:900px){.hero-split-grid{grid-template-columns:1fr!important;}}`}</style>
     </section>
   );
 }
@@ -314,7 +313,6 @@ function SplitGalleryRightHero(props: InsuranceHeroProps) {
         </div>
       </div>
 
-      <style>{`@media(max-width:960px){.hero-gallery-grid{grid-template-columns:1fr!important;}.hero-gallery-grid>div:last-child{display:none}}`}</style>
     </section>
   );
 }
