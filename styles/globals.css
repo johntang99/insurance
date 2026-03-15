@@ -346,6 +346,37 @@
 }
 
 /* ============================================
+   HOVER UTILITY CLASSES (used in server components)
+   ============================================ */
+
+/* Buttons */
+.btn-gold { background: var(--gold-500); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-weight: 700; font-size: 1rem; display: inline-block; text-decoration: none; cursor: pointer; transition: background .18s; }
+.btn-gold:hover { background: var(--gold-600); }
+.btn-gold-sm { background: var(--gold-500); color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 600; font-size: .875rem; display: inline-block; text-decoration: none; transition: background .18s; }
+.btn-gold-sm:hover { background: var(--gold-600); }
+.btn-navy-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.35); border-radius: 10px; padding: 14px 32px; font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: background .18s, border-color .18s; }
+.btn-navy-outline:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+.btn-navy-sm { background: var(--navy-800); color: #fff; border-radius: 8px; padding: 10px 16px; font-weight: 600; font-size: .875rem; display: block; text-decoration: none; transition: background .18s; text-align: center; }
+.btn-navy-sm:hover { background: var(--navy-700); }
+
+/* Cards */
+.hover-lift { transition: box-shadow .2s, transform .2s; }
+.hover-lift:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.hover-lift-sm:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+
+/* Insurance tiles */
+.ins-tile-hover { transition: border-color .2s, transform .2s, box-shadow .2s; }
+.ins-tile-hover:hover { border-color: var(--navy-600) !important; transform: translateY(-3px); box-shadow: var(--shadow); }
+
+/* Text links */
+.link-gold { color: var(--gold-600); font-weight: 600; font-size: .9375rem; display: inline-flex; align-items: center; gap: 6px; transition: gap .15s, color .15s; }
+.link-gold:hover { color: var(--gold-500); gap: 10px; }
+
+/* Footer links */
+.footer-link { color: rgba(255,255,255,.65); font-size: .875rem; transition: color .15s; }
+.footer-link:hover { color: var(--gold-300); }
+
+/* ============================================
    ANIMATIONS
    ============================================ */
 

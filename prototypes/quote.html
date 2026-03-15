@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get a Free Insurance Quote — Peerless Brokerage</title>
+  <meta name="description" content="Request a free, no-obligation insurance quote from Peerless Brokerage. We compare 30+ carriers and respond within 2 business hours." />
+  <link rel="stylesheet" href="theme.css" />
+
+  <style>
+    /* ================================================================
+       QUOTE PAGE — Local Styles
+       ================================================================ */
+
+    /* ── Page scaffold ───────────────────────────────────────────── */
+    body { background: var(--bg-subtle); }
+
+    /* ── NAV overrides for quote page (no CTA button) ────────────── */
+    .nav-phone-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.25;
+    }
+    .nav-phone-block .phone-label {
+      font-size: .7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+    .nav-phone-block .phone-num {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy-800);
+    }
+
+    /* ── Page title band ─────────────────────────────────────────── */
+    .page-hero {
+      background: var(--navy-800);
+      padding: 28px 0 26px;
+    }
+    .page-hero .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .page-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+    .page-hero-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 100px;
+      font-size: .78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.88);
+      white-space: nowrap;
+    }
+    .hero-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-400);
+      flex-shrink: 0;
+    }
+
+    /* ── Content wrapper ─────────────────────────────────────────── */
+    .quote-layout {
+      padding: 40px 0 72px;
+    }
+    .quote-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Form card ───────────────────────────────────────────────── */
+    .form-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 12px 48px rgba(11,31,58,.13), 0 4px 16px rgba(11,31,58,.07);
+      overflow: hidden;
+    }
+
+    /* ── Progress bar ────────────────────────────────────────────── */
+    .progress-header {
+      padding: 28px 36px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 28px;
+    }
+    .progress-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      position: relative;
+    }
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .progress-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: calc(50% + 16px);
+      width: calc(100% - 32px);
+      height: 3px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      z-index: 0;
+    }
+    /* line fill for completed step leading to next */
+    .progress-step.completed::after {
+      background: var(--navy-800);
+    }
+    .progress-step.active::after {
+      background: linear-gradient(to right, var(--navy-800) 0%, #e2e8f0 100%);
+    }
+    .progress-circle {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all .25s ease;
+      position: relative;
+      z-index: 2;
+    }
+    .progress-step.pending .progress-circle {
+      background: #fff;
+      border: 2.5px solid #d1d9e0;
+      color: var(--text-muted);
+    }
+    .progress-step.active .progress-circle {
+      background: var(--navy-800);
+      border: 2.5px solid var(--navy-800);
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(11,31,58,.12);
+    }
+    .progress-step.completed .progress-circle {
+      background: var(--gold-500);
+      border: 2.5px solid var(--gold-500);
+      color: #fff;
+      font-size: 1rem;
+    }
+    .progress-label {
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      white-space: nowrap;
+    }
+    .progress-step.pending .progress-label { color: var(--text-muted); }
+    .progress-step.active .progress-label { color: var(--navy-800); }
+    .progress-step.completed .progress-label { color: var(--gold-600); }
+
+    /* ── Step sections ───────────────────────────────────────────── */
+    .step-section {
+      padding: 36px 36px 32px;
+    }
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .step-sub {
+      font-size: .9rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+
+    /* ── Coverage tile grid ──────────────────────────────────────── */
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .coverage-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all .18s ease;
+      background: var(--bg-white);
+      position: relative;
+      user-select: none;
+      text-align: center;
+    }
+    .coverage-tile:hover {
+      border-color: var(--navy-500);
+      background: var(--navy-50);
+    }
+    .coverage-tile.selected {
+      border-color: var(--navy-700);
+      background: #f5f9ff;
+      box-shadow: 0 0 0 1px var(--navy-700), inset 0 0 0 99px rgba(201,147,58,.05);
+    }
+    .coverage-tile .tile-emoji {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .coverage-tile .tile-name {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+    .coverage-tile.selected .tile-name {
+      color: var(--navy-800);
+    }
+    .tile-check {
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--gold-500);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .6rem;
+      color: #fff;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all .18s ease;
+    }
+    .coverage-tile.selected .tile-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ── Not sure collapsible ────────────────────────────────────── */
+    .not-sure-section {
+      margin-bottom: 28px;
+    }
+    .not-sure-summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--navy-600);
+      list-style: none;
+      padding: 10px 14px;
+      border: 1.5px solid var(--navy-100);
+      border-radius: var(--radius);
+      background: var(--navy-50);
+      transition: background .15s;
+      user-select: none;
+    }
+    .not-sure-summary:hover { background: var(--navy-100); }
+    .not-sure-summary::-webkit-details-marker { display: none; }
+    .not-sure-arrow {
+      margin-left: auto;
+      font-size: .75rem;
+      transition: transform .2s;
+    }
+    details[open] .not-sure-arrow { transform: rotate(180deg); }
+    .situation-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 14px 0 4px;
+    }
+    .situation-btn {
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-white);
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: left;
+      transition: all .15s;
+    }
+    .situation-btn:hover {
+      border-color: var(--gold-500);
+      color: var(--navy-800);
+      background: var(--gold-100);
+    }
+
+    /* ── Form grid ───────────────────────────────────────────────── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-row.cols-1 { grid-template-columns: 1fr; }
+
+    /* ── Radio pills ─────────────────────────────────────────────── */
+    .radio-pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .radio-pill {
+      display: none;
+    }
+    .radio-pill-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+    }
+    .radio-pill-label:hover {
+      border-color: var(--navy-500);
+      color: var(--navy-700);
+      background: var(--navy-50);
+    }
+    .radio-pill:checked + .radio-pill-label {
+      background: var(--navy-800);
+      border-color: var(--navy-800);
+      color: #fff;
+    }
+
+    /* ── Step navigation buttons ─────────────────────────────────── */
+    .step-nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 0 36px 36px;
+    }
+    .step-nav .btn-back {
+      padding: 14px 24px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .step-nav .btn-back:hover {
+      border-color: var(--navy-600);
+      color: var(--navy-700);
+      background: var(--navy-50);
+    }
+    .step-nav .btn-next {
+      flex: 1;
+    }
+
+    /* ── Collapsed preview panels ────────────────────────────────── */
+    .step-preview {
+      border-top: 1px solid var(--border);
+      padding: 24px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(247,248,250,.3) 0%, rgba(247,248,250,.85) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .preview-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .preview-step-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .preview-step-title {
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .preview-fields { pointer-events: none; opacity: .55; }
+
+    /* ── Confirmation card ───────────────────────────────────────── */
+    .confirmation-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 12px 48px rgba(11,31,58,.13), 0 4px 16px rgba(11,31,58,.07);
+      padding: 52px 40px 48px;
+      text-align: center;
+      margin-top: 32px;
+    }
+    .confirm-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--green-100);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .confirm-icon svg {
+      width: 36px; height: 36px;
+    }
+    .confirm-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .confirm-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .confirm-next-steps {
+      background: var(--bg-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .confirm-next-steps h4 {
+      font-size: .875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .next-step-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .next-step-item:last-child { margin-bottom: 0; }
+    .next-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--navy-800);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .next-text strong {
+      display: block;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .next-text span {
+      font-size: .82rem;
+      color: var(--text-muted);
+    }
+    .confirm-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .confirm-actions .btn {
+      min-width: 200px;
+      justify-content: center;
+    }
+
+    /* ── Trust panel ─────────────────────────────────────────────── */
+    .trust-panel {
+      position: sticky;
+      top: 88px;
+    }
+    .trust-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 8px 32px rgba(11,31,58,.1), 0 2px 8px rgba(11,31,58,.06);
+      overflow: hidden;
+    }
+    .trust-card-inner {
+      padding: 28px 24px;
+    }
+    .trust-heading {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy-800);
+      margin-bottom: 20px;
+    }
+    .trust-points {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .trust-point {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .trust-point-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+      line-height: 1;
+    }
+    .trust-point-text {
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .trust-google {
+      background: var(--bg-subtle);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 24px;
+    }
+    .google-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .google-row .stars { font-size: .9rem; }
+    .google-row .score {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .google-row .count {
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+    .google-link {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--navy-600);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+    .google-link:hover { color: var(--gold-600); }
+    .trust-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+    .trust-phone-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .trust-phone-num {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy-800);
+      letter-spacing: -.01em;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .trust-phone-hours {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+    .trust-response-note {
+      font-size: .78rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+    .trust-license {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .trust-license-states {
+      font-size: .72rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Mobile trust strip ──────────────────────────────────────── */
+    .trust-strip {
+      display: none;
+      background: var(--navy-800);
+      border-radius: var(--radius-lg);
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .trust-strip-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78rem;
+      color: rgba(255,255,255,.8);
+      font-weight: 500;
+    }
+    .trust-strip-item .icon { font-size: 1rem; }
+    .trust-strip-phone {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold-300);
+    }
+
+    /* ── Minimal footer ──────────────────────────────────────────── */
+    .footer-minimal {
+      background: var(--navy-900);
+      padding: 24px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer-minimal .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-mini-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-mini-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .footer-mini-logo-mark {
+      width: 32px; height: 32px;
+      background: var(--navy-700);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: .95rem;
+      color: var(--gold-400);
+    }
+    .footer-mini-logo-text {
+      font-family: var(--font-heading);
+      font-size: .95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .footer-mini-phone {
+      font-size: .875rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.65);
+    }
+    .footer-mini-right {
+      text-align: right;
+    }
+    .footer-mini-copy {
+      font-size: .75rem;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 3px;
+    }
+    .footer-mini-compliance {
+      font-size: .68rem;
+      color: rgba(255,255,255,.25);
+      max-width: 400px;
+      line-height: 1.45;
+    }
+
+    /* ── Active step show/hide ───────────────────────────────────── */
+    .step-live { display: block; }
+    .step-collapsed { display: block; }
+
+    /* ── JS-driven step visibility (overrides applied by JS) ─────── */
+    [data-step-panel] { display: none; }
+    [data-step-panel].step-active { display: block; }
+
+    /* ── Select arrow fix ────────────────────────────────────────── */
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%237a8a9a' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .quote-grid {
+        grid-template-columns: 1fr;
+      }
+      .trust-panel {
+        display: none;
+      }
+      .trust-strip {
+        display: flex;
+      }
+    }
+    @media (max-width: 640px) {
+      .step-section { padding: 24px 20px 20px; }
+      .step-nav { padding: 0 20px 24px; }
+      .step-preview { padding: 20px 20px; }
+      .progress-header { padding: 20px 20px 20px; }
+      .coverage-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .coverage-tile { padding: 12px 6px 10px; }
+      .coverage-tile .tile-emoji { font-size: 1.3rem; }
+      .coverage-tile .tile-name { font-size: .72rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .situation-btns { grid-template-columns: 1fr; }
+      .page-hero .container { flex-direction: column; align-items: flex-start; }
+      .footer-minimal .container { flex-direction: column; align-items: flex-start; }
+      .footer-mini-right { text-align: left; }
+      .confirm-actions { flex-direction: column; }
+      .confirm-actions .btn { min-width: auto; width: 100%; }
+      .trust-strip { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       HEADER — Nav only, no top bar, no CTA button
+       ================================================================ -->
+  <header class="site-header">
+    <nav class="nav-bar">
+      <div class="container">
+        <!-- Logo -->
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-mark">PB</div>
+          <div class="nav-logo-text">
+            Peerless Brokerage
+            <span>Brooklyn, New York</span>
+          </div>
+        </a>
+
+        <!-- Nav links -->
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Insurance</a></li>
+          <li><a href="tlc.html">TLC</a></li>
+          <li><a href="claims.html">Claims</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <!-- Phone (replacing CTA button since user is on quote page) -->
+        <div class="nav-phone-block">
+          <span class="phone-label">Questions? Call us</span>
+          <a href="tel:+17185550100" class="phone-num">(718) 555-0100</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ================================================================
+       PAGE TITLE BAND
+       ================================================================ -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>Get a Free Insurance Quote</h1>
+      <div class="page-hero-badges">
+        <span class="hero-pill"><span class="dot"></span>Free · No Obligation</span>
+        <span class="hero-pill"><span class="dot"></span>We Respond Within 2 Hours</span>
+        <span class="hero-pill"><span class="dot"></span>30+ Carriers Compared</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================================
+       MAIN CONTENT
+       ================================================================ -->
+  <main class="quote-layout">
+    <div class="container">
+
+      <!-- Mobile trust strip (shown instead of sidebar on mobile) -->
+      <div class="trust-strip">
+        <div class="trust-strip-item"><span class="icon">⏱</span> Response within 2 hours</div>
+        <div class="trust-strip-item"><span class="icon">🆓</span> 100% free</div>
+        <div class="trust-strip-item"><span class="icon">⭐</span> 4.9 stars</div>
+        <a href="tel:+17185550100" class="trust-strip-phone">(718) 555-0100</a>
+      </div>
+
+      <div class="quote-grid">
+
+        <!-- ============================================================
+             LEFT — FORM CARD
+             ============================================================ -->
+        <div>
+          <div class="form-card" id="quoteFormCard">
+
+            <!-- Progress bar -->
+            <div class="progress-header">
+              <div class="progress-track">
+                <div class="progress-step active" id="prog-step-1">
+                  <div class="progress-circle">1</div>
+                  <span class="progress-label">Coverage</span>
+                </div>
+                <div class="progress-step pending" id="prog-step-2">
+                  <div class="progress-circle">2</div>
+                  <span class="progress-label">Contact</span>
+                </div>
+                <div class="progress-step pending" id="prog-step-3">
+                  <div class="progress-circle">3</div>
+                  <span class="progress-label">Details</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 1: Coverage Selection ── -->
+            <div id="step-1" data-step-panel class="step-active">
+              <div class="step-section">
+                <h3 class="step-title">What coverage are you looking for?</h3>
+                <p class="step-sub">Select all that apply — we'll find your best rates for everything.</p>
+
+                <!-- Coverage tiles -->
+                <div class="coverage-grid" id="coverageGrid">
+                  <div class="coverage-tile selected" data-coverage="auto" role="checkbox" aria-checked="true" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🚗</span>
+                    <span class="tile-name">Auto Insurance</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="tlc" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🚕</span>
+                    <span class="tile-name">TLC Insurance</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="commercial-auto" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🚚</span>
+                    <span class="tile-name">Commercial Auto</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="homeowner" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🏠</span>
+                    <span class="tile-name">Homeowner</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="bop" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🏢</span>
+                    <span class="tile-name">Business (BOP)</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="workers-comp" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">👷</span>
+                    <span class="tile-name">Workers Comp</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="disability" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🦺</span>
+                    <span class="tile-name">Disability</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="construction" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🏗️</span>
+                    <span class="tile-name">Construction</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="motorcycle" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🏍️</span>
+                    <span class="tile-name">Motorcycle</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="boat" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">⛵</span>
+                    <span class="tile-name">Boat</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="travel" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">✈️</span>
+                    <span class="tile-name">Travel</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="group-health" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🏥</span>
+                    <span class="tile-name">Group Health</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="commercial-property" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🏭</span>
+                    <span class="tile-name">Commercial Property</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="claims" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">📋</span>
+                    <span class="tile-name">Claims Help</span>
+                  </div>
+                  <div class="coverage-tile" data-coverage="dmv" role="checkbox" aria-checked="false" tabindex="0">
+                    <div class="tile-check">✓</div>
+                    <span class="tile-emoji">🚗</span>
+                    <span class="tile-name">DMV Services</span>
+                  </div>
+                </div>
+
+                <!-- Not sure collapsible -->
+                <div class="not-sure-section">
+                  <details>
+                    <summary class="not-sure-summary">
+                      <span>💡</span>
+                      Not sure what you need?
+                      <span class="not-sure-arrow">▼</span>
+                    </summary>
+                    <div class="situation-btns">
+                      <button class="situation-btn" onclick="selectSituation('auto')">🚗 I have a new car</button>
+                      <button class="situation-btn" onclick="selectSituation('homeowner')">🏠 I'm a new homeowner</button>
+                      <button class="situation-btn" onclick="selectSituation('bop')">🏢 I run a business</button>
+                      <button class="situation-btn" onclick="selectSituation('tlc')">🚕 I'm a TLC driver</button>
+                    </div>
+                  </details>
+                </div>
+              </div>
+
+              <!-- Step 1 nav -->
+              <div class="step-nav" style="padding-top: 0;">
+                <button class="btn btn-primary btn-lg step-nav" style="flex:1; justify-content:center; border:none;" onclick="goToStep(2)">
+                  Next: Your Contact Info &rarr;
+                </button>
+              </div>
+            </div>
+            <!-- /step-1 -->
+
+
+            <!-- ── STEP 2: Contact Info ── -->
+            <div id="step-2" data-step-panel>
+              <div class="step-section">
+                <h3 class="step-title">How can we reach you?</h3>
+                <p class="step-sub">We'll only use this to contact you about your quote — never spam.</p>
+
+                <div class="form-row" style="margin-bottom: 16px;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">First Name <span class="required-mark">*</span></label>
+                    <input type="text" class="form-input" placeholder="Maria" autocomplete="given-name" />
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">Last Name <span class="required-mark">*</span></label>
+                    <input type="text" class="form-input" placeholder="Rodriguez" autocomplete="family-name" />
+                  </div>
+                </div>
+
+                <div class="form-row" style="margin-bottom: 20px;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">Phone Number <span class="required-mark">*</span></label>
+                    <input type="tel" class="form-input" placeholder="(718) 555-0100" autocomplete="tel" />
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="maria@example.com" autocomplete="email" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Best time to contact</label>
+                  <div class="radio-pill-group">
+                    <input type="radio" name="contact-time" id="time-morning" class="radio-pill" value="morning" />
+                    <label for="time-morning" class="radio-pill-label">🌅 Morning</label>
+
+                    <input type="radio" name="contact-time" id="time-afternoon" class="radio-pill" value="afternoon" checked />
+                    <label for="time-afternoon" class="radio-pill-label">☀️ Afternoon</label>
+
+                    <input type="radio" name="contact-time" id="time-evening" class="radio-pill" value="evening" />
+                    <label for="time-evening" class="radio-pill-label">🌆 Evening</label>
+
+                    <input type="radio" name="contact-time" id="time-anytime" class="radio-pill" value="anytime" />
+                    <label for="time-anytime" class="radio-pill-label">🕐 Anytime</label>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Language preference</label>
+                  <div class="radio-pill-group">
+                    <input type="radio" name="language" id="lang-en" class="radio-pill" value="english" checked />
+                    <label for="lang-en" class="radio-pill-label">🇺🇸 English</label>
+
+                    <input type="radio" name="language" id="lang-es" class="radio-pill" value="spanish" />
+                    <label for="lang-es" class="radio-pill-label">🇪🇸 Español</label>
+
+                    <input type="radio" name="language" id="lang-zh" class="radio-pill" value="chinese" />
+                    <label for="lang-zh" class="radio-pill-label">🇨🇳 中文</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step-nav">
+                <button class="btn-back" onclick="goToStep(1)">&larr; Back</button>
+                <button class="btn btn-primary btn-lg step-nav" style="flex:1; justify-content:center; border:none;" onclick="goToStep(3)">
+                  Next: Additional Details &rarr;
+                </button>
+              </div>
+            </div>
+            <!-- /step-2 -->
+
+
+            <!-- ── STEP 3: Details ── -->
+            <div id="step-3" data-step-panel>
+              <div class="step-section">
+                <h3 class="step-title">A few more details</h3>
+                <p class="step-sub">These help us find the most accurate rates for you — takes less than a minute.</p>
+
+                <!-- Auto-specific fields (shown since auto is pre-selected) -->
+                <div id="auto-fields">
+                  <p style="font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-muted); margin-bottom: 14px;">Auto Insurance Details</p>
+
+                  <div class="form-row" style="margin-bottom: 16px;">
+                    <div class="form-group" style="margin-bottom:0;">
+                      <label class="form-label">Current Insurer</label>
+                      <input type="text" class="form-input" placeholder="e.g. Geico, State Farm" />
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                      <label class="form-label">Number of Vehicles</label>
+                      <select class="form-select">
+                        <option value="">Select...</option>
+                        <option value="1" selected>1 vehicle</option>
+                        <option value="2">2 vehicles</option>
+                        <option value="3">3 vehicles</option>
+                        <option value="4+">4 or more</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Any accidents or violations in the past 3 years?</label>
+                    <div class="radio-pill-group">
+                      <input type="radio" name="accidents" id="acc-no" class="radio-pill" value="no" checked />
+                      <label for="acc-no" class="radio-pill-label">No — clean record</label>
+
+                      <input type="radio" name="accidents" id="acc-yes" class="radio-pill" value="yes" />
+                      <label for="acc-yes" class="radio-pill-label">Yes — I'll explain</label>
+                    </div>
+                  </div>
+
+                  <hr class="divider" style="margin: 20px 0;" />
+                </div>
+
+                <!-- General fields -->
+                <div class="form-group">
+                  <label class="form-label">Anything else we should know?</label>
+                  <textarea class="form-textarea" placeholder="Add any specific questions, special situations, or coverage details you'd like us to keep in mind..."></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">How did you hear about us?</label>
+                  <select class="form-select">
+                    <option value="">Select one...</option>
+                    <option>Google Search</option>
+                    <option>Google Maps</option>
+                    <option>Friend or Family Referral</option>
+                    <option>Social Media</option>
+                    <option>TLC community / forum</option>
+                    <option>Seen your office</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="step-nav">
+                <button class="btn-back" onclick="goToStep(2)">&larr; Back</button>
+                <button class="btn btn-primary btn-lg" style="flex:1; justify-content:center; border:none;" onclick="submitForm()">
+                  Submit My Quote Request ✓
+                </button>
+              </div>
+            </div>
+            <!-- /step-3 -->
+
+
+            <!-- ── COLLAPSED STEP 2 PREVIEW (visible on step 1) ── -->
+            <div id="preview-step2" class="step-preview">
+              <div class="preview-label">
+                <div class="preview-step-num">2</div>
+                <div class="preview-step-title">Contact Info — First Name, Last Name, Phone, Email…</div>
+              </div>
+              <div class="preview-fields">
+                <div class="form-row" style="margin-bottom: 12px; gap: 12px;">
+                  <div>
+                    <div class="form-label" style="margin-bottom:5px; opacity:.6;">First Name</div>
+                    <div class="form-input" style="height:42px; background: #f7f8fa;"></div>
+                  </div>
+                  <div>
+                    <div class="form-label" style="margin-bottom:5px; opacity:.6;">Last Name</div>
+                    <div class="form-input" style="height:42px; background: #f7f8fa;"></div>
+                  </div>
+                </div>
+                <div class="form-row" style="gap: 12px;">
+                  <div>
+                    <div class="form-label" style="margin-bottom:5px; opacity:.6;">Phone</div>
+                    <div class="form-input" style="height:42px; background: #f7f8fa;"></div>
+                  </div>
+                  <div>
+                    <div class="form-label" style="margin-bottom:5px; opacity:.6;">Email</div>
+                    <div class="form-input" style="height:42px; background: #f7f8fa;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── COLLAPSED STEP 3 PREVIEW (visible on steps 1 & 2) ── -->
+            <div id="preview-step3" class="step-preview">
+              <div class="preview-label">
+                <div class="preview-step-num">3</div>
+                <div class="preview-step-title">Details — Coverage specifics &amp; how to best help you</div>
+              </div>
+              <div class="preview-fields">
+                <div class="form-row" style="margin-bottom: 12px; gap: 12px;">
+                  <div>
+                    <div class="form-label" style="margin-bottom:5px; opacity:.6;">Current Insurer</div>
+                    <div class="form-input" style="height:42px; background: #f7f8fa;"></div>
+                  </div>
+                  <div>
+                    <div class="form-label" style="margin-bottom:5px; opacity:.6;">No. of Vehicles</div>
+                    <div class="form-input" style="height:42px; background: #f7f8fa;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="form-label" style="margin-bottom:5px; opacity:.6;">Additional notes</div>
+                  <div class="form-textarea" style="height:64px; background: #f7f8fa;"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- /form-card -->
+
+
+          <!-- ============================================================
+               CONFIRMATION CARD — shown after submit
+               ============================================================ -->
+          <div class="confirmation-card" id="confirmationCard" style="display:none;">
+            <div class="confirm-icon">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="18" fill="#1a7a4a" opacity=".15"/>
+                <path d="M10 18.5L15.5 24L26 12" stroke="#1a7a4a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h2 class="confirm-title">Quote Request Received!</h2>
+            <p class="confirm-sub">Thank you! We'll contact you within 2 business hours.</p>
+
+            <div class="confirm-next-steps">
+              <h4>What Happens Next</h4>
+              <div class="next-step-item">
+                <div class="next-num">1</div>
+                <div class="next-text">
+                  <strong>We review your request</strong>
+                  <span>A licensed broker reviews your coverage needs within 2 hours.</span>
+                </div>
+              </div>
+              <div class="next-step-item">
+                <div class="next-num">2</div>
+                <div class="next-text">
+                  <strong>We shop 30+ carriers</strong>
+                  <span>We compare rates across all major insurers to find your best options.</span>
+                </div>
+              </div>
+              <div class="next-step-item">
+                <div class="next-num">3</div>
+                <div class="next-text">
+                  <strong>We contact you with quotes</strong>
+                  <span>We'll reach out by phone or email with your personalized quotes — no pressure.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="confirm-actions">
+              <a href="services.html" class="btn btn-navy btn-lg">Browse Insurance Services</a>
+              <a href="index.html" class="btn btn-outline btn-lg">Return to Home</a>
+            </div>
+          </div>
+          <!-- /confirmation-card -->
+
+        </div>
+        <!-- /left col -->
+
+
+        <!-- ============================================================
+             RIGHT — TRUST PANEL
+             ============================================================ -->
+        <aside class="trust-panel">
+          <div class="trust-card">
+            <div class="trust-card-inner">
+
+              <h3 class="trust-heading">Why Get a Quote From Us?</h3>
+
+              <div class="trust-points">
+                <div class="trust-point">
+                  <span class="trust-point-icon">⏱</span>
+                  <span class="trust-point-text">We respond within <strong>2 business hours</strong></span>
+                </div>
+                <div class="trust-point">
+                  <span class="trust-point-icon">🆓</span>
+                  <span class="trust-point-text">No obligation — <strong>100% free</strong> quote</span>
+                </div>
+                <div class="trust-point">
+                  <span class="trust-point-icon">🛒</span>
+                  <span class="trust-point-text"><strong>30+ carriers</strong> compared for you</span>
+                </div>
+                <div class="trust-point">
+                  <span class="trust-point-icon">⭐</span>
+                  <span class="trust-point-text"><strong>4.9 stars</strong> across 127 Google reviews</span>
+                </div>
+              </div>
+
+              <!-- Google rating -->
+              <div class="trust-google">
+                <div class="google-row">
+                  <div class="google-g"></div>
+                  <div class="stars">★★★★★</div>
+                  <span class="score">4.9</span>
+                  <span class="count">/ 5 &nbsp;(127 reviews)</span>
+                </div>
+                <a href="#" class="google-link">Read reviews on Google &rarr;</a>
+              </div>
+
+              <div class="trust-divider"></div>
+
+              <p class="trust-phone-label">Prefer to call?</p>
+              <a href="tel:+17185550100" class="trust-phone-num">(718) 555-0100</a>
+              <p class="trust-phone-hours">Mon–Sat &nbsp;9am – 6pm</p>
+
+              <div class="trust-divider"></div>
+
+              <p class="trust-response-note">
+                We respond to all quote requests within 2 business hours during business hours.
+              </p>
+
+              <p class="trust-license">Licensed Insurance Broker&nbsp; |&nbsp; NY Lic. #LA-123456</p>
+              <p class="trust-license-states">Also licensed in NJ &nbsp;·&nbsp; CT &nbsp;·&nbsp; PA</p>
+
+            </div>
+          </div>
+        </aside>
+        <!-- /trust panel -->
+
+      </div>
+      <!-- /quote-grid -->
+    </div>
+    <!-- /container -->
+  </main>
+
+
+  <!-- ================================================================
+       FOOTER — Minimal
+       ================================================================ -->
+  <footer class="footer-minimal">
+    <div class="container">
+      <div class="footer-mini-left">
+        <div class="footer-mini-logo">
+          <div class="footer-mini-logo-mark">PB</div>
+          <span class="footer-mini-logo-text">Peerless Brokerage</span>
+        </div>
+        <span class="footer-mini-phone">
+          <a href="tel:+17185550100" style="color: rgba(255,255,255,.65);">(718) 555-0100</a>
+        </span>
+      </div>
+      <div class="footer-mini-right">
+        <p class="footer-mini-copy">&copy; 2026 Peerless Brokerage. All rights reserved.</p>
+        <p class="footer-mini-compliance">Licensed Insurance Broker | NY Lic. #LA-123456 | Also licensed in NJ, CT &amp; PA. Coverage subject to policy terms and carrier approval.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ================================================================
+       JAVASCRIPT — Step navigation, tile selection, form logic
+       ================================================================ -->
+  <script>
+    /* ── State ─────────────────────────────────────────────────────── */
+    let currentStep = 1;
+    const TOTAL_STEPS = 3;
+
+    /* ── Step navigation ───────────────────────────────────────────── */
+    function goToStep(step) {
+      if (step < 1 || step > TOTAL_STEPS) return;
+
+      // Hide current step panel
+      const prevPanel = document.getElementById('step-' + currentStep);
+      if (prevPanel) prevPanel.classList.remove('step-active');
+
+      currentStep = step;
+
+      // Show new step panel
+      const nextPanel = document.getElementById('step-' + currentStep);
+      if (nextPanel) nextPanel.classList.add('step-active');
+
+      // Update progress indicators
+      updateProgress(currentStep);
+
+      // Show/hide preview panels
+      updatePreviews(currentStep);
+
+      // Scroll to top of form card
+      const formCard = document.getElementById('quoteFormCard');
+      if (formCard) {
+        const offset = formCard.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
+    }
+
+    function updateProgress(step) {
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        const el = document.getElementById('prog-step-' + i);
+        if (!el) continue;
+        el.classList.remove('active', 'completed', 'pending');
+
+        const circle = el.querySelector('.progress-circle');
+
+        if (i < step) {
+          el.classList.add('completed');
+          circle.textContent = '✓';
+        } else if (i === step) {
+          el.classList.add('active');
+          circle.textContent = i;
+        } else {
+          el.classList.add('pending');
+          circle.textContent = i;
+        }
+      }
+    }
+
+    function updatePreviews(step) {
+      const preview2 = document.getElementById('preview-step2');
+      const preview3 = document.getElementById('preview-step3');
+
+      if (step === 1) {
+        preview2.style.display = 'block';
+        preview3.style.display = 'block';
+      } else if (step === 2) {
+        preview2.style.display = 'none';
+        preview3.style.display = 'block';
+      } else {
+        preview2.style.display = 'none';
+        preview3.style.display = 'none';
+      }
+    }
+
+    /* ── Coverage tile toggle ──────────────────────────────────────── */
+    document.getElementById('coverageGrid').addEventListener('click', function(e) {
+      const tile = e.target.closest('.coverage-tile');
+      if (!tile) return;
+      toggleTile(tile);
+    });
+
+    document.getElementById('coverageGrid').addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        const tile = e.target.closest('.coverage-tile');
+        if (!tile) return;
+        e.preventDefault();
+        toggleTile(tile);
+      }
+    });
+
+    function toggleTile(tile) {
+      const isSelected = tile.classList.contains('selected');
+      tile.classList.toggle('selected');
+      tile.setAttribute('aria-checked', !isSelected);
+    }
+
+    /* ── Situation shortcuts ───────────────────────────────────────── */
+    function selectSituation(coverage) {
+      // First deselect all
+      document.querySelectorAll('.coverage-tile').forEach(t => {
+        t.classList.remove('selected');
+        t.setAttribute('aria-checked', 'false');
+      });
+
+      // Select the matching tile
+      const tile = document.querySelector('[data-coverage="' + coverage + '"]');
+      if (tile) {
+        tile.classList.add('selected');
+        tile.setAttribute('aria-checked', 'true');
+        tile.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    /* ── Form submission ───────────────────────────────────────────── */
+    function submitForm() {
+      // Hide the form card steps
+      const formCard = document.getElementById('quoteFormCard');
+      const confirmCard = document.getElementById('confirmationCard');
+
+      // Visual feedback: disable/hide form
+      formCard.style.opacity = '0';
+      formCard.style.transition = 'opacity 0.3s ease';
+
+      setTimeout(() => {
+        formCard.style.display = 'none';
+        confirmCard.style.display = 'block';
+        confirmCard.style.opacity = '0';
+        confirmCard.style.transition = 'opacity 0.4s ease';
+
+        requestAnimationFrame(() => {
+          confirmCard.style.opacity = '1';
+          // Scroll to confirmation
+          const offset = confirmCard.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        });
+      }, 300);
+    }
+
+    /* ── Init ──────────────────────────────────────────────────────── */
+    // Ensure step 1 is shown and previews are correct on load
+    document.addEventListener('DOMContentLoaded', function() {
+      // All step panels are hidden via CSS [data-step-panel] { display:none }
+      // Step 1 is shown via .step-active class in HTML
+      updatePreviews(1);
+      updateProgress(1);
+    });
+  </script>
+
+</body>
+</html>

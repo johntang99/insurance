@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Insurance in Brooklyn, NY — Peerless Brokerage</title>
+  <meta name="description" content="Compare auto insurance rates from 20+ carriers. Same-day quotes, no hassle. Licensed in NY, NJ, CT & PA. Serving Brooklyn since 1999." />
+  <link rel="stylesheet" href="theme.css" />
+
+  <style>
+    /* ============================================================
+       service-auto.html — Page-specific styles
+       Peerless Brokerage · Auto Insurance
+       ============================================================ */
+
+    /* ── Section 1: ServiceHero ──────────────────────────────── */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      min-height: 580px;
+    }
+    .hero-left {
+      background: var(--bg-white);
+      padding: 72px 64px 72px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-left .container-inner { max-width: 640px; margin-left: auto; padding-left: 24px; }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-100);
+      color: var(--gold-600);
+      border: 1px solid var(--gold-300);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: .775rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: "🛡️";
+      font-size: .9rem;
+    }
+    .hero-left h1 {
+      margin-bottom: 18px;
+      color: var(--navy-800);
+      letter-spacing: -.01em;
+    }
+    .hero-left .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 520px;
+    }
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .hero-stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      background: var(--navy-50);
+      border: 1px solid var(--navy-100);
+      border-radius: 100px;
+      font-size: .825rem;
+      font-weight: 600;
+      color: var(--navy-700);
+    }
+    .hero-stat-pill::before { content: "✦"; color: var(--gold-500); font-size: .65rem; }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-trust {
+      font-size: .825rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-trust::before {
+      content: "🔒";
+      font-size: .85rem;
+    }
+
+    /* Hero Right Panel */
+    .hero-right {
+      background: linear-gradient(145deg, var(--navy-800) 0%, var(--navy-900) 100%);
+      padding: 64px 48px 64px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-shield {
+      width: 72px;
+      height: 72px;
+      background: rgba(201,147,58,.15);
+      border: 2px solid rgba(201,147,58,.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+    .hero-right h3 {
+      color: #fff;
+      font-size: 1.15rem;
+      margin-bottom: 22px;
+      line-height: 1.3;
+    }
+    .hero-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .hero-bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: rgba(255,255,255,.85);
+      font-size: .9375rem;
+      line-height: 1.5;
+    }
+    .hero-bullet-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--gold-500);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .65rem;
+      color: #fff;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    /* ── Section 2: WhatItCovers ─────────────────────────────── */
+    .covers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .covers-col-title {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 20px;
+    }
+    .covers-col-title.green { color: var(--green-600); }
+    .covered-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .covered-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .9375rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .check-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--green-100);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green-600);
+      font-size: .75rem;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .who-needs-box {
+      background: var(--navy-50);
+      border: 1px solid var(--navy-100);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .who-needs-box .required-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red-100);
+      color: var(--red-600);
+      border: 1px solid #f5c6c6;
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .who-needs-box .required-badge::before { content: "⚠"; font-size: .8rem; }
+    .who-needs-box p {
+      font-size: .9375rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .who-needs-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .who-needs-box ul li {
+      font-size: .9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      padding-left: 18px;
+      position: relative;
+    }
+    .who-needs-box ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--navy-600);
+      font-weight: 700;
+    }
+    .ny-law-callout {
+      background: var(--red-100);
+      border-left: 3px solid var(--red-500);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: .85rem;
+      color: var(--red-600);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Section 3: WhyUs ────────────────────────────────────── */
+    .why-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .why-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .18s, transform .18s;
+    }
+    .why-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .why-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .why-card h3 {
+      color: var(--navy-800);
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+    }
+    .why-card p { font-size: .925rem; }
+
+    /* ── Section 4: RateFactors ──────────────────────────────── */
+    .factors-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .factor-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: box-shadow .18s, transform .18s;
+    }
+    .factor-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .factor-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--navy-50);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .factor-body h4 { color: var(--navy-800); margin-bottom: 6px; }
+    .factor-body p { font-size: .875rem; line-height: 1.6; }
+    .savings-callout {
+      background: var(--gold-100);
+      border: 1px solid var(--gold-300);
+      border-left: 4px solid var(--gold-500);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-size: .9375rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .savings-callout .tip-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .savings-callout strong { color: var(--gold-600); }
+
+    /* ── Section 5: QuoteProcess ─────────────────────────────── */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    .process-steps::before {
+      content: "";
+      position: absolute;
+      top: 40px;
+      left: calc(16.67% + 20px);
+      right: calc(16.67% + 20px);
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .process-step {
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-number {
+      font-family: var(--font-heading);
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--gold-500);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .step-bubble {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 20px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .process-step:hover .step-bubble {
+      border-color: var(--gold-400);
+      box-shadow: var(--shadow);
+    }
+    .step-content h3 { color: var(--navy-800); margin-bottom: 8px; font-size: 1.05rem; }
+    .step-content p { font-size: .875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+    .step-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--green-100);
+      color: var(--green-600);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+    .step-time::before { content: "⏱"; font-size: .75rem; }
+    .process-cta { text-align: center; }
+
+    /* ── Section 6: Testimonials ─────────────────────────────── */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    .testimonial-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .18s, transform .18s;
+    }
+    .testimonial-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .testimonial-stars { margin-bottom: 16px; }
+    .testimonial-quote {
+      font-size: .9625rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 20px;
+      border-left: 3px solid var(--gold-300);
+      padding-left: 16px;
+    }
+    .testimonial-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .testimonial-author strong { display: block; font-size: .9rem; color: var(--text-primary); font-weight: 600; }
+    .testimonial-author span { font-size: .8rem; color: var(--text-muted); }
+    .testimonial-source {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .75rem;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    /* ── Section 7: FAQ ──────────────────────────────────────── */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .faq-list details {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .faq-list details:last-child { border-bottom: none; }
+    .faq-list details[open] {
+      border-left: 4px solid var(--gold-500);
+    }
+    .faq-list details:not([open]) {
+      border-left: 4px solid transparent;
+    }
+    .faq-list summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 24px;
+      font-weight: 600;
+      font-size: .9625rem;
+      color: var(--navy-800);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      user-select: none;
+      transition: background .15s;
+      background: var(--bg-white);
+    }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary::after {
+      content: "+";
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: background .18s, color .18s, transform .18s;
+      text-align: center;
+      line-height: 26px;
+    }
+    .faq-list details[open] summary::after {
+      content: "−";
+      background: var(--gold-100);
+      border-color: var(--gold-300);
+      color: var(--gold-600);
+      transform: rotate(0deg);
+    }
+    .faq-list summary:hover { background: var(--bg-subtle); }
+    .faq-list details[open] summary { background: var(--gold-100); color: var(--navy-800); }
+    .faq-body {
+      padding: 0 24px 22px 24px;
+      font-size: .925rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      background: var(--bg-white);
+    }
+    .faq-list details[open] .faq-body { background: var(--bg-white); }
+
+    /* ── Section 8: RelatedServices ─────────────────────────── */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .related-tile {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .18s, transform .18s;
+    }
+    .related-tile:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .related-icon { font-size: 2rem; }
+    .related-tile h3 { color: var(--navy-800); font-size: 1.05rem; margin: 0; }
+    .related-tile p { font-size: .875rem; color: var(--text-muted); line-height: 1.6; margin: 0; flex: 1; }
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--gold-600);
+      transition: gap .15s;
+      margin-top: auto;
+    }
+    .related-link:hover { gap: 8px; color: var(--gold-500); }
+
+    /* ── Section 9: ServiceQuoteCTA ──────────────────────────── */
+    .quote-cta-section {
+      background: var(--navy-800);
+      padding: var(--section-y) 0;
+    }
+    .quote-cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .quote-cta-left h2 {
+      color: #fff;
+      margin-bottom: 16px;
+      font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+    }
+    .quote-cta-left p {
+      color: rgba(255,255,255,.65);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .cta-trust-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cta-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .875rem;
+      color: rgba(255,255,255,.7);
+    }
+    .cta-trust-item::before {
+      content: "✓";
+      width: 20px;
+      height: 20px;
+      background: rgba(201,147,58,.25);
+      border: 1px solid rgba(201,147,58,.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      color: var(--gold-400);
+      font-weight: 700;
+      flex-shrink: 0;
+      text-align: center;
+      line-height: 18px;
+    }
+    .quote-form-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+    }
+    .quote-form-card h3 {
+      color: var(--navy-800);
+      margin-bottom: 6px;
+      font-size: 1.15rem;
+    }
+    .quote-form-card .form-sub {
+      font-size: .875rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .or-divider {
+      text-align: center;
+      font-size: .825rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+    .or-divider a {
+      color: var(--navy-700);
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .or-divider a:hover { color: var(--gold-600); }
+
+    /* ── Responsive overrides ────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-split { grid-template-columns: 1fr; }
+      .hero-left { padding: 56px 24px 48px; }
+      .hero-left .container-inner { max-width: 100%; margin: 0; padding: 0; }
+      .hero-right { padding: 48px 24px; }
+      .covers-grid { grid-template-columns: 1fr; }
+      .why-cards { grid-template-columns: repeat(2, 1fr); }
+      .factors-grid { grid-template-columns: 1fr; }
+      .process-steps::before { display: none; }
+      .quote-cta-grid { grid-template-columns: 1fr; gap: 48px; }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-left { padding: 40px 20px; }
+      .hero-right { padding: 36px 20px; }
+      .why-cards { grid-template-columns: 1fr; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; gap: 24px; }
+      .related-grid { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════════════ -->
+  <header class="site-header">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="container">
+        <div class="top-bar-left">
+          <span class="license-badge">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1l2.09 4.26 4.71.68-3.4 3.32.8 4.68L8 11.77 3.8 13.94l.8-4.68L1.2 5.94l4.71-.68L8 1z" fill="currentColor" opacity=".7"/></svg>
+            Licensed Broker — NY · NJ · CT · PA
+          </span>
+          <span>Lic. #BR-114892</span>
+        </div>
+        <div class="top-bar-right">
+          <a href="tel:+17185550100">📞 (718) 555-0100</a>
+          <span>English · Español · 中文 · Русский · Kreyòl</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <div class="nav-bar">
+      <div class="container">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-mark">PB</div>
+          <div class="nav-logo-text">
+            Peerless Brokerage
+            <span>Brooklyn, NY · Est. 1999</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="#services">Services</a>
+          <a href="service-auto.html" class="active">Auto</a>
+          <a href="#">Home Insurance</a>
+          <a href="#">Business</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="tel:+17185550100" class="nav-phone">📞 (718) 555-0100</a>
+          <a href="#quote-form" class="btn btn-primary btn-sm">Get a Free Quote</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — ServiceHero
+  ══════════════════════════════════════════════════════════ -->
+  <section class="hero-split" aria-label="Auto Insurance hero">
+    <!-- Left: Text -->
+    <div class="hero-left">
+      <div class="container-inner">
+        <div class="hero-eyebrow">Auto Insurance</div>
+        <h1>Auto Insurance<br>in Brooklyn, NY</h1>
+        <p class="hero-sub">Compare rates from 20+ carriers. We find your best deal — same-day quotes, no hassle.</p>
+
+        <div class="hero-stats" role="list">
+          <span class="hero-stat-pill" role="listitem">20+ Carriers</span>
+          <span class="hero-stat-pill" role="listitem">Same-Day Quote</span>
+          <span class="hero-stat-pill" role="listitem">Required by NY Law</span>
+        </div>
+
+        <div class="hero-ctas">
+          <a href="#quote-form" class="btn btn-primary btn-lg">Get an Auto Quote →</a>
+          <a href="tel:+17185550100" class="btn btn-outline btn-lg">Call (718) 555-0100</a>
+        </div>
+
+        <p class="hero-trust">Licensed in NY · NJ · CT · PA</p>
+      </div>
+    </div>
+
+    <!-- Right: Dark Navy Panel -->
+    <div class="hero-right" aria-label="Why drivers choose Peerless">
+      <div class="hero-shield" aria-hidden="true">🛡️</div>
+      <h3>Why drivers choose Peerless:</h3>
+      <ul class="hero-bullets">
+        <li class="hero-bullet">
+          <span class="hero-bullet-check" aria-hidden="true">✓</span>
+          Multi-carrier comparison — we shop 20+ carriers so you don't have to
+        </li>
+        <li class="hero-bullet">
+          <span class="hero-bullet-check" aria-hidden="true">✓</span>
+          Clean record discounts — we know which carriers reward safe drivers best
+        </li>
+        <li class="hero-bullet">
+          <span class="hero-bullet-check" aria-hidden="true">✓</span>
+          Bundle &amp; save up to 20% — combine auto + home or auto + renters
+        </li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — WhatItCovers
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="covers-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">Coverage Details</p>
+        <h2 class="section-heading" id="covers-heading">What Auto Insurance Covers</h2>
+      </header>
+
+      <div class="covers-grid">
+        <!-- Left: What's Covered -->
+        <div>
+          <p class="covers-col-title green">What's Covered</p>
+          <ul class="covered-list">
+            <li class="covered-item">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span><strong>Liability coverage</strong> — bodily injury &amp; property damage to others</span>
+            </li>
+            <li class="covered-item">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span><strong>Collision coverage</strong> — your vehicle after an accident</span>
+            </li>
+            <li class="covered-item">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span><strong>Comprehensive coverage</strong> — theft, weather damage, fire</span>
+            </li>
+            <li class="covered-item">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span><strong>Uninsured/underinsured motorist</strong> — protects you when the other driver has no insurance</span>
+            </li>
+            <li class="covered-item">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span><strong>Personal injury protection (PIP)</strong> — medical costs regardless of fault</span>
+            </li>
+            <li class="covered-item">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span><strong>Medical payments coverage</strong> — additional medical expense protection</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: Who Needs It -->
+        <div>
+          <p class="covers-col-title" style="color:var(--navy-700)">Who Needs It</p>
+          <div class="who-needs-box">
+            <span class="required-badge">Required for All NY Drivers</span>
+            <p>New York State requires all registered vehicles to carry minimum liability coverage. Operating without insurance can result in license suspension and fines.</p>
+            <ul>
+              <li>$25,000 / $50,000 bodily injury liability</li>
+              <li>$10,000 property damage liability</li>
+              <li>$50,000 PIP (personal injury protection)</li>
+            </ul>
+            <div class="ny-law-callout" role="note">
+              <span aria-hidden="true">🚨</span>
+              <span><strong>NY Law Note:</strong> Driving uninsured in New York is a misdemeanor. Minimum coverage is required — but we strongly recommend higher limits for real-world protection.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — WhyUs
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--subtle" aria-labelledby="whyus-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">Our Advantage</p>
+        <h2 class="section-heading" id="whyus-heading">Why Choose Peerless for Auto Insurance?</h2>
+      </header>
+
+      <div class="why-cards">
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">🔄</span>
+          <h3>20+ Carrier Options</h3>
+          <p>We compare Progressive, Geico, Allstate, Liberty Mutual and 16+ other carriers to find your best rate — all in one conversation.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">⚡</span>
+          <h3>Same-Day Quotes</h3>
+          <p>Submit a request by 3pm and we'll have your quote comparison ready the same business day. No waiting a week to hear back.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">🏅</span>
+          <h3>25+ Years of Local Expertise</h3>
+          <p>We know Brooklyn auto insurance — local risks, local carriers, local rates. Our clients get better deals than walking into a single-brand agent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — RateFactors
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="factors-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">Pricing Factors</p>
+        <h2 class="section-heading" id="factors-heading">What Affects Your Auto Insurance Rate?</h2>
+        <p class="section-sub">Understanding these factors helps you make smarter coverage decisions and find better savings.</p>
+      </header>
+
+      <div class="factors-grid">
+        <div class="factor-card">
+          <div class="factor-icon" aria-hidden="true">🚗</div>
+          <div class="factor-body">
+            <h4>Driving Record</h4>
+            <p>A clean record can save 15–30%. Accidents and violations raise your premium — but we find carriers who weigh them differently.</p>
+          </div>
+        </div>
+
+        <div class="factor-card">
+          <div class="factor-icon" aria-hidden="true">📅</div>
+          <div class="factor-body">
+            <h4>Vehicle Age &amp; Type</h4>
+            <p>Newer and more expensive cars cost more to insure. Safety features like automatic braking and lane assist can help reduce premiums.</p>
+          </div>
+        </div>
+
+        <div class="factor-card">
+          <div class="factor-icon" aria-hidden="true">📍</div>
+          <div class="factor-body">
+            <h4>Location</h4>
+            <p>Brooklyn ZIP codes vary significantly. High-theft areas or dense traffic zones mean higher premiums — we know which carriers price Brooklyn fairly.</p>
+          </div>
+        </div>
+
+        <div class="factor-card">
+          <div class="factor-icon" aria-hidden="true">👤</div>
+          <div class="factor-body">
+            <h4>Driver Age</h4>
+            <p>Young drivers (under 25) typically pay higher rates. Mature driver discounts are available for drivers 55+ who complete approved courses.</p>
+          </div>
+        </div>
+
+        <div class="factor-card">
+          <div class="factor-icon" aria-hidden="true">📊</div>
+          <div class="factor-body">
+            <h4>Coverage Level</h4>
+            <p>Higher liability limits and lower deductibles increase your premium. We'll help you find the right balance of protection and affordability.</p>
+          </div>
+        </div>
+
+        <div class="factor-card">
+          <div class="factor-icon" aria-hidden="true">🏠</div>
+          <div class="factor-body">
+            <h4>Bundling</h4>
+            <p>Combining auto + home or auto + renters with the same carrier can save 10–20% on both policies. We'll show you the numbers side by side.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="savings-callout" role="note" aria-label="Savings tip">
+        <span class="tip-icon" aria-hidden="true">💡</span>
+        <p style="color:var(--text-primary)">
+          <strong>Savings Tip:</strong> Bundling auto + homeowner insurance saves most clients <strong>$400–$800/year</strong>. Ask us about bundle rates when you request your auto quote — the comparison takes 5 minutes and the savings are often significant.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — QuoteProcess
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--subtle" aria-labelledby="process-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">Simple Process</p>
+        <h2 class="section-heading" id="process-heading">How to Get Your Auto Insurance Quote</h2>
+        <p class="section-sub">Three steps. No pressure. Completely free.</p>
+      </header>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <p class="step-number">Step 01</p>
+          <div class="step-bubble" aria-hidden="true">🚗</div>
+          <div class="step-content">
+            <h3>Tell Us About Your Vehicle</h3>
+            <p>Year, make, model, and current insurer. We'll also ask about your drivers and approximate mileage. Takes 2 minutes.</p>
+            <span class="step-time">2 min</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <p class="step-number">Step 02</p>
+          <div class="step-bubble" aria-hidden="true">🔍</div>
+          <div class="step-content">
+            <h3>We Compare 20+ Carriers</h3>
+            <p>We run your info through every carrier we represent to find the best rate for your exact profile and coverage needs.</p>
+            <span class="step-time">Same day</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <p class="step-number">Step 03</p>
+          <div class="step-bubble" aria-hidden="true">📋</div>
+          <div class="step-content">
+            <h3>Review &amp; Bind Your Policy</h3>
+            <p>We explain the differences clearly. You choose the policy that fits your budget. We handle all the paperwork and send your ID cards.</p>
+            <span class="step-time">You decide</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-cta">
+        <a href="#quote-form" class="btn btn-primary btn-lg">Start My Auto Quote</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 6 — Testimonials
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="testimonials-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">Client Reviews</p>
+        <h2 class="section-heading" id="testimonials-heading">What Auto Insurance Clients Say</h2>
+      </header>
+
+      <div class="testimonial-grid">
+        <article class="testimonial-card">
+          <div class="testimonial-stars stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <blockquote class="testimonial-quote">
+            "Switched from Geico after 6 years and saved $740 on my annual premium. The comparison spreadsheet they sent was really helpful — I could see exactly where the savings came from."
+          </blockquote>
+          <div class="testimonial-meta">
+            <div class="testimonial-author">
+              <strong>Roberto S.</strong>
+              <span>Auto Insurance · Brooklyn, NY</span>
+            </div>
+            <div class="testimonial-source">
+              <span class="google-g" aria-label="Google"></span>
+              Google
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="testimonial-stars stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <blockquote class="testimonial-quote">
+            "Got insured on my new car in under 3 hours. Called at 11am, had my ID cards emailed by 2pm. Incredible service — I've never had an insurance experience that smooth."
+          </blockquote>
+          <div class="testimonial-meta">
+            <div class="testimonial-author">
+              <strong>Jennifer W.</strong>
+              <span>Auto Insurance · Brooklyn, NY</span>
+            </div>
+            <div class="testimonial-source">
+              <span aria-hidden="true">✍</span>
+              Verified Client
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 7 — FAQ
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="faq-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">FAQs</p>
+        <h2 class="section-heading" id="faq-heading">Auto Insurance FAQs</h2>
+        <p class="section-sub">Common questions Brooklyn drivers ask us every day.</p>
+      </header>
+
+      <div class="faq-list" role="list">
+
+        <details open>
+          <summary>What is the minimum auto insurance required in New York?</summary>
+          <div class="faq-body">
+            New York requires: <strong>$25,000/$50,000 bodily injury liability</strong>, <strong>$10,000 property damage liability</strong>, and <strong>$50,000 personal injury protection (PIP)</strong>. However, we recommend higher limits — the state minimums often don't cover the full cost of a serious accident, and you could be held personally liable for the difference.
+          </div>
+        </details>
+
+        <details>
+          <summary>Can I get covered if I have accidents or violations on my record?</summary>
+          <div class="faq-body">
+            Yes — we work with carriers that specialize in non-standard or high-risk drivers. Your rates will be higher than a clean-record driver, but we can still find you the most competitive option available in the market. We're upfront about pricing and don't waste your time.
+          </div>
+        </details>
+
+        <details>
+          <summary>Does my credit score affect my auto insurance rate in NY?</summary>
+          <div class="faq-body">
+            <strong>New York State does NOT allow insurers to use credit scores as a primary rating factor for auto insurance</strong> — making it one of the few states with this important consumer protection. Your driving record, vehicle, and coverage selections are the primary rating factors.
+          </div>
+        </details>
+
+        <details>
+          <summary>How long does it take to get auto insurance?</summary>
+          <div class="faq-body">
+            Same-day binding is available in most cases. Submit your information by 3pm on a business day and we'll have your policy comparison ready and your policy bound by end of day. Urgent same-day coverage is also possible — call us directly at (718) 555-0100.
+          </div>
+        </details>
+
+        <details>
+          <summary>Can I bundle auto with homeowner or renters insurance?</summary>
+          <div class="faq-body">
+            Absolutely — and we recommend it. Bundling with the same carrier typically saves <strong>10–20% on both policies</strong>. We'll run both quotes simultaneously and show you the bundle vs. standalone numbers so you can make an informed decision. Most clients save $400–$800/year by bundling.
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 8 — RelatedServices
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--subtle" aria-labelledby="related-heading">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-label">Related Coverage</p>
+        <h2 class="section-heading" id="related-heading">Clients with Auto Insurance Often Also Need</h2>
+      </header>
+
+      <div class="related-grid">
+        <div class="related-tile">
+          <span class="related-icon" aria-hidden="true">🏠</span>
+          <h3>Homeowner Insurance</h3>
+          <p>Bundle auto + home and save up to 20% with most carriers. One broker, one renewal date, one point of contact.</p>
+          <a href="#" class="related-link">Learn More →</a>
+        </div>
+
+        <div class="related-tile">
+          <span class="related-icon" aria-hidden="true">🚕</span>
+          <h3>TLC Insurance</h3>
+          <p>Drive for Uber or Lyft? Your personal auto policy won't cover you while you're on the clock. TLC requires commercial coverage.</p>
+          <a href="#" class="related-link">Learn More →</a>
+        </div>
+
+        <div class="related-tile">
+          <span class="related-icon" aria-hidden="true">🚚</span>
+          <h3>Commercial Auto</h3>
+          <p>Own a delivery van or work truck? Personal auto doesn't cover commercial use. We insure fleets, contractors, and owner-operators.</p>
+          <a href="#" class="related-link">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 9 — ServiceQuoteCTA
+  ══════════════════════════════════════════════════════════ -->
+  <section class="quote-cta-section" aria-labelledby="quote-cta-heading" id="quote-form">
+    <div class="container">
+      <div class="quote-cta-grid">
+
+        <!-- Left: Copy -->
+        <div class="quote-cta-left">
+          <p class="section-label" style="color:var(--gold-400)">Free Quote</p>
+          <h2 id="quote-cta-heading">Get Your Auto Insurance Quote Today</h2>
+          <p>Free. No obligation. We respond within 2 hours on business days — often within 30 minutes.</p>
+          <ul class="cta-trust-items">
+            <li class="cta-trust-item">Compare 20+ carriers in one request</li>
+            <li class="cta-trust-item">Same-day quotes available</li>
+            <li class="cta-trust-item">No pressure — we explain, you decide</li>
+            <li class="cta-trust-item">Licensed in NY · NJ · CT · PA</li>
+          </ul>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <div class="quote-form-card">
+            <h3>Request Your Auto Quote</h3>
+            <p class="form-sub">Fill in the form and we'll get back to you fast.</p>
+
+            <form action="#" method="post" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="q-name">Full Name <span class="required-mark" aria-hidden="true">*</span></label>
+                <input class="form-input" type="text" id="q-name" name="name" placeholder="e.g. Maria Gonzalez" autocomplete="name" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="q-phone">Phone Number <span class="required-mark" aria-hidden="true">*</span></label>
+                <input class="form-input" type="tel" id="q-phone" name="phone" placeholder="(718) 000-0000" autocomplete="tel" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="q-coverage">Coverage Type</label>
+                <select class="form-select" id="q-coverage" name="coverage" disabled aria-label="Coverage type pre-selected as Auto Insurance">
+                  <option value="auto" selected>Auto Insurance</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
+                Get My Auto Quote →
+              </button>
+            </form>
+
+            <p class="or-divider">Or call us directly: <a href="tel:+17185550100">(718) 555-0100</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════════ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+
+          <!-- Brand -->
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="footer-logo-mark">PB</div>
+              <span class="footer-logo-text">Peerless Brokerage</span>
+            </div>
+            <p class="footer-tagline">Brooklyn's independent insurance broker since 1999. We work for you — not the insurance companies.</p>
+            <div class="footer-contact">
+              <a href="tel:+17185550100">📞 (718) 555-0100</a>
+              <a href="mailto:info@peerlessbrokerage.com">✉ info@peerlessbrokerage.com</a>
+              <a href="#">📍 123 Atlantic Ave, Brooklyn, NY 11201</a>
+            </div>
+            <a href="#quote-form" class="footer-quote-btn">Get a Free Quote</a>
+          </div>
+
+          <!-- Services -->
+          <div>
+            <p class="footer-col-title">Personal Insurance</p>
+            <ul class="footer-links">
+              <li><a href="#">Auto Insurance</a></li>
+              <li><a href="#">Homeowner Insurance</a></li>
+              <li><a href="#">Renters Insurance</a></li>
+              <li><a href="#">Life Insurance</a></li>
+              <li><a href="#">Umbrella Insurance</a></li>
+              <li><a href="#">TLC Insurance</a></li>
+            </ul>
+          </div>
+
+          <!-- Business -->
+          <div>
+            <p class="footer-col-title">Business Insurance</p>
+            <ul class="footer-links">
+              <li><a href="#">General Liability</a></li>
+              <li><a href="#">Commercial Auto</a></li>
+              <li><a href="#">Workers' Comp</a></li>
+              <li><a href="#">BOP</a></li>
+              <li><a href="#">Professional Liability</a></li>
+              <li><a href="#">Contractor Insurance</a></li>
+            </ul>
+          </div>
+
+          <!-- Company -->
+          <div>
+            <p class="footer-col-title">Company</p>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Reviews</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="footer-compliance">© 2025 Peerless Brokerage LLC. All rights reserved. Licensed Insurance Broker — New York (Lic. #BR-114892) · New Jersey · Connecticut · Pennsylvania. Insurance products are not guaranteed by any government agency. Policy terms, conditions, and availability may vary. This site is for informational purposes and does not constitute a binding insurance offer.</p>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       MOBILE STICKY BAR
+  ══════════════════════════════════════════════════════════ -->
+  <div class="mobile-sticky-bar" aria-label="Mobile quick actions">
+    <a href="tel:+17185550100" class="btn btn-outline">📞 Call Us</a>
+    <a href="#quote-form" class="btn btn-primary">Get a Free Quote</a>
+  </div>
+
+</body>
+</html>

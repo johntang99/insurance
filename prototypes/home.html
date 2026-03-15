@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peerless Brokerage — Brooklyn's #1 Independent Insurance Broker</title>
+  <meta name="description" content="Peerless Brokerage is Brooklyn's trusted independent insurance broker. Get fast quotes from 30+ carriers for auto, TLC, home, business & more. Licensed in NY · NJ · CT · PA." />
+  <link rel="stylesheet" href="theme.css" />
+
+  <style>
+    /* ================================================================
+       HOME PAGE — Page-specific styles
+       All shared design tokens, components, header, footer come from
+       theme.css. Only page-specific layout/overrides live here.
+    ================================================================ */
+
+    /* ── Smooth scroll handled in theme.css, ensure anchor offset ── */
+    :target { scroll-margin-top: 80px; }
+
+    /* ================================================================
+       SECTION 1 — HERO
+    ================================================================ */
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          160deg,
+          rgba(6, 15, 29, 0.95) 0%,
+          rgba(11, 31, 58, 0.90) 40%,
+          rgba(17, 42, 77, 0.85) 75%,
+          rgba(23, 53, 96, 0.82) 100%
+        ),
+        /* Simulated architectural/city photo via CSS */
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 60px,
+          rgba(255,255,255,0.012) 60px,
+          rgba(255,255,255,0.012) 61px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 80px,
+          rgba(255,255,255,0.012) 80px,
+          rgba(255,255,255,0.012) 81px
+        ),
+        linear-gradient(180deg, var(--navy-900) 0%, var(--navy-700) 60%, #1e3a5f 100%);
+    }
+
+    /* Decorative texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,147,58,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(11,31,58,0.5) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Subtle grid pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 100px 0 80px;
+    }
+
+    .hero-content { max-width: 760px; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,147,58,0.15);
+      border: 1px solid rgba(201,147,58,0.3);
+      color: var(--gold-300);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero-eyebrow::before {
+      content: '★';
+      color: var(--gold-400);
+      font-size: .75rem;
+    }
+
+    .hero h1 {
+      color: #fff;
+      font-size: clamp(2.4rem, 5vw, 3.75rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -.01em;
+    }
+
+    .hero h1 span { color: var(--gold-400); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.78);
+      max-width: 580px;
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .hero-trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.55);
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+    }
+
+    .hero-trust-badge::before,
+    .hero-trust-badge::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 9px 18px;
+      border-radius: 100px;
+      color: #fff;
+      font-size: .85rem;
+      font-weight: 500;
+    }
+
+    .hero-stat-pill strong {
+      color: var(--gold-400);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    /* ================================================================
+       SECTION 2 — INSURANCE LINE GRID
+    ================================================================ */
+    .insurance-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .ins-tile {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 16px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ins-tile:hover {
+      border-color: var(--navy-600);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .ins-tile.featured {
+      border-left: 3px solid var(--gold-500);
+    }
+
+    .ins-tile-icon {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .ins-tile-name {
+      font-family: var(--font-heading);
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      margin-bottom: 4px;
+    }
+
+    .ins-tile-tag {
+      font-size: .78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 0;
+    }
+
+    .ins-tile-learn {
+      display: block;
+      margin-top: 10px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gold-600);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity .18s, transform .18s;
+    }
+
+    .ins-tile:hover .ins-tile-learn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================================================================
+       SECTION 3 — WHY INDEPENDENT
+    ================================================================ */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .why-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .why-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .why-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: block;
+      line-height: 1;
+    }
+
+    .why-card h3 {
+      color: var(--navy-800);
+      margin-bottom: 10px;
+    }
+
+    .why-card p {
+      font-size: .9375rem;
+      line-height: 1.7;
+    }
+
+    .why-cta-row {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .text-link-gold {
+      color: var(--gold-600);
+      font-weight: 600;
+      font-size: .9375rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .15s, color .15s;
+    }
+
+    .text-link-gold:hover {
+      color: var(--gold-500);
+      gap: 10px;
+    }
+
+    /* ================================================================
+       SECTION 4 — STATS STRIP
+    ================================================================ */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 52px 24px;
+      position: relative;
+    }
+
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 60px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold-500);
+      line-height: 1;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: .9rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+
+    /* Counter animation */
+    .stat-value { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .stats-strip.in-view .stat-value { opacity: 1; transform: translateY(0); }
+    .stats-strip.in-view .stat-item:nth-child(2) .stat-value { transition-delay: .1s; }
+    .stats-strip.in-view .stat-item:nth-child(3) .stat-value { transition-delay: .2s; }
+    .stats-strip.in-view .stat-item:nth-child(4) .stat-value { transition-delay: .3s; }
+
+    /* ================================================================
+       SECTION 5 — CARRIER CAROUSEL
+    ================================================================ */
+    .carrier-track-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fade masks */
+    .carrier-track-wrap::before,
+    .carrier-track-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .carrier-track-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg-white) 0%, transparent 100%);
+    }
+    .carrier-track-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--bg-white) 0%, transparent 100%);
+    }
+
+    .carrier-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      animation: carrier-scroll 32s linear infinite;
+    }
+
+    .carrier-track:hover { animation-play-state: paused; }
+
+    @keyframes carrier-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .carrier-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      height: 54px;
+      background: var(--bg-white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0 20px;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: border-color .18s, color .18s, box-shadow .18s;
+      filter: grayscale(1);
+    }
+
+    .carrier-pill:hover {
+      border-color: var(--navy-500);
+      color: var(--navy-800);
+      filter: grayscale(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .carrier-sub {
+      text-align: center;
+      margin-top: 32px;
+    }
+
+    /* ================================================================
+       SECTION 6 — HOW IT WORKS
+    ================================================================ */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .how-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px 32px;
+      position: relative;
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .how-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .how-step-num {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--navy-50);
+      line-height: 1;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .how-icon {
+      font-size: 1.75rem;
+      display: block;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .how-card h3 { color: var(--navy-800); margin-bottom: 10px; }
+    .how-card p { font-size: .9375rem; line-height: 1.7; margin-bottom: 16px; }
+
+    .how-time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--gold-100);
+      color: var(--gold-600);
+      font-size: .775rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .how-connector {
+      display: none;
+    }
+
+    .how-cta-row {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    /* ================================================================
+       SECTION 7 — TESTIMONIALS
+    ================================================================ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .testimonial-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .test-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .test-stars {
+      color: var(--gold-500);
+      font-size: .95rem;
+      letter-spacing: 2px;
+    }
+
+    .test-source {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .72rem;
+      color: var(--text-muted);
+    }
+
+    .test-body {
+      font-size: .9375rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .test-body::before {
+      content: '\201C';
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--gold-300);
+      line-height: 0;
+      vertical-align: -0.5rem;
+      margin-right: 2px;
+    }
+
+    .test-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .test-author-name {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--text-primary);
+    }
+
+    .testimonials-cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    /* ================================================================
+       SECTION 8 — AGENT SPOTLIGHT
+    ================================================================ */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .agent-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .agent-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .agent-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--navy-100);
+      border: 3px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy-700);
+      margin: 0 auto 16px;
+    }
+
+    .agent-name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy-800);
+      margin-bottom: 2px;
+    }
+
+    .agent-title {
+      font-size: .83rem;
+      font-weight: 600;
+      color: var(--gold-600);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: 14px;
+    }
+
+    .agent-meta {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .agent-meta-icon {
+      color: var(--gold-500);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .agent-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .agent-license {
+      font-size: .75rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .agents-cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    /* ================================================================
+       SECTION 9 — BLOG PREVIEW
+    ================================================================ */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .blog-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .blog-card-img {
+      height: 160px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-card-img.tlc-bg {
+      background: linear-gradient(135deg, #1a2535 0%, #2a3d58 100%);
+    }
+    .blog-card-img.auto-bg {
+      background: linear-gradient(135deg, #0b1f3a 0%, #173560 100%);
+    }
+    .blog-card-img.biz-bg {
+      background: linear-gradient(135deg, #155f3a 0%, #1a7a4a 100%);
+    }
+
+    .blog-card-img-icon {
+      font-size: 3.5rem;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-60%);
+      opacity: .25;
+      line-height: 1;
+    }
+
+    .blog-card-body {
+      padding: 22px 22px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .blog-card-date {
+      font-size: .78rem;
+      color: var(--text-muted);
+    }
+
+    .blog-card-read {
+      font-size: .78rem;
+      color: var(--text-muted);
+    }
+
+    .blog-card-dot { color: var(--text-light); font-size: .7rem; }
+
+    .blog-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      margin-bottom: 12px;
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .blog-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--navy-600);
+      transition: gap .15s, color .15s;
+      margin-top: auto;
+    }
+
+    .blog-card-link:hover { color: var(--gold-600); gap: 9px; }
+
+    .blog-cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    /* ================================================================
+       SECTION 10 — QUOTE CTA
+    ================================================================ */
+    .quote-cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .quote-cta-left h2 {
+      color: #fff;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: 16px;
+    }
+
+    .quote-cta-left h2 span { color: var(--gold-400); }
+
+    .quote-cta-left p {
+      color: rgba(255,255,255,0.68);
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+      max-width: 420px;
+    }
+
+    .quote-promise {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,147,58,0.12);
+      border: 1px solid rgba(201,147,58,0.25);
+      color: var(--gold-300);
+      font-size: .83rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    .quote-promise::before { content: '✓'; }
+
+    .quote-form-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .quote-form-card h3 {
+      color: var(--navy-800);
+      margin-bottom: 6px;
+      font-size: 1.25rem;
+    }
+
+    .quote-form-card .form-sub {
+      font-size: .875rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .quote-form-card .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 15px;
+      font-size: 1rem;
+    }
+
+    .quote-call-link {
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+      font-size: .875rem;
+      color: var(--text-muted);
+    }
+
+    .quote-call-link a {
+      color: var(--navy-700);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .quote-call-link a:hover { color: var(--gold-600); }
+
+    /* ================================================================
+       NAV HAMBURGER (mobile)
+    ================================================================ */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--navy-800);
+      border-radius: 2px;
+      transition: all .2s;
+    }
+
+    /* ================================================================
+       RESPONSIVE OVERRIDES
+    ================================================================ */
+    @media (max-width: 1024px) {
+      .insurance-grid { grid-template-columns: repeat(4, 1fr); }
+      .why-grid       { gap: 20px; }
+      .stats-strip    { grid-template-columns: repeat(2, 1fr); }
+      .stat-item + .stat-item::before { display: none; }
+      .stat-item:nth-child(3),
+      .stat-item:nth-child(4) {
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+      .quote-cta-grid { gap: 40px; }
+    }
+
+    @media (max-width: 900px) {
+      .insurance-grid    { grid-template-columns: repeat(3, 1fr); }
+      .how-grid          { grid-template-columns: 1fr; gap: 20px; }
+      .agents-grid       { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .blog-grid         { grid-template-columns: 1fr; }
+      .why-grid          { grid-template-columns: 1fr; }
+      .quote-cta-grid    { grid-template-columns: 1fr; gap: 40px; }
+      .quote-cta-left p  { max-width: 100%; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-stats { gap: 8px; }
+      .hero-stat-pill { font-size: .78rem; padding: 8px 14px; }
+      .hero h1 { font-size: 2.2rem; }
+      .insurance-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-strip    { grid-template-columns: repeat(2, 1fr); }
+      .quote-form-card { padding: 24px 20px; }
+      .nav-hamburger { display: flex; }
+      .hero-cta-group .btn-lg { padding: 13px 22px; font-size: .9rem; }
+    }
+
+    @media (max-width: 480px) {
+      .insurance-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-cta-group { flex-direction: column; align-items: flex-start; }
+      .blog-grid      { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================================================================
+     HEADER
+================================================================ -->
+<header class="site-header" id="top">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <span class="license-badge">Licensed in NY · NJ · CT · PA</span>
+        <span>★ 4.9 &nbsp;<strong style="color:#fff">127 Google Reviews</strong></span>
+        <span>Access to 30+ Carriers</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="tel:7185550100"><strong style="color:#fff">(718) 555-0100</strong> &nbsp;|&nbsp; Mon–Sat 9am–6pm</a>
+        <span style="color:rgba(255,255,255,.4)">|</span>
+        <span>English · Español · 中文</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav Bar -->
+  <nav class="nav-bar">
+    <div class="container">
+      <a href="home.html" class="nav-logo">
+        <div class="nav-logo-mark">P</div>
+        <div class="nav-logo-text">
+          PEERLESS BROKERAGE
+          <span>Independent Insurance</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="home.html" class="active">Home</a>
+        <a href="#">Insurance</a>
+        <a href="#">Quote</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <div class="nav-cta">
+        <span class="nav-phone">(718) 555-0100</span>
+        <a href="#quote" class="btn btn-primary btn-sm">Get a Free Quote</a>
+        <button class="nav-hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<!-- ================================================================
+     SECTION 1 — HERO
+================================================================ -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Brooklyn's #1 Independent Insurance Broker</div>
+
+        <h1>Your Trusted Local<br><span>Insurance Broker</span></h1>
+
+        <p class="hero-sub">
+          Fast quotes from 30+ carriers. Personal, business &amp; specialty coverage —
+          one call covers it all.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#quote" class="btn btn-primary btn-lg">Get a Free Quote &nbsp;→</a>
+          <a href="tel:7185550100" class="btn btn-outline-white btn-lg">Call (718) 555-0100</a>
+        </div>
+
+        <div class="hero-trust-badge">
+          Licensed &nbsp;·&nbsp; Independent &nbsp;·&nbsp; Local
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat-pill"><strong>25+</strong> Years in Business</div>
+          <div class="hero-stat-pill"><strong>30+</strong> Carrier Partners</div>
+          <div class="hero-stat-pill"><strong>5,000+</strong> Clients Served</div>
+          <div class="hero-stat-pill"><strong>10,000+</strong> Policies Written</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 2 — INSURANCE LINE GRID
+================================================================ -->
+<section class="section" id="insurance" style="background:var(--bg-white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Coverage</span>
+      <h2 class="section-heading">We Cover Everything</h2>
+      <p class="section-sub">From personal to commercial — one broker for all your coverage needs</p>
+    </div>
+
+    <div class="insurance-grid">
+
+      <!-- Featured -->
+      <div class="ins-tile featured">
+        <span class="ins-tile-icon">🚗</span>
+        <div class="ins-tile-name">Auto</div>
+        <p class="ins-tile-tag">Personal &amp; commercial vehicles</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile featured">
+        <span class="ins-tile-icon">🚕</span>
+        <div class="ins-tile-name">TLC / Livery</div>
+        <p class="ins-tile-tag">FHV, rideshare &amp; taxi fleets</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🚚</span>
+        <div class="ins-tile-name">Commercial Auto</div>
+        <p class="ins-tile-tag">Trucks, vans &amp; fleets</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🏠</span>
+        <div class="ins-tile-name">Homeowner</div>
+        <p class="ins-tile-tag">House, condo &amp; co-op coverage</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile featured">
+        <span class="ins-tile-icon">🏢</span>
+        <div class="ins-tile-name">Business (BOP)</div>
+        <p class="ins-tile-tag">GL, property &amp; liability bundled</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">👷</span>
+        <div class="ins-tile-name">Workers Comp</div>
+        <p class="ins-tile-tag">NY state required coverage</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🦺</span>
+        <div class="ins-tile-name">Disability</div>
+        <p class="ins-tile-tag">Short &amp; long-term disability</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🏗️</span>
+        <div class="ins-tile-name">Construction</div>
+        <p class="ins-tile-tag">GL, builders risk &amp; tools</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🏍️</span>
+        <div class="ins-tile-name">Motorcycle</div>
+        <p class="ins-tile-tag">Year-round &amp; seasonal riders</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">⛵</span>
+        <div class="ins-tile-name">Boat</div>
+        <p class="ins-tile-tag">Watercraft &amp; marine coverage</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">✈️</span>
+        <div class="ins-tile-name">Travel</div>
+        <p class="ins-tile-tag">Trip cancellation &amp; medical</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🏥</span>
+        <div class="ins-tile-name">Group Health</div>
+        <p class="ins-tile-tag">Small business employee plans</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🏭</span>
+        <div class="ins-tile-name">Commercial Property</div>
+        <p class="ins-tile-tag">Buildings, equipment &amp; stock</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">📋</span>
+        <div class="ins-tile-name">Claims Help</div>
+        <p class="ins-tile-tag">We advocate throughout the process</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+      <div class="ins-tile">
+        <span class="ins-tile-icon">🚗</span>
+        <div class="ins-tile-name">DMV Services</div>
+        <p class="ins-tile-tag">Registration, plates &amp; filings</p>
+        <span class="ins-tile-learn">Learn More →</span>
+      </div>
+
+    </div><!-- /insurance-grid -->
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 3 — WHY INDEPENDENT
+================================================================ -->
+<section class="section section--subtle" id="why">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our Advantage</span>
+      <h2 class="section-heading">Why Choose an Independent Broker?</h2>
+      <p class="section-sub">We work for you — not the insurance company</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">🛒</span>
+        <h3>We Shop 30+ Carriers</h3>
+        <p>We compare rates from every major carrier to find your best deal — not just the one that pays us the most commission. Our loyalty is to your wallet.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🤝</span>
+        <h3>We Work For You</h3>
+        <p>Captive agents can only offer one company's policies. We represent you, advocate for your claim, and advise without bias or pressure to upsell.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🗂️</span>
+        <h3>One Broker for Everything</h3>
+        <p>Auto, home, business, TLC — bundle all your coverage with one trusted broker. Fewer headaches, simplified renewals, and often better multi-policy rates.</p>
+      </div>
+    </div>
+
+    <div class="why-cta-row">
+      <a href="#quote" class="text-link-gold">See How Much You Could Save →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 4 — STATS STRIP
+================================================================ -->
+<section class="section--dark" id="stats">
+  <div class="container">
+    <div class="stats-strip" id="statsStrip">
+      <div class="stat-item">
+        <span class="stat-value" data-target="25">25+</span>
+        <span class="stat-label">Years in Business</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" data-target="30">30+</span>
+        <span class="stat-label">Carrier Partners</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" data-target="5000">5,000+</span>
+        <span class="stat-label">Clients Served</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" data-target="10000">10,000+</span>
+        <span class="stat-label">Policies Written</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 5 — CARRIER CAROUSEL
+================================================================ -->
+<section class="section" id="carriers" style="background:var(--bg-white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our Network</span>
+      <h2 class="section-heading">Carriers We Work With</h2>
+      <p class="section-sub">We shop them all to get you the best rate</p>
+    </div>
+  </div>
+
+  <div class="carrier-track-wrap">
+    <div class="carrier-track" id="carrierTrack">
+      <!-- Set A -->
+      <div class="carrier-pill">Travelers</div>
+      <div class="carrier-pill">Progressive</div>
+      <div class="carrier-pill">Nationwide</div>
+      <div class="carrier-pill">Liberty Mutual</div>
+      <div class="carrier-pill">Chubb</div>
+      <div class="carrier-pill">Allstate</div>
+      <div class="carrier-pill">State Farm</div>
+      <div class="carrier-pill">The Hartford</div>
+      <div class="carrier-pill">Zurich</div>
+      <div class="carrier-pill">Berkley</div>
+      <div class="carrier-pill">EMPLOYERS</div>
+      <div class="carrier-pill">AmTrust</div>
+      <div class="carrier-pill">Guard</div>
+      <div class="carrier-pill">Markel</div>
+      <div class="carrier-pill">Seneca</div>
+      <!-- Set B (duplicate for seamless loop) -->
+      <div class="carrier-pill">Travelers</div>
+      <div class="carrier-pill">Progressive</div>
+      <div class="carrier-pill">Nationwide</div>
+      <div class="carrier-pill">Liberty Mutual</div>
+      <div class="carrier-pill">Chubb</div>
+      <div class="carrier-pill">Allstate</div>
+      <div class="carrier-pill">State Farm</div>
+      <div class="carrier-pill">The Hartford</div>
+      <div class="carrier-pill">Zurich</div>
+      <div class="carrier-pill">Berkley</div>
+      <div class="carrier-pill">EMPLOYERS</div>
+      <div class="carrier-pill">AmTrust</div>
+      <div class="carrier-pill">Guard</div>
+      <div class="carrier-pill">Markel</div>
+      <div class="carrier-pill">Seneca</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="carrier-sub">
+      <p style="font-size:.875rem;color:var(--text-muted);">
+        And many more — we continuously add carriers to find you the most competitive rates.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 6 — HOW IT WORKS
+================================================================ -->
+<section class="section section--subtle" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Process</span>
+      <h2 class="section-heading">How It Works — 3 Simple Steps</h2>
+      <p class="section-sub">No confusing forms. No pushy sales calls. Just expert advice and great rates.</p>
+    </div>
+
+    <div class="how-grid">
+
+      <div class="how-card">
+        <span class="how-step-num">01</span>
+        <span class="how-icon">📝</span>
+        <h3>Tell Us What You Need</h3>
+        <p>Fill out our 2-minute form or call us. Tell us what coverage you're looking for, your current situation, and your budget — that's all we need to get started.</p>
+        <span class="how-time-badge">⏱ 2 minutes</span>
+      </div>
+
+      <div class="how-card">
+        <span class="how-step-num">02</span>
+        <span class="how-icon">🔍</span>
+        <h3>We Shop 30+ Carriers</h3>
+        <p>Our licensed brokers compare rates and coverage terms from every relevant carrier in our network and prepare a clear, side-by-side quote comparison just for you.</p>
+        <span class="how-time-badge">⏱ Same day</span>
+      </div>
+
+      <div class="how-card">
+        <span class="how-step-num">03</span>
+        <span class="how-icon">✅</span>
+        <h3>You Pick the Best Rate</h3>
+        <p>Review your options at your own pace. We explain the differences in plain English — coverage limits, deductibles, exclusions. You make the final call — no pressure, ever.</p>
+        <span class="how-time-badge">⏱ You decide</span>
+      </div>
+
+    </div>
+
+    <div class="how-cta-row">
+      <a href="#quote" class="btn btn-primary btn-lg">Start My Quote &nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 7 — TESTIMONIALS
+================================================================ -->
+<section class="section" id="testimonials" style="background:var(--bg-white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Client Reviews</span>
+      <h2 class="section-heading">What Our Clients Say</h2>
+      <p class="section-sub">5,000+ clients served — see why they choose Peerless</p>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="test-header">
+          <span class="test-stars">★★★★★</span>
+          <span class="test-source">
+            <span class="google-g"></span> Google
+          </span>
+        </div>
+        <p class="test-body">
+          John at Peerless helped me get TLC insurance same-day when my plate renewal deadline was hours away. Literally saved my livelihood. Couldn't recommend more.
+        </p>
+        <div class="test-footer">
+          <div>
+            <div class="test-author-name">Carlos M.</div>
+            <span class="badge badge-gold" style="margin-top:4px;">🚕 TLC Insurance</span>
+          </div>
+          <span style="font-size:.75rem;color:var(--text-light);">Brooklyn, NY</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="test-header">
+          <span class="test-stars">★★★★★</span>
+          <span class="test-source">
+            <span class="google-g"></span> Google
+          </span>
+        </div>
+        <p class="test-body">
+          Switched from my old broker after 8 years and immediately saved $1,200 on my homeowner policy. The comparison they provided was eye-opening — I didn't realize how overpaying I was.
+        </p>
+        <div class="test-footer">
+          <div>
+            <div class="test-author-name">Sarah K.</div>
+            <span class="badge badge-navy" style="margin-top:4px;">🏠 Homeowner Insurance</span>
+          </div>
+          <span style="font-size:.75rem;color:var(--text-light);">Park Slope, NY</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="test-header">
+          <span class="test-stars">★★★★★</span>
+          <span class="test-source">
+            <span class="google-g"></span> Google
+          </span>
+        </div>
+        <p class="test-body">
+          As a contractor I need GL + workers comp + commercial auto. Peerless handles all three and gets me COIs within hours. One call, everything covered. Absolute game changer.
+        </p>
+        <div class="test-footer">
+          <div>
+            <div class="test-author-name">Mike T.</div>
+            <span class="badge badge-green" style="margin-top:4px;">🏗️ Construction Insurance</span>
+          </div>
+          <span style="font-size:.75rem;color:var(--text-light);">Sunset Park, NY</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="testimonials-cta">
+      <a href="#" class="text-link-gold">See all our reviews on Google →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 8 — AGENT SPOTLIGHT
+================================================================ -->
+<section class="section section--subtle" id="agents">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our Team</span>
+      <h2 class="section-heading">Meet Your Insurance Experts</h2>
+      <p class="section-sub">Real people. Real expertise. No bots.</p>
+    </div>
+
+    <div class="agents-grid">
+
+      <!-- Agent 1 -->
+      <div class="agent-card">
+        <div class="agent-avatar">JM</div>
+        <div class="agent-name">John Martinez</div>
+        <div class="agent-title">Principal Broker</div>
+
+        <div class="agent-meta">
+          <span class="agent-meta-icon">⚡</span>
+          <span><strong>Specialties:</strong>&nbsp; Auto · TLC / Livery · Commercial</span>
+        </div>
+        <div class="agent-meta">
+          <span class="agent-meta-icon">💬</span>
+          <span><strong>Languages:</strong>&nbsp; English · Español</span>
+        </div>
+        <div class="agent-meta">
+          <span class="agent-meta-icon">📅</span>
+          <span>18 years experience</span>
+        </div>
+
+        <div class="agent-divider"></div>
+        <div class="agent-license">NY Lic. #LA-123456</div>
+        <a href="#quote" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get a Quote with John →</a>
+      </div>
+
+      <!-- Agent 2 -->
+      <div class="agent-card">
+        <div class="agent-avatar" style="background:var(--gold-100);color:var(--gold-600);">MC</div>
+        <div class="agent-name">Maria Chen</div>
+        <div class="agent-title">Senior Broker</div>
+
+        <div class="agent-meta">
+          <span class="agent-meta-icon">⚡</span>
+          <span><strong>Specialties:</strong>&nbsp; Home · Business · Group Health</span>
+        </div>
+        <div class="agent-meta">
+          <span class="agent-meta-icon">💬</span>
+          <span><strong>Languages:</strong>&nbsp; English · 中文</span>
+        </div>
+        <div class="agent-meta">
+          <span class="agent-meta-icon">📅</span>
+          <span>12 years experience</span>
+        </div>
+
+        <div class="agent-divider"></div>
+        <div class="agent-license">NY Lic. #LA-234567</div>
+        <a href="#quote" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get a Quote with Maria →</a>
+      </div>
+
+      <!-- Agent 3 -->
+      <div class="agent-card">
+        <div class="agent-avatar" style="background:var(--green-100);color:var(--green-600);">DK</div>
+        <div class="agent-name">David Kim</div>
+        <div class="agent-title">Licensed Broker</div>
+
+        <div class="agent-meta">
+          <span class="agent-meta-icon">⚡</span>
+          <span><strong>Specialties:</strong>&nbsp; Construction · Workers Comp · Disability</span>
+        </div>
+        <div class="agent-meta">
+          <span class="agent-meta-icon">💬</span>
+          <span><strong>Languages:</strong>&nbsp; English</span>
+        </div>
+        <div class="agent-meta">
+          <span class="agent-meta-icon">📅</span>
+          <span>8 years experience</span>
+        </div>
+
+        <div class="agent-divider"></div>
+        <div class="agent-license">NY Lic. #LA-345678</div>
+        <a href="#quote" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get a Quote with David →</a>
+      </div>
+
+    </div>
+
+    <div class="agents-cta">
+      <a href="#" class="text-link-gold">View All Our Agents →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 9 — BLOG PREVIEW
+================================================================ -->
+<section class="section" id="resources" style="background:var(--bg-white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Resource Center</span>
+      <h2 class="section-heading">From Our Resource Center</h2>
+      <p class="section-sub">Expert guides, tips, and industry updates to help you make informed coverage decisions</p>
+    </div>
+
+    <div class="blog-grid">
+
+      <div class="blog-card">
+        <div class="blog-card-img tlc-bg">
+          <span class="blog-card-img-icon">🚕</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="badge badge-gold">TLC</span>
+            <span class="blog-card-dot">·</span>
+            <span class="blog-card-date">Mar 2026</span>
+            <span class="blog-card-dot">·</span>
+            <span class="blog-card-read">6 min read</span>
+          </div>
+          <h3>What Is TLC Insurance and Who Needs It in NYC?</h3>
+          <a href="#" class="blog-card-link">Read Article →</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-card-img auto-bg">
+          <span class="blog-card-img-icon">🚗</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="badge badge-navy">Auto</span>
+            <span class="blog-card-dot">·</span>
+            <span class="blog-card-date">Feb 2026</span>
+            <span class="blog-card-dot">·</span>
+            <span class="blog-card-read">8 min read</span>
+          </div>
+          <h3>How Much Does Auto Insurance Cost in Brooklyn? (2026 Guide)</h3>
+          <a href="#" class="blog-card-link">Read Article →</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-card-img biz-bg">
+          <span class="blog-card-img-icon">👷</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="badge badge-green">Business</span>
+            <span class="blog-card-dot">·</span>
+            <span class="blog-card-date">Jan 2026</span>
+            <span class="blog-card-dot">·</span>
+            <span class="blog-card-read">7 min read</span>
+          </div>
+          <h3>Workers Compensation in New York: What Every Employer Must Know</h3>
+          <a href="#" class="blog-card-link">Read Article →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="blog-cta">
+      <a href="#" class="text-link-gold">View All Resources →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 10 — QUOTE CTA
+================================================================ -->
+<section class="section section--dark" id="quote">
+  <div class="container">
+    <div class="quote-cta-grid">
+
+      <!-- Left: Copy -->
+      <div class="quote-cta-left">
+        <span class="section-label">Free Quote</span>
+        <h2>Ready to <span>Save on Insurance?</span></h2>
+        <p>Takes 2 minutes. No obligation. We shop 30+ carriers so you don't have to — and deliver a real comparison from a real licensed broker.</p>
+        <div class="quote-promise">We respond within 2 business hours</div>
+
+        <div style="margin-top:36px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.65);font-size:.9rem;">
+            <span style="color:var(--gold-400);font-size:1rem;">✓</span>
+            Compare rates from 30+ top carriers
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.65);font-size:.9rem;">
+            <span style="color:var(--gold-400);font-size:1rem;">✓</span>
+            Licensed broker reviews your quote personally
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.65);font-size:.9rem;">
+            <span style="color:var(--gold-400);font-size:1rem;">✓</span>
+            No spam calls, no pressure — ever
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.65);font-size:.9rem;">
+            <span style="color:var(--gold-400);font-size:1rem;">✓</span>
+            Same-day service available for TLC &amp; urgent needs
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div>
+        <div class="quote-form-card">
+          <h3>Get Your Free Quote</h3>
+          <p class="form-sub">No obligation · Takes 2 minutes</p>
+
+          <form action="#" method="post" onsubmit="return false;">
+            <div class="form-group">
+              <label class="form-label" for="q-name">Full Name <span class="required-mark">*</span></label>
+              <input class="form-input" type="text" id="q-name" name="name" placeholder="e.g. Carlos Rodriguez" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="q-phone">Phone Number <span class="required-mark">*</span></label>
+              <input class="form-input" type="tel" id="q-phone" name="phone" placeholder="(718) 555-0000" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="q-type">Coverage Type <span class="required-mark">*</span></label>
+              <select class="form-select" id="q-type" name="coverage_type" required>
+                <option value="" disabled selected>Select coverage type…</option>
+                <option value="auto">Auto Insurance</option>
+                <option value="tlc">TLC / Livery Insurance</option>
+                <option value="commercial-auto">Commercial Auto</option>
+                <option value="homeowner">Homeowner Insurance</option>
+                <option value="bop">Business (BOP)</option>
+                <option value="workers-comp">Workers Compensation</option>
+                <option value="disability">Disability Insurance</option>
+                <option value="construction">Construction Insurance</option>
+                <option value="motorcycle">Motorcycle Insurance</option>
+                <option value="boat">Boat / Watercraft</option>
+                <option value="travel">Travel Insurance</option>
+                <option value="group-health">Group Health Insurance</option>
+                <option value="commercial-property">Commercial Property</option>
+                <option value="claims">Claims Assistance</option>
+                <option value="dmv">DMV Services</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Get My Free Quote →</button>
+          </form>
+
+          <p class="quote-call-link">
+            Or call us now: <a href="tel:7185550100">(718) 555-0100</a>
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /quote-cta-grid -->
+  </div>
+</section>
+
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-mark">P</div>
+            <div class="footer-logo-text">PEERLESS BROKERAGE</div>
+          </div>
+          <p class="footer-tagline">
+            Brooklyn's trusted independent insurance broker. Licensed in NY, NJ, CT &amp; PA.
+            Access to 30+ top-rated carriers.
+          </p>
+          <div class="footer-contact">
+            <a href="tel:7185550100">📞 (718) 555-0100</a>
+            <a href="mailto:info@peerlessbrokerage.com">✉️ info@peerlessbrokerage.com</a>
+            <a href="#">📍 123 Atlantic Ave, Brooklyn, NY 11201</a>
+          </div>
+          <div style="margin-top:16px;font-size:.78rem;color:rgba(255,255,255,.35);">
+            Mon–Sat 9am–6pm · English · Español · 中文
+          </div>
+        </div>
+
+        <!-- Col 2: Services -->
+        <div>
+          <div class="footer-col-title">Insurance Products</div>
+          <ul class="footer-links">
+            <li><a href="#">Auto Insurance</a></li>
+            <li><a href="#">TLC / Livery Insurance</a></li>
+            <li><a href="#">Homeowner Insurance</a></li>
+            <li><a href="#">Business (BOP)</a></li>
+            <li><a href="#">Workers Compensation</a></li>
+            <li><a href="#">Construction Insurance</a></li>
+            <li><a href="#">Commercial Property</a></li>
+            <li><a href="#">Group Health Insurance</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Company -->
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="#">About Peerless</a></li>
+            <li><a href="#">Our Agents</a></li>
+            <li><a href="#">Carrier Partners</a></li>
+            <li><a href="#">Resource Center</a></li>
+            <li><a href="#">Client Testimonials</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Get a Free Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: CTA -->
+        <div>
+          <div class="footer-col-title">Start Today</div>
+          <p style="font-size:.875rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px;">
+            Fast quotes. Real brokers. No pressure. Compare 30+ carriers in one call.
+          </p>
+          <a href="#quote" class="footer-quote-btn">Get a Free Quote →</a>
+          <a href="tel:7185550100" style="display:block;text-align:center;margin-top:12px;font-size:.875rem;color:rgba(255,255,255,.55);transition:color .15s;" onmouseover="this.style.color='var(--gold-300)'" onmouseout="this.style.color='rgba(255,255,255,.55)'">
+            📞 (718) 555-0100
+          </a>
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);">
+            <div style="font-size:.75rem;color:rgba(255,255,255,.35);margin-bottom:8px;">Follow Us</div>
+            <div style="display:flex;gap:10px;">
+              <a href="#" style="font-size:.85rem;color:rgba(255,255,255,.4);transition:color .15s;" onmouseover="this.style.color='var(--gold-300)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Facebook</a>
+              <span style="color:rgba(255,255,255,.2);">·</span>
+              <a href="#" style="font-size:.85rem;color:rgba(255,255,255,.4);transition:color .15s;" onmouseover="this.style.color='var(--gold-300)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Google</a>
+              <span style="color:rgba(255,255,255,.2);">·</span>
+              <a href="#" style="font-size:.85rem;color:rgba(255,255,255,.4);transition:color .15s;" onmouseover="this.style.color='var(--gold-300)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">Yelp</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="container">
+      <div>
+        <p class="footer-compliance">
+          © 2026 Peerless Brokerage LLC. All rights reserved. &nbsp;|&nbsp;
+          Licensed Insurance Broker &nbsp;|&nbsp; NY Lic. #LA-123456 &nbsp;|&nbsp; NJ Lic. #NJB-78901 &nbsp;|&nbsp; CT Lic. #CT-456789 &nbsp;|&nbsp; PA Lic. #PA-321098<br>
+          Insurance products are subject to availability and may not be available in all states. Coverage terms, conditions, and exclusions vary by policy and carrier.
+          This website is for informational purposes only and does not constitute a binding insurance contract.
+        </p>
+      </div>
+      <div class="footer-legal-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ================================================================
+     MOBILE STICKY BAR
+================================================================ -->
+<div class="mobile-sticky-bar">
+  <a href="tel:7185550100" class="btn btn-navy">📞 Call Us Now</a>
+  <a href="#quote" class="btn btn-primary">Get a Free Quote →</a>
+</div>
+
+
+<!-- ================================================================
+     VANILLA JS — Minimal interactions
+================================================================ -->
+<script>
+  // ── 1. Smooth scroll for anchor links ──────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      var target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        var headerH = document.querySelector('.site-header').offsetHeight;
+        var y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 12;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ── 2. Stats strip in-view animation ───────────────────────────
+  var statsStrip = document.getElementById('statsStrip');
+  if (statsStrip && 'IntersectionObserver' in window) {
+    var statsObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          statsObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    statsObs.observe(statsStrip);
+  } else if (statsStrip) {
+    statsStrip.classList.add('in-view');
+  }
+
+  // ── 3. Sticky header shadow on scroll ──────────────────────────
+  var header = document.querySelector('.site-header');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 10) {
+      header.style.boxShadow = '0 4px 20px rgba(0,0,0,.12)';
+    } else {
+      header.style.boxShadow = '0 2px 8px rgba(0,0,0,.06)';
+    }
+  }, { passive: true });
+
+  // ── 4. Active nav link based on scroll position ─────────────────
+  var sections = ['hero', 'insurance', 'why', 'stats', 'carriers', 'how-it-works', 'testimonials', 'agents', 'resources', 'quote'];
+  var navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', function() {
+    var scrollY = window.pageYOffset + 100;
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (scrollY >= el.offsetTop && scrollY < el.offsetTop + el.offsetHeight) {
+        navLinks.forEach(function(a) { a.classList.remove('active'); });
+        var match = document.querySelector('.nav-links a[href="home.html"]');
+        // highlight Home always on hero, else rely on proximity
+      }
+    });
+  }, { passive: true });
+
+  // ── 5. Mobile nav hamburger (placeholder toggle) ────────────────
+  var hamburger = document.querySelector('.nav-hamburger');
+  var navLinksEl = document.querySelector('.nav-links');
+  hamburger && hamburger.addEventListener('click', function() {
+    var isOpen = navLinksEl.style.display === 'flex';
+    if (isOpen) {
+      navLinksEl.style.display = '';
+    } else {
+      navLinksEl.style.cssText = 'display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:#fff; padding:16px 24px 20px; border-bottom:1px solid #e2e8f0; gap:4px; z-index:99;';
+    }
+  });
+
+  // ── 6. Quote form submission feedback ──────────────────────────
+  var quoteForm = document.querySelector('#quote form');
+  if (quoteForm) {
+    quoteForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = quoteForm.querySelector('button[type="submit"]');
+      var orig = btn.innerHTML;
+      btn.innerHTML = '✓ Request Received — We\'ll be in touch shortly!';
+      btn.disabled = true;
+      btn.style.background = 'var(--green-500)';
+      btn.style.borderColor = 'var(--green-500)';
+      setTimeout(function() {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        quoteForm.reset();
+      }, 5000);
+    });
+  }
+</script>
+
+</body>
+</html>

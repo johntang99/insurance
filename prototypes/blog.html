@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insurance Resource Center — Peerless Brokerage</title>
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+
+    /* ============================================================
+       blog.html — Page-Specific Styles
+       Resource Center / Blog Listing
+       ============================================================ */
+
+    /* ─── RESOURCES HERO ─────────────────────────────────── */
+    .resources-hero {
+      background: linear-gradient(160deg, var(--navy-50) 0%, var(--bg-white) 60%, var(--gold-100) 100%);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      padding: 64px 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .resources-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -120px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,147,58,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .resources-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -80px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(11,31,58,.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .resources-hero .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold-500);
+      margin-bottom: 14px;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: var(--gold-400);
+    }
+    .resources-hero h1 {
+      color: var(--navy-800);
+      margin-bottom: 16px;
+    }
+    .resources-hero .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-search {
+      display: flex;
+      align-items: center;
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--bg-white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .hero-search:focus-within {
+      border-color: var(--navy-500);
+      box-shadow: 0 0 0 3px rgba(30,66,117,.1), var(--shadow);
+    }
+    .hero-search-icon {
+      padding: 0 16px;
+      font-size: 1rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .hero-search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-body);
+      font-size: .9375rem;
+      color: var(--text-primary);
+      padding: 14px 0;
+      background: transparent;
+    }
+    .hero-search input::placeholder {
+      color: var(--text-light);
+    }
+    .hero-search-btn {
+      margin: 6px;
+      padding: 10px 24px;
+      background: var(--gold-500);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: .875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, transform .12s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .hero-search-btn:hover {
+      background: var(--gold-600);
+      transform: translateY(-1px);
+    }
+
+    /* ─── CATEGORY TABS ──────────────────────────────────── */
+    .category-tabs-wrap {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 68px;
+      z-index: 90;
+    }
+    .category-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      display: inline-flex;
+      align-items: center;
+      padding: 16px 20px;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+      font-family: var(--font-body);
+    }
+    .cat-tab:hover {
+      color: var(--navy-800);
+    }
+    .cat-tab.active {
+      color: var(--navy-800);
+      font-weight: 600;
+      border-bottom-color: var(--navy-800);
+    }
+
+    /* ─── FEATURED ARTICLE ───────────────────────────────── */
+    .featured-section {
+      background: var(--bg-white);
+      padding: 56px 0;
+    }
+    .featured-card {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .featured-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .featured-img {
+      background: var(--navy-800);
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      gap: 12px;
+    }
+    .featured-img-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: var(--gold-500);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 4px;
+    }
+    .featured-img-emoji {
+      font-size: 3.5rem;
+      line-height: 1;
+    }
+    .featured-img-label {
+      font-family: var(--font-body);
+      font-size: .875rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .featured-content {
+      padding: 48px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+    .featured-eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold-500);
+      margin-bottom: 12px;
+      margin-top: 10px;
+    }
+    .featured-content h2 {
+      font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+      color: var(--navy-800);
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .8125rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .article-meta-sep {
+      width: 3px;
+      height: 3px;
+      background: var(--text-light);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .featured-excerpt {
+      font-size: .9375rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--gold-500);
+      transition: gap .15s, color .15s;
+    }
+    .read-link:hover {
+      color: var(--gold-600);
+      gap: 10px;
+    }
+
+    /* ─── ARTICLE GRID ───────────────────────────────────── */
+    .article-grid-section {
+      background: var(--bg-subtle);
+      padding: 48px 0 64px;
+    }
+    .grid-section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 16px;
+    }
+    .grid-section-header h3 {
+      font-size: 1.35rem;
+      color: var(--navy-800);
+    }
+    .grid-result-count {
+      font-size: .8125rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    /* Article Card */
+    .article-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .article-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+    .article-card-img {
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .article-card-img-emoji {
+      font-size: 2.6rem;
+      line-height: 1;
+    }
+    .article-card-img-label {
+      font-family: var(--font-body);
+      font-size: .75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .article-card-body {
+      padding: 24px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .article-card-category {
+      margin-bottom: 12px;
+    }
+    .article-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.075rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      line-height: 1.35;
+      margin-bottom: 10px;
+      transition: color .15s;
+    }
+    .article-card:hover .article-card-title {
+      color: var(--gold-500);
+    }
+    .article-card-excerpt {
+      font-size: .845rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .article-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    .article-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      color: var(--text-light);
+    }
+    .article-card-meta-sep {
+      width: 2px;
+      height: 2px;
+      background: var(--text-light);
+      border-radius: 50%;
+    }
+    .article-read-link {
+      font-size: .8125rem;
+      font-weight: 700;
+      color: var(--gold-500);
+      transition: color .15s, letter-spacing .15s;
+      white-space: nowrap;
+    }
+    .article-read-link:hover {
+      color: var(--gold-600);
+      letter-spacing: .01em;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .pagination-info {
+      font-size: .875rem;
+      color: var(--text-muted);
+      padding: 0 8px;
+      font-weight: 500;
+    }
+    .pagination-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      font-family: var(--font-body);
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--navy-700);
+      background: var(--bg-white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .pagination-btn:hover {
+      background: var(--navy-800);
+      color: #fff;
+      border-color: var(--navy-800);
+    }
+    .pagination-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+    .pagination-btn:disabled:hover {
+      background: var(--bg-white);
+      color: var(--navy-700);
+      border-color: var(--border);
+    }
+
+    /* ─── NEWSLETTER CTA ─────────────────────────────────── */
+    .newsletter-section {
+      background: var(--navy-800);
+      padding: 72px 0;
+    }
+    .newsletter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .newsletter-left h2 {
+      color: #fff;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      margin-bottom: 14px;
+    }
+    .newsletter-left p {
+      color: rgba(255,255,255,.65);
+      font-size: .9375rem;
+      line-height: 1.75;
+      max-width: 420px;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .newsletter-input {
+      flex: 1;
+      padding: 13px 18px;
+      border: 1.5px solid rgba(255,255,255,.15);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.07);
+      font-family: var(--font-body);
+      font-size: .9375rem;
+      color: #fff;
+      outline: none;
+      transition: border-color .15s, background .15s;
+      min-width: 0;
+    }
+    .newsletter-input::placeholder {
+      color: rgba(255,255,255,.35);
+    }
+    .newsletter-input:focus {
+      border-color: var(--gold-400);
+      background: rgba(255,255,255,.1);
+    }
+    .newsletter-submit {
+      padding: 13px 28px;
+      background: var(--gold-500);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: .9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, transform .12s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .newsletter-submit:hover {
+      background: var(--gold-600);
+      transform: translateY(-1px);
+    }
+    .newsletter-disclaimer {
+      font-size: .78rem;
+      color: rgba(255,255,255,.35);
+      line-height: 1.5;
+    }
+
+    /* ─── QUOTE CTA ──────────────────────────────────────── */
+    .quote-cta-section {
+      background: var(--gold-100);
+      padding: 64px 0;
+      text-align: center;
+    }
+    .quote-cta-section h2 {
+      color: var(--navy-800);
+      margin-bottom: 10px;
+    }
+    .quote-cta-section p {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .quote-cta-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── BADGE HELPERS ──────────────────────────────────── */
+    .badge-tlc {
+      background: var(--gold-100);
+      color: var(--gold-600);
+    }
+    .badge-auto, .badge-home, .badge-commercial {
+      background: var(--navy-50);
+      color: var(--navy-700);
+    }
+    .badge-business {
+      background: var(--green-100);
+      color: var(--green-600);
+    }
+    .badge-tips {
+      background: var(--gold-100);
+      color: var(--gold-600);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .featured-card {
+        grid-template-columns: 320px 1fr;
+      }
+      .featured-content {
+        padding: 36px 36px;
+      }
+      .article-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .resources-hero {
+        padding: 48px 0 40px;
+        min-height: auto;
+      }
+      .category-tabs-wrap {
+        top: 0;
+      }
+      .featured-section {
+        padding: 40px 0;
+      }
+      .featured-card {
+        grid-template-columns: 1fr;
+      }
+      .featured-img {
+        min-height: 220px;
+      }
+      .featured-content {
+        padding: 28px 24px;
+      }
+      .featured-content h2 {
+        font-size: 1.35rem;
+      }
+      .article-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .grid-section-header {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .newsletter-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .newsletter-form {
+        flex-direction: column;
+      }
+      .newsletter-submit {
+        width: 100%;
+      }
+      .newsletter-left p {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-search {
+        flex-wrap: wrap;
+        border-radius: var(--radius);
+      }
+      .hero-search-btn {
+        margin: 0 6px 6px;
+        width: calc(100% - 12px);
+        justify-content: center;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════ -->
+  <header class="site-header">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="container">
+        <div class="top-bar-left">
+          <span class="license-badge">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            NY Licensed &amp; Insured — Broker Lic. #BR-0049271
+          </span>
+          <span style="color:rgba(255,255,255,.35);">|</span>
+          <span>Serving Brooklyn, Queens, the Bronx &amp; All of NYC</span>
+        </div>
+        <div class="top-bar-right">
+          <a href="tel:7185550100">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            (718) 555-0100
+          </a>
+          <a href="#">Mon–Fri 9am–6pm, Sat 10am–3pm</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <nav class="nav-bar">
+      <div class="container">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-mark">PB</div>
+          <div class="nav-logo-text">
+            Peerless Brokerage
+            <span>Insurance Specialists · Brooklyn, NY</span>
+          </div>
+        </a>
+
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="#">Auto</a>
+          <a href="#">Home &amp; Renters</a>
+          <a href="#">Business</a>
+          <a href="#">TLC / Livery</a>
+          <a href="#">Commercial</a>
+          <a href="#" class="active">Resources</a>
+          <a href="#">About</a>
+        </div>
+
+        <div class="nav-cta">
+          <span class="nav-phone">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            (718) 555-0100
+          </span>
+          <a href="#" class="btn btn-primary btn-sm">Get a Free Quote</a>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1 — RESOURCES HERO
+  ════════════════════════════════════════ -->
+  <section class="resources-hero">
+    <div class="container">
+      <div class="hero-eyebrow">Resource Center</div>
+      <h1>Insurance Resource Center</h1>
+      <p class="hero-sub">Guides, tips, and explainers to help you make the best coverage decisions in New York</p>
+
+      <div class="hero-search">
+        <span class="hero-search-icon">🔍</span>
+        <input type="text" placeholder="Search articles, guides, topics…" aria-label="Search articles" />
+        <button class="hero-search-btn">Search</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2 — CATEGORY TABS
+  ════════════════════════════════════════ -->
+  <div class="category-tabs-wrap">
+    <div class="container">
+      <nav class="category-tabs" role="tablist" aria-label="Filter articles by category">
+        <button class="cat-tab active" role="tab" aria-selected="true">All</button>
+        <button class="cat-tab" role="tab" aria-selected="false">Auto</button>
+        <button class="cat-tab" role="tab" aria-selected="false">Home</button>
+        <button class="cat-tab" role="tab" aria-selected="false">Business</button>
+        <button class="cat-tab" role="tab" aria-selected="false">TLC</button>
+        <button class="cat-tab" role="tab" aria-selected="false">Commercial</button>
+        <button class="cat-tab" role="tab" aria-selected="false">Tips &amp; Guides</button>
+      </nav>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 3 — FEATURED ARTICLE
+  ════════════════════════════════════════ -->
+  <section class="featured-section">
+    <div class="container">
+      <article class="featured-card">
+
+        <!-- Left: Image Placeholder -->
+        <div class="featured-img" style="background: linear-gradient(145deg, var(--navy-800) 0%, var(--navy-600) 100%);">
+          <span class="featured-img-badge">Featured</span>
+          <span class="featured-img-emoji">🚕</span>
+          <span class="featured-img-label">TLC / Livery</span>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="featured-content">
+          <div>
+            <span class="badge badge-tlc" style="font-size:.775rem; padding:5px 14px;">TLC</span>
+          </div>
+          <p class="featured-eyebrow">Featured Article</p>
+          <h2>What Is TLC Insurance and Who Needs It in NYC? Complete Guide for Livery Drivers</h2>
+          <div class="article-meta">
+            <span>March 10, 2026</span>
+            <span class="article-meta-sep"></span>
+            <span>8 min read</span>
+          </div>
+          <p class="featured-excerpt">If you drive for a taxi company, car service, Uber, Lyft, or any for-hire vehicle service in New York City, you need TLC insurance — and your personal auto policy won't cover you while working. Here's everything you need to know about TLC-compliant coverage, minimum limits, and how to find the right broker for your situation.</p>
+          <a href="#" class="read-link">Read Article <span aria-hidden="true">→</span></a>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 4 — ARTICLE GRID
+  ════════════════════════════════════════ -->
+  <section class="article-grid-section">
+    <div class="container">
+
+      <div class="grid-section-header">
+        <h3>Latest Articles</h3>
+        <span class="grid-result-count">Showing 6 of 18 articles</span>
+      </div>
+
+      <div class="article-grid">
+
+        <!-- Card 1 — Auto -->
+        <article class="article-card">
+          <div class="article-card-img" style="background: linear-gradient(135deg, var(--navy-500) 0%, var(--navy-700) 100%);">
+            <span class="article-card-img-emoji">🚗</span>
+            <span class="article-card-img-label">Auto</span>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-category">
+              <span class="badge badge-auto" style="font-size:.735rem;">Auto</span>
+            </div>
+            <h4 class="article-card-title">How Much Does Auto Insurance Cost in Brooklyn? (2026 Guide)</h4>
+            <p class="article-card-excerpt">Brooklyn drivers pay some of the highest auto insurance rates in the country. We break down what you'll actually pay, what factors affect your rate, and how to find better coverage.</p>
+            <div class="article-card-footer">
+              <div class="article-card-meta">
+                <span>Feb 28, 2026</span>
+                <span class="article-card-meta-sep"></span>
+                <span>7 min</span>
+              </div>
+              <a href="#" class="article-read-link">Read More →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 — Home -->
+        <article class="article-card">
+          <div class="article-card-img" style="background: linear-gradient(135deg, var(--navy-700) 0%, var(--navy-900) 100%);">
+            <span class="article-card-img-emoji">🏠</span>
+            <span class="article-card-img-label">Home</span>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-category">
+              <span class="badge badge-home" style="font-size:.735rem;">Home</span>
+            </div>
+            <h4 class="article-card-title">Home Insurance Checklist: What to Review at Renewal Time</h4>
+            <p class="article-card-excerpt">Renewal season is the best time to make sure your home coverage still matches your life. Use this checklist to avoid gaps before they become expensive problems.</p>
+            <div class="article-card-footer">
+              <div class="article-card-meta">
+                <span>Feb 15, 2026</span>
+                <span class="article-card-meta-sep"></span>
+                <span>5 min</span>
+              </div>
+              <a href="#" class="article-read-link">Read More →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 — Business -->
+        <article class="article-card">
+          <div class="article-card-img" style="background: linear-gradient(135deg, var(--green-500) 0%, var(--green-600) 100%);">
+            <span class="article-card-img-emoji">🏢</span>
+            <span class="article-card-img-label">Business</span>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-category">
+              <span class="badge badge-business" style="font-size:.735rem;">Business</span>
+            </div>
+            <h4 class="article-card-title">Workers Compensation in New York: What Every Employer Must Know</h4>
+            <p class="article-card-excerpt">New York has strict workers comp requirements — and the fines for non-compliance can be severe. Here's what you need to know to stay compliant and protect your employees.</p>
+            <div class="article-card-footer">
+              <div class="article-card-meta">
+                <span>Jan 30, 2026</span>
+                <span class="article-card-meta-sep"></span>
+                <span>9 min</span>
+              </div>
+              <a href="#" class="article-read-link">Read More →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 — Tips & Guides -->
+        <article class="article-card">
+          <div class="article-card-img" style="background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%);">
+            <span class="article-card-img-emoji">💡</span>
+            <span class="article-card-img-label">Tips &amp; Guides</span>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-category">
+              <span class="badge badge-tips" style="font-size:.735rem;">Tips &amp; Guides</span>
+            </div>
+            <h4 class="article-card-title">Independent Broker vs. Captive Agent: Which Is Better for You?</h4>
+            <p class="article-card-excerpt">Not all insurance professionals are the same. Understanding the difference between a broker and a captive agent could save you money and get you better coverage.</p>
+            <div class="article-card-footer">
+              <div class="article-card-meta">
+                <span>Jan 15, 2026</span>
+                <span class="article-card-meta-sep"></span>
+                <span>6 min</span>
+              </div>
+              <a href="#" class="article-read-link">Read More →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 — Commercial -->
+        <article class="article-card">
+          <div class="article-card-img" style="background: linear-gradient(135deg, var(--navy-600) 0%, var(--navy-800) 100%);">
+            <span class="article-card-img-emoji">🚚</span>
+            <span class="article-card-img-label">Commercial</span>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-category">
+              <span class="badge badge-commercial" style="font-size:.735rem;">Commercial</span>
+            </div>
+            <h4 class="article-card-title">What Does Commercial Auto Insurance Cover? A Fleet Owner's Guide</h4>
+            <p class="article-card-excerpt">Personal auto policies don't cover vehicles used for business. If you run a fleet — even just a few trucks — here's what commercial coverage actually protects you against.</p>
+            <div class="article-card-footer">
+              <div class="article-card-meta">
+                <span>Jan 5, 2026</span>
+                <span class="article-card-meta-sep"></span>
+                <span>8 min</span>
+              </div>
+              <a href="#" class="article-read-link">Read More →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 — Business -->
+        <article class="article-card">
+          <div class="article-card-img" style="background: linear-gradient(135deg, #1a7a4a 0%, #0e5234 100%);">
+            <span class="article-card-img-emoji">👷</span>
+            <span class="article-card-img-label">Business</span>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-category">
+              <span class="badge badge-business" style="font-size:.735rem;">Business</span>
+            </div>
+            <h4 class="article-card-title">How to Save Money on Business Insurance Without Reducing Coverage</h4>
+            <p class="article-card-excerpt">Smart bundling, higher deductibles, and risk management programs can all bring your premiums down — without leaving your business exposed. Here's how to do it right.</p>
+            <div class="article-card-footer">
+              <div class="article-card-meta">
+                <span>Dec 20, 2025</span>
+                <span class="article-card-meta-sep"></span>
+                <span>7 min</span>
+              </div>
+              <a href="#" class="article-read-link">Read More →</a>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.article-grid -->
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="pagination-btn" disabled>
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          Previous
+        </button>
+        <span class="pagination-info">Page 1 of 3</span>
+        <button class="pagination-btn">
+          Next
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 5 — NEWSLETTER CTA
+  ════════════════════════════════════════ -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-grid">
+
+        <div class="newsletter-left">
+          <h2>Stay Informed on Insurance</h2>
+          <p>Get monthly tips on saving money, understanding your coverage, and staying protected — straight to your inbox. Written by our Brooklyn brokers, not a content mill.</p>
+        </div>
+
+        <div class="newsletter-right">
+          <form class="newsletter-form" onsubmit="return false;">
+            <input
+              class="newsletter-input"
+              type="email"
+              placeholder="Your email address"
+              aria-label="Email address for newsletter"
+              autocomplete="email"
+            />
+            <button class="newsletter-submit" type="submit">Subscribe</button>
+          </form>
+          <p class="newsletter-disclaimer">No spam. Unsubscribe anytime. We respect your privacy.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 6 — QUOTE CTA
+  ════════════════════════════════════════ -->
+  <section class="quote-cta-section">
+    <div class="container">
+      <h2>Have insurance questions? We have answers.</h2>
+      <p>Call us or get a free quote — our brokers are here to help.</p>
+      <div class="quote-cta-btns">
+        <a href="#" class="btn btn-navy btn-lg">Get a Free Quote →</a>
+        <a href="tel:7185550100" class="btn btn-outline btn-lg">Call (718) 555-0100</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+
+          <!-- Brand Column -->
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="footer-logo-mark">PB</div>
+              <span class="footer-logo-text">Peerless Brokerage</span>
+            </div>
+            <p class="footer-tagline">Brooklyn's trusted independent insurance brokers. We shop the market so you don't have to.</p>
+            <div class="footer-contact">
+              <a href="tel:7185550100">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                (718) 555-0100
+              </a>
+              <a href="mailto:info@peerlessbrokerage.com">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                info@peerlessbrokerage.com
+              </a>
+              <a href="#">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                456 Atlantic Ave, Brooklyn, NY 11217
+              </a>
+            </div>
+            <a href="#" class="footer-quote-btn">Get a Free Quote →</a>
+          </div>
+
+          <!-- Coverage Column -->
+          <div>
+            <p class="footer-col-title">Coverage</p>
+            <ul class="footer-links">
+              <li><a href="#">Auto Insurance</a></li>
+              <li><a href="#">Home &amp; Renters</a></li>
+              <li><a href="#">Business Insurance</a></li>
+              <li><a href="#">TLC / Livery Insurance</a></li>
+              <li><a href="#">Commercial Auto</a></li>
+              <li><a href="#">Workers Compensation</a></li>
+              <li><a href="#">General Liability</a></li>
+            </ul>
+          </div>
+
+          <!-- Company Column -->
+          <div>
+            <p class="footer-col-title">Company</p>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Testimonials</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+            <p class="footer-col-title" style="margin-top:28px;">Resources</p>
+            <ul class="footer-links">
+              <li><a href="#">Resource Center</a></li>
+              <li><a href="#">Insurance Glossary</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+
+          <!-- Hours Column -->
+          <div>
+            <p class="footer-col-title">Office Hours</p>
+            <ul class="footer-links" style="gap:6px;">
+              <li style="color:rgba(255,255,255,.65); font-size:.875rem;">Mon – Fri: 9:00 am – 6:00 pm</li>
+              <li style="color:rgba(255,255,255,.65); font-size:.875rem;">Saturday: 10:00 am – 3:00 pm</li>
+              <li style="color:rgba(255,255,255,.4); font-size:.875rem;">Sunday: Closed</li>
+            </ul>
+            <div style="margin-top:24px; padding:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:var(--radius);">
+              <div class="google-rating">
+                <div class="google-g"></div>
+                <span class="score" style="color:#fff;">4.9</span>
+                <span class="stars">★★★★★</span>
+                <span class="count">(183 reviews)</span>
+              </div>
+              <p style="font-size:.75rem; color:rgba(255,255,255,.35); margin-top:6px;">Google Reviews · Brooklyn office</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="footer-compliance">© 2026 Peerless Brokerage LLC. All rights reserved. Licensed in the State of New York — Broker License #BR-0049271. Insurance products are subject to underwriting approval and policy terms. Coverage availability and rates vary.</p>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════
+       MOBILE STICKY BAR
+  ════════════════════════════════════════ -->
+  <div class="mobile-sticky-bar">
+    <a href="tel:7185550100" class="btn btn-outline">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      Call Now
+    </a>
+    <a href="#" class="btn btn-primary">Get a Free Quote</a>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════ -->
+  <script>
+    // Category Tab switching
+    const tabs = document.querySelectorAll('.cat-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Peerless Brokerage | Brooklyn, NY</title>
+  <meta name="description" content="Learn about Peerless Brokerage — Brooklyn's trusted independent insurance broker since 1999. Meet our team, review our licenses, and discover our carrier partners." />
+  <link rel="stylesheet" href="theme.css" />
+
+  <style>
+    /* ================================================================
+       ABOUT PAGE — Page-specific styles
+       Peerless Brokerage | Navy #0B1F3A + Gold #C9933A
+       ================================================================ */
+
+    /* ── Trust Badges (hero pills) ──────────────────────────────── */
+    .trust-badges {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 18px;
+      border: 1.5px solid rgba(255,255,255,.45);
+      border-radius: 100px;
+      font-size: .8125rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.9);
+      letter-spacing: .03em;
+      backdrop-filter: blur(4px);
+      background: rgba(255,255,255,.07);
+    }
+    .trust-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-400);
+      flex-shrink: 0;
+    }
+
+    /* ── About Hero ─────────────────────────────────────────────── */
+    .about-hero {
+      background: linear-gradient(155deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--navy-700) 100%);
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 80px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 20% 50%, rgba(201,147,58,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 30%, rgba(23,53,96,.5) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.03));
+      pointer-events: none;
+    }
+    .about-hero .container { position: relative; z-index: 1; }
+    .about-hero h1 {
+      color: #fff;
+      font-size: clamp(2.2rem, 4.5vw, 3.25rem);
+      margin-bottom: 18px;
+      letter-spacing: -.01em;
+    }
+    .about-hero h1 em {
+      font-style: normal;
+      color: var(--gold-400);
+    }
+    .about-hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: rgba(255,255,255,.72);
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .about-hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── Our Story ──────────────────────────────────────────────── */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .story-photo {
+      background: var(--navy-800);
+      border-radius: var(--radius-xl);
+      aspect-ratio: 4 / 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: rgba(255,255,255,.35);
+      font-size: .875rem;
+      font-weight: 500;
+      position: sticky;
+      top: 96px;
+      overflow: hidden;
+    }
+    .story-photo-icon {
+      font-size: 2.5rem;
+      opacity: .5;
+    }
+    .story-photo-label {
+      font-family: var(--font-body);
+      font-size: .8125rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.25);
+    }
+    .story-photo-corner {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 48px; height: 48px;
+      border-top: 2px solid rgba(201,147,58,.3);
+      border-right: 2px solid rgba(201,147,58,.3);
+      border-radius: 0 8px 0 0;
+    }
+    .story-photo-corner-bl {
+      position: absolute;
+      bottom: 16px; left: 16px;
+      width: 48px; height: 48px;
+      border-bottom: 2px solid rgba(201,147,58,.3);
+      border-left: 2px solid rgba(201,147,58,.3);
+      border-radius: 0 0 0 8px;
+    }
+    .story-content .section-label { margin-bottom: 8px; }
+    .story-content h2 { margin-bottom: 24px; }
+    .story-paragraphs { display: flex; flex-direction: column; gap: 18px; margin-bottom: 40px; }
+    .story-paragraphs p { font-size: .9625rem; }
+
+    /* ── Timeline ───────────────────────────────────────────────── */
+    .timeline { border-left: 2px solid var(--border); padding-left: 28px; margin-top: 8px; }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 28px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -36px;
+      top: 5px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold-500);
+      border: 2px solid var(--bg-white);
+      box-shadow: 0 0 0 2px var(--gold-300);
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 11px;
+      width: 0; height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 6px solid var(--gold-300);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .timeline-item:hover::after { opacity: 1; }
+    .timeline-year {
+      font-size: .7875rem;
+      font-weight: 700;
+      color: var(--gold-600);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .timeline-event {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── Mission Section ────────────────────────────────────────── */
+    .mission-section {
+      background: var(--navy-50);
+      padding: var(--section-y) 0;
+    }
+    .mission-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .mission-quote-mark {
+      font-family: var(--font-heading);
+      font-size: 7rem;
+      line-height: .65;
+      color: var(--gold-500);
+      margin-bottom: 12px;
+      display: block;
+      opacity: .55;
+      user-select: none;
+    }
+    .mission-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+      color: var(--navy-800);
+      margin-bottom: 28px;
+    }
+    .mission-quote-text {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      line-height: 1.75;
+      color: var(--navy-700);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .mission-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
+      margin: 0 auto 20px;
+    }
+    .mission-attribution {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: .02em;
+    }
+
+    /* ── Licenses & Credentials ─────────────────────────────────── */
+    .licenses-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .license-table-wrap { overflow-x: auto; }
+    .license-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    .license-table thead tr {
+      background: var(--navy-50);
+    }
+    .license-table th {
+      padding: 11px 16px;
+      text-align: left;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+    .license-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+    .license-table tbody tr:last-child td { border-bottom: none; }
+    .license-table tbody tr:hover td { background: var(--navy-50); }
+    .license-table .state-flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .license-table .status-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--green-100);
+      color: var(--green-600);
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: .775rem;
+      font-weight: 600;
+    }
+    .license-table .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green-500);
+    }
+    .verify-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 14px;
+      font-size: .8125rem;
+      font-weight: 600;
+      color: var(--navy-700);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color .15s;
+    }
+    .verify-link:hover { color: var(--gold-600); }
+    .verify-link svg { flex-shrink: 0; }
+
+    /* Right column: memberships + E&O */
+    .credentials-right { display: flex; flex-direction: column; gap: 32px; }
+    .memberships-title {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .membership-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-white);
+      transition: box-shadow .18s, border-color .18s;
+    }
+    .membership-item:not(:last-child) { margin-bottom: 10px; }
+    .membership-item:hover { box-shadow: var(--shadow-sm); border-color: var(--navy-100); }
+    .membership-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      background: var(--navy-50);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .membership-name {
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+    .membership-sub {
+      font-size: .775rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+    .eo-callout {
+      background: var(--gold-100);
+      border: 1px solid rgba(201,147,58,.25);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .eo-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .eo-text {
+      font-size: .875rem;
+      color: var(--gold-600);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* ── Team Section ───────────────────────────────────────────── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .agent-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .agent-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+      border-color: var(--navy-100);
+    }
+    .agent-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold-300);
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(11,31,58,.2);
+      flex-shrink: 0;
+    }
+    .agent-name {
+      font-family: var(--font-heading);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+    .agent-title {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--gold-600);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 14px;
+    }
+    .agent-divider {
+      width: 32px;
+      height: 1.5px;
+      background: var(--border);
+      margin: 0 auto 14px;
+    }
+    .agent-specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .specialty-pill {
+      padding: 3px 10px;
+      background: var(--navy-50);
+      color: var(--navy-700);
+      border-radius: 100px;
+      font-size: .725rem;
+      font-weight: 600;
+    }
+    .agent-meta {
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .agent-meta-icon { color: var(--gold-500); font-size: .7rem; }
+    .agent-lic {
+      font-size: .72rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      font-family: var(--font-body);
+      letter-spacing: .01em;
+    }
+    .agent-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 10px 16px;
+      background: var(--gold-500);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      font-weight: 600;
+      transition: background .15s, transform .15s;
+      margin-top: auto;
+    }
+    .agent-btn:hover { background: var(--gold-600); transform: translateY(-1px); }
+    .team-footer {
+      text-align: center;
+      margin-top: 36px;
+    }
+    .view-all-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy-700);
+      border-bottom: 2px solid var(--gold-400);
+      padding-bottom: 2px;
+      transition: color .15s, border-color .15s;
+    }
+    .view-all-link:hover { color: var(--gold-600); border-color: var(--gold-600); }
+
+    /* ── Carrier Partners ───────────────────────────────────────── */
+    .carriers-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+    .carrier-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      text-align: center;
+      transition: box-shadow .18s, border-color .18s, transform .18s;
+    }
+    .carrier-card:hover {
+      box-shadow: var(--shadow-sm);
+      border-color: var(--navy-100);
+      transform: translateY(-2px);
+    }
+    .carrier-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      letter-spacing: .01em;
+    }
+    .carriers-footer {
+      text-align: center;
+      margin-top: 32px;
+    }
+
+    /* ── About CTA Section ──────────────────────────────────────── */
+    .about-cta {
+      background: linear-gradient(155deg, var(--navy-900) 0%, var(--navy-800) 60%, var(--navy-700) 100%);
+      padding: var(--section-y) 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 80% at 50% 100%, rgba(201,147,58,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-cta .container { position: relative; z-index: 1; }
+    .about-cta h2 {
+      color: #fff;
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      margin-bottom: 14px;
+    }
+    .about-cta-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.65);
+      margin: 0 auto 36px;
+      max-width: 500px;
+    }
+    .about-cta-buttons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .carriers-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .story-photo { position: static; aspect-ratio: 16/7; }
+      .licenses-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .carriers-grid { grid-template-columns: repeat(3, 1fr); }
+      .about-hero { min-height: 400px; padding: 60px 0 52px; }
+      .mission-quote-mark { font-size: 5rem; }
+    }
+    @media (max-width: 480px) {
+      .team-grid { grid-template-columns: 1fr; }
+      .carriers-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-badges { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="site-header">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="container">
+        <div class="top-bar-left">
+          <a href="tel:7185550100">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;opacity:.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.71 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.96-.96a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.71A2 2 0 0 1 22 16.92z"/></svg>
+            (718) 555-0100
+          </a>
+          <a href="mailto:info@peerlessbrokerage.com">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;opacity:.7"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            info@peerlessbrokerage.com
+          </a>
+          <span>Mon–Fri 9am–6pm</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="license-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Licensed NY · NJ · CT · PA
+          </span>
+          <div class="google-rating">
+            <div class="google-g"></div>
+            <span class="score">4.9</span>
+            <span class="stars">★★★★★</span>
+            <span class="count">(312 reviews)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <nav class="nav-bar">
+      <div class="container">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-mark">P</div>
+          <div class="nav-logo-text">
+            Peerless Brokerage
+            <span>Insurance Brokers · Est. 1999</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="insurance.html">Insurance</a></li>
+          <li><a href="tlc.html">TLC / Livery</a></li>
+          <li><a href="commercial.html">Commercial</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <span class="nav-phone">(718) 555-0100</span>
+          <a href="quote.html" class="btn btn-primary btn-sm">Get a Free Quote</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 1 — About Hero
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="about-hero">
+    <div class="container">
+
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <span class="trust-badge">
+          <span class="trust-badge-dot"></span>
+          Est. 1999
+        </span>
+        <span class="trust-badge">
+          <span class="trust-badge-dot"></span>
+          Licensed in NY · NJ · CT · PA
+        </span>
+      </div>
+
+      <h1>About <em>Peerless</em> Brokerage</h1>
+
+      <p class="about-hero-sub">
+        Brooklyn's trusted independent insurance broker for 25+ years.
+        We work for you — not the insurance companies.
+      </p>
+
+      <div class="about-hero-cta">
+        <a href="quote.html" class="btn btn-primary btn-lg">Get a Free Quote &nbsp;→</a>
+        <a href="#team" class="btn btn-outline-white btn-lg">Meet Our Team</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 2 — Our Story
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="section" id="story">
+    <div class="container">
+      <div class="story-grid">
+
+        <!-- Photo Placeholder -->
+        <div>
+          <div class="story-photo">
+            <span class="story-photo-corner"></span>
+            <span class="story-photo-corner-bl"></span>
+            <span class="story-photo-icon">📷</span>
+            <span class="story-photo-label">Office Photo</span>
+          </div>
+        </div>
+
+        <!-- Story Content -->
+        <div class="story-content">
+          <span class="section-label">Our Story</span>
+          <h2 class="section-heading">25 Years Serving the Brooklyn Community</h2>
+
+          <div class="story-paragraphs">
+            <p>Peerless Brokerage was founded in 1999 by John Martinez, a Brooklyn native who saw his neighbors overpaying for insurance simply because they didn't have access to the right broker. Starting from a single office in Bay Ridge, John built relationships with 5 carriers in the first year.</p>
+            <p>Today, Peerless represents 30+ carriers and has served over 5,000 clients across New York City, New Jersey, Connecticut, and Pennsylvania. Our team of 8 licensed brokers speaks English, Spanish, and Chinese — reflecting the diversity of the communities we serve.</p>
+            <p>We've never lost sight of why we started: to be the broker we wish our neighbors had always had. Independent, honest, and fast.</p>
+          </div>
+
+          <!-- Milestones Timeline -->
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">1999</div>
+              <div class="timeline-event">Founded in Bay Ridge, Brooklyn</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2005</div>
+              <div class="timeline-event">Expanded to TLC / livery insurance specialty</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2012</div>
+              <div class="timeline-event">Opened second office in Flushing, Queens</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2018</div>
+              <div class="timeline-event">Reached 3,000 active clients</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2023</div>
+              <div class="timeline-event">Expanded to NJ, CT, and PA markets</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2025</div>
+              <div class="timeline-event">5,000+ clients served milestone</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 3 — Our Mission
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="mission-section">
+    <div class="container">
+      <div class="mission-inner">
+
+        <span class="mission-quote-mark">"</span>
+
+        <h2 class="mission-heading">Our Mission</h2>
+
+        <p class="mission-quote-text">
+          To be the broker we wish our neighbors always had — independent, transparent,
+          and genuinely working for your best interest, not the insurance company's bottom line.
+        </p>
+
+        <div class="mission-divider"></div>
+
+        <p class="mission-attribution">— John Martinez, Founder &amp; Principal Broker</p>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 4 — Licenses & Credentials
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="section" id="licenses">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-heading">Licenses &amp; Credentials</h2>
+        <p class="section-sub">Fully licensed, professionally insured, verified by state authorities</p>
+      </div>
+
+      <div class="licenses-grid">
+
+        <!-- License Table -->
+        <div>
+          <div class="license-table-wrap">
+            <table class="license-table">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>License Number</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="state-flag">🗽 NY</span></td>
+                  <td>LA-123456</td>
+                  <td>Broker</td>
+                  <td>
+                    <span class="status-active">
+                      <span class="status-dot"></span>
+                      Active
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="state-flag">🌿 NJ</span></td>
+                  <td>8765432</td>
+                  <td>Broker</td>
+                  <td>
+                    <span class="status-active">
+                      <span class="status-dot"></span>
+                      Active
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="state-flag">🌳 CT</span></td>
+                  <td>B-234567</td>
+                  <td>Broker</td>
+                  <td>
+                    <span class="status-active">
+                      <span class="status-dot"></span>
+                      Active
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="state-flag">🔔 PA</span></td>
+                  <td>987654</td>
+                  <td>Broker</td>
+                  <td>
+                    <span class="status-active">
+                      <span class="status-dot"></span>
+                      Active
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <a href="#" class="verify-link">
+            Verify our license
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
+        <!-- Professional Memberships + E&O -->
+        <div class="credentials-right">
+
+          <div>
+            <p class="memberships-title">Professional Memberships</p>
+
+            <div class="membership-item">
+              <div class="membership-icon">🏛️</div>
+              <div>
+                <div class="membership-name">PIANY</div>
+                <div class="membership-sub">Professional Insurance Agents of New York</div>
+              </div>
+            </div>
+
+            <div class="membership-item">
+              <div class="membership-icon">⭐</div>
+              <div>
+                <div class="membership-name">BBB Accredited Business</div>
+                <div class="membership-sub">A+ Rating — Better Business Bureau</div>
+              </div>
+            </div>
+
+            <div class="membership-item">
+              <div class="membership-icon">📋</div>
+              <div>
+                <div class="membership-name">NAIC Member</div>
+                <div class="membership-sub">National Association of Insurance Commissioners</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- E&O Statement -->
+          <div class="eo-callout">
+            <span class="eo-icon">🛡️</span>
+            <p class="eo-text">
+              We carry Errors &amp; Omissions (E&amp;O) insurance — protecting our clients
+              and our professional standards at all times.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 5 — Team
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="section section--subtle" id="team">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-heading">Meet Our Team</h2>
+        <p class="section-sub">Licensed professionals dedicated to finding you the best coverage</p>
+      </div>
+
+      <div class="team-grid">
+
+        <!-- John Martinez -->
+        <div class="agent-card">
+          <div class="agent-avatar">JM</div>
+          <div class="agent-name">John Martinez</div>
+          <div class="agent-title">Principal Broker</div>
+          <div class="agent-divider"></div>
+          <div class="agent-specialties">
+            <span class="specialty-pill">Auto</span>
+            <span class="specialty-pill">TLC</span>
+            <span class="specialty-pill">Commercial</span>
+          </div>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">🌐</span>
+            English · Español
+          </p>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">⏱</span>
+            18 years experience
+          </p>
+          <p class="agent-lic">NY Lic. #LA-123456</p>
+          <a href="quote.html?agent=john" class="agent-btn">Get a Quote with John →</a>
+        </div>
+
+        <!-- Maria Chen -->
+        <div class="agent-card">
+          <div class="agent-avatar">MC</div>
+          <div class="agent-name">Maria Chen</div>
+          <div class="agent-title">Senior Broker</div>
+          <div class="agent-divider"></div>
+          <div class="agent-specialties">
+            <span class="specialty-pill">Home</span>
+            <span class="specialty-pill">Business</span>
+            <span class="specialty-pill">Group Health</span>
+          </div>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">🌐</span>
+            English · 中文
+          </p>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">⏱</span>
+            12 years experience
+          </p>
+          <p class="agent-lic">NY Lic. #LA-234567</p>
+          <a href="quote.html?agent=maria" class="agent-btn">Get a Quote with Maria →</a>
+        </div>
+
+        <!-- David Kim -->
+        <div class="agent-card">
+          <div class="agent-avatar">DK</div>
+          <div class="agent-name">David Kim</div>
+          <div class="agent-title">Licensed Broker</div>
+          <div class="agent-divider"></div>
+          <div class="agent-specialties">
+            <span class="specialty-pill">Construction</span>
+            <span class="specialty-pill">Workers Comp</span>
+          </div>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">🌐</span>
+            English
+          </p>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">⏱</span>
+            8 years experience
+          </p>
+          <p class="agent-lic">NY Lic. #LA-345678</p>
+          <a href="quote.html?agent=david" class="agent-btn">Get a Quote with David →</a>
+        </div>
+
+        <!-- Sofia Rodriguez -->
+        <div class="agent-card">
+          <div class="agent-avatar">SR</div>
+          <div class="agent-name">Sofia Rodriguez</div>
+          <div class="agent-title">Licensed Broker</div>
+          <div class="agent-divider"></div>
+          <div class="agent-specialties">
+            <span class="specialty-pill">Auto</span>
+            <span class="specialty-pill">Motorcycle</span>
+            <span class="specialty-pill">Boat</span>
+          </div>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">🌐</span>
+            English · Español
+          </p>
+          <p class="agent-meta">
+            <span class="agent-meta-icon">⏱</span>
+            5 years experience
+          </p>
+          <p class="agent-lic">NY Lic. #LA-456789</p>
+          <a href="quote.html?agent=sofia" class="agent-btn">Get a Quote with Sofia →</a>
+        </div>
+
+      </div>
+
+      <div class="team-footer">
+        <a href="agents.html" class="view-all-link">
+          View All Agents
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 6 — Carrier Partners
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="section" id="carriers">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-heading">Our Carrier Partners</h2>
+        <p class="section-sub">We shop 30+ carriers to find your best rate — not just the one that pays us the most</p>
+      </div>
+
+      <div class="carriers-grid">
+        <div class="carrier-card"><span class="carrier-name">Travelers</span></div>
+        <div class="carrier-card"><span class="carrier-name">Progressive</span></div>
+        <div class="carrier-card"><span class="carrier-name">Nationwide</span></div>
+        <div class="carrier-card"><span class="carrier-name">Liberty Mutual</span></div>
+        <div class="carrier-card"><span class="carrier-name">Chubb</span></div>
+        <div class="carrier-card"><span class="carrier-name">Allstate</span></div>
+        <div class="carrier-card"><span class="carrier-name">The Hartford</span></div>
+        <div class="carrier-card"><span class="carrier-name">Zurich</span></div>
+        <div class="carrier-card"><span class="carrier-name">AmTrust</span></div>
+        <div class="carrier-card"><span class="carrier-name">Guard</span></div>
+        <div class="carrier-card"><span class="carrier-name">Employers</span></div>
+        <div class="carrier-card"><span class="carrier-name">Berkley</span></div>
+        <div class="carrier-card"><span class="carrier-name">Markel</span></div>
+        <div class="carrier-card"><span class="carrier-name">Seneca</span></div>
+        <div class="carrier-card"><span class="carrier-name">MAPFRE</span></div>
+      </div>
+
+      <div class="carriers-footer">
+        <a href="carriers.html" class="view-all-link">
+          See All Our Carriers
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 7 — About CTA
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="about-cta">
+    <div class="container">
+
+      <h2>Ready to Work With a Broker Who Puts You First?</h2>
+
+      <p class="about-cta-sub">
+        Get a free quote in 2 minutes. No obligation.
+        We respond within 2 hours.
+      </p>
+
+      <div class="about-cta-buttons">
+        <a href="quote.html" class="btn btn-primary btn-lg">Get a Free Quote</a>
+        <a href="tel:7185550100" class="btn btn-outline-white btn-lg">Call (718) 555-0100</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+
+          <!-- Brand -->
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="footer-logo-mark">P</div>
+              <div class="footer-logo-text">Peerless Brokerage</div>
+            </div>
+            <p class="footer-tagline">Brooklyn's trusted independent insurance broker since 1999. We work for you — not the insurance companies.</p>
+            <div class="footer-contact">
+              <a href="tel:7185550100">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.71 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.96-.96a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.71A2 2 0 0 1 22 16.92z"/></svg>
+                (718) 555-0100
+              </a>
+              <a href="mailto:info@peerlessbrokerage.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                info@peerlessbrokerage.com
+              </a>
+              <a href="https://maps.google.com" target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                Bay Ridge, Brooklyn · Flushing, Queens
+              </a>
+            </div>
+          </div>
+
+          <!-- Insurance -->
+          <div>
+            <p class="footer-col-title">Insurance</p>
+            <ul class="footer-links">
+              <li><a href="auto.html">Auto Insurance</a></li>
+              <li><a href="home.html">Homeowners</a></li>
+              <li><a href="tlc.html">TLC / Livery</a></li>
+              <li><a href="commercial.html">Commercial</a></li>
+              <li><a href="workers-comp.html">Workers Comp</a></li>
+              <li><a href="life.html">Life Insurance</a></li>
+            </ul>
+          </div>
+
+          <!-- Company -->
+          <div>
+            <p class="footer-col-title">Company</p>
+            <ul class="footer-links">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="agents.html">Our Agents</a></li>
+              <li><a href="carriers.html">Carriers</a></li>
+              <li><a href="reviews.html">Client Reviews</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Get a Quote -->
+          <div>
+            <p class="footer-col-title">Get Started</p>
+            <ul class="footer-links">
+              <li><a href="quote.html">Get a Free Quote</a></li>
+              <li><a href="quote.html?type=auto">Auto Quote</a></li>
+              <li><a href="quote.html?type=tlc">TLC Quote</a></li>
+              <li><a href="quote.html?type=commercial">Commercial Quote</a></li>
+            </ul>
+            <a href="quote.html" class="footer-quote-btn">Get a Free Quote →</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="footer-compliance">
+          © 2025 Peerless Brokerage LLC. All rights reserved. Licensed insurance broker in NY (LA-123456), NJ (8765432), CT (B-234567), and PA (987654). Insurance products are offered through Peerless Brokerage LLC. Coverage is subject to policy terms and conditions.
+        </p>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MOBILE STICKY BAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="mobile-sticky-bar">
+    <a href="tel:7185550100" class="btn btn-outline">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.71 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.96-.96a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.71A2 2 0 0 1 22 16.92z"/></svg>
+      Call Us
+    </a>
+    <a href="quote.html" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
+      Get a Free Quote
+    </a>
+  </div>
+
+</body>
+</html>

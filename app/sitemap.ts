@@ -1,101 +1,50 @@
-import type { MetadataRoute } from 'next';
-import { headers } from 'next/headers';
-import fs from 'fs/promises';
-import path from 'path';
-import { getBaseUrlFromHost } from '@/lib/seo';
-import { getDefaultSite, getSiteByHost } from '@/lib/sites';
-import { locales, type Locale } from '@/lib/i18n';
-import { isBlogPostVisible } from '@/lib/blog';
+import { MetadataRoute } from 'next';
+import { getSupabaseServerClient } from '@/lib/supabase/server';
+import { getRequestSiteId } from '@/lib/content';
 
-const CONTENT_DIR = path.join(process.cwd(), 'content');
-
-async function listJsonSlugs(dirPath: string): Promise<string[]> {
-  try {
-    const files = await fs.readdir(dirPath);
-    return files
-      .filter((file) => file.endsWith('.json'))
-      .map((file) => file.replace(/\.json$/, ''));
-  } catch (error) {
-    return [];
-  }
-}
-
-async function listPageSlugs(siteId: string, locale: Locale) {
-  const pagesDir = path.join(CONTENT_DIR, siteId, locale, 'pages');
-  const slugs = await listJsonSlugs(pagesDir);
-  const excluded = /-(copy|new)$/;
-  return slugs.filter((slug) => slug !== 'home' && !excluded.test(slug));
-}
-
-async function listBlogSlugs(siteId: string, locale: Locale) {
-  const blogDir = path.join(CONTENT_DIR, siteId, locale, 'blog');
-  try {
-    const files = await fs.readdir(blogDir);
-    const visible: string[] = [];
-    for (const file of files.filter((entry) => entry.endsWith('.json'))) {
-      const fullPath = path.join(blogDir, file);
-      try {
-        const raw = await fs.readFile(fullPath, 'utf-8');
-        const parsed = JSON.parse(raw);
-        if (isBlogPostVisible(parsed)) {
-          visible.push(file.replace(/\.json$/, ''));
-        }
-      } catch {
-        // ignore invalid blog JSON
-      }
-    }
-    return visible;
-  } catch (error) {
-    return [];
-  }
-}
-
-async function getLastModified(filePath: string): Promise<Date | undefined> {
-  try {
-    const stats = await fs.stat(filePath);
-    return stats.mtime;
-  } catch (error) {
-    return undefined;
-  }
-}
+const BASE = process.env.NEXT_PUBLIC_APP_URL || 'https://pbiny.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const host = headers().get('host');
-  const baseUrl = getBaseUrlFromHost(host);
-  const site = (await getSiteByHost(host)) || (await getDefaultSite());
+  const siteId = await getRequestSiteId();
+  const supabase = getSupabaseServerClient();
+  const locale = 'en';
 
-  if (!site) {
-    return [];
-  }
+  const [linesRes, blogRes] = await Promise.all([
+    supabase?.from('insurance_lines').select('line_slug').eq('site_id', siteId).eq('is_enabled', true),
+    supabase?.from('content_entries').select('path,updated_at').eq('site_id', siteId).eq('locale', locale).like('path', 'blog/%'),
+  ]);
 
-  const entries: MetadataRoute.Sitemap = [];
-  const siteLocales = site.supportedLocales?.length ? site.supportedLocales : locales;
+  const lines = linesRes?.data || [];
+  const blogEntries = blogRes?.data || [];
 
-  for (const locale of siteLocales) {
-    // Home
-    entries.push({
-      url: new URL(`/${locale}`, baseUrl).toString(),
-      lastModified: new Date(),
-    });
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: `${BASE}/${locale}`,          lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${BASE}/${locale}/insurance`, lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${BASE}/${locale}/quote`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/${locale}/about`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/${locale}/contact`,   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/${locale}/resources`, lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.6 },
+    { url: `${BASE}/${locale}/agents`,    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/${locale}/carriers`,  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE}/${locale}/faq`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+  ];
 
-    // Pages
-    const pageSlugs = await listPageSlugs(site.id, locale);
-    for (const slug of pageSlugs) {
-      entries.push({
-        url: new URL(`/${locale}/${slug}`, baseUrl).toString(),
-        lastModified: new Date(),
-      });
-    }
+  const servicePages: MetadataRoute.Sitemap = lines.map(l => ({
+    url: `${BASE}/${locale}/insurance/${l.line_slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
 
-    // Blog posts
-    const blogSlugs = await listBlogSlugs(site.id, locale);
-    for (const slug of blogSlugs) {
-      entries.push({
-        url: new URL(`/${locale}/blog/${slug}`, baseUrl).toString(),
-        lastModified: new Date(),
-      });
-    }
-  }
+  const blogPages: MetadataRoute.Sitemap = blogEntries.map(entry => {
+    const slug = entry.path.replace('blog/', '').replace('.json', '');
+    return {
+      url: `${BASE}/${locale}/resources/${slug}`,
+      lastModified: entry.updated_at ? new Date(entry.updated_at) : new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    };
+  });
 
-  return entries;
+  return [...staticPages, ...servicePages, ...blogPages];
 }

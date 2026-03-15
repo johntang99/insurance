@@ -1,813 +1,284 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import fs from 'fs/promises';
-import path from 'path';
-import { getRequestSiteId, loadContent, loadPageContent, loadSiteInfo } from '@/lib/content';
+import Link from 'next/link';
+import { type Locale } from '@/lib/i18n';
+import { getRequestSiteId, loadPageContent, loadSiteInfo } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
-import { Locale, SiteInfo } from '@/lib/types';
+import type { SiteInfo } from '@/lib/types';
 import { getSiteDisplayName } from '@/lib/siteInfo';
-import { resolveMediaUrl } from '@/lib/media-url';
-import { Button, Badge, Card, CardHeader, CardTitle, CardDescription, CardContent, Icon } from '@/components/ui';
-import CTASection from '@/components/sections/CTASection';
-import { CheckCircle2, MapPin, Clock } from 'lucide-react';
+import { getSupabaseServerClient } from '@/lib/supabase/server';
+import CarrierLogoCarousel from '@/components/sections/CarrierLogoCarousel';
+import QuoteCTASection from '@/components/sections/QuoteCTASection';
+import { ExternalLink, Shield } from 'lucide-react';
 
-interface AboutPageData {
-  hero: {
-    variant?: 'centered' | 'split-photo-right' | 'split-photo-left' | 'photo-background';
-    title: string;
-    subtitle: string;
-    description?: string;
-    backgroundImage?: string;
-  };
-  profile: {
-    variant?: 'split' | 'stacked';
-    name: string;
-    title: string;
-    image: string;
-    bio: string;
-    quote: string;
-    signature?: string;
-  };
-  credentials: {
-    variant?: 'list' | 'grid';
-    title: string;
-    items: Array<{
-      icon: string;
-      credential: string;
-      institution: string;
-      year: string;
-      location: string;
-    }>;
-  };
-  specializations: {
-    variant?: 'grid-2' | 'grid-3' | 'list';
-    title: string;
-    description: string;
-    areas: Array<{
-      icon: string;
-      title: string;
-      description: string;
-    }>;
-  };
-  philosophy: {
-    variant?: 'cards' | 'timeline';
-    title: string;
-    introduction: string;
-    principles: Array<{
-      title: string;
-      description: string;
-    }>;
-  };
-  journey: {
-    variant?: 'prose' | 'card';
-    title: string;
-    story: string;
-  };
-  affiliations: {
-    variant?: 'compact' | 'detailed';
-    title: string;
-    organizations: Array<{
-      name: string;
-      role: string;
-    }>;
-  };
-  continuingEducation: {
-    variant?: 'compact' | 'detailed';
-    title: string;
-    description: string;
-    items: string[];
-  };
-  clinic: {
-    variant?: 'split' | 'cards';
-    title: string;
-    description: string | string[];
-    features?: string[];
-    values: Array<{
-      icon: string;
-      title: string;
-      description: string;
-    }>;
-    environment: string;
-  };
-  cta: {
-    variant?: 'centered' | 'split' | 'banner' | 'card-elevated';
-    title: string;
-    description: string;
-    primaryCta: {
-      text: string;
-      link: string;
-    };
-    secondaryCta: {
-      text: string;
-      link: string;
-    };
-  };
-}
+interface PageProps { params: { locale: Locale } }
 
-interface AboutPageProps {
-  params: {
-    locale: Locale;
-  };
-}
-
-interface ContactHoursSchedule {
-  day: string;
-  time: string;
-  isOpen: boolean;
-  note?: string;
-}
-
-interface ContactPageData {
-  hours?: {
-    title?: string;
-    schedule: ContactHoursSchedule[];
-    note?: string;
-  };
-}
-
-interface PageLayoutConfig {
-  sections: Array<{ id: string }>;
-}
-
-interface HeaderMenuConfig {
-  menu?: {
-    variant?: 'default' | 'centered' | 'transparent' | 'stacked';
-  };
-}
-
-function isSparseAboutContent(content: AboutPageData | null): boolean {
-  if (!content) return true;
-
-  const hasProfileBio = Boolean(content.profile?.bio?.trim());
-  const hasCredentials = Array.isArray(content.credentials?.items) && content.credentials.items.length > 0;
-  const hasSpecializations =
-    Array.isArray(content.specializations?.areas) && content.specializations.areas.length > 0;
-  const hasPhilosophy =
-    Array.isArray(content.philosophy?.principles) && content.philosophy.principles.length > 0;
-  const hasJourney = Boolean(content.journey?.story?.trim());
-  const hasAffiliations =
-    Array.isArray(content.affiliations?.organizations) && content.affiliations.organizations.length > 0;
-  const hasContinuingEducation =
-    Array.isArray(content.continuingEducation?.items) && content.continuingEducation.items.length > 0;
-  const hasBusinessValues = Array.isArray(content.clinic?.values) && content.clinic.values.length > 0;
-
-  return !(
-    hasProfileBio &&
-    hasCredentials &&
-    hasSpecializations &&
-    hasPhilosophy &&
-    hasJourney &&
-    hasAffiliations &&
-    hasContinuingEducation &&
-    hasBusinessValues
-  );
-}
-
-export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
   const siteId = await getRequestSiteId();
-  const content = await loadPageContent<AboutPageData>('about', locale, siteId);
-  const title = content?.hero?.title;
-  const description = content?.hero?.description || content?.hero?.subtitle;
-
+  const [content, siteInfo] = await Promise.all([
+    loadPageContent<any>('about', locale, siteId),
+    loadSiteInfo(siteId, locale) as Promise<SiteInfo | null>,
+  ]);
+  const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
+  const year = content?.story?.founded || '1999';
   return buildPageMetadata({
-    siteId,
-    locale,
-    slug: 'about',
-    title,
-    description,
+    siteId, locale, slug: 'about',
+    title: `About ${siteName} | Licensed Insurance Broker Since ${year}`,
+    description: `${siteName} is a licensed independent insurance broker serving Brooklyn since ${year}. 25+ years experience, 30+ carriers, 5,000+ clients.`,
   });
 }
 
-export default async function AboutPage({ params }: AboutPageProps) {
-  const { locale } = params;
-  
-  // Load page content
-  const siteId = await getRequestSiteId();
-  let content = await loadPageContent<AboutPageData>('about', locale, siteId);
-  if (isSparseAboutContent(content)) {
-    try {
-      const localPath = path.join(
-        process.cwd(),
-        'content',
-        siteId,
-        locale,
-        'pages',
-        'about.json'
-      );
-      const raw = await fs.readFile(localPath, 'utf-8');
-      const localContent = JSON.parse(raw) as AboutPageData;
-      if (!isSparseAboutContent(localContent)) {
-        content = localContent;
-      }
-    } catch {
-      // Ignore local fallback read errors; keep DB content.
-    }
-  }
-  const layout = await loadPageContent<PageLayoutConfig>('about.layout', locale, siteId);
-  const contactContent = await loadPageContent<ContactPageData>('contact', locale, siteId);
-  const headerConfig = await loadContent<HeaderMenuConfig>(siteId, locale, 'header.json');
-  const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
-  
-  if (!content) {
-    notFound();
-  }
+const STATE_DOI: Record<string, string> = {
+  NY: 'https://myportal.dfs.ny.gov/web/guest-applications/lookup-agent-broker',
+  NJ: 'https://sbs.nj.gov/sbs/public/login.jsf',
+  CT: 'https://portal.ct.gov/CID',
+  PA: 'https://www.insurance.pa.gov',
+};
 
-  const hero = content.hero || {
-    variant: 'split-photo-right',
-    title: locale === 'en' ? 'About Us' : '关于我们',
-    subtitle: '',
-    description: '',
-    backgroundImage: '',
-  };
-  const profile = content.profile || {
-    variant: 'split',
-    name: getSiteDisplayName(siteInfo, 'Our Team'),
-    title: siteInfo?.tagline || '',
-    image: '',
-    bio: '',
-    quote: '',
-    signature: '',
-  };
-  const credentials = content.credentials || {
-    variant: 'list',
-    title: locale === 'en' ? 'Credentials' : '资质',
-    items: [],
-  };
-  const specializations = content.specializations || {
-    variant: 'grid-2',
-    title: locale === 'en' ? 'Specializations' : '专业领域',
-    description: '',
-    areas: [],
-  };
-  const philosophy = content.philosophy || {
-    variant: 'cards',
-    title: locale === 'en' ? 'Philosophy' : '理念',
-    introduction: '',
-    principles: [],
-  };
-  const journey = content.journey || {
-    variant: 'prose',
-    title: locale === 'en' ? 'Journey' : '经历',
-    story: '',
-  };
-  const affiliations = content.affiliations || {
-    variant: 'compact',
-    title: locale === 'en' ? 'Affiliations' : '协会会员',
-    organizations: [],
-  };
-  const continuingEducation = content.continuingEducation || {
-    variant: 'compact',
-    title: locale === 'en' ? 'Continuing Education' : '继续教育',
-    description: '',
-    items: [],
-  };
-  const businessSection = content.clinic || {
-    variant: 'split',
-    title: locale === 'en' ? 'About Our Business' : '关于我们',
-    description: '',
-    features: [],
-    values: [],
-    environment: '',
-  };
-  const cta = {
-    variant: content.cta?.variant || 'centered',
-    title: content.cta?.title || (locale === 'en' ? 'Ready to get started?' : '准备好开始了吗？'),
-    description: content.cta?.description || '',
-    primaryCta: {
-      text: content.cta?.primaryCta?.text || (locale === 'en' ? 'Get Started' : '立即开始'),
-      link: content.cta?.primaryCta?.link || `/${locale}/book`,
-    },
-    secondaryCta: {
-      text: content.cta?.secondaryCta?.text || (locale === 'en' ? 'Contact Us' : '联系我们'),
-      link: content.cta?.secondaryCta?.link || 'tel:+18453811106',
-    },
-  };
-  const layoutOrder = new Map<string, number>(
-    layout?.sections?.map((section, index) => [section.id, index]) || []
-  );
-  const useLayout = layoutOrder.size > 0;
-  const isEnabled = (sectionId: string) => !useLayout || layoutOrder.has(sectionId);
-  const sectionStyle = (sectionId: string) =>
-    useLayout ? { order: layoutOrder.get(sectionId) ?? 0 } : undefined;
-  const heroVariant = hero.variant || 'split-photo-right';
-  const centeredHero = heroVariant === 'centered';
-  const imageLeftHero = heroVariant === 'split-photo-left';
-  const resolvedHeroBackgroundImage = resolveMediaUrl(hero.backgroundImage);
-  const resolvedProfileImage = resolveMediaUrl(profile.image);
-  const backgroundHero =
-    heroVariant === 'photo-background' && Boolean(resolvedHeroBackgroundImage);
-  const isTransparentMenu = headerConfig?.menu?.variant === 'transparent';
-  const heroTopPaddingClass = isTransparentMenu ? 'pt-30 md:pt-36' : 'pt-20 md:pt-24';
-  const profileVariant = profile.variant || 'split';
-  const credentialsVariant = credentials.variant || 'list';
-  const specializationsVariant = specializations.variant || 'grid-2';
-  const philosophyVariant = philosophy.variant || 'cards';
-  const journeyVariant = journey.variant || 'prose';
-  const affiliationsVariant = affiliations.variant || 'compact';
-  const continuingEducationVariant = continuingEducation.variant || 'compact';
-  const businessSectionVariant = businessSection.variant || 'split';
-  const sectionSpacingStyle = {
-    paddingTop: 'var(--section-padding-y, 5rem)',
-    paddingBottom: 'var(--section-padding-y, 5rem)',
-  };
-  const tokenSurfaceStyle = {
-    borderRadius: 'var(--radius-base, 0.75rem)',
-    boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))',
-  };
-  const heroBottomSpacingStyle = { paddingBottom: 'var(--section-padding-y, 5rem)' };
-  const bioParagraphs =
-    typeof profile.bio === 'string'
-      ? profile.bio
-          .split(/\n\s*\n/g)
-          .map((paragraph) => paragraph.trim())
-          .filter(Boolean)
-      : [];
-  const resolvedBioParagraphs = bioParagraphs.length > 0 ? bioParagraphs : [String(profile.bio || '').trim()].filter(Boolean);
+export default async function AboutPage({ params }: PageProps) {
+  const { locale } = params;
+  const siteId = await getRequestSiteId();
+
+  const [content, siteInfo] = await Promise.all([
+    loadPageContent<any>('about', locale, siteId),
+    loadSiteInfo(siteId, locale) as Promise<SiteInfo | null>,
+  ]);
+
+  if (!content) notFound();
+
+  const si = siteInfo as any;
+  const phone = si?.phone || '+1 (718) 555-0100';
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
+
+  const supabase = getSupabaseServerClient();
+  const [agentsRes, carriersRes] = await Promise.all([
+    supabase?.from('agents').select('*').eq('site_id', siteId).eq('is_active', true).order('sort_order'),
+    supabase?.from('site_carriers').select('*, carriers(*)').eq('site_id', siteId).order('sort_order'),
+  ]);
+
+  const agents = agentsRes?.data || [];
+  const carriers = (carriersRes?.data || []).map((sc: any) => sc.carriers).filter(Boolean);
+
+  const story = content.story || {};
+  const licenses = content.licenses || {};
+  const community = content.community || {};
 
   return (
-    <main className="min-h-screen flex flex-col">
-      {/* Hero Section */}
-      {isEnabled('hero') && (
-        <section
-          className={`relative ${heroTopPaddingClass} px-4 overflow-hidden ${
-            backgroundHero
-              ? 'bg-cover bg-center before:absolute before:inset-0 before:bg-white/75'
-              : 'bg-gradient-to-br from-[var(--backdrop-primary)] via-[var(--backdrop-secondary)] to-[var(--backdrop-primary)]'
-          }`}
-          style={{
-            ...(sectionStyle('hero') || {}),
-            ...heroBottomSpacingStyle,
-            ...(backgroundHero
-              ? { backgroundImage: `url(${resolvedHeroBackgroundImage})` }
-              : {}),
-          }}
-        >
-        {/* Decorative Background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 right-10 w-64 h-64 bg-primary-100 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 left-10 w-64 h-64 bg-secondary-50 rounded-full blur-3xl"></div>
+    <main>
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      <section style={{ background: 'var(--navy-800)', padding: '72px 0 56px', textAlign: 'center' }}>
+        <div className="container-custom">
+          <div style={{ display: 'inline-flex', gap: 10, marginBottom: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <span style={{ background: 'rgba(255,255,255,.1)', color: 'rgba(255,255,255,.8)', fontSize: '.8rem', fontWeight: 600, padding: '5px 14px', borderRadius: 100 }}>
+              Est. {story.foundedYear || story.founded || '1999'}
+            </span>
+            <span style={{ background: 'rgba(201,147,58,.15)', border: '1px solid rgba(201,147,58,.3)', color: 'var(--gold-300)', fontSize: '.8rem', fontWeight: 600, padding: '5px 14px', borderRadius: 100 }}>
+              Licensed in {si?.licensedStates?.join(' · ') || 'NY · NJ · CT · PA'}
+            </span>
+          </div>
+          <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(2rem,4vw,3rem)', marginBottom: 16 }}>
+            {content.hero?.headline || `About ${siteName}`}
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '1.1rem', maxWidth: 560, margin: '0 auto', lineHeight: 1.65 }}>
+            {content.hero?.subline || '25 years of independent insurance expertise, working for clients — not insurance companies.'}
+          </p>
         </div>
+      </section>
 
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className={`grid gap-12 items-center ${centeredHero ? 'max-w-4xl mx-auto' : 'lg:grid-cols-2'}`}>
-            {/* Left Column - Text Content */}
-            <div className={`text-center ${centeredHero ? '' : 'lg:text-left'}`}>
-              <h1 className="text-display font-bold text-gray-900 mb-6 leading-tight">
-                {hero.title}
-              </h1>
-              <p className="text-subheading text-primary font-medium mb-4">
-                {hero.subtitle}
-              </p>
-              {hero.description && (
-                <p className="text-subheading text-gray-600 leading-relaxed">
-                  {hero.description}
-                </p>
+      {/* ── OUR STORY ───────────────────────────────────────────── */}
+      <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
+        <div className="container-custom">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
+            {/* Story photo placeholder */}
+            <div style={{ background: 'var(--navy-50)', borderRadius: 'var(--radius-lg)', aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12, border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '4rem' }}>🏢</span>
+              <p style={{ color: 'var(--text-muted)', fontSize: '.875rem' }}>Office Photo</p>
+            </div>
+
+            {/* Story text */}
+            <div>
+              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Our Story</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 20 }}>
+                {story.heading || `Serving Brooklyn Since ${story.foundedYear || story.founded || '1999'}`}
+              </h2>
+              <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '.9375rem', marginBottom: 32 }}>
+                {story.body || `Peerless Brokerage was founded in ${story.foundedYear || story.founded || '1999'} with a simple mission: give Brooklyn families and businesses the same access to insurance options that large corporations enjoy. As an independent broker, we represent you — not any single insurance company.`}
+              </div>
+
+              {/* Milestones timeline */}
+              {story.milestones && story.milestones.length > 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                  {story.milestones.map((m: any, i: number) => (
+                    <div key={i} style={{ display: 'flex', gap: 20, paddingBottom: 20, position: 'relative' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                        <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--gold-500)', marginTop: 4 }} />
+                        {i < story.milestones.length - 1 && <div style={{ width: 2, flex: 1, background: 'var(--border)', marginTop: 4 }} />}
+                      </div>
+                      <div>
+                        <span style={{ fontWeight: 700, color: 'var(--gold-600)', fontSize: '.875rem' }}>{m.year}</span>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '.875rem', margin: '2px 0 0' }}>{m.event || m.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
-
-            {/* Right Column - Hero Image */}
-            {!centeredHero && (
-            <div className={`hidden md:block w-full ${imageLeftHero ? 'lg:order-first' : ''}`}>
-              <div className="overflow-hidden" style={tokenSurfaceStyle}>
-                {resolvedHeroBackgroundImage ? (
-                  <Image
-                    src={resolvedHeroBackgroundImage}
-                    alt={hero.title}
-                    width={1200}
-                    height={1200}
-                    className="w-full h-auto object-contain"
-                    priority
-                  />
-                ) : (
-                  <div className="w-full aspect-square flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 relative p-8">
-                    <div className="absolute top-10 left-10 w-24 h-24 bg-primary-50/20 rounded-full"></div>
-                    <div className="absolute bottom-10 right-10 w-32 h-32 bg-secondary-50/20 rounded-full"></div>
-
-                    <div className="relative z-10 text-center">
-                      <div className="text-8xl mb-6">🏢</div>
-                      <p className="text-gray-700 font-semibold text-subheading mb-2">
-                        {getSiteDisplayName(siteInfo, 'Our Team')}
-                      </p>
-                      <p className="text-gray-600 text-small">
-                        {siteInfo?.tagline || 'Professional Services'}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            )}
           </div>
         </div>
-        </section>
-      )}
+      </section>
 
-      {/* Profile Section */}
-      {isEnabled('profile') && (
-        <section
-          className="bg-white"
-          style={{ ...(sectionStyle('profile') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className={profileVariant === 'stacked' ? 'space-y-10' : 'grid lg:grid-cols-5 gap-12 items-start'}>
-              {/* Photo */}
-              <div className={profileVariant === 'stacked' ? 'max-w-md mx-auto' : 'lg:col-span-2'}>
-                <div className="sticky top-8">
-                  <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-gray-100" style={tokenSurfaceStyle}>
-                    {resolvedProfileImage ? (
-                      <Image
-                        src={resolvedProfileImage}
-                        alt={profile.name}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                        <Icon name="User" size="xl" className="text-primary/30" />
-                      </div>
-                    )}
+      {/* ── MISSION ─────────────────────────────────────────────── */}
+      <section style={{ padding: '64px 0', background: 'var(--navy-50)', textAlign: 'center' }}>
+        <div className="container-custom" style={{ maxWidth: 720 }}>
+          <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Our Mission</p>
+          <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 20 }}>
+            {content.mission?.headline || 'We Work For You — Not the Insurance Company'}
+          </h2>
+          <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+            {content.mission?.body || 'We believe every family and business deserves access to the best insurance options at the best price. As independent brokers, we shop multiple carriers on your behalf — so you never overpay or under-protect.'}
+          </p>
+        </div>
+      </section>
+
+      {/* ── LICENSES & CREDENTIALS ──────────────────────────────── */}
+      <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
+        <div className="container-custom">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Trust & Credentials</p>
+            <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>
+              {licenses.headline || 'Licenses & Credentials'}
+            </h2>
+          </div>
+
+          {/* License table */}
+          <div style={{ overflowX: 'auto', marginBottom: 40 }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '.9rem' }}>
+              <thead>
+                <tr style={{ background: 'var(--navy-800)', color: '#fff' }}>
+                  {['State', 'License Number', 'Type', 'Status', 'Verify'].map(h => (
+                    <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 600, fontSize: '.8rem', textTransform: 'uppercase', letterSpacing: '.06em' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(licenses.items || [
+                  { state: 'New York', licenseNumber: si?.licenseNumber || 'LA-1234567', verifyUrl: STATE_DOI.NY },
+                  { state: 'New Jersey', licenseNumber: 'NJ-7654321', verifyUrl: STATE_DOI.NJ },
+                  { state: 'Connecticut', licenseNumber: 'CT-1122334', verifyUrl: STATE_DOI.CT },
+                  { state: 'Pennsylvania', licenseNumber: 'PA-4433221', verifyUrl: STATE_DOI.PA },
+                ]).map((lic: any, i: number) => (
+                  <tr key={i} style={{ background: i % 2 === 0 ? 'var(--bg-white)' : 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
+                    <td style={{ padding: '12px 16px', fontWeight: 600, color: 'var(--text-primary)' }}>{lic.state}</td>
+                    <td style={{ padding: '12px 16px', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>#{lic.licenseNumber}</td>
+                    <td style={{ padding: '12px 16px', color: 'var(--text-muted)' }}>Insurance Broker</td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <span style={{ background: 'var(--green-100)', color: 'var(--green-500)', fontSize: '.75rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100 }}>Active</span>
+                    </td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <a href={lic.verifyUrl || STATE_DOI[lic.state?.substring(0, 2)] || '#'} target="_blank" rel="noopener noreferrer"
+                        style={{ color: 'var(--gold-600)', fontSize: '.8rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                        Verify <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Memberships + E&O */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+            <div>
+              <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>Professional Memberships</h4>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                {(licenses.memberships || [
+                  { name: 'PIANY — Professional Insurance Agents of NY' },
+                  { name: 'IIABNY — Independent Insurance Agents' },
+                  { name: 'Better Business Bureau (BBB)' },
+                ]).map((m: any) => (
+                  <div key={m.name} style={{ background: 'var(--navy-50)', border: '1px solid var(--navy-100)', borderRadius: 8, padding: '8px 14px', fontSize: '.85rem', fontWeight: 500, color: 'var(--navy-700)' }}>
+                    {m.name}
                   </div>
-                  <div className="text-center">
-                    <h2 className="text-heading font-bold text-gray-900 mb-2">
-                      {profile.name}
-                    </h2>
-                    <p className="text-gray-600 mb-6">{profile.title}</p>
-                    <div className="flex gap-4 justify-center">
-                      <Button asChild size="sm">
-                        <Link href={cta.primaryCta.link}>Get Started</Link>
-                      </Button>
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={cta.secondaryCta.link}>Contact Us</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-
-              {/* Bio Content */}
-              <div className={profileVariant === 'stacked' ? 'max-w-3xl mx-auto space-y-8 text-center' : 'lg:col-span-3 space-y-8'}>
+            </div>
+            <div style={{ background: 'var(--navy-50)', border: '1px solid var(--navy-100)', borderRadius: 'var(--radius-lg)', padding: '24px 28px' }}>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <Shield className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--navy-600)', marginTop: 2 }} />
                 <div>
-                  <div className="space-y-4 mb-6">
-                    {resolvedBioParagraphs.map((paragraph, index) => (
-                      <p key={`bio-${index}`} className="text-body text-gray-700 leading-relaxed">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                  
-                  {/* Quote */}
-                  <div
-                    className="bg-gradient-to-br from-primary/5 to-backdrop-primary border-l-4 border-primary p-8"
-                    style={{ borderTopRightRadius: 'var(--radius-base, 0.75rem)', borderBottomRightRadius: 'var(--radius-base, 0.75rem)' }}
-                  >
-                    <blockquote className="text-subheading italic text-gray-800 mb-4">
-                      "{profile.quote}"
-                    </blockquote>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900">{profile.name}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </section>
-      )}
-
-      {/* Credentials */}
-      {isEnabled('credentials') && (
-        <section
-          className="bg-gradient-to-br from-backdrop-secondary to-white"
-          style={{ ...(sectionStyle('credentials') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <Badge variant="primary" className="mb-4">Qualifications</Badge>
-              <h2 className="text-heading font-bold text-gray-900">
-                {credentials.title}
-              </h2>
-            </div>
-
-            <div className={credentialsVariant === 'grid' ? 'grid md:grid-cols-2 gap-4' : 'grid gap-4'}>
-              {credentials.items.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 border border-gray-100 hover:border-primary/30 transition-all"
-                  style={tokenSurfaceStyle}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 flex items-center justify-center flex-shrink-0" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
-                      <Icon name={item.icon as any} className="text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-subheading font-bold text-gray-900 mb-1">
-                        {item.credential}
-                      </h3>
-                      <p className="text-gray-700 mb-2">{item.institution}</p>
-                      <div className="flex flex-wrap gap-3 text-small text-gray-500">
-                        <span className="flex items-center gap-1">
-                          <Icon name="Calendar" size="sm" />
-                          {item.year}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Icon name="MapPin" size="sm" />
-                          {item.location}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        </section>
-      )}
-
-      {/* Specializations */}
-      {isEnabled('specializations') && (
-        <section
-          className="bg-white"
-          style={{ ...(sectionStyle('specializations') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <Badge variant="primary" className="mb-4">Expertise</Badge>
-              <h2 className="text-heading font-bold text-gray-900 mb-4">
-                {specializations.title}
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                {specializations.description}
-              </p>
-            </div>
-
-            <div
-              className={
-                specializationsVariant === 'grid-3'
-                  ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6'
-                  : specializationsVariant === 'list'
-                    ? 'grid gap-4'
-                    : 'grid md:grid-cols-2 gap-6'
-              }
-            >
-              {specializations.areas.map((area, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <div
-                      className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4"
-                      style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}
-                    >
-                      <Icon name={area.icon as any} className="text-primary" />
-                    </div>
-                    <CardTitle>{area.title}</CardTitle>
-                    <CardDescription>{area.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-        </section>
-      )}
-
-      {/* Philosophy */}
-      {isEnabled('philosophy') && (
-        <section
-          className="bg-gradient-to-br from-primary/5 to-backdrop-primary"
-          style={{ ...(sectionStyle('philosophy') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <Badge variant="primary" className="mb-4">Philosophy</Badge>
-              <h2 className="text-heading font-bold text-gray-900 mb-4">
-                {philosophy.title}
-              </h2>
-              <p className="text-body text-gray-700">
-                {philosophy.introduction}
-              </p>
-            </div>
-
-            <div className={philosophyVariant === 'timeline' ? 'space-y-4' : 'grid md:grid-cols-2 gap-6'}>
-              {philosophy.principles.map((principle, index) => (
-                <div
-                  key={index}
-                  className={`bg-white p-6 ${
-                    philosophyVariant === 'timeline' ? 'border-l-4 border-primary' : ''
-                  }`}
-                  style={tokenSurfaceStyle}
-                >
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-8 h-8 bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold" style={{ borderRadius: 'var(--radius-base, 0.5rem)' }}>
-                      {index + 1}
-                    </div>
-                    <h3 className="text-subheading font-bold text-gray-900 pt-0.5">
-                      {principle.title}
-                    </h3>
-                  </div>
-                  <p className="text-gray-600 leading-relaxed">
-                    {principle.description}
+                  <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 8, fontWeight: 700 }}>E&O Insurance Holder</h4>
+                  <p style={{ fontSize: '.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                    We carry Errors & Omissions (E&O) insurance — protecting our clients and our professional standards.
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── TEAM SECTION ─────────────────────────────────────────── */}
+      {agents.length > 0 && (
+        <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
+          <div className="container-custom">
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>The Team</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>Meet Our Licensed Agents</h2>
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: 12 }}>Licensed professionals dedicated to finding you the best coverage</p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
+              {agents.map((agent: any) => (
+                <div key={agent.id} style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 28, textAlign: 'center', boxShadow: 'var(--shadow-sm)' }}>
+                  <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--navy-100)', border: '3px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--navy-700)', margin: '0 auto 16px' }}>
+                    {agent.name?.charAt(0)}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--navy-800)', marginBottom: 2 }}>{agent.name}</div>
+                  <div style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', textTransform: 'uppercase', letterSpacing: '.07em', marginBottom: 12 }}>{agent.title}</div>
+                  {agent.specialties?.length > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 4, marginBottom: 8 }}>
+                      {agent.specialties.map((s: string) => (
+                        <span key={s} style={{ background: 'var(--navy-50)', color: 'var(--navy-700)', fontSize: '.7rem', fontWeight: 600, padding: '2px 8px', borderRadius: 100 }}>{s}</span>
+                      ))}
+                    </div>
+                  )}
+                  {agent.languages?.length > 0 && (
+                    <div style={{ fontSize: '.8rem', color: 'var(--text-muted)', marginBottom: 8 }}>
+                      🌐 {agent.languages.join(' · ')}
+                    </div>
+                  )}
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-light)', marginBottom: 16 }}>
+                    {agent.license_number && `NY Lic. #${agent.license_number}`}
+                    {agent.years_experience > 0 && ` · ${agent.years_experience} yrs exp`}
+                  </div>
+                  <Link href={`/${locale}/quote?agent=${agent.id}`}
+                    style={{ display: 'block', background: 'var(--navy-800)', color: '#fff', borderRadius: 8, padding: '10px', fontWeight: 600, fontSize: '.875rem', textDecoration: 'none' }}>
+                    Get a Quote with {agent.name?.split(' ')[0]}
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
-        </div>
         </section>
       )}
 
-      {/* Journey Story */}
-      {isEnabled('journey') && (
-        <section
-          className="bg-white"
-          style={{ ...(sectionStyle('journey') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <Badge variant="primary" className="mb-4">My Story</Badge>
-              <h2 className="text-heading font-bold text-gray-900">
-                {journey.title}
-              </h2>
-            </div>
+      {/* ── CARRIERS ─────────────────────────────────────────────── */}
+      <CarrierLogoCarousel
+        headline="Our Carrier Partners"
+        subline={`We shop ${carriers.length > 10 ? carriers.length + '+' : '30+'} carriers to find your best rate`}
+        carriers={carriers}
+        variant="static-grid"
+      />
 
-            <div
-              className={journeyVariant === 'card' ? 'bg-white p-8 border border-gray-100' : 'prose prose-lg max-w-none'}
-              style={journeyVariant === 'card' ? tokenSurfaceStyle : undefined}
-            >
-              {journey.story.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="text-gray-700 leading-relaxed mb-6">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-        </section>
-      )}
-
-      {/* Affiliations & Continuing Ed */}
-      {isEnabled('affiliationsEducation') && (
-        <section
-          className="bg-gradient-to-br from-backdrop-secondary to-white"
-          style={{ ...(sectionStyle('affiliationsEducation') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className={affiliationsVariant === 'detailed' || continuingEducationVariant === 'detailed' ? 'grid md:grid-cols-2 gap-12' : 'grid md:grid-cols-2 gap-8'}>
-              {/* Affiliations */}
-              <div>
-                <h2 className="text-subheading font-bold text-gray-900 mb-6">
-                  {affiliations.title}
-                </h2>
-                <div className="space-y-4">
-                  {affiliations.organizations.map((org, index) => (
-                    <div
-                      key={index}
-                      className="bg-white p-4 border border-gray-100"
-                      style={{ borderRadius: 'var(--radius-base, 0.5rem)', ...(affiliationsVariant === 'detailed' ? { boxShadow: 'var(--shadow-base, 0 4px 20px rgba(0,0,0,0.08))' } : {}) }}
-                    >
-                      <p className="font-semibold text-gray-900 mb-1">
-                        {org.name}
-                      </p>
-                      <p className="text-small text-gray-600">{org.role}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Continuing Education */}
-              <div>
-                <h2 className="text-subheading font-bold text-gray-900 mb-4">
-                  {continuingEducation.title}
-                </h2>
-                <p className="text-gray-600 mb-6">
-                  {continuingEducation.description}
-                </p>
-                <ul className={continuingEducationVariant === 'detailed' ? 'space-y-4' : 'space-y-3'}>
-                  {continuingEducation.items.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Icon name="Check" className="text-primary mt-1 flex-shrink-0" size="sm" />
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        </section>
-      )}
-
-      {/* About the Business */}
-      {isEnabled('clinic') && (
-        <section
-          className="px-4 bg-gray-50"
-          style={{ ...(sectionStyle('clinic') || {}), ...sectionSpacingStyle }}
-        >
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-heading font-bold text-gray-900 mb-8 text-center">{businessSection.title}</h2>
-
-          {/* Description */}
-          <div className="max-w-3xl mx-auto mb-12">
-            {(Array.isArray(businessSection.description)
-              ? businessSection.description
-              : businessSection.description.split('\n\n')
-            ).map((paragraph, idx) => (
-              <p key={idx} className="text-subheading text-gray-700 leading-relaxed mb-4">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-
-          <div className={businessSectionVariant === 'cards' ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'grid lg:grid-cols-2 gap-8'}>
-            {/* Features List */}
-            <div className="bg-white border-2 border-gray-200 p-8" style={tokenSurfaceStyle}>
-              <h3 className="text-subheading font-bold text-gray-900 mb-6">
-                {locale === 'en' ? 'Business Features' : '业务特色'}
-              </h3>
-              <ul className="space-y-3">
-                {(businessSection.features && businessSection.features.length > 0
-                  ? businessSection.features
-                  : businessSection.values.map(value => value.title)
-                ).map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Location & Hours */}
-            <div className={`space-y-6 ${businessSectionVariant === 'cards' ? 'md:col-span-2 lg:col-span-2' : ''}`}>
-              {/* Location Card */}
-              <div className="bg-gradient-to-br from-[var(--backdrop-primary)] to-[var(--backdrop-secondary)] border-2 border-gray-200 p-8" style={tokenSurfaceStyle}>
-                <div className="flex items-start gap-3 mb-4">
-                  <MapPin className="w-6 h-6 text-primary shrink-0" />
-                  <h3 className="text-subheading font-bold text-gray-900">
-                    {locale === 'en' ? 'Location' : '地址'}
-                  </h3>
-                </div>
-                <p className="text-gray-700 mb-2">{siteInfo?.address}</p>
-                <p className="text-gray-700 mb-4">
-                  {siteInfo?.city}, {siteInfo?.state} {siteInfo?.zip}
-                </p>
-                {siteInfo?.addressMapUrl && (
-                  <a
-                    href={siteInfo.addressMapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block text-primary hover:text-primary-dark font-semibold text-small"
-                  >
-                    {locale === 'en' ? 'Get Directions' : '获取路线'} →
-                  </a>
-                )}
-              </div>
-
-              {/* Hours Card */}
-              <div className="bg-white border-2 border-gray-200 p-8" style={tokenSurfaceStyle}>
-                <div className="flex items-start gap-3 mb-4">
-                  <Clock className="w-6 h-6 text-primary shrink-0" />
-                  <h3 className="text-subheading font-bold text-gray-900">
-                    {locale === 'en' ? 'Office Hours' : '营业时间'}
-                  </h3>
-                </div>
-                <div className="space-y-2">
-                  {(contactContent?.hours?.schedule || []).map((hour, idx) => (
-                    <div key={idx} className="flex justify-between text-gray-700">
-                      <span className="font-medium">{hour.day}</span>
-                      <span>{hour.time}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </section>
-      )}
-
-      {/* CTA Section */}
-      {isEnabled('cta') && (
-        <div style={sectionStyle('cta')}>
-          <CTASection
-            title={cta.title}
-            subtitle={cta.description}
-            primaryCta={cta.primaryCta}
-            secondaryCta={cta.secondaryCta}
-            variant={cta.variant || 'centered'}
-            className=""
-          />
-        </div>
-      )}
+      {/* ── CTA ─────────────────────────────────────────────────── */}
+      <QuoteCTASection
+        variant="cta-only"
+        headline="Ready to Work with a Broker Who Puts You First?"
+        subline="Get a free quote today and see how much you can save."
+        phone={phone}
+        phoneHref={phoneHref}
+        locale={locale}
+      />
     </main>
   );
 }

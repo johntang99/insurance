@@ -1,19 +1,14 @@
-import type { MetadataRoute } from 'next';
-import { headers } from 'next/headers';
-import { getBaseUrlFromHost } from '@/lib/seo';
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const host = headers().get('host');
-  const baseUrl = getBaseUrlFromHost(host);
-
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/api'],
+        disallow: ['/admin/', '/api/'],
       },
     ],
-    sitemap: new URL('/sitemap.xml', baseUrl).toString(),
+    sitemap: `${process.env.NEXT_PUBLIC_APP_URL || 'https://pbiny.com'}/sitemap.xml`,
   };
 }

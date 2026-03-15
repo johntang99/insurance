@@ -1,179 +1,394 @@
-import { Fragment } from 'react';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { type Locale } from '@/lib/i18n';
-import { getRequestSiteId, loadPageContent, loadSiteInfo } from '@/lib/content';
+import { getRequestSiteId, loadPageContent, loadSiteInfo, loadContent } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
 import type { SiteInfo } from '@/lib/types';
-import HeroSection, { CredentialsSection } from '@/components/sections/HeroSection';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import HowItWorksSection from '@/components/sections/HowItWorksSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import BlogPreviewSection from '@/components/sections/BlogPreviewSection';
-import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
-import CTASection from '@/components/sections/CTASection';
 import { getSiteDisplayName } from '@/lib/siteInfo';
+import { getSupabaseServerClient } from '@/lib/supabase/server';
+import InsuranceLineGrid from '@/components/sections/InsuranceLineGrid';
+import CarrierLogoCarousel from '@/components/sections/CarrierLogoCarousel';
+import QuoteCTASection from '@/components/sections/QuoteCTASection';
+import { CheckCircle, Phone } from 'lucide-react';
 
-interface PageProps {
-  params: {
-    locale: Locale;
-  };
-}
-
-interface HomePageContent {
-  menu?: {
-    variant?: string;
-  };
-  topBar?: {
-    address?: string;
-    phone?: string;
-    email?: string;
-    badge?: {
-      text: string;
-      visible?: boolean;
-    };
-  };
-  hero: {
-    variant: 'centered' | 'split-photo-right' | 'split-photo-left' | 'overlap' | 'photo-background' | 'video-background';
-    businessName?: string;
-    tagline: string;
-    description: string;
-    primaryCta?: { text: string; link: string };
-    secondaryCta?: { text: string; link: string };
-    image?: string;
-    video?: string;
-    floatingTags?: string[];
-    stats?: Array<{
-      icon?: string;
-      number: string;
-      label: string;
-    }>;
-    credentials?: Array<{
-      icon: string;
-      text: string;
-    }>;
-  };
-  testimonials?: any;
-  howItWorks?: any;
-  services?: any;
-  blog?: any;
-  whyChooseUs?: any;
-  cta?: any;
-}
-
-interface PageLayoutConfig {
-  sections: Array<{ id: string }>;
-}
+interface PageProps { params: { locale: Locale } }
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
   const siteId = await getRequestSiteId();
   const [content, siteInfo] = await Promise.all([
-    loadPageContent<HomePageContent>('home', locale, siteId),
-    loadSiteInfo(siteId, locale as Locale) as Promise<SiteInfo | null>,
+    loadPageContent<any>('home', locale, siteId),
+    loadSiteInfo(siteId, locale) as Promise<SiteInfo | null>,
   ]);
-
-  const businessName = getSiteDisplayName(siteInfo, 'Business');
-  const location = siteInfo?.city && siteInfo?.state
-    ? `${siteInfo.city}, ${siteInfo.state}`
-    : '';
-  const heroTagline = content?.hero?.tagline || '';
-  const title = [heroTagline, location, businessName]
-    .filter(Boolean)
-    .join(' | ')
-    .trim();
-
-  const description =
-    content?.hero?.description ||
-    siteInfo?.description ||
-    'Professional services tailored to your needs and goals.';
-
+  const siteName = getSiteDisplayName(siteInfo, 'Insurance Brokerage');
+  const city = (siteInfo as any)?.city || 'Brooklyn';
   return buildPageMetadata({
-    siteId,
-    locale,
-    slug: 'home',
-    title: title || businessName,
-    description,
+    siteId, locale, slug: 'home',
+    title: `${siteName} — Independent Insurance Broker in ${city} | Free Quotes`,
+    description: content?.hero?.subline || `Get free insurance quotes for auto, home, business & more. ${siteName} shops 30+ carriers to find your best rate. Serving ${city}.`,
   });
 }
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = params;
-  
   const siteId = await getRequestSiteId();
-  const content = await loadPageContent<HomePageContent>('home', locale, siteId);
-  const layout = await loadPageContent<PageLayoutConfig>('home.layout', locale, siteId);
-  
-  if (!content) {
-    notFound();
-  }
-  
-  const { hero } = content;
-  const hasTopBar =
-    Boolean(content.topBar?.badge?.visible) ||
-    Boolean(content.topBar?.address) ||
-    Boolean(content.topBar?.phone) ||
-    Boolean(content.topBar?.email);
-  const heroBusinessName = hero.businessName || 'Business';
-  const defaultSections = [
-    'hero',
-    'credentials',
-    'testimonials',
-    'howItWorks',
-    'services',
-    'blog',
-    'whyChooseUs',
-    'cta',
-  ];
-  const layoutSections =
-    layout?.sections?.map((section) => section.id).filter(Boolean) || defaultSections;
 
-  const renderSection = (sectionId: string) => {
-    switch (sectionId) {
-      case 'hero':
-        return (
-          <HeroSection
-            variant={hero.variant}
-            topSpacingMode={hasTopBar ? 'extra' : 'default'}
-            businessName={heroBusinessName}
-            tagline={hero.tagline}
-            description={hero.description}
-            badgeText={content.topBar?.badge?.visible ? content.topBar.badge.text : undefined}
-            primaryCta={hero.primaryCta}
-            secondaryCta={hero.secondaryCta}
-            image={hero.image}
-            video={hero.video}
-            floatingTags={hero.floatingTags}
-            stats={hero.stats}
-          />
-        );
-      case 'credentials':
-        return hero.credentials && hero.credentials.length > 0 ? (
-          <CredentialsSection credentials={hero.credentials} />
-        ) : null;
-      case 'testimonials':
-        return content.testimonials ? (
-          <TestimonialsSection {...content.testimonials} />
-        ) : null;
-      case 'howItWorks':
-        return content.howItWorks ? <HowItWorksSection {...content.howItWorks} /> : null;
-      case 'services':
-        return content.services ? <ServicesSection {...content.services} /> : null;
-      case 'blog':
-        return content.blog ? <BlogPreviewSection locale={locale} {...content.blog} /> : null;
-      case 'whyChooseUs':
-        return content.whyChooseUs ? <WhyChooseUsSection {...content.whyChooseUs} /> : null;
-      case 'cta':
-        return content.cta ? <CTASection {...content.cta} /> : null;
-      default:
-        return null;
-    }
-  };
-  
+  const [content, siteInfo] = await Promise.all([
+    loadPageContent<any>('home', locale, siteId),
+    loadSiteInfo(siteId, locale) as Promise<SiteInfo | null>,
+  ]);
+
+  if (!content) notFound();
+
+  const si = siteInfo as any;
+  const phone = si?.phone || '+1 (718) 555-0100';
+  const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17185550100';
+  const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
+
+  // Load DB data
+  const supabase = getSupabaseServerClient();
+  const [linesRes, carriersRes, testimonialsRes, agentsRes, blogRes] = await Promise.all([
+    supabase?.from('insurance_lines').select('*').eq('site_id', siteId).eq('is_enabled', true).order('sort_order'),
+    supabase?.from('site_carriers').select('*, carriers(*)').eq('site_id', siteId).order('sort_order'),
+    supabase?.from('testimonials').select('*').eq('site_id', siteId).limit(3),
+    supabase?.from('agents').select('*').eq('site_id', siteId).eq('is_active', true).order('sort_order').limit(3),
+    Promise.resolve(null),
+  ]);
+
+  const lines = linesRes?.data || [];
+  const carriers = (carriersRes?.data || []).map((sc: any) => sc.carriers).filter(Boolean);
+  const testimonials = testimonialsRes?.data || [];
+  const agents = agentsRes?.data || [];
+
+  const hero = content.hero || {};
+  const hiw = content.howItWorks || {};
+  const stats = content.stats || {};
+  const cta = content.cta || {};
+
   return (
     <main>
-      {layoutSections.map((sectionId, index) => (
-        <Fragment key={`${sectionId}-${index}`}>{renderSection(sectionId)}</Fragment>
-      ))}
+      {/* ── SECTION 1: HERO ─────────────────────────────────────── */}
+      <section style={{
+        position: 'relative',
+        minHeight: '88vh',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        background: `linear-gradient(160deg,rgba(6,15,29,.95) 0%,rgba(11,31,58,.9) 40%,rgba(17,42,77,.85) 75%,rgba(23,53,96,.82) 100%)`,
+      }}>
+        {/* Grid texture */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px)', backgroundSize: '48px 48px', pointerEvents: 'none' }} />
+        {/* Gold radial glow */}
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 80% 60% at 70% 50%,rgba(201,147,58,.07) 0%,transparent 60%)', pointerEvents: 'none' }} />
+
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: '100px 0 80px' }}>
+          <div className="container-custom">
+            <div style={{ maxWidth: 760 }}>
+              {/* Eyebrow */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(201,147,58,.15)', border: '1px solid rgba(201,147,58,.3)', color: 'var(--gold-300)', fontSize: '.8rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', padding: '6px 14px', borderRadius: 100, marginBottom: 24 }}>
+                ★ {hero.badge || 'Licensed & Independent'}
+              </div>
+
+              {/* Headline */}
+              <h1 style={{ color: '#fff', fontSize: 'clamp(2.4rem,5vw,3.75rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 20, letterSpacing: '-.01em', fontFamily: 'var(--font-heading)' }}>
+                {(hero.headline || 'Your Trusted Independent Insurance Broker').split('Insurance').map((part: string, i: number, arr: string[]) =>
+                  i < arr.length - 1
+                    ? <span key={i}>{part}<span style={{ color: 'var(--gold-400)' }}>Insurance</span></span>
+                    : <span key={i}>{part}</span>
+                )}
+              </h1>
+
+              {/* Subline */}
+              <p style={{ fontSize: 'clamp(1rem,2vw,1.2rem)', color: 'rgba(255,255,255,.78)', maxWidth: 580, lineHeight: 1.65, marginBottom: 36 }}>
+                {hero.subline || 'We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.'}
+              </p>
+
+              {/* CTAs */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center', marginBottom: 28 }}>
+                <Link href={hero.ctaPrimary?.href || `/${locale}/quote`}
+                  className="btn-gold"
+                  style={{ padding: '15px 32px', fontSize: '1rem', borderRadius: 10 }}>
+                  {hero.ctaPrimary?.label || 'Get a Free Quote'}
+                </Link>
+                <a href={phoneHref} className="btn-navy-outline">
+                  <Phone className="w-4 h-4" />
+                  {hero.ctaSecondary?.label || 'Call Us Now'}
+                </a>
+              </div>
+
+              {/* Trust badge */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: 'rgba(255,255,255,.55)', fontSize: '.82rem', fontWeight: 500, letterSpacing: '.05em' }}>
+                <span style={{ display: 'block', width: 32, height: 1, background: 'rgba(255,255,255,.2)' }} />
+                Licensed · Independent · Local
+                <span style={{ display: 'block', width: 32, height: 1, background: 'rgba(255,255,255,.2)' }} />
+              </div>
+
+              {/* Stats bar */}
+              {(hero.stats || stats.items) && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 56, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,.1)' }}>
+                  {(hero.stats || stats.items || []).map((s: any, i: number) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', backdropFilter: 'blur(4px)', padding: '9px 18px', borderRadius: 100, color: '#fff', fontSize: '.85rem', fontWeight: 500 }}>
+                      <strong style={{ color: 'var(--gold-400)', fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 700 }}>{s.value}{s.suffix}</strong>
+                      {s.label}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 2: INSURANCE LINE GRID ─────────────────────── */}
+      <InsuranceLineGrid
+        headline={content.insuranceLines?.headline || 'We Cover Everything'}
+        subline={content.insuranceLines?.subline}
+        lines={lines.length > 0 ? lines : []}
+        variant="grid"
+        locale={locale}
+      />
+
+      {/* ── SECTION 3: WHY INDEPENDENT ──────────────────────────── */}
+      <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
+        <div className="container-custom">
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Why We&apos;re Different</p>
+            <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 12 }}>
+              {content.whyIndependent?.headline || 'Why Choose an Independent Broker?'}
+            </h2>
+            {content.whyIndependent?.subline && (
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', maxWidth: 560, margin: '0 auto' }}>
+                {content.whyIndependent.subline}
+              </p>
+            )}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 32 }}>
+            {(content.whyIndependent?.points || [
+              { icon: '🔍', title: 'We Shop 30+ Carriers', description: 'We compare rates from every major carrier to find your best deal — not just the one that pays us the most.' },
+              { icon: '🤝', title: 'We Work For You', description: 'Captive agents can only offer one company\'s policies. We represent you and advise without bias.' },
+              { icon: '📋', title: 'One Broker for Everything', description: 'Auto, home, business, specialty — one call and one trusted relationship handles everything.' },
+            ]).map((point: any, i: number) => (
+              <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '36px 28px' }}>
+                <span style={{ fontSize: '2.2rem', display: 'block', marginBottom: 16 }}>{point.icon}</span>
+                <h3 style={{ color: 'var(--navy-800)', marginBottom: 10, fontFamily: 'var(--font-heading)' }}>{point.title}</h3>
+                <p style={{ fontSize: '.9375rem', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{point.description}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 48 }}>
+            <Link href={`/${locale}/quote`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              See how much you could save →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 4: STATS STRIP ──────────────────────────────── */}
+      <section className="section--dark" style={{ background: 'var(--navy-800)', padding: 0 }}>
+        <div className="container-custom">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
+            {(stats.items || [
+              { value: '25', label: 'Years in Business', suffix: '+' },
+              { value: '30', label: 'Carrier Partners', suffix: '+' },
+              { value: '5,000', label: 'Clients Served', suffix: '+' },
+              { value: '4.9', label: 'Google Rating', suffix: '★' },
+            ]).map((s: any, i: number) => (
+              <div key={i} style={{ textAlign: 'center', padding: '52px 24px', position: 'relative' }}>
+                {i > 0 && <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', width: 1, height: 60, background: 'rgba(255,255,255,.12)' }} />}
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.4rem,4vw,3.5rem)', fontWeight: 700, color: 'var(--gold-500)', lineHeight: 1, marginBottom: 8, display: 'block' }}>
+                  {s.value}{s.suffix}
+                </span>
+                <span style={{ fontSize: '.9rem', color: 'rgba(255,255,255,.65)', fontWeight: 500, letterSpacing: '.02em' }}>{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 5: CARRIER CAROUSEL ─────────────────────────── */}
+      <CarrierLogoCarousel
+        headline={content.carriers?.headline || 'Carriers We Work With'}
+        subline={content.carriers?.subline}
+        carriers={carriers}
+        variant="auto-scroll"
+      />
+
+      {/* ── SECTION 6: HOW IT WORKS ─────────────────────────────── */}
+      <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
+        <div className="container-custom">
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Simple Process</p>
+            <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>{hiw.headline || 'How It Works — 3 Simple Steps'}</h2>
+            {hiw.subline && <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: 12 }}>{hiw.subline}</p>}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 28 }}>
+            {(hiw.steps || [
+              { number: '01', title: 'Tell Us What You Need', description: 'Fill out our 2-minute form or call us. Tell us what coverage you\'re looking for.', duration: '2 minutes' },
+              { number: '02', title: 'We Shop 30+ Carriers', description: 'Our brokers compare rates from every relevant carrier and prepare your quote comparison.', duration: 'Same day' },
+              { number: '03', title: 'You Pick the Best Rate', description: 'Review your options. We explain the differences. You make the final call — no pressure.', duration: 'You decide' },
+            ]).map((step: any, i: number) => (
+              <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '36px 28px 32px', position: 'relative' }}>
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '3.5rem', fontWeight: 700, color: 'var(--navy-50)', lineHeight: 1, marginBottom: 4, display: 'block' }}>{step.number}</span>
+                <h3 style={{ color: 'var(--navy-800)', marginBottom: 10, fontFamily: 'var(--font-heading)' }}>{step.title}</h3>
+                <p style={{ fontSize: '.9375rem', lineHeight: 1.7, color: 'var(--text-secondary)', marginBottom: 16 }}>{step.description}</p>
+                {step.duration && (
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'var(--gold-100)', color: 'var(--gold-600)', fontSize: '.775rem', fontWeight: 700, padding: '4px 12px', borderRadius: 100 }}>
+                    ⏱ {step.duration}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 48 }}>
+            <Link href={`/${locale}/quote`} className="btn-gold">
+              {hiw.cta?.label || 'Start My Quote'}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 7: TESTIMONIALS ─────────────────────────────── */}
+      <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
+        <div className="container-custom">
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Client Reviews</p>
+            <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>
+              {content.testimonials?.headline || 'What Our Clients Say'}
+            </h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
+            {(testimonials.length > 0 ? testimonials : [
+              { quote: 'Michael helped me find auto insurance that saved me $800 a year. He shopped 8 carriers and explained every option clearly.', name: 'Robert K.', coverage_type: 'auto' },
+              { quote: 'As a TLC driver, I needed TLC-compliant insurance fast. James had me covered the same day. He speaks Spanish which made everything easier.', name: 'Carlos M.', coverage_type: 'tlc' },
+              { quote: "We've been using Peerless for our restaurant's BOP and workers comp for 6 years. Maria always finds us the best rates.", name: 'Linda T.', coverage_type: 'business' },
+            ]).map((t: any, i: number) => (
+              <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 28, display: 'flex', flexDirection: 'column', gap: 16, boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+                  <span style={{ color: 'var(--gold-500)', letterSpacing: 2, fontSize: '.95rem' }}>★★★★★</span>
+                  <span style={{ fontSize: '.72rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>Google Review</span>
+                </div>
+                <p style={{ fontSize: '.9375rem', lineHeight: 1.7, color: 'var(--text-secondary)', flex: 1 }}>
+                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: 'var(--gold-300)', lineHeight: 0, verticalAlign: '-.5rem', marginRight: 2 }}>&ldquo;</span>
+                  {t.quote || t.content}
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 14, borderTop: '1px solid var(--border)' }}>
+                  <span style={{ fontWeight: 700, fontSize: '.9rem', color: 'var(--text-primary)' }}>{t.name || t.author_name}</span>
+                  {t.coverage_type && (
+                    <span style={{ background: 'var(--navy-50)', color: 'var(--navy-700)', fontSize: '.72rem', fontWeight: 600, padding: '3px 10px', borderRadius: 100 }}>
+                      {t.coverage_type.replace(/-/g, ' ')} insurance
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 40 }}>
+            <Link href={`/${locale}/testimonials`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              See all our reviews →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 8: AGENT SPOTLIGHT ──────────────────────────── */}
+      {agents.length > 0 && (
+        <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
+          <div className="container-custom">
+            <div style={{ textAlign: 'center', marginBottom: 56 }}>
+              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Meet the Team</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>Meet Your Insurance Experts</h2>
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: 12 }}>Real people. Real expertise. No bots.</p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(agents.length, 3)},1fr)`, gap: 24 }}>
+              {agents.slice(0, 3).map((agent: any) => (
+                <div key={agent.id} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 28, textAlign: 'center', boxShadow: 'var(--shadow-sm)' }}>
+                  <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--navy-100)', border: '3px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--navy-700)', margin: '0 auto 16px' }}>
+                    {agent.name?.charAt(0)}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 700, color: 'var(--navy-800)', marginBottom: 2 }}>{agent.name}</div>
+                  <div style={{ fontSize: '.83rem', fontWeight: 600, color: 'var(--gold-600)', textTransform: 'uppercase', letterSpacing: '.07em', marginBottom: 14 }}>{agent.title}</div>
+                  <div style={{ height: 1, background: 'var(--border)', margin: '12px 0' }} />
+                  {agent.years_experience > 0 && (
+                    <div style={{ fontSize: '.85rem', color: 'var(--text-muted)', marginBottom: 6 }}>📅 {agent.years_experience} years experience</div>
+                  )}
+                  {agent.languages?.length > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 4, marginBottom: 10 }}>
+                      {agent.languages.map((lang: string) => (
+                        <span key={lang} style={{ background: 'var(--navy-50)', color: 'var(--navy-700)', fontSize: '.72rem', fontWeight: 600, padding: '2px 8px', borderRadius: 100 }}>{lang}</span>
+                      ))}
+                    </div>
+                  )}
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-light)', marginBottom: 16 }}>
+                    {agent.license_number && `NY Lic. #${agent.license_number}`}
+                  </div>
+                  <Link href={`/${locale}/quote?agent=${agent.id}`} className="btn-navy-sm">
+                    Get a Quote with {agent.name?.split(' ')[0]}
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 40 }}>
+              <Link href={`/${locale}/agents`} className="link-gold">
+                View All Our Agents →
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── SECTION 9: BLOG PREVIEW ─────────────────────────────── */}
+      <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
+        <div className="container-custom">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Resource Center</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>From Our Resource Center</h2>
+            </div>
+            <Link href={`/${locale}/resources`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', whiteSpace: 'nowrap' }}>
+              View All Resources →
+            </Link>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
+            {[
+              { title: 'How Much Does Auto Insurance Cost in NYC? (2026 Guide)', slug: 'how-much-does-auto-insurance-cost-nyc', category: 'auto', excerpt: 'Auto insurance in New York City is among the most expensive in the nation. Here\'s what drivers pay — and how to lower your rate.', date: 'Mar 1, 2026', bg: 'linear-gradient(135deg,#0b1f3a 0%,#173560 100%)', icon: '🚗' },
+              { title: 'What Is TLC Insurance and Who Needs It in NYC?', slug: 'what-is-tlc-insurance-and-who-needs-it', category: 'tlc', excerpt: 'If you drive for Uber, Lyft, or operate a taxi in New York City, TLC insurance is legally required.', date: 'Mar 5, 2026', bg: 'linear-gradient(135deg,#1a2535 0%,#2a3d58 100%)', icon: '🚕' },
+              { title: 'Independent Broker vs Captive Agent: Which Is Better?', slug: 'independent-broker-vs-captive-agent', category: 'general', excerpt: 'Captive agents sell one company\'s products. Independent brokers shop dozens of carriers. Here\'s why it matters.', date: 'Mar 8, 2026', bg: 'linear-gradient(135deg,#155f3a 0%,#1a7a4a 100%)', icon: '📊' },
+            ].map((post, i) => (
+              <Link key={i} href={`/${locale}/resources/${post.slug}`} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ height: 160, background: post.bg, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: 16, position: 'relative', overflow: 'hidden' }}>
+                  <span style={{ fontSize: '3.5rem', opacity: .25, position: 'absolute', right: 20, top: '50%', transform: 'translateY(-60%)' }}>{post.icon}</span>
+                  <span style={{ background: 'rgba(255,255,255,.15)', color: '#fff', fontSize: '.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, zIndex: 1 }}>
+                    {post.category.replace(/-/g, ' ')}
+                  </span>
+                </div>
+                <div style={{ padding: '22px 22px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, fontSize: '.78rem', color: 'var(--text-muted)' }}>
+                    <span>{post.date}</span>
+                    <span>·</span>
+                    <span>5 min read</span>
+                  </div>
+                  <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.05rem', lineHeight: 1.35, marginBottom: 10, fontWeight: 600 }}>{post.title}</h3>
+                  <p style={{ fontSize: '.875rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
+                  <div style={{ fontSize: '.85rem', fontWeight: 600, color: 'var(--gold-600)', marginTop: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
+                    Read more →
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 10: QUOTE CTA ─────────────────────────────────── */}
+      <QuoteCTASection
+        headline={cta.headline || 'Ready to Save on Insurance?'}
+        subline={cta.subline || 'Takes 2 minutes. No obligation. We shop 30+ carriers for you.'}
+        note={cta.note}
+        phone={phone}
+        phoneHref={phoneHref}
+        variant="form-inline"
+        locale={locale}
+      />
     </main>
   );
 }
