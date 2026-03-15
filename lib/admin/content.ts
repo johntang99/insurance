@@ -16,6 +16,20 @@ export interface ContentFileItem {
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
+function getBlogSlugFromPath(pathValue: string): string | null {
+  if (pathValue.startsWith('blog/') && pathValue.endsWith('.json')) {
+    return pathValue.replace(/^blog\//, '').replace(/\.json$/, '');
+  }
+  if (pathValue.startsWith('blog-scheduled/') && pathValue.endsWith('.json')) {
+    return pathValue.replace(/^blog-scheduled\//, '').replace(/\.json$/, '');
+  }
+  return null;
+}
+
+function isScheduledBlogPath(pathValue: string): boolean {
+  return pathValue.startsWith('blog-scheduled/');
+}
+
 function titleCase(value: string) {
   return value
     .replace(/[-_]/g, ' ')
@@ -118,6 +132,23 @@ export async function listContentFiles(
   await ensureHeaderFile(siteId, locale);
 
   const addItem = (item: ContentFileItem) => {
+    // Blog entries can appear from DB + filesystem sources. If the same slug exists in both
+    // blog/ and blog-scheduled/, keep a single row in admin and prefer blog-scheduled/.
+    const incomingBlogSlug = getBlogSlugFromPath(item.path);
+    if (incomingBlogSlug) {
+      const existingIndex = items.findIndex((entry) => {
+        const existingBlogSlug = getBlogSlugFromPath(entry.path);
+        return existingBlogSlug === incomingBlogSlug;
+      });
+      if (existingIndex >= 0) {
+        const existing = items[existingIndex];
+        if (!isScheduledBlogPath(existing.path) && isScheduledBlogPath(item.path)) {
+          items[existingIndex] = item;
+        }
+        return;
+      }
+    }
+
     if (!items.some((entry) => entry.path === item.path)) {
       items.push(item);
     }
