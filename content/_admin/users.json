@@ -1,0 +1,12 @@
+[
+  {
+    "id": "admin-1",
+    "email": "admin@pbiny.com",
+    "name": "Platform Admin",
+    "role": "platform_super_admin",
+    "sites": ["peerless-brokerage"],
+    "passwordHash": "$2b$10$h4.g4MZp.ImJ5ohNG1O1EunWNsjx9j.oJ3rS5Mb9rzJiaNsOt2BVe",
+    "createdAt": "2026-03-15T00:00:00Z",
+    "lastLoginAt": "2026-03-15T00:00:00Z"
+  }
+]
