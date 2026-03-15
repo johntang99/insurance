@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { type Locale } from '@/lib/i18n';
-import { getRequestSiteId, loadPageContent, loadSiteInfo, loadContent } from '@/lib/content';
+import { getRequestSiteId, loadPageContent, loadSiteInfo, loadContent, loadAllItems } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
 import type { SiteInfo } from '@/lib/types';
 import { getSiteDisplayName } from '@/lib/siteInfo';
@@ -60,18 +60,28 @@ export default async function HomePage({ params }: PageProps) {
 
   // Load DB data
   const supabase = getSupabaseServerClient();
-  const [linesRes, carriersRes, testimonialsRes, agentsRes, blogRes] = await Promise.all([
+  const [linesRes, carriersRes, testimonialsRes, agentsRes, blogPosts] = await Promise.all([
     supabase?.from('insurance_lines').select('*').eq('site_id', siteId).eq('is_enabled', true).order('sort_order'),
     supabase?.from('site_carriers').select('*, carriers(*)').eq('site_id', siteId).order('sort_order'),
     supabase?.from('testimonials').select('*').eq('site_id', siteId).limit(3),
     supabase?.from('agents').select('*').eq('site_id', siteId).eq('is_active', true).order('sort_order').limit(3),
-    Promise.resolve(null),
+    loadAllItems<any>(siteId, locale, 'blog'),
   ]);
 
   const lines = linesRes?.data || [];
   const carriers = (carriersRes?.data || []).map((sc: any) => sc.carriers).filter(Boolean);
   const testimonials = testimonialsRes?.data || [];
   const agents = agentsRes?.data || [];
+
+  // Sort blog posts by publishedAt descending, take 3 most recent
+  const recentBlogPosts = (blogPosts || [])
+    .filter((p: any) => p.title && p.slug)
+    .sort((a: any, b: any) => {
+      const da = a.publishedAt || a.publishDate || '';
+      const db = b.publishedAt || b.publishDate || '';
+      return db.localeCompare(da);
+    })
+    .slice(0, 3);
 
   const hero = content.hero || {};
   const hiw = content.howItWorks || {};
@@ -323,35 +333,49 @@ export default async function HomePage({ params }: PageProps) {
               View All Resources →
             </Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
-            {[
-              { title: 'How Much Does Auto Insurance Cost in NYC? (2026 Guide)', slug: 'how-much-does-auto-insurance-cost-nyc', category: 'auto', excerpt: 'Auto insurance in NYC is among the most expensive in the nation. Here\'s what drivers pay — and how to lower your rate.', date: 'Jan 15, 2026', coverImage: '' },
-              { title: 'What Is TLC Insurance and Who Needs It in NYC?', slug: 'what-is-tlc-insurance-and-who-needs-it', category: 'tlc', excerpt: 'If you drive for Uber, Lyft, or operate a taxi in NYC, TLC insurance is legally required. Everything you need to know.', date: 'Jan 22, 2026', coverImage: '' },
-              { title: 'Independent Broker vs Captive Agent: Which Is Better?', slug: 'independent-broker-vs-captive-agent', category: 'general', excerpt: 'Captive agents sell one company\'s products. Independent brokers shop dozens of carriers. Here\'s why it matters.', date: 'Feb 1, 2026', coverImage: '' },
-            ].map((post, i) => {
-              const bg = HOME_BLOG_COLORS[post.category] || HOME_BLOG_COLORS.general;
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }} className="grid-1col-mobile">
+            {recentBlogPosts.map((post: any, i: number) => {
+              const cat = post.category || 'general';
+              const bg = HOME_BLOG_COLORS[cat] || HOME_BLOG_COLORS.general;
+              // Check both image (admin field) and coverImage (JSON field)
+              const photoUrl = post.image || post.coverImage || '';
+              const catIcons: Record<string,string> = { auto:'🚗', tlc:'🚕', business:'💼', homeowner:'🏠', general:'📋', 'workers-comp':'🦺', 'commercial-auto':'🚛' };
+              const dateStr = post.publishedAt || post.publishDate || '';
+              const formattedDate = dateStr
+                ? new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                : '';
+
               return (
                 <Link key={i} href={`/${locale}/resources/${post.slug}`} className="hover-lift"
                   style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
-                  {/* 16:9 image area */}
+
+                  {/* 16:9 image — real photo or category gradient */}
                   <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: bg, overflow: 'hidden', flexShrink: 0 }}>
-                    {post.coverImage ? (
-                      <Image src={post.coverImage} alt={post.title} fill sizes="(max-width:768px) 100vw, 33vw" style={{ objectFit: 'cover' }} />
+                    {photoUrl ? (
+                      <Image
+                        src={photoUrl}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width:768px) 100vw, 33vw"
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                      />
                     ) : (
                       <span style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-60%)', fontSize: '3rem', opacity: .2 }}>
-                        {{ auto:'🚗', tlc:'🚕', business:'💼', homeowner:'🏠', general:'📋' }[post.category] || '📄'}
+                        {catIcons[cat] || '📄'}
                       </span>
                     )}
-                    <span style={{ position: 'absolute', bottom: 10, left: 12, background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: '.7rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, textTransform: 'uppercase', letterSpacing: '.04em' }}>
-                      {post.category}
-                    </span>
+                    {cat && (
+                      <span style={{ position: 'absolute', bottom: 10, left: 12, background: 'rgba(0,0,0,.45)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: '.7rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, textTransform: 'uppercase', letterSpacing: '.04em', zIndex: 1 }}>
+                        {cat}
+                      </span>
+                    )}
                   </div>
 
                   {/* Text body */}
                   <div style={{ padding: '18px 20px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <p style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginBottom: 8 }}>{post.date} · 5 min read</p>
+                    {formattedDate && <p style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginBottom: 8 }}>{formattedDate} · 5 min read</p>}
                     <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', lineHeight: 1.35, marginBottom: 8, fontWeight: 600 }}>{post.title}</h3>
-                    <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
+                    {post.excerpt && <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>}
                     <span style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', marginTop: 12 }}>Read more →</span>
                   </div>
                 </Link>
