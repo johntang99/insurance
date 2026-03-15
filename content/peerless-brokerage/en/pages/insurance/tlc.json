@@ -1,0 +1,84 @@
+{
+  "serviceHero": {
+    "variant": "service-hero",
+    "badge": "NYC TLC Specialist",
+    "headline": "TLC Insurance",
+    "subline": "Fast, TLC-compliant coverage for Uber, Lyft, taxi, and livery drivers. Same-day binding available.",
+    "stats": [
+      { "value": "Same", "label": "Day Binding", "suffix": "" },
+      { "value": "10", "label": "Years TLC Experience", "suffix": "+" }
+    ],
+    "ctaPrimary": { "label": "Get a TLC Quote", "href": "/en/quote?type=tlc" },
+    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" }
+  },
+  "whatItCovers": {
+    "headline": "What TLC Insurance Covers",
+    "included": [
+      { "title": "Commercial Liability",       "description": "Covers bodily injury and property damage to passengers and third parties while the vehicle is in service." },
+      { "title": "TLC Required Minimums",      "description": "Meets all NYC TLC minimum coverage requirements for FHV (For-Hire Vehicles) and taxi/livery plates." },
+      { "title": "Physical Damage",            "description": "Comprehensive and collision coverage for the vehicle itself." },
+      { "title": "Uninsured Motorist",         "description": "Protection when you're hit by an uninsured driver while on duty." },
+      { "title": "Medical Payments",           "description": "Covers medical costs for you and passengers in the event of an accident." }
+    ],
+    "excluded": [
+      { "title": "Personal Use Gaps",          "description": "Some TLC policies only cover commercial use. Ask us about endorsements for personal use." },
+      { "title": "Mechanical Breakdown",       "description": "Normal vehicle wear and maintenance is not covered." }
+    ],
+    "whoNeedsIt": "Any driver operating a for-hire vehicle in New York City — including Uber, Lyft, Via, yellow cab, black car, and limousine drivers — must carry TLC-approved commercial insurance. Driving without it can result in license suspension and significant fines."
+  },
+  "whyUs": {
+    "variant": "three-columns",
+    "headline": "Why TLC Drivers Choose Peerless",
+    "points": [
+      { "icon": "zap",        "title": "Same-Day Binding",        "description": "We understand TLC deadlines. We can bind your coverage the same day in most cases." },
+      { "icon": "globe",      "title": "Multilingual Team",       "description": "Our agents speak English, Spanish, and Chinese — making the process easier for all our TLC clients." },
+      { "icon": "shield",     "title": "TLC Compliance Expert",   "description": "We know TLC regulations inside and out and ensure your policy always meets current TLC requirements." }
+    ]
+  },
+  "quoteProcess": {
+    "headline": "How to Get a TLC Quote",
+    "steps": [
+      { "title": "Provide Your TLC License Number", "description": "Your TLC driver license number and vehicle FHV plate number." },
+      { "title": "Vehicle Information",             "description": "Year, make, model, and VIN of the for-hire vehicle." },
+      { "title": "Driving History",                 "description": "Any prior violations, accidents, or license suspensions." }
+    ],
+    "duration": "Same day"
+  },
+  "rateFactors": {
+    "headline": "What Affects TLC Insurance Rates",
+    "factors": [
+      { "factor": "Vehicle Age & Type",   "impact": "high",   "description": "Newer vehicles and those with higher replacement values cost more to insure." },
+      { "factor": "Driving History",      "impact": "high",   "description": "Moving violations and at-fault accidents significantly increase TLC premiums." },
+      { "factor": "Coverage Limits",      "impact": "medium", "description": "Higher liability limits cost more but provide greater protection." },
+      { "factor": "Deductible",           "impact": "medium", "description": "Choosing a higher deductible reduces your premium but increases out-of-pocket costs after a claim." },
+      { "factor": "Claims History",       "impact": "high",   "description": "Prior claims — especially at-fault accidents — substantially impact your rate." }
+    ],
+    "tips": [
+      "Maintain a clean driving record — it's the single biggest factor in your premium",
+      "Complete a defensive driving course approved by TLC",
+      "Choose the right deductible based on what you can afford to pay out of pocket",
+      "Bundle multiple vehicles if you operate a fleet"
+    ]
+  },
+  "testimonials": {
+    "variant": "featured-3",
+    "filterByCoverageType": "tlc",
+    "limit": 3,
+    "showRating": true,
+    "showCoverageType": false
+  },
+  "faq": {
+    "headline": "TLC Insurance FAQs",
+    "items": [
+      { "question": "What is the minimum TLC insurance required in NYC?", "answer": "TLC requires a minimum of $100,000 per person, $300,000 per incident for FHV plates. Taxi and livery plates have different requirements. We ensure your policy meets current TLC standards." },
+      { "question": "Can I get TLC insurance if I have points on my license?", "answer": "Yes, but your options may be limited and cost higher. We work with carriers that specialize in non-standard TLC coverage for drivers with violations." },
+      { "question": "Do I need separate insurance for personal use?", "answer": "Your TLC policy may have gaps for personal use. We'll review your coverage and recommend whether an endorsement or separate personal auto policy makes sense." },
+      { "question": "How quickly can I get covered?", "answer": "In most cases, same-day. Once we have your information, we can bind coverage and provide proof of insurance to TLC the same business day." },
+      { "question": "Do you offer multi-vehicle fleet rates?", "answer": "Yes. If you own multiple FHV vehicles, we can provide fleet pricing which is typically more economical than individual policies." }
+    ]
+  },
+  "related": {
+    "headline": "TLC Drivers Also Ask About",
+    "slugs": ["commercial-auto", "auto", "dmv"]
+  }
+}

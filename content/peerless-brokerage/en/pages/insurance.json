@@ -1,0 +1,45 @@
+{
+  "hero": {
+    "variant": "centered",
+    "badge": "15 Coverage Lines",
+    "headline": "Comprehensive Insurance Coverage",
+    "subline": "One independent broker for all your personal, business, and specialty insurance needs."
+  },
+  "serviceGrid": {
+    "headline": "All Coverage Types",
+    "subline": "Select any line to learn more and get a quote tailored to your needs.",
+    "variant": "grid-3col"
+  },
+  "whyUs": {
+    "headline": "Why Peerless Brokerage?",
+    "points": [
+      { "icon": "search",     "title": "30+ Carriers",        "description": "We shop the market so you don't have to." },
+      { "icon": "shield",     "title": "Independent Advice",  "description": "We work for you — no bias toward any one carrier." },
+      { "icon": "clock",      "title": "Fast Quotes",         "description": "Quote within 2 hours during business hours." },
+      { "icon": "map-pin",    "title": "Local Expertise",     "description": "25+ years serving Brooklyn, Queens, and NYC." }
+    ]
+  },
+  "faq": {
+    "headline": "Common Questions",
+    "items": [
+      {
+        "question": "What's the difference between an insurance broker and a captive agent?",
+        "answer": "A captive agent (like State Farm or Allstate agents) only sells one company's products. An independent broker like Peerless represents many carriers and can shop your coverage across 30+ options to find the best rate."
+      },
+      {
+        "question": "How long does it take to get a quote?",
+        "answer": "Most quotes are ready within 2 hours during business hours. Complex commercial or specialty coverage may take 1–2 business days."
+      },
+      {
+        "question": "Do you serve clients outside of Brooklyn?",
+        "answer": "Yes. We are licensed in New York, New Jersey, Connecticut, and Pennsylvania. We serve clients throughout these states."
+      }
+    ]
+  },
+  "cta": {
+    "headline": "Ready to Get Started?",
+    "subline": "Tell us what you need and we'll find your best rate.",
+    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
+    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" }
+  }
+}

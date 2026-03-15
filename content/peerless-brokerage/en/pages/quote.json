@@ -1,0 +1,36 @@
+{
+  "formConfig": {
+    "headline": "Get Your Free Insurance Quote",
+    "subline": "A licensed broker will contact you within 2 business hours.",
+    "steps": [
+      { "step": 1, "title": "What do you need to insure?", "description": "Select all that apply" },
+      { "step": 2, "title": "Your Contact Information", "description": "We'll reach out within 2 business hours" },
+      { "step": 3, "title": "Additional Details", "description": "Optional — helps us give you a more accurate quote" }
+    ],
+    "contactTimeOptions": ["Morning (9am–12pm)", "Afternoon (12pm–5pm)", "Evening (5pm–8pm)", "Anytime"],
+    "languageOptions": ["English", "Spanish", "Chinese", "Other"],
+    "coverageTypes": [
+      { "slug": "auto",              "label": "Auto Insurance",          "icon": "car" },
+      { "slug": "tlc",               "label": "TLC / Livery Insurance",  "icon": "taxi" },
+      { "slug": "commercial-auto",   "label": "Commercial Auto",         "icon": "truck" },
+      { "slug": "homeowner",         "label": "Homeowner Insurance",     "icon": "home" },
+      { "slug": "business",          "label": "Business Insurance",      "icon": "briefcase" },
+      { "slug": "workers-comp",      "label": "Workers Compensation",    "icon": "hard-hat" },
+      { "slug": "disability",        "label": "Disability Insurance",    "icon": "shield" },
+      { "slug": "construction",      "label": "Construction Insurance",  "icon": "hammer" },
+      { "slug": "motorcycle",        "label": "Motorcycle Insurance",    "icon": "zap" },
+      { "slug": "boat",              "label": "Boat Insurance",          "icon": "anchor" },
+      { "slug": "travel",            "label": "Travel Insurance",        "icon": "plane" },
+      { "slug": "group-health",      "label": "Group Health Insurance",  "icon": "heart" }
+    ],
+    "confirmation": {
+      "headline": "Thank You! Your Quote Request Was Received.",
+      "subline": "A licensed broker will contact you within 2 business hours.",
+      "nextSteps": [
+        "We review your coverage needs",
+        "We shop 30+ carriers for you",
+        "We present your best options"
+      ]
+    }
+  }
+}

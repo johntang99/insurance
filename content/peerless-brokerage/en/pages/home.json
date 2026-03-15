@@ -1,0 +1,100 @@
+{
+  "hero": {
+    "variant": "animated-stats",
+    "badge": "Licensed & Independent",
+    "headline": "Your Trusted Independent Insurance Broker",
+    "subline": "We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.",
+    "stats": [
+      { "value": "25", "label": "Years in Business", "suffix": "+" },
+      { "value": "30", "label": "Carriers", "suffix": "+" },
+      { "value": "5,000", "label": "Clients Served", "suffix": "+" },
+      { "value": "10,000", "label": "Policies Written", "suffix": "+" }
+    ],
+    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
+    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" },
+    "backgroundImage": ""
+  },
+  "insuranceLines": {
+    "variant": "featured-plus-grid",
+    "headline": "We Cover Everything",
+    "subline": "Personal, business, and specialty coverage under one roof.",
+    "showIcons": true,
+    "showDescriptions": true,
+    "ctaLabel": "Learn More"
+  },
+  "whyIndependent": {
+    "variant": "three-columns",
+    "headline": "Why Choose an Independent Broker?",
+    "subline": "Unlike captive agents who represent one company, we work for you.",
+    "points": [
+      {
+        "icon": "search",
+        "title": "We Shop 30+ Carriers",
+        "description": "We compare rates from over 30 insurance companies to find you the best coverage at the lowest price."
+      },
+      {
+        "icon": "user-check",
+        "title": "We Work for You",
+        "description": "Our loyalty is to you, not to any single insurance company. We give unbiased advice based on your needs."
+      },
+      {
+        "icon": "phone-call",
+        "title": "One Broker for All Your Needs",
+        "description": "Auto, home, business, specialty — one call and one trusted relationship handles everything."
+      }
+    ]
+  },
+  "stats": {
+    "variant": "dark-band",
+    "items": [
+      { "value": "25", "label": "Years in Business", "suffix": "+" },
+      { "value": "30", "label": "Carriers Accessed", "suffix": "+" },
+      { "value": "5,000", "label": "Clients Served", "suffix": "+" },
+      { "value": "4.9", "label": "Google Rating", "suffix": "★" }
+    ]
+  },
+  "carriers": {
+    "variant": "auto-scroll",
+    "headline": "Carriers We Work With",
+    "subline": "We shop them all to get you the best rate"
+  },
+  "howItWorks": {
+    "headline": "How It Works — 3 Simple Steps",
+    "subline": "Getting your best insurance rate has never been easier.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Tell Us What You Need",
+        "description": "Fill out our quick quote form or give us a call. Takes less than 2 minutes.",
+        "duration": "2 minutes"
+      },
+      {
+        "number": "02",
+        "title": "We Shop 30+ Carriers",
+        "description": "Our licensed brokers compare rates from over 30 insurance companies on your behalf.",
+        "duration": "Same day"
+      },
+      {
+        "number": "03",
+        "title": "You Choose the Best Rate",
+        "description": "We present your options clearly. You pick the coverage that fits your needs and budget.",
+        "duration": "You decide"
+      }
+    ],
+    "cta": { "label": "Start My Free Quote", "href": "/en/quote" }
+  },
+  "testimonials": {
+    "variant": "featured-3",
+    "headline": "What Our Clients Say",
+    "showRating": true,
+    "showCoverageType": true,
+    "limit": 3
+  },
+  "cta": {
+    "headline": "Ready to Save on Insurance?",
+    "subline": "Get a free quote in minutes. We'll shop 30+ carriers to find your best rate.",
+    "ctaPrimary": { "label": "Get a Free Quote", "href": "/en/quote" },
+    "ctaSecondary": { "label": "Call (718) 555-0100", "href": "tel:+17185550100" },
+    "note": "Quote within 2 hours during business hours"
+  }
+}

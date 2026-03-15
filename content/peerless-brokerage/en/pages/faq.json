@@ -1,0 +1,89 @@
+{
+  "hero": {
+    "variant": "centered",
+    "headline": "Frequently Asked Questions",
+    "subline": "Answers to the most common insurance questions. Still have questions? Call us at (718) 555-0100."
+  },
+  "categories": [
+    {
+      "id": "general",
+      "label": "General",
+      "items": [
+        {
+          "question": "What is an independent insurance broker?",
+          "answer": "An independent broker represents many insurance companies (called carriers) rather than just one. This means we can shop your coverage across 30+ carriers to find the best rate and coverage for your needs — unlike a captive agent who is limited to one company's products."
+        },
+        {
+          "question": "How long does it take to get a quote?",
+          "answer": "Most personal lines quotes (auto, home) are ready within 2 hours during business hours. Commercial and specialty coverage may take 1–2 business days depending on complexity."
+        },
+        {
+          "question": "Do you charge a fee for your services?",
+          "answer": "No. As a broker, we are compensated by the insurance carrier when you purchase a policy. Our service to you — shopping multiple carriers and advising on coverage — is free."
+        },
+        {
+          "question": "What states are you licensed in?",
+          "answer": "We are licensed in New York, New Jersey, Connecticut, and Pennsylvania. We can help clients in any of these states."
+        },
+        {
+          "question": "Can I bundle multiple types of insurance?",
+          "answer": "Yes, and we recommend it. Bundling auto and home insurance, for example, often results in discounts of 10–25%. We can bundle all your personal and business coverage through the same carrier when it saves you money."
+        }
+      ]
+    },
+    {
+      "id": "auto",
+      "label": "Auto Insurance",
+      "items": [
+        {
+          "question": "What auto insurance coverage is required in New York?",
+          "answer": "New York requires: Bodily Injury Liability (25/50/10), Personal Injury Protection (PIP), and Uninsured Motorist coverage. Comprehensive and collision are optional but usually required by lenders."
+        },
+        {
+          "question": "What affects my auto insurance rate?",
+          "answer": "Key factors include: driving record, age, vehicle make/model, annual mileage, credit score (in some states), ZIP code, and coverage limits selected."
+        },
+        {
+          "question": "Can I get insurance for a leased vehicle?",
+          "answer": "Yes. Leased vehicles typically require full coverage (comprehensive and collision) plus gap insurance, which covers the difference between what you owe and what the car is worth if totaled."
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "label": "Business Insurance",
+      "items": [
+        {
+          "question": "What is a BOP (Business Owner's Policy)?",
+          "answer": "A BOP bundles general liability insurance with commercial property insurance into one convenient policy, typically at a lower cost than buying each separately. It's ideal for most small businesses."
+        },
+        {
+          "question": "Is workers compensation required in New York?",
+          "answer": "Yes. New York requires all employers — even those with just one employee — to carry workers compensation insurance. Penalties for non-compliance can be severe."
+        },
+        {
+          "question": "What is a Certificate of Insurance (COI)?",
+          "answer": "A COI is a document that summarizes your insurance coverage and is often required by clients, landlords, or general contractors before you can start work. We issue COIs quickly — usually same day."
+        }
+      ]
+    },
+    {
+      "id": "tlc",
+      "label": "TLC & Livery Insurance",
+      "items": [
+        {
+          "question": "What is TLC insurance?",
+          "answer": "TLC insurance is commercial auto insurance specifically required by the NYC Taxi and Limousine Commission for for-hire vehicles including taxis, Uber, Lyft, and private car services."
+        },
+        {
+          "question": "How quickly can I get TLC insurance?",
+          "answer": "We specialize in TLC insurance and can often bind coverage the same day. We understand TLC deadlines and compliance requirements."
+        },
+        {
+          "question": "Do you have Spanish and Chinese-speaking agents for TLC drivers?",
+          "answer": "Yes. Our team includes agents who speak English, Spanish, and Mandarin/Cantonese — many of our TLC clients prefer to work in their native language."
+        }
+      ]
+    }
+  ]
+}
