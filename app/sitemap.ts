@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getSupabaseServerClient } from '@/lib/supabase/server';
 import { getRequestSiteId } from '@/lib/content';
+import { DEFAULT_ACTIVE_LOCATIONS } from '@/lib/insurance/locations';
 
 const BASE = process.env.NEXT_PUBLIC_APP_URL || 'https://pbiny.com';
 
@@ -24,9 +25,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/${locale}/about`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/${locale}/contact`,   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/${locale}/resources`, lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.6 },
-    { url: `${BASE}/${locale}/agents`,    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE}/${locale}/carriers`,  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE}/${locale}/faq`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/${locale}/agents`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/${locale}/carriers`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE}/${locale}/locations`,    lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+    { url: `${BASE}/${locale}/faq`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/${locale}/testimonials`, lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.6 },
   ];
 
   const servicePages: MetadataRoute.Sitemap = lines.map(l => ({
@@ -46,5 +49,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  return [...staticPages, ...servicePages, ...blogPages];
+  // Location pages: /insurance/[slug]/[city] for each enabled line × active city
+  const locationPages: MetadataRoute.Sitemap = lines.flatMap(l =>
+    DEFAULT_ACTIVE_LOCATIONS.map(city => ({
+      url: `${BASE}/${locale}/insurance/${l.line_slug}/${city}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+  );
+
+  return [...staticPages, ...servicePages, ...locationPages, ...blogPages];
 }

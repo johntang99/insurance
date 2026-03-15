@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '@/lib/supabase/server';
 import { getRequestSiteId } from '@/lib/content';
+import { sendQuoteNotification } from '@/lib/notifications/quoteNotification';
 
 // POST — public quote request submission
 export async function POST(request: NextRequest) {
@@ -70,7 +71,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Failed to submit quote request' }, { status: 500 });
     }
 
-    // TODO (Phase 3): Send email notification to QUOTE_NOTIFICATION_EMAIL via Resend
+    // Send email notification (non-blocking — failures don't affect the response)
+    const siteRes = await supabase?.from('sites').select('name').eq('id', siteId).single();
+    sendQuoteNotification({
+      id: data.id,
+      firstName, lastName, phone, email,
+      coverageTypes: coverageTypes || [],
+      preferredLanguage, bestContactTime,
+      details: details || {},
+      source: source || 'website',
+      siteName: siteRes?.data?.name || 'Insurance Brokerage',
+      siteId,
+      notificationEmail: process.env.QUOTE_NOTIFICATION_EMAIL,
+      fromEmail: process.env.RESEND_FROM,
+      adminBaseUrl: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3007',
+    }).catch(() => {}); // fire-and-forget, errors already logged inside
 
     return NextResponse.json(
       { success: true, id: data.id, message: 'Quote request submitted successfully' },

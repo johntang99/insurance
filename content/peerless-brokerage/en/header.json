@@ -4,13 +4,7 @@
     "logo": {
       "text": "Peerless Brokerage",
       "subtext": "Independent Insurance Broker"
-    },
-    "items": [
-      { "text": "Insurance", "url": "/en/insurance" },
-      { "text": "About", "url": "/en/about" },
-      { "text": "Resources", "url": "/en/resources" },
-      { "text": "Contact", "url": "/en/contact" }
-    ]
+    }
   },
   "cta": {
     "text": "Get a Free Quote",
@@ -25,19 +19,73 @@
   "phoneHref": "tel:+17185550100",
   "stickyOnMobile": true,
   "showPhoneInHeader": true,
-  "insuranceDropdown": [
-    { "label": "Auto Insurance", "href": "/en/insurance/auto" },
-    { "label": "TLC Insurance", "href": "/en/insurance/tlc" },
-    { "label": "Commercial Auto", "href": "/en/insurance/commercial-auto" },
-    { "label": "Homeowner Insurance", "href": "/en/insurance/homeowner" },
-    { "label": "Business Insurance", "href": "/en/insurance/business" },
-    { "label": "Workers Compensation", "href": "/en/insurance/workers-comp" },
-    { "label": "Disability Insurance", "href": "/en/insurance/disability" },
-    { "label": "Construction Insurance", "href": "/en/insurance/construction" },
-    { "label": "Motorcycle Insurance", "href": "/en/insurance/motorcycle" },
-    { "label": "Boat Insurance", "href": "/en/insurance/boat" },
-    { "label": "Travel Insurance", "href": "/en/insurance/travel" },
-    { "label": "Group Health", "href": "/en/insurance/group-health" },
-    { "label": "View All →", "href": "/en/insurance", "isViewAll": true }
+  "nav": [
+    {
+      "label": "Insurance",
+      "type": "mega",
+      "columns": [
+        {
+          "heading": "Personal",
+          "links": [
+            { "label": "Auto Insurance",       "href": "insurance/auto",        "icon": "🚗" },
+            { "label": "TLC Insurance",         "href": "insurance/tlc",         "icon": "🚕" },
+            { "label": "Homeowner Insurance",   "href": "insurance/homeowner",   "icon": "🏠" },
+            { "label": "Motorcycle Insurance",  "href": "insurance/motorcycle",  "icon": "🏍️" },
+            { "label": "Boat Insurance",        "href": "insurance/boat",        "icon": "⛵" },
+            { "label": "Travel Insurance",      "href": "insurance/travel",      "icon": "✈️" }
+          ]
+        },
+        {
+          "heading": "Business",
+          "links": [
+            { "label": "Business Insurance",    "href": "insurance/business",        "icon": "💼" },
+            { "label": "Commercial Auto",       "href": "insurance/commercial-auto", "icon": "🚛" },
+            { "label": "Workers Compensation",  "href": "insurance/workers-comp",    "icon": "🦺" },
+            { "label": "Construction Insurance","href": "insurance/construction",    "icon": "🏗️" },
+            { "label": "Disability Insurance",  "href": "insurance/disability",      "icon": "🛡️" },
+            { "label": "Group Health",          "href": "insurance/group-health",    "icon": "❤️" }
+          ]
+        },
+        {
+          "heading": "Services",
+          "links": [
+            { "label": "All Coverage Types →",  "href": "insurance",       "icon": "📋", "highlight": true },
+            { "label": "DMV Services",          "href": "services/dmv",    "icon": "📄" },
+            { "label": "Notary Services",       "href": "services/notary", "icon": "✒️" },
+            { "label": "Claims Assistance",     "href": "claims",          "icon": "🛡️" }
+          ],
+          "cta": {
+            "label": "Get a Free Quote",
+            "href": "quote",
+            "description": "We respond within 2 hours"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Company",
+      "type": "dropdown",
+      "links": [
+        { "label": "About Us",        "href": "about",         "description": "Our story, mission & credentials" },
+        { "label": "Our Agents",      "href": "agents",        "description": "Licensed experts in every coverage type" },
+        { "label": "Carrier Partners","href": "carriers",      "description": "30+ carriers we work with" },
+        { "label": "Service Areas",   "href": "locations",     "description": "Cities and regions we serve" },
+        { "label": "Testimonials",    "href": "testimonials",  "description": "5,000+ satisfied clients" }
+      ]
+    },
+    {
+      "label": "Resources",
+      "type": "dropdown",
+      "links": [
+        { "label": "Resource Center", "href": "resources",  "description": "Insurance guides & expert tips" },
+        { "label": "FAQ",             "href": "faq",        "description": "Answers to common questions" },
+        { "label": "Claims Help",     "href": "claims",     "description": "Guidance through your claim" }
+      ]
+    },
+    {
+      "label": "Contact",
+      "type": "link",
+      "href": "contact"
+    }
   ]
 }

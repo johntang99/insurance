@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -9,16 +9,27 @@ import type { Locale } from '@/lib/i18n';
 import type { SiteInfo } from '@/lib/types';
 import { getSiteDisplayName } from '@/lib/siteInfo';
 
+// ── Nav config types ─────────────────────────────────────
+
+interface NavLink { label: string; href: string; icon?: string; description?: string; highlight?: boolean; }
+interface NavColumn { heading: string; links: NavLink[]; cta?: { label: string; href: string; description?: string }; }
+
+interface NavItem {
+  label: string;
+  type: 'link' | 'dropdown' | 'mega';
+  href?: string;
+  links?: NavLink[];
+  columns?: NavColumn[];
+}
+
 export interface HeaderConfig {
-  menu?: {
-    variant?: string;
-    logo?: { text?: string; subtext?: string; image?: { src?: string; alt?: string } };
-    items?: Array<{ text: string; url: string }>;
-  };
+  menu?: { variant?: string; logo?: { text?: string; subtext?: string; image?: { src?: string; alt?: string } } };
   cta?: { text?: string; link?: string };
   topbar?: { phone?: string; phoneHref?: string; badge?: string };
   phoneDisplay?: string;
   phoneHref?: string;
+  nav?: NavItem[];
+  // Legacy support
   insuranceDropdown?: Array<{ label: string; href: string; isViewAll?: boolean }>;
 }
 
@@ -31,35 +42,55 @@ interface HeaderProps {
   headerConfig?: HeaderConfig;
 }
 
-const NAV_ITEMS = [
-  { text: 'Insurance', url: 'insurance', hasDropdown: true },
-  { text: 'About', url: 'about' },
-  { text: 'Resources', url: 'resources' },
-  { text: 'Contact', url: 'contact' },
+// ── Default nav (fallback when no header.json configured) ─
+
+const DEFAULT_NAV: NavItem[] = [
+  {
+    label: 'Insurance', type: 'mega',
+    columns: [
+      { heading: 'Personal', links: [
+        { label: 'Auto Insurance',      href: 'insurance/auto',       icon: '🚗' },
+        { label: 'TLC Insurance',       href: 'insurance/tlc',        icon: '🚕' },
+        { label: 'Homeowner Insurance', href: 'insurance/homeowner',  icon: '🏠' },
+        { label: 'Motorcycle',          href: 'insurance/motorcycle', icon: '🏍️' },
+      ]},
+      { heading: 'Business', links: [
+        { label: 'Business Insurance',  href: 'insurance/business',       icon: '💼' },
+        { label: 'Commercial Auto',     href: 'insurance/commercial-auto',icon: '🚛' },
+        { label: 'Workers Comp',        href: 'insurance/workers-comp',   icon: '🦺' },
+        { label: 'Construction',        href: 'insurance/construction',   icon: '🏗️' },
+      ]},
+      { heading: 'Services', links: [
+        { label: 'All Coverage →', href: 'insurance',      icon: '📋', highlight: true },
+        { label: 'Claims Help',    href: 'claims',          icon: '🛡️' },
+        { label: 'DMV Services',   href: 'services/dmv',   icon: '📄' },
+      ], cta: { label: 'Get a Free Quote', href: 'quote' } },
+    ],
+  },
+  { label: 'Company', type: 'dropdown', links: [
+    { label: 'About Us',         href: 'about',        description: 'Story, mission & credentials' },
+    { label: 'Our Agents',       href: 'agents',       description: 'Specialists in every coverage type' },
+    { label: 'Carrier Partners', href: 'carriers',     description: '30+ carriers we represent' },
+    { label: 'Testimonials',     href: 'testimonials', description: '5,000+ satisfied clients' },
+    { label: 'Service Areas',    href: 'locations',    description: 'Cities and regions we serve' },
+  ]},
+  { label: 'Resources', type: 'dropdown', links: [
+    { label: 'Resource Center', href: 'resources', description: 'Insurance guides & tips' },
+    { label: 'FAQ',             href: 'faq',       description: 'Common questions answered' },
+    { label: 'Claims Help',     href: 'claims',    description: 'Guidance through your claim' },
+  ]},
+  { label: 'Contact', type: 'link', href: 'contact' },
 ];
 
-const INSURANCE_DROPDOWN = [
-  { label: 'Auto Insurance', href: 'insurance/auto' },
-  { label: 'TLC Insurance', href: 'insurance/tlc' },
-  { label: 'Commercial Auto', href: 'insurance/commercial-auto' },
-  { label: 'Homeowner Insurance', href: 'insurance/homeowner' },
-  { label: 'Business Insurance', href: 'insurance/business' },
-  { label: 'Workers Comp', href: 'insurance/workers-comp' },
-  { label: 'Disability Insurance', href: 'insurance/disability' },
-  { label: 'Construction Insurance', href: 'insurance/construction' },
-  { label: 'Motorcycle Insurance', href: 'insurance/motorcycle' },
-  { label: 'View All Coverage →', href: 'insurance', isViewAll: true },
-];
+// ── Component ─────────────────────────────────────────────
 
-export default function Header({
-  locale,
-  siteInfo,
-  headerConfig,
-}: HeaderProps) {
+export default function Header({ locale, siteInfo, headerConfig }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [openItem, setOpenItem] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const pathname = usePathname();
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -67,79 +98,81 @@ export default function Header({
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-    setDropdownOpen(false);
-  }, [pathname]);
+  useEffect(() => { setMobileOpen(false); setOpenItem(null); }, [pathname]);
 
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   const logoText = headerConfig?.menu?.logo?.text || siteName;
   const logoSubtext = headerConfig?.menu?.logo?.subtext || 'Independent Insurance Broker';
   const logoImg = headerConfig?.menu?.logo?.image?.src;
-  const phone = headerConfig?.phoneDisplay || siteInfo?.phone || '';
+  const phone = headerConfig?.phoneDisplay || (siteInfo as any)?.phone || '';
   const phoneHref = headerConfig?.phoneHref || (phone ? `tel:${phone.replace(/\D/g, '')}` : '#');
   const ctaLabel = headerConfig?.cta?.text || 'Get a Free Quote';
-  const ctaHref = `/${locale}/${headerConfig?.cta?.link?.replace(/^\/en\//, '') || 'quote'}`;
-  const licenseNumber = (siteInfo as any)?.licenseNumber || 'LA-1234567';
-  const licensedStates = (siteInfo as any)?.licensedStates || ['NY', 'NJ', 'CT', 'PA'];
+  const ctaHref = `/${locale}/${(headerConfig?.cta?.link || 'quote').replace(/^\/en\//, '').replace(/^\//, '')}`;
+  const licenseNumber = (siteInfo as any)?.licenseNumber || '';
+  const licensedStates = (siteInfo as any)?.licensedStates || [];
   const carriersCount = (siteInfo as any)?.carriersCount || 30;
   const languages = (siteInfo as any)?.languages || [];
 
-  const navItems = headerConfig?.menu?.items?.length
-    ? headerConfig.menu.items.map(i => ({ text: i.text, url: i.url, hasDropdown: false }))
-    : NAV_ITEMS;
+  const navItems: NavItem[] = headerConfig?.nav || DEFAULT_NAV;
 
-  const dropdown = headerConfig?.insuranceDropdown || INSURANCE_DROPDOWN;
-
-  const isActive = (url: string) => {
-    const full = `/${locale}/${url}`;
+  const href = (path: string) => path.startsWith('http') ? path : `/${locale}/${path.replace(/^\//, '')}`;
+  const isActive = (path: string) => {
+    const full = href(path);
     return pathname === full || pathname.startsWith(`${full}/`);
+  };
+
+  const handleMouseEnter = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenItem(label);
+  };
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setOpenItem(null), 180);
   };
 
   return (
     <>
-      {/* TOP BAR — desktop only */}
-      <div className="top-bar hidden md:block" style={{ background: 'var(--navy-800)', padding: '8px 0', fontSize: '.8125rem', color: 'rgba(255,255,255,.75)' }}>
+      {/* ── TOP BAR ──────────────────────────────────────── */}
+      <div className="hidden md:block" style={{ background: 'var(--navy-800)', padding: '7px 0', fontSize: '.8rem', color: 'rgba(255,255,255,.75)', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
         <div className="container-custom flex justify-between items-center gap-4">
-          {/* Left: License + Languages */}
           <div className="flex items-center gap-4 flex-wrap">
-            <div className="license-badge flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium" style={{ background: 'rgba(255,255,255,.1)', color: 'rgba(255,255,255,.85)' }}>
-              <Shield className="w-3 h-3" style={{ color: 'var(--gold-400)' }} />
-              Lic. #{licenseNumber}
-            </div>
-            <span style={{ color: 'rgba(255,255,255,.5)' }}>Licensed in {licensedStates.join(' · ')}</span>
+            {licenseNumber && (
+              <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(255,255,255,.1)', color: 'rgba(255,255,255,.85)' }}>
+                <Shield className="w-3 h-3" style={{ color: 'var(--gold-400)' }} />
+                Lic. #{licenseNumber}
+              </span>
+            )}
+            {licensedStates.length > 0 && (
+              <span style={{ color: 'rgba(255,255,255,.5)', fontSize: '.78rem' }}>Licensed in {licensedStates.join(' · ')}</span>
+            )}
             {languages.length > 1 && (
-              <span style={{ color: 'rgba(255,255,255,.55)' }}>· {languages.join(' · ')}</span>
+              <span style={{ color: 'rgba(255,255,255,.45)', fontSize: '.78rem' }}>· {languages.join(' · ')}</span>
             )}
           </div>
-          {/* Right: Carriers + Phone */}
           <div className="flex items-center gap-5">
             {carriersCount > 0 && (
               <span style={{ color: 'var(--gold-300)', fontWeight: 600, fontSize: '.78rem' }}>Access to {carriersCount}+ Carriers</span>
             )}
             {phone && (
-              <a href={phoneHref} className="flex items-center gap-1.5 font-semibold transition-colors" style={{ color: 'rgba(255,255,255,.85)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold-300)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.85)')}>
-                <Phone className="w-3.5 h-3.5" />
-                {phone}
+              <a href={phoneHref} className="flex items-center gap-1.5 font-semibold" style={{ color: 'rgba(255,255,255,.85)', fontSize: '.82rem', textDecoration: 'none' }}>
+                <Phone className="w-3 h-3" />{phone}
               </a>
             )}
           </div>
         </div>
       </div>
 
-      {/* MAIN NAV */}
-      <header className="site-header" style={{
+      {/* ── MAIN NAV ──────────────────────────────────────── */}
+      <header style={{
         position: 'sticky', top: 0, zIndex: 100,
         background: 'var(--bg-white)',
         borderBottom: '1px solid var(--border)',
-        boxShadow: scrolled ? '0 2px 16px rgba(0,0,0,.09)' : '0 1px 0 var(--border)',
+        boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,.1)' : 'none',
         transition: 'box-shadow .2s',
       }}>
-        <div className="container-custom flex items-center justify-between" style={{ height: 68 }}>
+        <div className="container-custom flex items-center justify-between" style={{ height: 68, gap: 12 }}>
+
           {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center gap-3 flex-shrink-0">
+          <Link href={`/${locale}`} className="flex items-center gap-2.5 flex-shrink-0" style={{ textDecoration: 'none' }}>
             {logoImg ? (
               <Image src={logoImg} alt={logoText} width={140} height={40} className="h-10 w-auto object-contain" />
             ) : (
@@ -152,7 +185,7 @@ export default function Header({
                   <div className="font-bold leading-tight" style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.05rem' }}>
                     {logoText}
                   </div>
-                  <div className="font-medium uppercase tracking-wide" style={{ fontSize: '.65rem', color: 'var(--text-muted)', letterSpacing: '.06em' }}>
+                  <div className="font-medium uppercase tracking-wide" style={{ fontSize: '.62rem', color: 'var(--text-muted)', letterSpacing: '.07em' }}>
                     {logoSubtext}
                   </div>
                 </div>
@@ -160,124 +193,171 @@ export default function Header({
             )}
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => {
-              const href = item.url.startsWith('/') ? item.url : `/${locale}/${item.url}`;
-              const active = isActive(item.url.replace(/^\/[a-z]{2}\//, ''));
-              if ((item as any).hasDropdown !== false && item.url === 'insurance') {
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
+            {navItems.map(item => {
+              const active = item.href ? isActive(item.href) : navItems.some(n => n.links?.some(l => isActive(l.href)));
+              const isOpen = openItem === item.label;
+
+              if (item.type === 'link') {
                 return (
-                  <div key={item.url} className="relative" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
-                    <button className="flex items-center gap-1 px-3.5 py-2 rounded-md text-sm font-medium transition-all"
-                      style={{ color: active ? 'var(--navy-800)' : 'var(--text-secondary)', fontWeight: active ? 700 : 500 }}>
-                      {item.text}
-                      <ChevronDown className="w-3.5 h-3.5" style={{ transform: dropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }} />
-                    </button>
-                    {dropdownOpen && (
-                      <div className="absolute top-full left-0 pt-1 z-50" style={{ minWidth: 220 }}>
-                        <div className="rounded-xl overflow-hidden shadow-lg" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)' }}>
-                          {dropdown.map((d) => (
-                            <Link key={d.href} href={`/${locale}/${d.href}`}
-                              className="block px-4 py-2.5 text-sm transition-colors"
-                              style={{
-                                color: (d as any).isViewAll ? 'var(--gold-600)' : 'var(--text-secondary)',
-                                fontWeight: (d as any).isViewAll ? 700 : 400,
-                                borderTop: (d as any).isViewAll ? '1px solid var(--border)' : 'none',
-                              }}
-                              onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                              {d.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <Link key={item.label} href={href(item.href || '')}
+                    className="px-3.5 py-2 rounded-md text-sm font-medium transition-colors"
+                    style={{ color: isActive(item.href || '') ? 'var(--navy-800)' : 'var(--text-secondary)', fontWeight: isActive(item.href || '') ? 700 : 500, textDecoration: 'none' }}>
+                    {item.label}
+                  </Link>
                 );
               }
+
               return (
-                <Link key={item.url} href={href}
-                  className="px-3.5 py-2 rounded-md text-sm transition-all"
-                  style={{ color: active ? 'var(--navy-800)' : 'var(--text-secondary)', fontWeight: active ? 700 : 500 }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-subtle)'; e.currentTarget.style.color = 'var(--navy-800)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = active ? 'var(--navy-800)' : 'var(--text-secondary)'; }}>
-                  {item.text}
-                </Link>
+                <div key={item.label} className="relative"
+                  onMouseEnter={() => handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}>
+                  <button className="flex items-center gap-1 px-3.5 py-2 rounded-md text-sm font-medium transition-colors"
+                    style={{ color: isOpen ? 'var(--navy-800)' : 'var(--text-secondary)', fontWeight: isOpen ? 700 : 500, background: isOpen ? 'var(--navy-50)' : 'transparent', border: 'none', cursor: 'pointer' }}>
+                    {item.label}
+                    <ChevronDown className="w-3.5 h-3.5" style={{ transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s', color: 'var(--text-muted)' }} />
+                  </button>
+
+                  {isOpen && (
+                    <div className="absolute top-full left-0 pt-1 z-50" style={{ minWidth: item.type === 'mega' ? 680 : 260 }}>
+                      <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)' }}>
+
+                        {/* MEGA dropdown */}
+                        {item.type === 'mega' && item.columns && (
+                          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${item.columns.length}, 1fr)`, gap: 0 }}>
+                            {item.columns.map((col, ci) => (
+                              <div key={col.heading} style={{ padding: '20px 24px', borderRight: ci < item.columns!.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                                <p style={{ fontSize: '.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.1em', color: 'var(--text-muted)', marginBottom: 10, paddingBottom: 8, borderBottom: '1px solid var(--border)' }}>
+                                  {col.heading}
+                                </p>
+                                <div className="flex flex-col gap-0.5">
+                                  {col.links.map(l => (
+                                    <Link key={l.href} href={href(l.href)}
+                                      className="flex items-center gap-2 px-2 py-2 rounded-lg text-sm transition-colors"
+                                      style={{ color: l.highlight ? 'var(--gold-600)' : 'var(--text-secondary)', fontWeight: l.highlight ? 700 : 400, background: isActive(l.href) ? 'var(--navy-50)' : 'transparent', textDecoration: 'none' }}
+                                      onMouseEnter={e => { if (!l.highlight) (e.currentTarget as HTMLElement).style.background = 'var(--bg-subtle)'; }}
+                                      onMouseLeave={e => { if (!isActive(l.href)) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}>
+                                      {l.icon && <span style={{ fontSize: '1rem', flexShrink: 0 }}>{l.icon}</span>}
+                                      {l.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                                {col.cta && (
+                                  <Link href={href(col.cta.href)}
+                                    className="flex items-center justify-center gap-2 mt-4 py-2.5 px-4 rounded-lg text-sm font-bold transition-colors"
+                                    style={{ background: 'var(--gold-500)', color: '#fff', textDecoration: 'none' }}>
+                                    {col.cta.label}
+                                  </Link>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Regular dropdown */}
+                        {item.type === 'dropdown' && item.links && (
+                          <div style={{ padding: '8px' }}>
+                            {item.links.map(l => (
+                              <Link key={l.href} href={href(l.href)}
+                                className="flex items-start gap-3 px-4 py-3 rounded-lg transition-colors"
+                                style={{ color: 'var(--text-primary)', textDecoration: 'none', background: isActive(l.href) ? 'var(--navy-50)' : 'transparent' }}
+                                onMouseEnter={e => { if (!isActive(l.href)) (e.currentTarget as HTMLElement).style.background = 'var(--bg-subtle)'; }}
+                                onMouseLeave={e => { if (!isActive(l.href)) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}>
+                                <div>
+                                  <div style={{ fontWeight: 600, fontSize: '.875rem', color: 'var(--navy-800)', marginBottom: l.description ? 1 : 0 }}>{l.label}</div>
+                                  {l.description && <div style={{ fontSize: '.78rem', color: 'var(--text-muted)' }}>{l.description}</div>}
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             {phone && (
-              <a href={phoneHref} className="text-sm font-semibold" style={{ color: 'var(--navy-700)' }}>
+              <a href={phoneHref} style={{ fontSize: '.82rem', fontWeight: 700, color: 'var(--navy-700)', textDecoration: 'none', whiteSpace: 'nowrap' }}>
                 {phone}
               </a>
             )}
             <Link href={ctaHref}
-              className="btn btn-primary btn-sm"
-              style={{ background: 'var(--gold-500)', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 22px', fontWeight: 600, fontSize: '.875rem' }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'var(--gold-600)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'var(--gold-500)')}>
+              style={{ background: 'var(--gold-500)', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 20px', fontWeight: 700, fontSize: '.875rem', textDecoration: 'none', whiteSpace: 'nowrap', display: 'inline-block' }}>
               {ctaLabel}
             </Link>
           </div>
 
           {/* Mobile hamburger */}
-          <button className="lg:hidden p-2 rounded-md" onClick={() => setMobileOpen(!mobileOpen)}
-            style={{ color: 'var(--navy-800)' }} aria-label="Toggle menu">
+          <button className="lg:hidden p-2 rounded-md" onClick={() => setMobileOpen(!mobileOpen)} style={{ color: 'var(--navy-800)', background: 'none', border: 'none', cursor: 'pointer' }} aria-label="Toggle menu">
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* ── MOBILE MENU ──────────────────────────────────── */}
         {mobileOpen && (
-          <div className="lg:hidden" style={{ background: 'var(--bg-white)', borderTop: '1px solid var(--border)', padding: '16px 0 24px' }}>
-            <div className="container-custom">
-              {/* Phone prominent at top */}
+          <div style={{ background: 'var(--bg-white)', borderTop: '1px solid var(--border)', maxHeight: 'calc(100vh - 68px)', overflowY: 'auto' }}>
+            <div className="container-custom" style={{ paddingTop: 16, paddingBottom: 24 }}>
+              {/* Phone */}
               {phone && (
-                <a href={phoneHref} className="flex items-center justify-center gap-2 py-3 mb-3 rounded-lg font-bold text-lg"
-                  style={{ background: 'var(--navy-800)', color: '#fff', textDecoration: 'none' }}>
-                  <Phone className="w-5 h-5" />
-                  {phone}
+                <a href={phoneHref} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px', background: 'var(--navy-800)', color: '#fff', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', marginBottom: 12 }}>
+                  <Phone className="w-4 h-4" />{phone}
                 </a>
               )}
-              <div className="flex flex-col gap-1">
-                {navItems.map((item) => {
-                  const href = item.url.startsWith('/') ? item.url : `/${locale}/${item.url}`;
+
+              {/* Nav items */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {navItems.map(item => {
+                  const hasChildren = item.type !== 'link' && (item.links?.length || item.columns?.length);
+                  const allLinks: NavLink[] = item.type === 'mega'
+                    ? (item.columns || []).flatMap(c => c.links)
+                    : item.links || [];
+                  const isExpanded = mobileExpanded === item.label;
+
                   return (
-                    <Link key={item.url} href={href}
-                      className="block px-4 py-3 rounded-lg font-medium text-base"
-                      style={{ color: 'var(--text-primary)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                      {item.text}
-                    </Link>
+                    <div key={item.label}>
+                      {hasChildren ? (
+                        <button onClick={() => setMobileExpanded(isExpanded ? null : item.label)}
+                          style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderRadius: 8, fontWeight: 600, fontSize: '.9375rem', color: 'var(--text-primary)', background: isExpanded ? 'var(--bg-subtle)' : 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
+                          {item.label}
+                          <ChevronDown className="w-4 h-4" style={{ transform: isExpanded ? 'rotate(180deg)' : 'none', transition: 'transform .2s', color: 'var(--text-muted)' }} />
+                        </button>
+                      ) : (
+                        <Link href={href(item.href || '')}
+                          style={{ display: 'block', padding: '12px 16px', borderRadius: 8, fontWeight: 600, fontSize: '.9375rem', color: 'var(--text-primary)', textDecoration: 'none' }}>
+                          {item.label}
+                        </Link>
+                      )}
+                      {isExpanded && allLinks.length > 0 && (
+                        <div style={{ padding: '4px 8px 8px 8px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
+                          {allLinks.map(l => (
+                            <Link key={l.href} href={href(l.href)}
+                              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', borderRadius: 8, fontSize: '.85rem', color: l.highlight ? 'var(--gold-600)' : 'var(--text-secondary)', fontWeight: l.highlight ? 700 : 400, textDecoration: 'none' }}>
+                              {l.icon && <span>{l.icon}</span>}
+                              {l.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
-              {/* Insurance sub-links */}
-              <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
-                <p className="px-4 mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Coverage Types</p>
-                <div className="grid grid-cols-2 gap-1">
-                  {dropdown.slice(0, 8).map((d) => (
-                    <Link key={d.href} href={`/${locale}/${d.href}`}
-                      className="block px-3 py-2 rounded-md text-sm"
-                      style={{ color: 'var(--text-secondary)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                      {d.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+
+              {/* CTA */}
               <Link href={ctaHref}
-                className="block w-full text-center mt-4 py-3.5 rounded-lg font-bold text-base"
-                style={{ background: 'var(--gold-500)', color: '#fff', textDecoration: 'none' }}>
+                style={{ display: 'block', textAlign: 'center', marginTop: 16, padding: '14px', background: 'var(--gold-500)', color: '#fff', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none' }}>
                 {ctaLabel}
               </Link>
+
+              {/* Languages */}
               {languages.length > 1 && (
-                <p className="text-center mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <p style={{ textAlign: 'center', marginTop: 12, fontSize: '.8rem', color: 'var(--text-muted)' }}>
                   We speak: {languages.join(' · ')}
                 </p>
               )}

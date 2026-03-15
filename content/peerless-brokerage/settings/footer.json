@@ -19,6 +19,7 @@
         { "label": "Our Agents", "href": "/en/agents" },
         { "label": "Carrier Partners", "href": "/en/carriers" },
         { "label": "Testimonials", "href": "/en/testimonials" },
+        { "label": "Service Areas", "href": "/en/locations" },
         { "label": "Resources", "href": "/en/resources" }
       ]
     },
