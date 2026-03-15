@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { type Locale } from '@/lib/i18n';
 import { getRequestSiteId, loadPageContent, loadSiteInfo, loadAllItems } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
@@ -20,6 +21,7 @@ interface BlogPost {
 
 interface PageProps { params: { locale: Locale } }
 
+// Category gradient fallbacks (used when no coverImage)
 const CATEGORY_COLORS: Record<string, string> = {
   auto: 'linear-gradient(135deg,#0b1f3a 0%,#173560 100%)',
   tlc: 'linear-gradient(135deg,#1a2535 0%,#2a3d58 100%)',
@@ -29,6 +31,56 @@ const CATEGORY_COLORS: Record<string, string> = {
   'workers-comp': 'linear-gradient(135deg,#3b0f0f 0%,#8b1d1d 100%)',
   'commercial-auto': 'linear-gradient(135deg,#0c2340 0%,#1e4275 100%)',
 };
+
+const CATEGORY_ICONS: Record<string, string> = {
+  auto: '🚗', tlc: '🚕', business: '💼', homeowner: '🏠',
+  general: '📋', 'workers-comp': '🦺', 'commercial-auto': '🚛',
+};
+
+// Reusable 16:9 image block — shows real photo or gradient fallback
+function CardImage({ post, minHeight, large = false }: { post: BlogPost; minHeight?: number; large?: boolean }) {
+  const cat = post.category || 'general';
+  const bg = CATEGORY_COLORS[cat] || CATEGORY_COLORS.general;
+  const icon = CATEGORY_ICONS[cat] || '📄';
+
+  return (
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '16/9',          // ← proper 16:9 ratio
+      minHeight: minHeight,
+      overflow: 'hidden',
+      background: bg,               // gradient fallback (always visible under image)
+      flexShrink: 0,
+    }}>
+      {/* Real cover image — rendered on top of gradient */}
+      {post.coverImage && (
+        <Image
+          src={post.coverImage}
+          alt={post.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          priority={large}
+        />
+      )}
+
+      {/* Fallback icon (only when no real image) */}
+      {!post.coverImage && (
+        <span style={{ fontSize: large ? '5rem' : '3rem', opacity: .2, position: 'absolute', right: large ? 24 : 16, top: '50%', transform: 'translateY(-60%)', userSelect: 'none' }}>
+          {icon}
+        </span>
+      )}
+
+      {/* Category badge */}
+      {cat && (
+        <span style={{ position: 'absolute', bottom: 12, left: 12, background: 'rgba(0,0,0,.45)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: '.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, letterSpacing: '.04em', textTransform: 'uppercase', zIndex: 1 }}>
+          {cat}
+        </span>
+      )}
+    </div>
+  );
+}
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
@@ -53,12 +105,10 @@ export default async function ResourcesPage({ params }: PageProps) {
   ]);
 
   const si = siteInfo as any;
-  const phone = si?.phone || ("(718) 799-0472");
+  const phone = si?.phone || '(718) 799-0472';
   const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
 
-  const published = posts.filter(p => p.body !== '[Full article content coming in Phase 2]' || true); // show all for now
-
-  // Featured = first post
+  const published = posts.filter(p => p.title);
   const featured = published[0];
   const rest = published.slice(1);
 
@@ -79,23 +129,20 @@ export default async function ResourcesPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Featured article */}
+      {/* Featured article — 16:9 image left, text right */}
       {featured && (
         <section style={{ padding: '56px 0 40px', background: 'var(--bg-white)' }}>
           <div className="container-custom">
             <p style={{ fontSize: '.78rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 16 }}>Featured Article</p>
             <Link href={`/${locale}/resources/${featured.slug}`}
-              style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, textDecoration: 'none', background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow)' }}
-              className="hover-lift">
-              <div style={{ background: CATEGORY_COLORS[featured.category || 'general'] || CATEGORY_COLORS.general, minHeight: 240, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40, position: 'relative', overflow: 'hidden' }}>
-                <span style={{ fontSize: '5rem', opacity: .2, position: 'absolute', right: 24 }}>📰</span>
-                {featured.category && (
-                  <span style={{ position: 'relative', background: 'rgba(255,255,255,.15)', color: '#fff', fontSize: '.78rem', fontWeight: 700, padding: '5px 14px', borderRadius: 100 }}>
-                    {featured.category}
-                  </span>
-                )}
-              </div>
-              <div style={{ padding: '36px 32px 36px 0', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', textDecoration: 'none', background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow)' }}
+              className="hover-lift featured-grid">
+
+              {/* Left: 16:9 image */}
+              <CardImage post={featured} large={true} />
+
+              {/* Right: text */}
+              <div style={{ padding: '36px 36px 36px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 {featured.publishedAt && <p style={{ fontSize: '.8rem', color: 'var(--text-muted)', marginBottom: 10 }}>{new Date(featured.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>}
                 <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.6rem', lineHeight: 1.25, marginBottom: 14 }}>{featured.title}</h2>
                 {featured.excerpt && <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 20, fontSize: '.9375rem' }}>{featured.excerpt}</p>}
@@ -106,7 +153,7 @@ export default async function ResourcesPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* Article grid */}
+      {/* Article grid — 16:9 cards */}
       {rest.length > 0 && (
         <section style={{ padding: '40px 0 var(--section-y)', background: 'var(--bg-subtle)' }}>
           <div className="container-custom">
@@ -115,14 +162,9 @@ export default async function ResourcesPage({ params }: PageProps) {
                 <Link key={post.slug} href={`/${locale}/resources/${post.slug}`}
                   style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', textDecoration: 'none', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-sm)' }}
                   className="hover-lift">
-                  <div style={{ height: 160, background: CATEGORY_COLORS[post.category || 'general'] || CATEGORY_COLORS.general, position: 'relative', overflow: 'hidden' }}>
-                    <span style={{ fontSize: '3rem', opacity: .2, position: 'absolute', right: 16, top: '50%', transform: 'translateY(-60%)' }}>📄</span>
-                    {post.category && (
-                      <span style={{ position: 'absolute', bottom: 12, left: 12, background: 'rgba(255,255,255,.15)', color: '#fff', fontSize: '.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100 }}>
-                        {post.category}
-                      </span>
-                    )}
-                  </div>
+                  {/* 16:9 image or gradient */}
+                  <CardImage post={post} />
+
                   <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     {post.publishedAt && <p style={{ fontSize: '.78rem', color: 'var(--text-muted)', marginBottom: 8 }}>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>}
                     <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', lineHeight: 1.35, marginBottom: 10, fontWeight: 600 }}>{post.title}</h3>
@@ -144,6 +186,11 @@ export default async function ResourcesPage({ params }: PageProps) {
         phoneHref={phoneHref}
         locale={locale}
       />
+
+      {/* Responsive: featured article stacks on tablet */}
+      <style suppressHydrationWarning>{`
+        @media (max-width: 768px) { .featured-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </main>
   );
 }

@@ -10,7 +10,19 @@ import InsuranceLineGrid from '@/components/sections/InsuranceLineGrid';
 import CarrierLogoCarousel from '@/components/sections/CarrierLogoCarousel';
 import QuoteCTASection from '@/components/sections/QuoteCTASection';
 import InsuranceHero from '@/components/sections/InsuranceHero';
+import Image from 'next/image';
 import { CheckCircle, Phone } from 'lucide-react';
+
+// Blog category fallbacks (home page uses same system)
+const HOME_BLOG_COLORS: Record<string, string> = {
+  auto: 'linear-gradient(135deg,#0b1f3a 0%,#173560 100%)',
+  tlc: 'linear-gradient(135deg,#1a2535 0%,#2a3d58 100%)',
+  business: 'linear-gradient(135deg,#155f3a 0%,#1a7a4a 100%)',
+  homeowner: 'linear-gradient(135deg,#2d1b00 0%,#7c4a00 100%)',
+  general: 'linear-gradient(135deg,#0b1f3a 0%,#c9933a 100%)',
+  'workers-comp': 'linear-gradient(135deg,#3b0f0f 0%,#8b1d1d 100%)',
+  'commercial-auto': 'linear-gradient(135deg,#0c2340 0%,#1e4275 100%)',
+};
 
 interface PageProps { params: { locale: Locale } }
 
@@ -299,7 +311,7 @@ export default async function HomePage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ── SECTION 9: BLOG PREVIEW ─────────────────────────────── */}
+      {/* ── SECTION 9: BLOG PREVIEW — 16:9 cards with real images ── */}
       <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
         <div className="container-custom">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
@@ -313,31 +325,38 @@ export default async function HomePage({ params }: PageProps) {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
             {[
-              { title: 'How Much Does Auto Insurance Cost in NYC? (2026 Guide)', slug: 'how-much-does-auto-insurance-cost-nyc', category: 'auto', excerpt: 'Auto insurance in New York City is among the most expensive in the nation. Here\'s what drivers pay — and how to lower your rate.', date: 'Mar 1, 2026', bg: 'linear-gradient(135deg,#0b1f3a 0%,#173560 100%)', icon: '🚗' },
-              { title: 'What Is TLC Insurance and Who Needs It in NYC?', slug: 'what-is-tlc-insurance-and-who-needs-it', category: 'tlc', excerpt: 'If you drive for Uber, Lyft, or operate a taxi in New York City, TLC insurance is legally required.', date: 'Mar 5, 2026', bg: 'linear-gradient(135deg,#1a2535 0%,#2a3d58 100%)', icon: '🚕' },
-              { title: 'Independent Broker vs Captive Agent: Which Is Better?', slug: 'independent-broker-vs-captive-agent', category: 'general', excerpt: 'Captive agents sell one company\'s products. Independent brokers shop dozens of carriers. Here\'s why it matters.', date: 'Mar 8, 2026', bg: 'linear-gradient(135deg,#155f3a 0%,#1a7a4a 100%)', icon: '📊' },
-            ].map((post, i) => (
-              <Link key={i} href={`/${locale}/resources/${post.slug}`} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ height: 160, background: post.bg, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: 16, position: 'relative', overflow: 'hidden' }}>
-                  <span style={{ fontSize: '3.5rem', opacity: .25, position: 'absolute', right: 20, top: '50%', transform: 'translateY(-60%)' }}>{post.icon}</span>
-                  <span style={{ background: 'rgba(255,255,255,.15)', color: '#fff', fontSize: '.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, zIndex: 1 }}>
-                    {post.category.replace(/-/g, ' ')}
-                  </span>
-                </div>
-                <div style={{ padding: '22px 22px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, fontSize: '.78rem', color: 'var(--text-muted)' }}>
-                    <span>{post.date}</span>
-                    <span>·</span>
-                    <span>5 min read</span>
+              { title: 'How Much Does Auto Insurance Cost in NYC? (2026 Guide)', slug: 'how-much-does-auto-insurance-cost-nyc', category: 'auto', excerpt: 'Auto insurance in NYC is among the most expensive in the nation. Here\'s what drivers pay — and how to lower your rate.', date: 'Jan 15, 2026', coverImage: '' },
+              { title: 'What Is TLC Insurance and Who Needs It in NYC?', slug: 'what-is-tlc-insurance-and-who-needs-it', category: 'tlc', excerpt: 'If you drive for Uber, Lyft, or operate a taxi in NYC, TLC insurance is legally required. Everything you need to know.', date: 'Jan 22, 2026', coverImage: '' },
+              { title: 'Independent Broker vs Captive Agent: Which Is Better?', slug: 'independent-broker-vs-captive-agent', category: 'general', excerpt: 'Captive agents sell one company\'s products. Independent brokers shop dozens of carriers. Here\'s why it matters.', date: 'Feb 1, 2026', coverImage: '' },
+            ].map((post, i) => {
+              const bg = HOME_BLOG_COLORS[post.category] || HOME_BLOG_COLORS.general;
+              return (
+                <Link key={i} href={`/${locale}/resources/${post.slug}`} className="hover-lift"
+                  style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
+                  {/* 16:9 image area */}
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: bg, overflow: 'hidden', flexShrink: 0 }}>
+                    {post.coverImage ? (
+                      <Image src={post.coverImage} alt={post.title} fill sizes="(max-width:768px) 100vw, 33vw" style={{ objectFit: 'cover' }} />
+                    ) : (
+                      <span style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-60%)', fontSize: '3rem', opacity: .2 }}>
+                        {{ auto:'🚗', tlc:'🚕', business:'💼', homeowner:'🏠', general:'📋' }[post.category] || '📄'}
+                      </span>
+                    )}
+                    <span style={{ position: 'absolute', bottom: 10, left: 12, background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: '.7rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, textTransform: 'uppercase', letterSpacing: '.04em' }}>
+                      {post.category}
+                    </span>
                   </div>
-                  <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.05rem', lineHeight: 1.35, marginBottom: 10, fontWeight: 600 }}>{post.title}</h3>
-                  <p style={{ fontSize: '.875rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
-                  <div style={{ fontSize: '.85rem', fontWeight: 600, color: 'var(--gold-600)', marginTop: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
-                    Read more →
+
+                  {/* Text body */}
+                  <div style={{ padding: '18px 20px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <p style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginBottom: 8 }}>{post.date} · 5 min read</p>
+                    <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', lineHeight: 1.35, marginBottom: 8, fontWeight: 600 }}>{post.title}</h3>
+                    <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
+                    <span style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', marginTop: 12 }}>Read more →</span>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
