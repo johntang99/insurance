@@ -178,7 +178,10 @@ export default async function HomePage({ params }: PageProps) {
               { number: '03', title: 'You Pick the Best Rate', description: 'Review your options. We explain the differences. You make the final call — no pressure.', duration: 'You decide' },
             ]).map((step: any, i: number) => (
               <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '36px 28px 32px', position: 'relative' }}>
-                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '3.5rem', fontWeight: 700, color: 'var(--navy-50)', lineHeight: 1, marginBottom: 4, display: 'block' }}>{step.number}</span>
+                {/* Step number — gold gradient circle */}
+                <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: '0 4px 12px rgba(201,147,58,.35)' }}>
+                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{step.number}</span>
+                </div>
                 <h3 style={{ color: 'var(--navy-800)', marginBottom: 10, fontFamily: 'var(--font-heading)' }}>{step.title}</h3>
                 <p style={{ fontSize: '.9375rem', lineHeight: 1.7, color: 'var(--text-secondary)', marginBottom: 16 }}>{step.description}</p>
                 {step.duration && (
