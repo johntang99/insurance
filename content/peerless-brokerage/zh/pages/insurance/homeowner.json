@@ -1,0 +1,190 @@
+{
+  "serviceHero": {
+    "variant": "service-hero",
+    "badge": "家庭与房产保障",
+    "headline": "房屋保险",
+    "subline": "保障您的核心资产。我们比较主流保险公司方案，帮助您匹配更稳妥的保障与保费。",
+    "stats": [
+      {
+        "value": "30",
+        "label": "比较公司数",
+        "suffix": "+"
+      },
+      {
+        "value": "23",
+        "label": "平均节省",
+        "suffix": "%"
+      }
+    ],
+    "ctaPrimary": {
+      "label": "获取房屋险报价",
+      "href": "/zh/quote?type=homeowner"
+    },
+    "ctaSecondary": {
+      "label": "致电 (718) 799-0472",
+      "href": "tel:+17187990472"
+    },
+    "image": "",
+    "imageAlt": ""
+  },
+  "whatItCovers": {
+    "headline": "房屋险通常保障内容",
+    "included": [
+      {
+        "title": "房屋主体保障",
+        "description": "当房屋主体因火灾、风灾、恶意破坏等承保风险受损时，承担维修或重建费用（按条款）。"
+      },
+      {
+        "title": "室内财物保障",
+        "description": "家具、电器、衣物等个人财物被盗或受损时，提供相应赔付。"
+      },
+      {
+        "title": "责任保障",
+        "description": "若他人在您物业范围内受伤，可覆盖相应法律责任与医疗费用。"
+      },
+      {
+        "title": "额外生活费用",
+        "description": "承保事故导致房屋暂不可居住时，补偿临时住宿等额外费用。"
+      },
+      {
+        "title": "附属建筑保障",
+        "description": "覆盖独立车库、储物间、围栏等附属建筑损失。"
+      }
+    ],
+    "excluded": [
+      {
+        "title": "洪水损失",
+        "description": "标准房屋险通常不覆盖洪水，需另购洪水险（NFIP 或私人公司）。"
+      },
+      {
+        "title": "地震损失",
+        "description": "地震保障通常需单独保单或附加条款。"
+      },
+      {
+        "title": "自然磨损与维护问题",
+        "description": "长期老化、霉变及日常维护责任通常不在理赔范围。"
+      }
+    ],
+    "whoNeedsIt": "无论您拥有独立屋、公寓还是合作公寓，均建议配置房屋保障。若有房贷，贷款机构通常要求投保；即使无房贷，火灾、风灾与责任风险也不容忽视。"
+  },
+  "whyUs": {
+    "variant": "three-columns",
+    "headline": "为什么通过 Peerless 办理房屋险？",
+    "points": [
+      {
+        "icon": "💰",
+        "title": "打包更省钱",
+        "description": "房屋险与车险打包通常可获得 10%-25% 的综合折扣。"
+      },
+      {
+        "icon": "🔍",
+        "title": "30+ 公司可比价",
+        "description": "可比较 Travelers、Nationwide、Chubb、Liberty Mutual 等公司方案。"
+      },
+      {
+        "icon": "🤝",
+        "title": "理赔协助",
+        "description": "出险后我们协助整理材料与流程沟通，争取更顺畅的理赔体验。"
+      }
+    ]
+  },
+  "quoteProcess": {
+    "headline": "如何获取房屋险报价",
+    "steps": [
+      {
+        "title": "房屋基础信息",
+        "description": "包括地址、建造年份、面积及结构类型。"
+      },
+      {
+        "title": "当前投保情况",
+        "description": "包括现有保险公司、保障范围与保费。"
+      },
+      {
+        "title": "保障偏好设置",
+        "description": "包括重建成本、自付额及高价值物品单独列明需求。"
+      }
+    ],
+    "duration": "约 2 小时"
+  },
+  "rateFactors": {
+    "headline": "影响房屋险保费的主要因素",
+    "factors": [
+      {
+        "factor": "房龄与房况",
+        "impact": "high",
+        "description": "房龄较高且电路、管道、屋顶等系统老旧时，保费通常更高。"
+      },
+      {
+        "factor": "地理位置",
+        "impact": "high",
+        "description": "是否接近洪水区、火灾高风险区及区域风险水平都会影响费率。"
+      },
+      {
+        "factor": "保障额度",
+        "impact": "high",
+        "description": "按重建成本保障或按实际现金价值保障，费率差异明显。"
+      },
+      {
+        "factor": "自付额",
+        "impact": "medium",
+        "description": "自付额越高通常保费越低，但理赔时需承担更多费用。"
+      },
+      {
+        "factor": "历史理赔记录",
+        "impact": "medium",
+        "description": "过往理赔记录可能提高保费，或影响可选择的承保公司。"
+      },
+      {
+        "factor": "安防配置",
+        "impact": "low",
+        "description": "烟雾报警、安防系统、防盗门锁等配置可能有助于获得优惠。"
+      }
+    ],
+    "tips": [
+      "与车险打包通常可获得最明显折扣",
+      "安装可监控安防系统可能获得 5%-15% 优惠",
+      "更新屋顶等关键部位通常更有利于承保和费率",
+      "建议每年续保前复核保障额度，匹配房屋价值变化"
+    ]
+  },
+  "testimonials": {
+    "variant": "featured-3",
+    "filterByCoverageType": "homeowner",
+    "limit": 3,
+    "showRating": true,
+    "showCoverageType": false
+  },
+  "faq": {
+    "headline": "房屋险常见问题",
+    "items": [
+      {
+        "question": "房屋险保障额度怎么定？",
+        "answer": "建议以重建成本为核心，而非仅看市场交易价。我们会按房屋信息协助估算合理额度。"
+      },
+      {
+        "question": "房屋险包含洪水吗？",
+        "answer": "通常不包含。若房屋处于洪水风险区域，建议单独配置洪水险。"
+      },
+      {
+        "question": "提交理赔后保费会涨吗？",
+        "answer": "有可能，尤其是高频理赔或较大损失理赔。我们会帮您评估是否报案更划算。"
+      },
+      {
+        "question": "什么是伞形责任险？我需要吗？",
+        "answer": "伞形责任险可在房屋险和车险责任额度之上提供额外保护。若家庭资产较高，通常建议配置。"
+      },
+      {
+        "question": "房屋险多久复核一次比较合适？",
+        "answer": "建议每年复核一次；若有装修、购置高价值物品或区域房价明显变化，应及时调整。"
+      }
+    ]
+  },
+  "related": {
+    "headline": "房屋险客户也常咨询",
+    "slugs": [
+      "auto",
+      "business",
+      "construction"
+    ]
+  }
+}

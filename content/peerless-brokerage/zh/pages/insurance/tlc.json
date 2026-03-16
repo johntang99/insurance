@@ -1,0 +1,181 @@
+{
+  "faq": {
+    "items": [
+      {
+        "answer": "纽约市 TLC 对 FHV 牌照通常要求每人至少 100,000 美元、每次事故 300,000 美元责任限额。不同牌照类别要求会有差异，我们会按最新规则为您核对。",
+        "question": "纽约市 TLC 最低保险要求是什么？"
+      },
+      {
+        "answer": "可以，但可选公司和价格通常会受影响。我们有处理高风险驾驶记录的承保渠道，会尽力为您匹配可用方案。",
+        "question": "驾照有扣分还能办理 TLC 保险吗？"
+      },
+      {
+        "answer": "部分 TLC 保单对私人用车保障有限。我们会检查保单是否存在缺口，并建议加批注或配置独立个人车险。",
+        "question": "私人用车还需要额外保险吗？"
+      },
+      {
+        "answer": "多数情况可当天生效。资料齐全后，我们通常可在同一工作日完成出单并提供所需保险证明。",
+        "question": "多久可以完成投保并生效？"
+      },
+      {
+        "answer": "可以。若您有多台 FHV 车辆，通常可申请车队定价，整体成本往往优于逐台单独投保。",
+        "question": "多台营运车可以做车队价吗？"
+      }
+    ],
+    "headline": "TLC 保险常见问题"
+  },
+  "whyUs": {
+    "points": [
+      {
+        "icon": "⚡",
+        "title": "多数情况当天生效",
+        "description": "我们熟悉 TLC 截止节点，可在资料齐全时快速完成投保。"
+      },
+      {
+        "icon": "🌐",
+        "title": "中英西语多语服务",
+        "description": "团队可用英文、西班牙语与中文沟通，流程说明更清晰。"
+      },
+      {
+        "icon": "🛡️",
+        "title": "熟悉 TLC 合规细则",
+        "description": "按最新监管要求审核保障结构，降低因不合规带来的风险。"
+      }
+    ],
+    "variant": "three-columns",
+    "headline": "为什么 TLC 司机选择 Peerless"
+  },
+  "related": {
+    "slugs": [
+      "commercial-auto",
+      "auto",
+      "dmv"
+    ],
+    "headline": "TLC 客户也常咨询"
+  },
+  "rateFactors": {
+    "tips": [
+      "保持良好驾驶记录，是影响保费的核心因素",
+      "完成 TLC 认可的安全驾驶课程有助于争取更优费率",
+      "根据可承受范围合理设置自付额",
+      "多车辆运营可评估车队打包方案"
+    ],
+    "factors": [
+      {
+        "factor": "车辆年限与车型",
+        "impact": "high",
+        "description": "车辆价值与维修成本越高，保费通常越高。"
+      },
+      {
+        "factor": "驾驶历史",
+        "impact": "high",
+        "description": "违章与有责事故会显著影响 TLC 保费。"
+      },
+      {
+        "factor": "保障额度",
+        "impact": "medium",
+        "description": "额度越高保费越高，但风险保障更充分。"
+      },
+      {
+        "factor": "自付额",
+        "impact": "medium",
+        "description": "自付额提高可降低保费，但理赔时自付金额也会增加。"
+      },
+      {
+        "factor": "历史理赔记录",
+        "impact": "high",
+        "description": "历史理赔（尤其有责事故）会显著影响续保费率。"
+      }
+    ],
+    "headline": "影响 TLC 保费的主要因素"
+  },
+  "serviceHero": {
+    "badge": "纽约 TLC 专项服务",
+    "image": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557893767-photo-1593950315186-76a92975b60c.jpg",
+    "stats": [
+      {
+        "label": "投保时效",
+        "value": "当天",
+        "suffix": ""
+      },
+      {
+        "label": "TLC 服务经验",
+        "value": "10",
+        "suffix": "+"
+      }
+    ],
+    "subline": "为 Uber、Lyft、出租车及营运车司机提供快速、合规的 TLC 保险方案。",
+    "variant": "service-hero",
+    "headline": "TLC 保险",
+    "imageAlt": "纽约 TLC 保险服务",
+    "ctaPrimary": {
+      "href": "/zh/quote?type=tlc",
+      "label": "获取 TLC 报价"
+    },
+    "ctaSecondary": {
+      "href": "tel:+17187990472",
+      "label": "致电 (718) 799-0472"
+    }
+  },
+  "quoteProcess": {
+    "steps": [
+      {
+        "title": "提供 TLC 相关信息",
+        "description": "包括 TLC 驾驶证号及 FHV 车牌信息。"
+      },
+      {
+        "title": "填写车辆资料",
+        "description": "包括车辆年份、品牌型号及 VIN。"
+      },
+      {
+        "title": "提交驾驶记录",
+        "description": "包括违章、事故及驾照状态等信息。"
+      }
+    ],
+    "duration": "多数当天",
+    "headline": "如何获取 TLC 报价"
+  },
+  "testimonials": {
+    "limit": 3,
+    "variant": "featured-3",
+    "showRating": true,
+    "showCoverageType": false,
+    "filterByCoverageType": "tlc"
+  },
+  "whatItCovers": {
+    "excluded": [
+      {
+        "title": "私人使用保障缺口",
+        "description": "部分 TLC 保单仅覆盖商业用途，私人用途需额外配置。"
+      },
+      {
+        "title": "机械老化与保养",
+        "description": "正常磨损、机械故障及常规保养通常不属于理赔范围。"
+      }
+    ],
+    "headline": "TLC 保险保障范围",
+    "included": [
+      {
+        "title": "商业责任保障",
+        "description": "覆盖营运期间对乘客及第三方造成的人身和财产损失责任。"
+      },
+      {
+        "title": "符合 TLC 最低要求",
+        "description": "满足纽约市 TLC 对 FHV、出租车及营运车牌照的最低承保标准。"
+      },
+      {
+        "title": "车辆损失保障",
+        "description": "可包含综合险与碰撞险，用于车辆本身损失。"
+      },
+      {
+        "title": "无保险驾驶人保障",
+        "description": "营运中遭遇无保险车辆事故时提供保障。"
+      },
+      {
+        "title": "医疗费用保障",
+        "description": "事故发生后用于覆盖司机与乘客相关医疗费用（按条款）。"
+      }
+    ],
+    "whoNeedsIt": "在纽约市运营营运车辆（如 Uber、Lyft、出租车、黑车、豪华车等）的司机，通常都需要持有符合 TLC 标准的商业保险。未合规可能导致罚款、停牌或续牌受限。"
+  }
+}

@@ -77,6 +77,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function InsuranceServicePage({ params }: PageProps) {
   const { locale, slug } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const supabase = getSupabaseServerClient();
@@ -108,6 +109,21 @@ export default async function InsuranceServicePage({ params }: PageProps) {
   const lineName = hero.headline || LINE_NAMES[slug] || `${slug.charAt(0).toUpperCase() + slug.slice(1)} Insurance`;
   const icon = LINE_ICONS[slug] || '🔐';
   const isTLC = slug === 'tlc';
+  const ui = {
+    coverageDetails: isZh ? '保障详情' : 'Coverage Details',
+    covered: isZh ? '保障范围' : "What's Covered",
+    whoNeeds: isZh ? '适用人群' : 'Who Needs This?',
+    requiredByLaw: isZh ? '依法要求' : 'Required by Law',
+    notCovered: isZh ? '不保事项' : 'Not Covered',
+    tips: isZh ? '降低保费建议' : 'Tips to Lower Your Rate',
+    impact: isZh ? '影响' : 'impact',
+    quoteProcess: isZh ? `如何获取${lineName}报价` : `How to Get Your ${lineName} Quote`,
+    testimonials: isZh ? '客户评价' : 'What Our Clients Say',
+    related: isZh ? '相关咨询' : 'Clients Also Ask About',
+    quoteHeadline: isZh ? `准备获取${lineName}报价？` : `Ready to Get Your ${lineName} Quote?`,
+    quoteSubline: isZh ? '免费咨询，无任何义务。我们为您比较 30+ 保险公司方案。' : 'No obligation. Free quote. We shop 30+ carriers for you.',
+    trustBadge: isZh ? '免费咨询 · 无义务 · 持牌经纪' : 'No obligation · Free quote · Licensed broker',
+  };
 
   return (
     <main>
@@ -119,20 +135,20 @@ export default async function InsuranceServicePage({ params }: PageProps) {
       */}
       <InsuranceHero
         variant={hero.image ? 'split-image' : 'centered'}
-        badge={hero.badge || `${lineName} Coverage`}
+        badge={hero.badge || (isZh ? `${lineName}保障` : `${lineName} Coverage`)}
         icon={icon}
-        headline={`${lineName} in Flushing, NY`}
-        subline={hero.subline || `Free quotes from 30+ carriers. Same-day service for Flushing, Queens, and all of NYC.`}
+        headline={isZh ? `${lineName}（法拉盛，纽约）` : `${lineName} in Flushing, NY`}
+        subline={hero.subline || (isZh ? '比较 30+ 保险公司方案，法拉盛与纽约都会区可快速响应。' : `Free quotes from 30+ carriers. Same-day service for Flushing, Queens, and all of NYC.`)}
         image={hero.image}
         imageAlt={hero.imageAlt || `${lineName} — Peerless Brokerage`}
         stats={hero.stats?.length > 0 ? hero.stats : [
-          { value: isTLC ? 'Same Day' : '30+', label: isTLC ? 'Binding' : 'Carriers', suffix: isTLC ? '' : '' },
-          { value: '2', label: 'Hour Quote', suffix: 'hr' },
-          { value: 'NY · NJ · CT · PA', label: 'Licensed In' },
+          { value: isTLC ? (isZh ? '当天' : 'Same Day') : '30+', label: isTLC ? (isZh ? '快速生效' : 'Binding') : (isZh ? '保险公司' : 'Carriers'), suffix: '' },
+          { value: '2', label: isZh ? '报价时效' : 'Hour Quote', suffix: isZh ? '小时' : 'hr' },
+          { value: 'NY · NJ · CT · PA', label: isZh ? '持牌州' : 'Licensed In' },
         ]}
-        ctaPrimary={{ label: hero.ctaPrimary?.label || `Get a ${lineName} Quote`, href: `/${locale}/quote?type=${slug}` }}
-        ctaSecondary={{ label: `Call ${phone}`, href: phoneHref }}
-        trustBadge="No obligation · Free quote · Licensed broker"
+        ctaPrimary={{ label: hero.ctaPrimary?.label || (isZh ? `获取${lineName}报价` : `Get a ${lineName} Quote`), href: `/${locale}/quote?type=${slug}` }}
+        ctaSecondary={{ label: isZh ? `致电 ${phone}` : `Call ${phone}`, href: phoneHref }}
+        trustBadge={ui.trustBadge}
         urgencyNote={isTLC ? 'TLC plate renewal deadline? We specialize in fast TLC compliance — <strong>same-day binding available.</strong>' : undefined}
       />
 
@@ -140,7 +156,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
       <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
         <div className="container-custom">
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Coverage Details</p>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.coverageDetails}</p>
             <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>
               {covers.headline || `What ${lineName} Covers`}
             </h2>
@@ -149,7 +165,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             {/* Included */}
             <div>
               <h3 style={{ color: 'var(--green-500)', fontFamily: 'var(--font-heading)', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <CheckCircle className="w-5 h-5" /> What&apos;s Covered
+                <CheckCircle className="w-5 h-5" /> {ui.covered}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {(covers.included || [
@@ -173,11 +189,11 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
               {covers.whoNeedsIt && (
                 <div style={{ background: 'var(--navy-800)', borderRadius: 'var(--radius-lg)', padding: '28px 24px', color: '#fff' }}>
-                  <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--gold-400)', marginBottom: 12 }}>Who Needs This?</h4>
+                  <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--gold-400)', marginBottom: 12 }}>{ui.whoNeeds}</h4>
                   <p style={{ fontSize: '.9rem', color: 'rgba(255,255,255,.8)', lineHeight: 1.65 }}>{covers.whoNeedsIt}</p>
                   {covers.isRequired && (
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--gold-500)', color: '#fff', borderRadius: 100, padding: '4px 12px', fontSize: '.78rem', fontWeight: 700, marginTop: 14 }}>
-                      ⚖️ Required by Law
+                      ⚖️ {ui.requiredByLaw}
                     </div>
                   )}
                 </div>
@@ -185,7 +201,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
               {covers.excluded && covers.excluded.length > 0 && (
                 <div>
                   <h4 style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-heading)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <XCircle className="w-4 h-4" style={{ color: 'var(--red-500)' }} /> Not Covered
+                    <XCircle className="w-4 h-4" style={{ color: 'var(--red-500)' }} /> {ui.notCovered}
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                     {covers.excluded.map((item: any, i: number) => (
@@ -213,11 +229,11 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             <div style={{ background: 'var(--gold-100)', border: '2px solid var(--gold-400)', borderRadius: 12, padding: '20px 24px', marginBottom: 40, display: 'flex', gap: 16, alignItems: 'flex-start' }}>
               <span style={{ fontSize: '2rem', flexShrink: 0 }}>⚡</span>
               <div>
-                <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 6, fontWeight: 700 }}>TLC Deadline Pressure?</h4>
+                <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 6, fontWeight: 700 }}>{isZh ? 'TLC 续牌时间紧？' : 'TLC Deadline Pressure?'}</h4>
                 <p style={{ fontSize: '.9375rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                  We Specialize in Fast TLC Compliance Coverage. Same-day binding for TLC plate renewals.{' '}
-                  <strong>We speak English, Spanish, and Chinese</strong> — no language barrier.{' '}
-                  <a href={phoneHref} style={{ color: 'var(--gold-600)', fontWeight: 700, textDecoration: 'none' }}>Speak to a TLC specialist now →</a>
+                  {isZh ? '我们专注 TLC 合规保障，资料齐全时多数可当天生效。' : 'We Specialize in Fast TLC Compliance Coverage. Same-day binding for TLC plate renewals.'}{' '}
+                  <strong>{isZh ? '支持英文、西班牙语与中文服务' : 'We speak English, Spanish, and Chinese'}</strong>{isZh ? '，沟通无障碍。' : ' — no language barrier.'}{' '}
+                  <a href={phoneHref} style={{ color: 'var(--gold-600)', fontWeight: 700, textDecoration: 'none' }}>{isZh ? '立即联系 TLC 顾问 →' : 'Speak to a TLC specialist now →'}</a>
                 </p>
               </div>
             </div>
@@ -259,7 +275,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                     <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '.9rem' }}>{f.factor}</span>
                     <span style={{ fontSize: '.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, background: f.impact === 'high' ? 'var(--red-100)' : f.impact === 'medium' ? 'var(--gold-100)' : 'var(--green-100)', color: f.impact === 'high' ? 'var(--red-600)' : f.impact === 'medium' ? 'var(--gold-600)' : 'var(--green-600)' }}>
-                      {f.impact} impact
+                      {f.impact} {ui.impact}
                     </span>
                   </div>
                   <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.55, margin: 0 }}>{f.description}</p>
@@ -268,7 +284,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             </div>
             {rateFactors.tips && rateFactors.tips.length > 0 && (
               <div style={{ background: 'var(--gold-100)', border: '1px solid var(--gold-300)', borderRadius: 'var(--radius-lg)', padding: '24px 28px' }}>
-                <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--gold-600)', marginBottom: 14 }}>💡 Tips to Lower Your Rate</h4>
+                <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--gold-600)', marginBottom: 14 }}>💡 {ui.tips}</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {rateFactors.tips.map((tip: string, i: number) => (
                     <div key={i} style={{ display: 'flex', gap: 10, fontSize: '.875rem', color: 'var(--text-secondary)' }}>
@@ -288,7 +304,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
         <div className="container-custom">
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>
-              {quoteProcess.headline || `How to Get Your ${lineName} Quote`}
+              {quoteProcess.headline || ui.quoteProcess}
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
@@ -320,7 +336,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
         <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
           <div className="container-custom">
             <div style={{ textAlign: 'center', marginBottom: 40 }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>What Our Clients Say</h2>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>{ui.testimonials}</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(testimonials.length, 3)},1fr)`, gap: 24 }}>
               {testimonials.slice(0, 3).map((t: any) => (
@@ -370,7 +386,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
         <section style={{ padding: '56px 0', background: 'var(--bg-subtle)' }}>
           <div className="container-custom">
             <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 24, fontSize: '1.25rem' }}>
-              {related.headline || 'Clients Also Ask About'}
+              {related.headline || ui.related}
             </h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
               {related.slugs.map((rs: string) => (
@@ -387,8 +403,8 @@ export default async function InsuranceServicePage({ params }: PageProps) {
       {/* ── SECTION 9: QUOTE CTA ─────────────────────────────────── */}
       <QuoteCTASection
         variant="form-inline"
-        headline={`Ready to Get Your ${lineName} Quote?`}
-        subline="No obligation. Free quote. We shop 30+ carriers for you."
+        headline={ui.quoteHeadline}
+        subline={ui.quoteSubline}
         coverageType={slug}
         phone={phone}
         phoneHref={phoneHref}

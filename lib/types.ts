@@ -2,8 +2,8 @@
 // TYPE DEFINITIONS FOR MULTI-SITE CONTENT SYSTEM
 // ============================================
 
-// Phase 0: English only. Spanish/Chinese added in Phase 2+.
-export type Locale = 'en';
+// Insurance platform locales (currently enabled: English + Chinese).
+export type Locale = 'en' | 'zh';
 export type RuntimeEnvironment = 'dev' | 'staging' | 'prod';
 
 export interface SiteDomainAlias {

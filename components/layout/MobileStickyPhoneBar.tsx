@@ -7,6 +7,7 @@ interface MobileStickyPhoneBarProps {
   phone: string;
   phoneHref: string;
   quoteHref: string;
+  locale?: string;
   callLabel?: string;
   quoteLabel?: string;
 }
@@ -15,9 +16,14 @@ export default function MobileStickyPhoneBar({
   phone,
   phoneHref,
   quoteHref,
-  callLabel = 'Call Us Now',
-  quoteLabel = 'Get a Free Quote',
+  locale = 'en',
+  callLabel,
+  quoteLabel,
 }: MobileStickyPhoneBarProps) {
+  const isZh = locale === 'zh';
+  const resolvedCallLabel = callLabel || (isZh ? '立即致电' : 'Call Us Now');
+  const resolvedQuoteLabel = quoteLabel || (isZh ? '免费获取报价' : 'Get a Free Quote');
+
   return (
     <div
       className="mobile-sticky-bar md:hidden"
@@ -45,7 +51,7 @@ export default function MobileStickyPhoneBar({
         }}
       >
         <Phone className="w-4 h-4" />
-        <span>{callLabel}</span>
+        <span>{resolvedCallLabel}</span>
       </a>
 
       {/* Quote button — gold */}
@@ -60,7 +66,7 @@ export default function MobileStickyPhoneBar({
         }}
       >
         <FileText className="w-4 h-4" />
-        <span>{quoteLabel}</span>
+        <span>{resolvedQuoteLabel}</span>
       </Link>
     </div>
   );

@@ -1,0 +1,30 @@
+{
+  "titleTemplate": "%s | Peerless Brokerage Inc",
+  "defaultTitle": "Peerless Brokerage Inc — 法拉盛独立保险经纪",
+  "description": "提供车险、房屋险、商业险等免费报价。Peerless Brokerage 比较30+保险公司方案，帮助您选择更合适保障。",
+  "ogImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/og-default.jpg",
+  "twitterHandle": "",
+  "canonicalBase": "https://pbiny.com",
+  "pages": {
+    "home": {
+      "title": "Independent Insurance Broker in Flushing, NY | Free Quotes",
+      "description": "Peerless Brokerage 对比30+保险公司，提供车险、房屋险、商业险、TLC等保障方案。持牌州：NY、NJ、CT、PA。欢迎致电 (718) 799-0472。"
+    },
+    "insurance": {
+      "title": "保险方案总览 | 15类保障",
+      "description": "车险、TLC、房屋险、商业险、工伤险等15类保险方案，一站式满足法拉盛和皇后区家庭与企业需求。"
+    },
+    "quote": {
+      "title": "免费获取保险报价",
+      "description": "2分钟提交报价需求，我们将比较30+保险公司并在2个工作小时内联系您。"
+    },
+    "about": {
+      "title": "关于我们 | 自1999年持牌服务",
+      "description": "25年以上服务法拉盛、皇后区与纽约市。持牌州：NY、NJ、CT、PA。我们为客户利益提供独立建议。"
+    },
+    "contact": {
+      "title": "联系我们 | 法拉盛办公室",
+      "description": "欢迎到访 136-31 41st Ave, Flushing, NY 11355。电话 (718) 799-0472。营业时间：周一至周五9:00-18:00，周六10:00-15:00。"
+    }
+  }
+}

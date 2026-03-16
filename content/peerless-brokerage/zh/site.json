@@ -1,0 +1,39 @@
+{
+  "zip": "11355",
+  "city": "Flushing",
+  "name": "Peerless Brokerage Inc",
+  "email": "info@pbiny.com",
+  "hours": "Mon–Fri 9am–6pm",
+  "phone": "(718) 799-0472",
+  "state": "NY",
+  "social": {
+    "google": "",
+    "facebook": ""
+  },
+  "address": "136-31 41st Ave, Flushing, NY 11355",
+  "logoUrl": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/logo.png",
+  "tagline": "值得信赖的独立保险经纪",
+  "languages": [
+    "英文",
+    "西班牙语",
+    "中文"
+  ],
+  "faviconUrl": "/favicon.ico",
+  "description": "提供车险、房屋险、商业险等免费报价。Peerless Brokerage 比较30+保险公司方案，为您匹配更合适费率。自1999年服务法拉盛、皇后区与纽约市。",
+  "clientsCount": 5000,
+  "addressMapUrl": "https://www.google.com/maps/search/?api=1&query=136-31+41st+Ave+Flushing+NY+11355",
+  "carriersCount": 30,
+  "headerVariant": "default",
+  "licenseNumber": "LA-1234567",
+  "policiesCount": 10000,
+  "licensedStates": [
+    "NY",
+    "NJ",
+    "CT",
+    "PA"
+  ],
+  "yearsInBusiness": 25,
+  "googleReviewsCount": 312,
+  "googleReviewsRating": 4.9,
+  "iconCharacter": "PBI"
+}

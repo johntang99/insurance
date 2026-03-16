@@ -1,0 +1,46 @@
+{
+  "hero": {
+    "variant": "centered",
+    "headline": "Notary Services",
+    "subline": "Licensed notary public on-site. Get your important documents notarized quickly and professionally."
+  },
+  "serviceDetail": {
+    "headline": "Documents We Notarize",
+    "services": [
+      "Insurance forms and policies",
+      "Real estate and property documents",
+      "Affidavits and sworn statements",
+      "Power of attorney",
+      "Loan documents",
+      "Business contracts",
+      "Immigration forms",
+      "General legal documents"
+    ]
+  },
+  "pricing": {
+    "headline": "Pricing",
+    "note": "Notary fees are set by New York State law.",
+    "items": [
+      {
+        "service": "First signature",
+        "price": "$2.00"
+      },
+      {
+        "service": "Each additional signature",
+        "price": "$2.00"
+      }
+    ]
+  },
+  "cta": {
+    "headline": "Need a Notary?",
+    "subline": "Walk-ins welcome during business hours. Large documents — call ahead.",
+    "ctaPrimary": {
+      "label": "Call Ahead",
+      "href": "tel:+17187990472"
+    },
+    "ctaSecondary": {
+      "label": "Get Directions",
+      "href": "/zh/contact"
+    }
+  }
+}

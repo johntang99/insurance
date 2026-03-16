@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       domain: payload.domain,
       enabled: payload.enabled ?? true,
       defaultLocale: payload.defaultLocale ?? 'en',
-      supportedLocales: payload.supportedLocales ?? ['en'],
+      supportedLocales: payload.supportedLocales ?? ['en', 'zh'],
     });
 
     if (payload.cloneFrom) {

@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "variant": "centered",
+    "headline": "DMV Services",
+    "subline": "Save time on vehicle registration, title transfers, and other DMV transactions — handled right from our Brooklyn office."
+  },
+  "serviceDetail": {
+    "headline": "What We Handle",
+    "services": [
+      "Vehicle registration and renewals",
+      "Title transfers and title searches",
+      "License plate surrender",
+      "VIN inspections",
+      "Out-of-state vehicle registration in NY",
+      "Commercial vehicle registration"
+    ]
+  },
+  "requirements": {
+    "headline": "What to Bring",
+    "items": [
+      "Valid government-issued photo ID",
+      "Vehicle title or existing registration",
+      "Proof of insurance",
+      "Payment (check or credit card)"
+    ]
+  },
+  "cta": {
+    "headline": "Need DMV Help?",
+    "subline": "Stop by our office or call ahead to confirm what documents you'll need.",
+    "ctaPrimary": {
+      "label": "Call Us",
+      "href": "tel:+17187990472"
+    },
+    "ctaSecondary": {
+      "label": "Get Directions",
+      "href": "/zh/contact"
+    }
+  }
+}

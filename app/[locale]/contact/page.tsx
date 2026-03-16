@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ContactPage({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const [content, siteInfo] = await Promise.all([
@@ -36,12 +37,27 @@ export default async function ContactPage({ params }: PageProps) {
   const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const email = si?.email || 'info@pbiny.com';
   const address = si?.address ? `${si.address}, ${si.city}, ${si.state} ${si.zip}` : '123 Main Street, Flushing, NY 11201';
-  const languages = si?.languages || ['English', 'Spanish', 'Chinese'];
+  const languages = si?.languages || (isZh ? ['英文', '西班牙语', '中文'] : ['English', 'Spanish', 'Chinese']);
   const hours = content?.contactInfo?.hours || [
-    { days: 'Monday – Friday', hours: '9:00am – 6:00pm' },
-    { days: 'Saturday', hours: '10:00am – 3:00pm' },
-    { days: 'Sunday', hours: 'Closed' },
+    { days: isZh ? '周一至周五' : 'Monday – Friday', hours: isZh ? '9:00–18:00' : '9:00am – 6:00pm' },
+    { days: isZh ? '周六' : 'Saturday', hours: isZh ? '10:00–15:00' : '10:00am – 3:00pm' },
+    { days: isZh ? '周日' : 'Sunday', hours: isZh ? '休息' : 'Closed' },
   ];
+  const ui = {
+    heroHeadline: isZh ? '联系我们' : 'Contact Us',
+    heroSubline: isZh ? '欢迎来电、邮件咨询，或到办公室当面沟通。' : "We're here to help — call, email, or stop by our office.",
+    callText: isZh ? '电话咨询' : 'Call or Text',
+    available: isZh ? '周一至周六可联系' : 'Available Mon–Sat 9am–6pm',
+    office: isZh ? '办公室地址' : 'Our Office',
+    directions: isZh ? '导航前往 →' : 'Get Directions →',
+    emailQuote: isZh ? '邮箱与报价' : 'Email or Quote',
+    responseDay: isZh ? '1 个工作日内回复' : 'We respond within 1 business day',
+    freeQuote: isZh ? '免费获取报价' : 'Get a Free Quote',
+    findUs: isZh ? '地图位置' : 'Find Us',
+    openGoogleMaps: isZh ? '在 Google 地图打开 →' : 'Open in Google Maps →',
+    serviceArea: isZh ? '服务区域' : 'Service Area',
+    closed: isZh ? '休息' : 'Closed',
+  };
 
   const supabase = getSupabaseServerClient();
   const linesRes = await supabase?.from('insurance_lines').select('line_slug,name').eq('site_id', siteId).eq('is_enabled', true).order('sort_order');
@@ -53,10 +69,10 @@ export default async function ContactPage({ params }: PageProps) {
       <section style={{ background: 'var(--navy-800)', padding: '64px 0 48px', textAlign: 'center' }}>
         <div className="container-custom">
           <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(2rem,4vw,2.8rem)', marginBottom: 12 }}>
-            {content?.hero?.headline || 'Contact Us'}
+            {content?.hero?.headline || ui.heroHeadline}
           </h1>
           <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '1.05rem', maxWidth: 480, margin: '0 auto' }}>
-            {content?.hero?.subline || "We're here to help — call, email, or stop by our office."}
+            {content?.hero?.subline || ui.heroSubline}
           </p>
         </div>
       </section>
@@ -70,12 +86,12 @@ export default async function ContactPage({ params }: PageProps) {
               <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--navy-800)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
                 <Phone className="w-6 h-6" style={{ color: 'var(--gold-400)' }} />
               </div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>Call or Text</h3>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>{ui.callText}</h3>
               <a href={phoneHref} style={{ display: 'block', fontSize: '1.5rem', fontWeight: 800, color: 'var(--navy-800)', textDecoration: 'none', marginBottom: 8, fontFamily: 'var(--font-heading)' }}>
                 {phone}
               </a>
               <p style={{ fontSize: '.875rem', color: 'var(--text-muted)', marginBottom: 12 }}>
-                Available Mon–Sat 9am–6pm
+                {ui.available}
               </p>
               {languages.length > 1 && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6 }}>
@@ -91,17 +107,17 @@ export default async function ContactPage({ params }: PageProps) {
               <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--navy-800)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
                 <MapPin className="w-6 h-6" style={{ color: 'var(--gold-400)' }} />
               </div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>Our Office</h3>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>{ui.office}</h3>
               <p style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8, lineHeight: 1.5 }}>{address}</p>
               <a href={`https://maps.google.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-block', color: 'var(--gold-600)', fontWeight: 600, fontSize: '.875rem', marginBottom: 16 }}>
-                Get Directions →
+                {ui.directions}
               </a>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {hours.map((h: any, i: number) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '.85rem' }}>
                     <span style={{ color: 'var(--text-muted)' }}>{h.days}</span>
-                    <span style={{ fontWeight: 600, color: h.hours === 'Closed' ? 'var(--red-500)' : 'var(--text-primary)' }}>{h.hours}</span>
+                    <span style={{ fontWeight: 600, color: h.hours === ui.closed ? 'var(--red-500)' : 'var(--text-primary)' }}>{h.hours}</span>
                   </div>
                 ))}
               </div>
@@ -112,11 +128,11 @@ export default async function ContactPage({ params }: PageProps) {
               <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--navy-800)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
                 <Mail className="w-6 h-6" style={{ color: 'var(--gold-400)' }} />
               </div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>Email or Quote</h3>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>{ui.emailQuote}</h3>
               <a href={`mailto:${email}`} style={{ display: 'block', color: 'var(--navy-800)', fontWeight: 600, marginBottom: 8, wordBreak: 'break-all' }}>{email}</a>
-              <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', marginBottom: 20 }}>We respond within 1 business day</p>
+              <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', marginBottom: 20 }}>{ui.responseDay}</p>
               <a href={`/${locale}/quote`} className="btn-gold-sm" style={{ display: 'block', textAlign: 'center' }}>
-                Get a Free Quote
+                {ui.freeQuote}
               </a>
             </div>
           </div>
@@ -137,7 +153,7 @@ export default async function ContactPage({ params }: PageProps) {
       <section style={{ padding: '0 0 var(--section-y)' }}>
         <div className="container-custom">
           <div style={{ marginBottom: 16 }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 4 }}>Find Us</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 4 }}>{ui.findUs}</h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '.9rem' }}>{address}</p>
           </div>
           {content?.contactInfo?.mapEmbed ? (
@@ -156,7 +172,7 @@ export default async function ContactPage({ params }: PageProps) {
                 <p style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>{address}</p>
                 <a href={`https://maps.google.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer"
                   style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.875rem' }}>
-                  Open in Google Maps →
+                  {ui.openGoogleMaps}
                 </a>
               </div>
             </div>
@@ -167,7 +183,7 @@ export default async function ContactPage({ params }: PageProps) {
       {/* ── SERVICE AREA ─────────────────────────────────────────── */}
       <section style={{ padding: '48px 0', background: 'var(--bg-subtle)', borderTop: '1px solid var(--border)' }}>
         <div className="container-custom" style={{ textAlign: 'center' }}>
-          <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 12 }}>Service Area</h4>
+          <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 12 }}>{ui.serviceArea}</h4>
           <p style={{ color: 'var(--text-muted)', fontSize: '.9rem', maxWidth: 600, margin: '0 auto' }}>
             {content?.serviceArea?.text || 'We serve clients throughout New York, New Jersey, Connecticut, and Pennsylvania. Our Flushing office is conveniently located for clients in Flushing, Queens, Manhattan, Staten Island, and the Bronx.'}
           </p>

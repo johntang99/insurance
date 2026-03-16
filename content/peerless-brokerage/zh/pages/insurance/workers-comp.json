@@ -1,0 +1,147 @@
+{
+  "serviceHero": {
+    "variant": "service-hero",
+    "badge": "雇主法定保障",
+    "headline": "工伤保险（Workers Comp）",
+    "subline": "纽约州多数雇主依法需要配置工伤保险。我们帮助您快速完成投保、续保与合规资料准备。",
+    "ctaPrimary": {
+      "label": "获取工伤险报价",
+      "href": "/zh/quote?type=workers-comp"
+    },
+    "ctaSecondary": {
+      "label": "致电 (718) 799-0472",
+      "href": "tel:+17187990472"
+    },
+    "image": "",
+    "imageAlt": "工伤保险服务"
+  },
+  "whatItCovers": {
+    "headline": "工伤保险保障内容",
+    "included": [
+      {
+        "title": "工伤医疗费用",
+        "description": "员工因工受伤后的必要医疗、康复等费用（按法规与条款）。"
+      },
+      {
+        "title": "工资损失补偿",
+        "description": "员工因工伤无法工作期间，可获得法定比例的收入补偿。"
+      },
+      {
+        "title": "雇主责任保障",
+        "description": "在特定责任情形下，为雇主提供法律责任层面的保障。"
+      },
+      {
+        "title": "事故申报与合规支持",
+        "description": "协助企业理解续保、证明文件及申报流程要求。"
+      }
+    ],
+    "excluded": [
+      {
+        "title": "非工作相关伤病",
+        "description": "与工作无关的伤病通常不属于工伤保险理赔范围。"
+      },
+      {
+        "title": "故意违法行为",
+        "description": "故意违规导致的损失通常不予理赔。"
+      }
+    ],
+    "whoNeedsIt": "纽约州大多数雇主（即使员工人数较少）通常都需要依法购买工伤保险。未合规可能面临罚款、停业风险及合同受限。"
+  },
+  "whyUs": {
+    "variant": "three-columns",
+    "headline": "为什么选择 Peerless 办理工伤险",
+    "points": [
+      {
+        "icon": "⚖️",
+        "title": "关注合规要求",
+        "description": "协助您理解纽约州工伤险常见合规标准，降低经营风险。"
+      },
+      {
+        "icon": "📉",
+        "title": "多公司比价",
+        "description": "比较不同承保公司方案，兼顾预算、额度与服务体验。"
+      },
+      {
+        "icon": "🧾",
+        "title": "文件处理支持",
+        "description": "在续保、合同审查及保险证明资料方面提供高效协助。"
+      }
+    ]
+  },
+  "quoteProcess": {
+    "headline": "工伤险报价流程",
+    "steps": [
+      {
+        "number": "01",
+        "title": "提交雇主基础资料",
+        "description": "包括公司行业、员工人数、薪资总额与历史理赔信息。"
+      },
+      {
+        "number": "02",
+        "title": "确定分类与额度",
+        "description": "根据岗位风险和业务类型，匹配合理承保结构。"
+      },
+      {
+        "number": "03",
+        "title": "确认并完成投保",
+        "description": "比较方案后完成出单，并按需准备相关保险证明。"
+      }
+    ],
+    "duration": "1-2 个工作日"
+  },
+  "rateFactors": {
+    "headline": "影响工伤险保费的主要因素",
+    "factors": [
+      {
+        "factor": "行业与岗位风险",
+        "impact": "high",
+        "description": "岗位事故风险越高，费率通常越高。"
+      },
+      {
+        "factor": "工资基数",
+        "impact": "high",
+        "description": "工伤险保费通常与员工薪资总额相关。"
+      },
+      {
+        "factor": "历史理赔记录",
+        "impact": "high",
+        "description": "既往理赔频率和损失规模会影响定价与承保条件。"
+      },
+      {
+        "factor": "安全管理措施",
+        "impact": "medium",
+        "description": "完善的安全培训与管理制度有助于长期控费。"
+      }
+    ],
+    "tips": [
+      "确保岗位分类准确，避免续保或审计阶段争议",
+      "建立安全培训与事故预防机制，降低长期赔付风险",
+      "业务扩张或人员变化后及时更新保单信息"
+    ]
+  },
+  "faq": {
+    "headline": "工伤险常见问题",
+    "items": [
+      {
+        "question": "纽约州是否强制购买工伤险？",
+        "answer": "多数雇主都需要依法购买，具体适用情况可根据企业结构与雇佣形式确认。"
+      },
+      {
+        "question": "只有 1 名员工也需要买吗？",
+        "answer": "在很多情况下仍需要。建议按企业实际用工情况做合规核查。"
+      },
+      {
+        "question": "没有工伤险会有什么风险？",
+        "answer": "可能面临罚款、法律责任、合同合作受限及经营中断风险。"
+      }
+    ]
+  },
+  "related": {
+    "headline": "工伤险客户也常咨询",
+    "slugs": [
+      "business",
+      "commercial-auto",
+      "construction"
+    ]
+  }
+}

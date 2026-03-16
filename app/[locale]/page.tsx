@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const [content, siteInfo] = await Promise.all([
@@ -87,6 +88,37 @@ export default async function HomePage({ params }: PageProps) {
   const hiw = content.howItWorks || {};
   const stats = content.stats || {};
   const cta = content.cta || {};
+  const ui = {
+    heroBadge: isZh ? '持牌经纪 · 独立顾问' : 'Licensed & Independent',
+    heroHeadline: isZh ? '您值得信赖的独立保险经纪' : 'Your Trusted Independent Insurance Broker',
+    heroSubline: isZh ? '我们比较 30+ 保险公司，为车险、房屋险、商业险及专项险种提供更合适费率。' : 'We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.',
+    freeQuote: isZh ? '免费获取报价' : 'Get a Free Quote',
+    trustBadge: isZh ? '持牌 · 独立 · 本地服务' : 'Licensed · Independent · Local',
+    allCoverage: isZh ? '保障全覆盖' : 'We Cover Everything',
+    whyDifferent: isZh ? '我们的不同之处' : 'Why We\'re Different',
+    whyHeadline: isZh ? '为什么选择独立保险经纪？' : 'Why Choose an Independent Broker?',
+    saveLink: isZh ? '查看您可节省多少 →' : 'See how much you could save →',
+    simpleProcess: isZh ? '简单流程' : 'Simple Process',
+    howItWorks: isZh ? '3 步完成保险比价' : 'How It Works — 3 Simple Steps',
+    startQuote: isZh ? '开始我的报价' : 'Start My Quote',
+    clientReviews: isZh ? '客户评价' : 'Client Reviews',
+    testimonials: isZh ? '客户真实反馈' : 'What Our Clients Say',
+    reviewTag: isZh ? 'Google 评价' : 'Google Review',
+    readAllReviews: isZh ? '查看全部评价 →' : 'See all our reviews →',
+    meetTeam: isZh ? '顾问团队' : 'Meet the Team',
+    teamHeadline: isZh ? '认识您的保险顾问' : 'Meet Your Insurance Experts',
+    teamSubline: isZh ? '真人服务，专业建议。' : 'Real people. Real expertise. No bots.',
+    yearsExp: isZh ? '年经验' : 'years experience',
+    quoteWith: isZh ? '与' : 'Get a Quote with',
+    viewAllAgents: isZh ? '查看全部顾问 →' : 'View All Our Agents →',
+    resourceCenter: isZh ? '资讯中心' : 'Resource Center',
+    fromResource: isZh ? '精选保险指南' : 'From Our Resource Center',
+    viewAllResources: isZh ? '查看全部文章 →' : 'View All Resources →',
+    minRead: isZh ? '分钟阅读' : 'min read',
+    readMore: isZh ? '阅读全文 →' : 'Read more →',
+    ctaHeadline: isZh ? '准备好优化您的保险费用了吗？' : 'Ready to Save on Insurance?',
+    ctaSubline: isZh ? '仅需 2 分钟，无任何义务。我们比较 30+ 保险公司。' : 'Takes 2 minutes. No obligation. We shop 30+ carriers for you.',
+  };
 
   return (
     <main>
@@ -105,23 +137,23 @@ export default async function HomePage({ params }: PageProps) {
       */}
       <InsuranceHero
         variant={hero.variant || 'home'}
-        badge={`★ ${hero.badge || 'Licensed & Independent'}`}
-        headline={hero.headline || 'Your Trusted Independent Insurance Broker'}
-        subline={hero.subline || 'We shop 30+ carriers to find you the best rate for auto, home, business, and specialty coverage.'}
+        badge={`★ ${hero.badge || ui.heroBadge}`}
+        headline={hero.headline || ui.heroHeadline}
+        subline={hero.subline || ui.heroSubline}
         image={hero.image}
         imageAlt={hero.imageAlt}
         backgroundImage={hero.backgroundImage}
         galleryImages={hero.galleryImages || []}
         stats={hero.stats?.length > 0 ? hero.stats : (stats.items || [])}
-        ctaPrimary={{ label: hero.ctaPrimary?.label || 'Get a Free Quote', href: hero.ctaPrimary?.href || `/${locale}/quote` }}
-        ctaSecondary={{ label: hero.ctaSecondary?.label || `Call ${phone}`, href: hero.ctaSecondary?.href || phoneHref }}
-        trustBadge="Licensed · Independent · Local"
+        ctaPrimary={{ label: hero.ctaPrimary?.label || ui.freeQuote, href: hero.ctaPrimary?.href || `/${locale}/quote` }}
+        ctaSecondary={{ label: hero.ctaSecondary?.label || (isZh ? `致电 ${phone}` : `Call ${phone}`), href: hero.ctaSecondary?.href || phoneHref }}
+        trustBadge={ui.trustBadge}
         minHeight={520}
       />
 
       {/* ── SECTION 2: INSURANCE LINE GRID ─────────────────────── */}
       <InsuranceLineGrid
-        headline={content.insuranceLines?.headline || 'We Cover Everything'}
+        headline={content.insuranceLines?.headline || ui.allCoverage}
         subline={content.insuranceLines?.subline}
         lines={lines.length > 0 ? lines : []}
         variant="grid"
@@ -132,9 +164,9 @@ export default async function HomePage({ params }: PageProps) {
       <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
         <div className="container-custom">
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Why We&apos;re Different</p>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.whyDifferent}</p>
             <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 12 }}>
-              {content.whyIndependent?.headline || 'Why Choose an Independent Broker?'}
+              {content.whyIndependent?.headline || ui.whyHeadline}
             </h2>
             {content.whyIndependent?.subline && (
               <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', maxWidth: 560, margin: '0 auto' }}>
@@ -159,7 +191,7 @@ export default async function HomePage({ params }: PageProps) {
           </div>
           <div style={{ textAlign: 'center', marginTop: 48 }}>
             <Link href={`/${locale}/quote`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              See how much you could save →
+              {ui.saveLink}
             </Link>
           </div>
         </div>
@@ -199,8 +231,8 @@ export default async function HomePage({ params }: PageProps) {
       <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
         <div className="container-custom">
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Simple Process</p>
-            <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>{hiw.headline || 'How It Works — 3 Simple Steps'}</h2>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.simpleProcess}</p>
+            <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>{hiw.headline || ui.howItWorks}</h2>
             {hiw.subline && <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: 12 }}>{hiw.subline}</p>}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 28 }}>
@@ -226,7 +258,7 @@ export default async function HomePage({ params }: PageProps) {
           </div>
           <div style={{ textAlign: 'center', marginTop: 48 }}>
             <Link href={`/${locale}/quote`} className="btn-gold">
-              {hiw.cta?.label || 'Start My Quote'}
+              {hiw.cta?.label || ui.startQuote}
             </Link>
           </div>
         </div>
@@ -236,9 +268,9 @@ export default async function HomePage({ params }: PageProps) {
       <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-white)' }}>
         <div className="container-custom">
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Client Reviews</p>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.clientReviews}</p>
             <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>
-              {content.testimonials?.headline || 'What Our Clients Say'}
+              {content.testimonials?.headline || ui.testimonials}
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
@@ -250,7 +282,7 @@ export default async function HomePage({ params }: PageProps) {
               <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 28, display: 'flex', flexDirection: 'column', gap: 16, boxShadow: 'var(--shadow-sm)' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
                   <span style={{ color: 'var(--gold-500)', letterSpacing: 2, fontSize: '.95rem' }}>★★★★★</span>
-                  <span style={{ fontSize: '.72rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>Google Review</span>
+                  <span style={{ fontSize: '.72rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>{ui.reviewTag}</span>
                 </div>
                 <p style={{ fontSize: '.9375rem', lineHeight: 1.7, color: 'var(--text-secondary)', flex: 1 }}>
                   <span style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: 'var(--gold-300)', lineHeight: 0, verticalAlign: '-.5rem', marginRight: 2 }}>&ldquo;</span>
@@ -260,7 +292,7 @@ export default async function HomePage({ params }: PageProps) {
                   <span style={{ fontWeight: 700, fontSize: '.9rem', color: 'var(--text-primary)' }}>{t.name || t.author_name}</span>
                   {t.coverage_type && (
                     <span style={{ background: 'var(--navy-50)', color: 'var(--navy-700)', fontSize: '.72rem', fontWeight: 600, padding: '3px 10px', borderRadius: 100 }}>
-                      {t.coverage_type.replace(/-/g, ' ')} insurance
+                      {isZh ? `${t.coverage_type.replace(/-/g, ' ')} 保险` : `${t.coverage_type.replace(/-/g, ' ')} insurance`}
                     </span>
                   )}
                 </div>
@@ -269,7 +301,7 @@ export default async function HomePage({ params }: PageProps) {
           </div>
           <div style={{ textAlign: 'center', marginTop: 40 }}>
             <Link href={`/${locale}/testimonials`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              See all our reviews →
+              {ui.readAllReviews}
             </Link>
           </div>
         </div>
@@ -280,9 +312,9 @@ export default async function HomePage({ params }: PageProps) {
         <section style={{ padding: 'var(--section-y) 0', background: 'var(--bg-subtle)' }}>
           <div className="container-custom">
             <div style={{ textAlign: 'center', marginBottom: 56 }}>
-              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Meet the Team</p>
-              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>Meet Your Insurance Experts</h2>
-              <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: 12 }}>Real people. Real expertise. No bots.</p>
+              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.meetTeam}</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>{ui.teamHeadline}</h2>
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: 12 }}>{ui.teamSubline}</p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(agents.length, 3)},1fr)`, gap: 24 }}>
               {agents.slice(0, 3).map((agent: any) => (
@@ -294,7 +326,7 @@ export default async function HomePage({ params }: PageProps) {
                   <div style={{ fontSize: '.83rem', fontWeight: 600, color: 'var(--gold-600)', textTransform: 'uppercase', letterSpacing: '.07em', marginBottom: 14 }}>{agent.title}</div>
                   <div style={{ height: 1, background: 'var(--border)', margin: '12px 0' }} />
                   {agent.years_experience > 0 && (
-                    <div style={{ fontSize: '.85rem', color: 'var(--text-muted)', marginBottom: 6 }}>📅 {agent.years_experience} years experience</div>
+                    <div style={{ fontSize: '.85rem', color: 'var(--text-muted)', marginBottom: 6 }}>📅 {agent.years_experience} {ui.yearsExp}</div>
                   )}
                   {agent.languages?.length > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 4, marginBottom: 10 }}>
@@ -307,14 +339,14 @@ export default async function HomePage({ params }: PageProps) {
                     {agent.license_number && `NY Lic. #${agent.license_number}`}
                   </div>
                   <Link href={`/${locale}/quote?agent=${agent.id}`} className="btn-navy-sm">
-                    Get a Quote with {agent.name?.split(' ')[0]}
+                    {isZh ? `${ui.quoteWith}${agent.name?.split(' ')[0]}报价` : `${ui.quoteWith} ${agent.name?.split(' ')[0]}`}
                   </Link>
                 </div>
               ))}
             </div>
             <div style={{ textAlign: 'center', marginTop: 40 }}>
               <Link href={`/${locale}/agents`} className="link-gold">
-                View All Our Agents →
+                {ui.viewAllAgents}
               </Link>
             </div>
           </div>
@@ -326,11 +358,11 @@ export default async function HomePage({ params }: PageProps) {
         <div className="container-custom">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
             <div>
-              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Resource Center</p>
-              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>From Our Resource Center</h2>
+              <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.resourceCenter}</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)' }}>{ui.fromResource}</h2>
             </div>
             <Link href={`/${locale}/resources`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', whiteSpace: 'nowrap' }}>
-              View All Resources →
+              {ui.viewAllResources}
             </Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }} className="grid-1col-mobile">
@@ -342,7 +374,7 @@ export default async function HomePage({ params }: PageProps) {
               const catIcons: Record<string,string> = { auto:'🚗', tlc:'🚕', business:'💼', homeowner:'🏠', general:'📋', 'workers-comp':'🦺', 'commercial-auto':'🚛' };
               const dateStr = post.publishedAt || post.publishDate || '';
               const formattedDate = dateStr
-                ? new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                ? new Date(dateStr).toLocaleDateString(isZh ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                 : '';
 
               return (
@@ -373,10 +405,10 @@ export default async function HomePage({ params }: PageProps) {
 
                   {/* Text body */}
                   <div style={{ padding: '18px 20px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    {formattedDate && <p style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginBottom: 8 }}>{formattedDate} · 5 min read</p>}
+                    {formattedDate && <p style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginBottom: 8 }}>{formattedDate} · 5 {ui.minRead}</p>}
                     <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', lineHeight: 1.35, marginBottom: 8, fontWeight: 600 }}>{post.title}</h3>
                     {post.excerpt && <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>}
-                    <span style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', marginTop: 12 }}>Read more →</span>
+                    <span style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', marginTop: 12 }}>{ui.readMore}</span>
                   </div>
                 </Link>
               );
@@ -387,8 +419,8 @@ export default async function HomePage({ params }: PageProps) {
 
       {/* ── SECTION 10: QUOTE CTA ─────────────────────────────────── */}
       <QuoteCTASection
-        headline={cta.headline || 'Ready to Save on Insurance?'}
-        subline={cta.subline || 'Takes 2 minutes. No obligation. We shop 30+ carriers for you.'}
+        headline={cta.headline || ui.ctaHeadline}
+        subline={cta.subline || ui.ctaSubline}
         note={cta.note}
         phone={phone}
         phoneHref={phoneHref}

@@ -1,0 +1,190 @@
+{
+  "faq": {
+    "items": [
+      {
+        "answer": "纽约州车险通常需包含人身伤害责任险（25/50/10）、PIP 无过错医疗保障（最低 50,000 美元）和无保险驾驶人保障（25/50）。",
+        "question": "纽约州车险法定最低要求是什么？"
+      },
+      {
+        "answer": "可以。租赁车辆通常需要完整保障（综合险+碰撞险），并建议加购 GAP 保障，以覆盖全损时贷款差额。",
+        "question": "租赁车辆可以投保吗？"
+      },
+      {
+        "answer": "同一保单下投保两辆及以上车辆，通常可获得 10%-25% 的多车折扣。",
+        "question": "多车折扣如何计算？"
+      },
+      {
+        "answer": "会有影响。纽约州部分保险公司可将信用相关评分纳入定价因素，信用状况较好通常更有利于保费。",
+        "question": "纽约州车险会受信用记录影响吗？"
+      },
+      {
+        "answer": "有责事故后保费一般会上升，影响周期通常为 3-5 年（视保险公司而定）。我们可帮您重新比价，争取更合理方案。",
+        "question": "发生事故后保费会怎样变化？"
+      }
+    ],
+    "headline": "车险常见问题"
+  },
+  "whyUs": {
+    "points": [
+      {
+        "icon": "🔍",
+        "title": "30+ 保险公司快速比价",
+        "description": "我们可比较 Progressive、Nationwide、Mercury、Bristol West 等多家公司方案，帮您寻找更具性价比的保费。"
+      },
+      {
+        "icon": "⭐",
+        "title": "精准匹配可用折扣",
+        "description": "我们熟悉各家公司优惠规则，包含安全驾驶、课程证明及多险种打包折扣。"
+      },
+      {
+        "icon": "⚡",
+        "title": "报价与出单响应快",
+        "description": "多数车险报价可在 2 小时内完成，符合条件时可当天生效。"
+      }
+    ],
+    "variant": "three-columns",
+    "headline": "为什么通过 Peerless 办理车险？"
+  },
+  "related": {
+    "slugs": [
+      "homeowner",
+      "commercial-auto",
+      "motorcycle"
+    ],
+    "headline": "车险客户常一起咨询"
+  },
+  "rateFactors": {
+    "tips": [
+      "车险与房屋险打包通常可省 10%-25%",
+      "完成防御性驾驶课程可争取额外优惠",
+      "提高自付额通常可降低年度保费",
+      "安全驾驶者可咨询按里程/驾驶行为计价计划"
+    ],
+    "factors": [
+      {
+        "factor": "驾驶记录",
+        "impact": "high",
+        "description": "近 3-5 年事故与违章记录会显著影响保费。"
+      },
+      {
+        "factor": "车辆类型与价值",
+        "impact": "high",
+        "description": "豪华车和高性能车型通常保费更高。"
+      },
+      {
+        "factor": "驾驶人年龄",
+        "impact": "high",
+        "description": "25 岁以下和 75 岁以上驾驶人通常费率偏高。"
+      },
+      {
+        "factor": "居住邮编区域",
+        "impact": "medium",
+        "description": "事故率较高或车辆密集区域通常费率更高。"
+      },
+      {
+        "factor": "信用相关评分",
+        "impact": "medium",
+        "description": "纽约州部分保险公司会将信用相关评分用于定价。"
+      },
+      {
+        "factor": "年行驶里程",
+        "impact": "low",
+        "description": "年行驶里程较低时，可能可享低里程优惠。"
+      }
+    ],
+    "headline": "影响车险保费的主要因素"
+  },
+  "serviceHero": {
+    "badge": "个人车险",
+    "image": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557408598-photo-1565043666747-69f6646db940.jpg",
+    "stats": [
+      {
+        "label": "比较公司数",
+        "value": "30",
+        "suffix": "+"
+      },
+      {
+        "label": "报价时效",
+        "value": "2",
+        "suffix": "小时"
+      }
+    ],
+    "subline": "覆盖纽约州常见车险需求，我们替您比较 30+ 保险公司，省去逐家询价时间。",
+    "variant": "service-hero",
+    "headline": "车险",
+    "imageAlt": "纽约车险服务",
+    "ctaPrimary": {
+      "href": "/zh/quote?type=auto",
+      "label": "获取车险报价"
+    },
+    "ctaSecondary": {
+      "href": "tel:+17187990472",
+      "label": "致电 (718) 799-0472"
+    }
+  },
+  "quoteProcess": {
+    "steps": [
+      {
+        "title": "提供车辆信息",
+        "description": "包括年份、品牌型号、年行驶里程等。"
+      },
+      {
+        "title": "填写驾驶人资料",
+        "description": "包括保单驾驶人、驾驶记录和当前保险信息。"
+      },
+      {
+        "title": "获取多方案对比",
+        "description": "我们提供多家公司报价并说明保障差异，便于您决策。"
+      }
+    ],
+    "duration": "约 2 小时",
+    "headline": "如何获取车险报价"
+  },
+  "testimonials": {
+    "limit": 3,
+    "variant": "carousel",
+    "showRating": true,
+    "showCoverageType": false,
+    "filterByCoverageType": "auto"
+  },
+  "whatItCovers": {
+    "excluded": [
+      {
+        "title": "机械故障与日常保养",
+        "description": "正常磨损、保养及机械老化通常不在车险理赔范围。"
+      },
+      {
+        "title": "未加批注的商业用途",
+        "description": "个人车险通常不覆盖配送、网约车等商业用途，需对应附加保障。"
+      }
+    ],
+    "headline": "车险通常保障内容",
+    "included": [
+      {
+        "title": "责任险",
+        "description": "赔付您对他人造成的人身伤害及财产损失。"
+      },
+      {
+        "title": "碰撞险",
+        "description": "事故后用于维修或更换车辆（按保单条款）。"
+      },
+      {
+        "title": "综合险",
+        "description": "覆盖盗窃、恶意破坏、天气灾害、火灾等非碰撞损失。"
+      },
+      {
+        "title": "PIP 无过错医疗保障",
+        "description": "纽约州常见法定项目，用于赔付您及乘客医疗费用。"
+      },
+      {
+        "title": "无保险驾驶人保障",
+        "description": "在对方无保险或肇事逃逸情况下，为您提供保障。"
+      },
+      {
+        "title": "租车费用补偿",
+        "description": "车辆因理赔维修期间，补偿临时租车费用（按条款）。"
+      }
+    ],
+    "whoNeedsIt": "在纽约州拥有或租赁车辆的持牌驾驶人，通常都需要依法配置车险。我们会根据您的用车场景与预算，建议合规且实用的保障组合。"
+  }
+}

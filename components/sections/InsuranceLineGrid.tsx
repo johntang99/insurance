@@ -62,6 +62,24 @@ const LINE_META: Record<string, { name: string; description: string }> = {
   notary: { name: 'Notary Services', description: 'Document notarization' },
 };
 
+const LINE_META_ZH: Record<string, { name: string; description: string }> = {
+  auto: { name: '车险', description: '个人车辆保障' },
+  tlc: { name: 'TLC 保险', description: '纽约营运车保障' },
+  'commercial-auto': { name: '商业车辆保险', description: '车队与商用车辆' },
+  homeowner: { name: '房屋保险', description: '住宅与房产保障' },
+  business: { name: '商业保险', description: '责任、财产与营业保障' },
+  'workers-comp': { name: '工伤保险', description: '纽约雇主常见法定保障' },
+  disability: { name: '伤残保险', description: '收入保障' },
+  construction: { name: '建筑工程保险', description: '工程与责任保障' },
+  motorcycle: { name: '摩托车保险', description: '季节或全年保障' },
+  boat: { name: '船只保险', description: '船舶与水上设备保障' },
+  travel: { name: '旅行保险', description: '行程取消与医疗保障' },
+  'group-health': { name: '团体健康保险', description: '企业团体医疗方案' },
+  'commercial-property': { name: '商业财产保险', description: '建筑与库存保障' },
+  dmv: { name: 'DMV 服务', description: '注册与过户等办理' },
+  notary: { name: '公证服务', description: '文件公证办理' },
+};
+
 export default function InsuranceLineGrid({
   headline = 'We Cover Everything',
   subline,
@@ -71,6 +89,11 @@ export default function InsuranceLineGrid({
   locale = 'en',
 }: InsuranceLineGridProps) {
   const pathname = usePathname();
+  const isZh = locale === 'zh';
+  const ui = {
+    allCoverage: isZh ? '全部险种' : 'All Coverage Types',
+    ctaLabel: isZh ? '查看详情' : ctaLabel,
+  };
   const cols = variant === 'hub' ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5';
 
   return (
@@ -79,7 +102,7 @@ export default function InsuranceLineGrid({
         {/* Header */}
         <div className="section-header" style={{ textAlign: 'center', marginBottom: 56 }}>
           <p className="section-label" style={{ display: 'inline-block', fontSize: '.75rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>
-            All Coverage Types
+            {ui.allCoverage}
           </p>
           <h2 className="section-heading" style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16 }}>{headline}</h2>
           {subline && <p className="section-sub" style={{ fontSize: '1.05rem', color: 'var(--text-muted)', maxWidth: 600, margin: '0 auto' }}>{subline}</p>}
@@ -89,7 +112,7 @@ export default function InsuranceLineGrid({
         <div className={`grid ${cols} gap-4`}>
           {lines.map((line) => {
             const slug = line.line_slug || line.slug || '';
-            const meta = LINE_META[slug] || {};
+            const meta = (isZh ? LINE_META_ZH : LINE_META)[slug] || {};
             const name = line.name || meta.name || slug;
             const desc = line.description || meta.description || '';
             const icon = ICON_MAP[slug] || ICON_MAP[line.icon || ''] || '🔐';
@@ -139,7 +162,7 @@ export default function InsuranceLineGrid({
                   color: 'var(--gold-600)', opacity: 0, transform: 'translateY(4px)',
                   transition: 'opacity .18s, transform .18s',
                 }}>
-                  {ctaLabel} →
+                  {ui.ctaLabel} →
                 </span>
               </Link>
             );

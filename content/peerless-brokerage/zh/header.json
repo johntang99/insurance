@@ -1,0 +1,188 @@
+{
+  "menu": {
+    "variant": "default",
+    "logo": {
+      "text": "Peerless 保险经纪",
+      "subtext": "独立保险顾问"
+    }
+  },
+  "cta": {
+    "text": "免费获取报价",
+    "link": "/zh/quote"
+  },
+  "topbar": {
+    "phone": "(718) 799-0472",
+    "phoneHref": "tel:+17187990472",
+    "badge": "2小时内回复报价"
+  },
+  "phoneDisplay": "(718) 799-0472",
+  "phoneHref": "tel:+17187990472",
+  "stickyOnMobile": true,
+  "showPhoneInHeader": false,
+  "nav": [
+    {
+      "label": "保险产品",
+      "type": "mega",
+      "columns": [
+        {
+          "heading": "个人保险",
+          "links": [
+            {
+              "label": "Auto Insurance",
+              "href": "insurance/auto",
+              "icon": "🚗"
+            },
+            {
+              "label": "TLC Insurance",
+              "href": "insurance/tlc",
+              "icon": "🚕"
+            },
+            {
+              "label": "Homeowner Insurance",
+              "href": "insurance/homeowner",
+              "icon": "🏠"
+            },
+            {
+              "label": "Motorcycle Insurance",
+              "href": "insurance/motorcycle",
+              "icon": "🏍️"
+            },
+            {
+              "label": "Boat Insurance",
+              "href": "insurance/boat",
+              "icon": "⛵"
+            },
+            {
+              "label": "Travel Insurance",
+              "href": "insurance/travel",
+              "icon": "✈️"
+            }
+          ]
+        },
+        {
+          "heading": "商业保险",
+          "links": [
+            {
+              "label": "Business Insurance",
+              "href": "insurance/business",
+              "icon": "💼"
+            },
+            {
+              "label": "Commercial Auto",
+              "href": "insurance/commercial-auto",
+              "icon": "🚛"
+            },
+            {
+              "label": "Workers Compensation",
+              "href": "insurance/workers-comp",
+              "icon": "🦺"
+            },
+            {
+              "label": "Construction Insurance",
+              "href": "insurance/construction",
+              "icon": "🏗️"
+            },
+            {
+              "label": "Disability Insurance",
+              "href": "insurance/disability",
+              "icon": "🛡️"
+            },
+            {
+              "label": "Group Health",
+              "href": "insurance/group-health",
+              "icon": "❤️"
+            }
+          ]
+        },
+        {
+          "heading": "便民服务",
+          "links": [
+            {
+              "label": "All Coverage Types →",
+              "href": "insurance",
+              "icon": "📋",
+              "highlight": true
+            },
+            {
+              "label": "DMV Services",
+              "href": "services/dmv",
+              "icon": "📄"
+            },
+            {
+              "label": "Notary Services",
+              "href": "services/notary",
+              "icon": "✒️"
+            },
+            {
+              "label": "Claims Assistance",
+              "href": "claims",
+              "icon": "🛡️"
+            }
+          ],
+          "cta": {
+            "label": "Get a Free Quote",
+            "href": "quote",
+            "description": "We respond within 2 hours"
+          }
+        }
+      ]
+    },
+    {
+      "label": "关于我们",
+      "type": "dropdown",
+      "links": [
+        {
+          "label": "About Us",
+          "href": "about",
+          "description": "Our story, mission & credentials"
+        },
+        {
+          "label": "Our Agents",
+          "href": "agents",
+          "description": "Licensed experts in every coverage type"
+        },
+        {
+          "label": "Carrier Partners",
+          "href": "carriers",
+          "description": "30+ carriers we work with"
+        },
+        {
+          "label": "Service Areas",
+          "href": "locations",
+          "description": "Cities and regions we serve"
+        },
+        {
+          "label": "Testimonials",
+          "href": "testimonials",
+          "description": "5,000+ satisfied clients"
+        }
+      ]
+    },
+    {
+      "label": "资讯中心",
+      "type": "dropdown",
+      "links": [
+        {
+          "label": "Resource Center",
+          "href": "resources",
+          "description": "Insurance guides & expert tips"
+        },
+        {
+          "label": "FAQ",
+          "href": "faq",
+          "description": "Answers to common questions"
+        },
+        {
+          "label": "Claims Help",
+          "href": "claims",
+          "description": "Guidance through your claim"
+        }
+      ]
+    },
+    {
+      "label": "联系我们",
+      "type": "link",
+      "href": "contact"
+    }
+  ]
+}

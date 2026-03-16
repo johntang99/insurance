@@ -11,9 +11,11 @@ interface FAQAccordionProps {
   categories: FAQCategory[];
   phone?: string;
   phoneHref?: string;
+  locale?: string;
 }
 
-export default function FAQAccordion({ items, categories, phone, phoneHref }: FAQAccordionProps) {
+export default function FAQAccordion({ items, categories, phone, phoneHref, locale = 'en' }: FAQAccordionProps) {
+  const isZh = locale === 'zh';
   const [activeTab, setActiveTab] = useState('all');
   const [search, setSearch] = useState('');
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
@@ -43,6 +45,13 @@ export default function FAQAccordion({ items, categories, phone, phoneHref }: FA
 
   const getCategoryLabel = (id: string) =>
     categories.find(c => c.id === id)?.label || id;
+  const ui = {
+    search: isZh ? '搜索问题...' : 'Search FAQ...',
+    all: isZh ? '全部' : 'All',
+    noResults: isZh ? `未找到“${search}”相关结果。` : `No results for “${search}”.`,
+    browseAll: isZh ? '查看全部问题' : 'Browse all questions',
+    stillQuestions: isZh ? '还有问题？请致电：' : 'Still have questions? Call us:',
+  };
 
   const toggle = (key: string) => {
     setOpenItems(prev => ({ ...prev, [key]: !prev[key] }));
@@ -54,7 +63,7 @@ export default function FAQAccordion({ items, categories, phone, phoneHref }: FA
         {/* Search */}
         <div style={{ position: 'relative', marginBottom: 32 }}>
           <Search className="w-4 h-4" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-          <input type="text" placeholder="Search FAQ..." value={search}
+          <input type="text" placeholder={ui.search} value={search}
             onChange={e => { setSearch(e.target.value); if (e.target.value) setActiveTab('all'); }}
             style={{ width: '100%', padding: '12px 14px 12px 42px', border: '1.5px solid var(--border)', borderRadius: 10, fontSize: '1rem', outline: 'none', background: 'var(--bg-white)' }}
             onFocus={e => (e.currentTarget.style.borderColor = 'var(--navy-600)')}
@@ -65,7 +74,7 @@ export default function FAQAccordion({ items, categories, phone, phoneHref }: FA
         {/* Category tabs */}
         {!search && (
           <div style={{ display: 'flex', gap: 4, marginBottom: 32, overflowX: 'auto', paddingBottom: 2, borderBottom: '2px solid var(--border)', flexWrap: 'nowrap' }}>
-            {[{ id: 'all', label: 'All' }, ...categories].map(tab => (
+            {[{ id: 'all', label: ui.all }, ...categories].map(tab => (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                 style={{
                   padding: '9px 18px', borderRadius: '8px 8px 0 0', fontWeight: 600, fontSize: '.875rem', cursor: 'pointer',
@@ -83,9 +92,9 @@ export default function FAQAccordion({ items, categories, phone, phoneHref }: FA
         {/* Results */}
         {filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-muted)' }}>
-            <p>No results for &ldquo;{search}&rdquo;.</p>
+            <p>{ui.noResults}</p>
             <button onClick={() => setSearch('')} style={{ color: 'var(--gold-600)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', marginTop: 8 }}>
-              Browse all questions
+              {ui.browseAll}
             </button>
           </div>
         ) : (
@@ -123,7 +132,7 @@ export default function FAQAccordion({ items, categories, phone, phoneHref }: FA
                           </p>
                           {phone && (
                             <a href={phoneHref} style={{ fontSize: '.82rem', color: 'var(--gold-600)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                              📞 Still have questions? Call us: {phone}
+                              📞 {ui.stillQuestions} {phone}
                             </a>
                           )}
                         </div>

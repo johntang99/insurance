@@ -7,16 +7,18 @@ import { Locale } from './types';
 // Re-export Locale type
 export type { Locale };
 
-// Insurance platform: English-only for Phase 0. Spanish/Chinese added in Phase 2+.
-export const locales: Locale[] = ['en'];
+// Insurance platform locale set.
+export const locales: Locale[] = ['en', 'zh'];
 export const defaultLocale: Locale = 'en';
 
 export const localeNames: Record<Locale, string> = {
   en: 'English',
+  zh: '中文',
 };
 
 export const localeFlags: Record<Locale, string> = {
   en: '🇺🇸',
+  zh: '🇨🇳',
 };
 
 /**

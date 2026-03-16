@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, Shield, ChevronDown } from 'lucide-react';
-import type { Locale } from '@/lib/i18n';
+import { localeNames, locales, switchLocale, type Locale } from '@/lib/i18n';
 import type { SiteInfo } from '@/lib/types';
 import { getSiteDisplayName } from '@/lib/siteInfo';
 
@@ -28,6 +28,7 @@ export interface HeaderConfig {
   topbar?: { phone?: string; phoneHref?: string; badge?: string };
   phoneDisplay?: string;
   phoneHref?: string;
+  showPhoneInHeader?: boolean;
   nav?: NavItem[];
   // Legacy support
   insuranceDropdown?: Array<{ label: string; href: string; isViewAll?: boolean }>;
@@ -84,7 +85,7 @@ const DEFAULT_NAV: NavItem[] = [
 
 // ── Component ─────────────────────────────────────────────
 
-export default function Header({ locale, siteInfo, headerConfig }: HeaderProps) {
+export default function Header({ locale, siteInfo, headerConfig, supportedLocales }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openItem, setOpenItem] = useState<string | null>(null);
@@ -107,13 +108,22 @@ export default function Header({ locale, siteInfo, headerConfig }: HeaderProps) 
   const phone = headerConfig?.phoneDisplay || (siteInfo as any)?.phone || '';
   const phoneHref = headerConfig?.phoneHref || (phone ? `tel:${phone.replace(/\D/g, '')}` : '#');
   const ctaLabel = headerConfig?.cta?.text || 'Get a Free Quote';
-  const ctaHref = `/${locale}/${(headerConfig?.cta?.link || 'quote').replace(/^\/en\//, '').replace(/^\//, '')}`;
+  const ctaHref = `/${locale}/${(headerConfig?.cta?.link || 'quote').replace(/^\/(en|zh)\//, '').replace(/^\//, '')}`;
   const licenseNumber = (siteInfo as any)?.licenseNumber || '';
   const licensedStates = (siteInfo as any)?.licensedStates || [];
   const carriersCount = (siteInfo as any)?.carriersCount || 30;
   const languages = (siteInfo as any)?.languages || [];
 
   const navItems: NavItem[] = headerConfig?.nav || DEFAULT_NAV;
+  const activeLocales = Array.from(
+    new Set<Locale>([
+      ...(supportedLocales && supportedLocales.length > 0 ? supportedLocales : []),
+      ...locales,
+      locale,
+    ])
+  );
+  const showLocaleSwitcher = activeLocales.length > 1;
+  const getLocaleHref = (nextLocale: Locale) => switchLocale(pathname || `/${locale}`, nextLocale);
 
   const href = (path: string) => path.startsWith('http') ? path : `/${locale}/${path.replace(/^\//, '')}`;
   const isActive = (path: string) => {
@@ -143,9 +153,6 @@ export default function Header({ locale, siteInfo, headerConfig }: HeaderProps) 
             )}
             {licensedStates.length > 0 && (
               <span style={{ color: 'rgba(255,255,255,.5)', fontSize: '.78rem' }}>Licensed in {licensedStates.join(' · ')}</span>
-            )}
-            {languages.length > 1 && (
-              <span style={{ color: 'rgba(255,255,255,.45)', fontSize: '.78rem' }}>· {languages.join(' · ')}</span>
             )}
           </div>
           <div className="flex items-center gap-5">
@@ -282,10 +289,23 @@ export default function Header({ locale, siteInfo, headerConfig }: HeaderProps) 
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
-            {phone && (
-              <a href={phoneHref} style={{ fontSize: '.82rem', fontWeight: 700, color: 'var(--navy-700)', textDecoration: 'none', whiteSpace: 'nowrap' }}>
-                {phone}
-              </a>
+            {showLocaleSwitcher && (
+              <div className="flex items-center rounded-lg border" style={{ borderColor: 'var(--border)', overflow: 'hidden' }}>
+                {activeLocales.map((item) => (
+                  <Link
+                    key={item}
+                    href={getLocaleHref(item)}
+                    className="px-2.5 py-1.5 text-xs font-semibold"
+                    style={{
+                      color: item === locale ? '#fff' : 'var(--text-secondary)',
+                      background: item === locale ? 'var(--navy-700)' : 'transparent',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {localeNames[item]}
+                  </Link>
+                ))}
+              </div>
             )}
             <Link href={ctaHref}
               style={{ background: 'var(--gold-500)', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 20px', fontWeight: 700, fontSize: '.875rem', textDecoration: 'none', whiteSpace: 'nowrap', display: 'inline-block' }}>
@@ -354,6 +374,37 @@ export default function Header({ locale, siteInfo, headerConfig }: HeaderProps) 
                 style={{ display: 'block', textAlign: 'center', marginTop: 16, padding: '14px', background: 'var(--gold-500)', color: '#fff', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none' }}>
                 {ctaLabel}
               </Link>
+
+              {/* Locale switcher */}
+              {showLocaleSwitcher && (
+                <div className="mt-4">
+                  <p className="text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>
+                    Language
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {activeLocales.map((item) => (
+                      <Link
+                        key={item}
+                        href={getLocaleHref(item)}
+                        style={{
+                          display: 'block',
+                          textAlign: 'center',
+                          padding: '10px 12px',
+                          borderRadius: 8,
+                          border: '1px solid var(--border)',
+                          background: item === locale ? 'var(--navy-50)' : 'transparent',
+                          color: item === locale ? 'var(--navy-800)' : 'var(--text-secondary)',
+                          fontWeight: 600,
+                          fontSize: '.85rem',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        {localeNames[item]}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Languages */}
               {languages.length > 1 && (

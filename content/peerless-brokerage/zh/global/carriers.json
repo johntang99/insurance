@@ -1,0 +1,19 @@
+{
+  "carriers": [
+    { "slug": "travelers",       "name": "Travelers",        "category": "general",    "is_featured": true,  "sort_order": 1 },
+    { "slug": "progressive",     "name": "Progressive",      "category": "personal",   "is_featured": true,  "sort_order": 2 },
+    { "slug": "nationwide",      "name": "Nationwide",       "category": "general",    "is_featured": true,  "sort_order": 3 },
+    { "slug": "liberty-mutual",  "name": "Liberty Mutual",   "category": "general",    "is_featured": true,  "sort_order": 4 },
+    { "slug": "the-hartford",    "name": "The Hartford",     "category": "commercial", "is_featured": true,  "sort_order": 5 },
+    { "slug": "chubb",           "name": "Chubb",            "category": "specialty",  "is_featured": true,  "sort_order": 6 },
+    { "slug": "employers",       "name": "Employers",        "category": "commercial", "is_featured": false, "sort_order": 7 },
+    { "slug": "amtrust",         "name": "AmTrust",          "category": "commercial", "is_featured": false, "sort_order": 8 },
+    { "slug": "hiscox",          "name": "Hiscox",           "category": "specialty",  "is_featured": false, "sort_order": 9 },
+    { "slug": "foremost",        "name": "Foremost",         "category": "specialty",  "is_featured": false, "sort_order": 10 },
+    { "slug": "national-general","name": "National General", "category": "personal",   "is_featured": false, "sort_order": 11 },
+    { "slug": "mercury",         "name": "Mercury Insurance","category": "personal",   "is_featured": false, "sort_order": 12 },
+    { "slug": "bristol-west",    "name": "Bristol West",     "category": "personal",   "is_featured": false, "sort_order": 13 },
+    { "slug": "dairyland",       "name": "Dairyland",        "category": "specialty",  "is_featured": false, "sort_order": 14 },
+    { "slug": "geico",           "name": "GEICO",            "category": "personal",   "is_featured": false, "sort_order": 15 }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "lines": [
+    { "slug": "auto",               "name": "Auto Insurance",          "icon": "car",        "description": "Personal auto coverage for individuals and families",           "is_enabled": true,  "is_featured": true,  "sort_order": 1 },
+    { "slug": "tlc",                "name": "TLC Insurance",           "icon": "taxi",       "description": "TLC-compliant coverage for NYC taxi and livery drivers",         "is_enabled": true,  "is_featured": true,  "sort_order": 2 },
+    { "slug": "commercial-auto",    "name": "Commercial Auto",         "icon": "truck",      "description": "Coverage for fleets, delivery vehicles, and commercial drivers",  "is_enabled": true,  "is_featured": false, "sort_order": 3 },
+    { "slug": "homeowner",          "name": "Homeowner Insurance",     "icon": "home",       "description": "Protect your home and personal property",                        "is_enabled": true,  "is_featured": true,  "sort_order": 4 },
+    { "slug": "business",           "name": "Business Insurance",      "icon": "briefcase",  "description": "BOP, general liability, and commercial property",                "is_enabled": true,  "is_featured": false, "sort_order": 5 },
+    { "slug": "workers-comp",       "name": "Workers Compensation",    "icon": "shield",     "description": "Required by law for NY employers — fast binding, audit support",  "is_enabled": true,  "is_featured": false, "sort_order": 6 },
+    { "slug": "disability",         "name": "Disability Insurance",    "icon": "heart",      "description": "Short-term and long-term income protection",                     "is_enabled": true,  "is_featured": false, "sort_order": 7 },
+    { "slug": "construction",       "name": "Construction Insurance",  "icon": "hammer",     "description": "GL, builders risk, and contractor coverage",                     "is_enabled": true,  "is_featured": false, "sort_order": 8 },
+    { "slug": "motorcycle",         "name": "Motorcycle Insurance",    "icon": "zap",        "description": "Year-round or seasonal motorcycle coverage",                     "is_enabled": true,  "is_featured": false, "sort_order": 9 },
+    { "slug": "boat",               "name": "Boat Insurance",          "icon": "anchor",     "description": "Marine coverage and agreed value policies",                      "is_enabled": true,  "is_featured": false, "sort_order": 10 },
+    { "slug": "travel",             "name": "Travel Insurance",        "icon": "plane",      "description": "Trip cancellation, medical, and group travel rates",             "is_enabled": true,  "is_featured": false, "sort_order": 11 },
+    { "slug": "group-health",       "name": "Group Health Insurance",  "icon": "users",      "description": "Employer-sponsored and ACA-compliant health plans",              "is_enabled": true,  "is_featured": false, "sort_order": 12 }
+  ]
+}

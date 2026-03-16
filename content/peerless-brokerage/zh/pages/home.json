@@ -1,0 +1,152 @@
+{
+  "cta": {
+    "note": "营业时间内 2 小时内回复报价",
+    "subline": "几分钟提交需求，我们为您对比 30+ 保险公司，匹配更合适的保障与保费。",
+    "headline": "准备好优化您的保险费用了吗？",
+    "ctaPrimary": {
+      "href": "/zh/quote",
+      "label": "免费获取报价"
+    },
+    "ctaSecondary": {
+      "href": "tel:+17187990472",
+      "label": "致电 (718) 799-0472"
+    }
+  },
+  "hero": {
+    "badge": "持牌经纪 · 独立顾问",
+    "stats": [
+      {
+        "label": "从业年限",
+        "value": "25",
+        "suffix": "+"
+      },
+      {
+        "label": "合作保险公司",
+        "value": "30",
+        "suffix": "+"
+      },
+      {
+        "label": "服务客户",
+        "value": "5,000",
+        "suffix": "+"
+      },
+      {
+        "label": "签发保单",
+        "value": "10,000",
+        "suffix": "+"
+      }
+    ],
+    "subline": "车险、房屋险、商业险与专项险种一站式办理。我们代表您比较 30+ 保险公司方案，而不是只推荐单一公司产品。",
+    "variant": "split-gallery-right",
+    "headline": "您在法拉盛值得信赖的独立保险经纪",
+    "ctaPrimary": {
+      "href": "/zh/quote",
+      "label": "免费获取报价"
+    },
+    "ctaSecondary": {
+      "href": "tel:+17187990472",
+      "label": "立即致电 (718) 799-0472"
+    },
+    "galleryImages": [
+      "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg",
+      "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557655209-photo-1605281317010-fe5ffe798166.jpg",
+      "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773559113044-photo-1595670322505-4de61b9cdf47.jpg"
+    ],
+    "backgroundImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg"
+  },
+  "stats": {
+    "items": [
+      {
+        "label": "本地服务经验",
+        "value": "25",
+        "suffix": "+"
+      },
+      {
+        "label": "可比价保险公司",
+        "value": "30",
+        "suffix": "+"
+      },
+      {
+        "label": "累计服务客户",
+        "value": "5,000",
+        "suffix": "+"
+      },
+      {
+        "label": "Google 评分",
+        "value": "4.9",
+        "suffix": "★"
+      }
+    ],
+    "variant": "dark-band"
+  },
+  "carriers": {
+    "subline": "同样的保障条件下，帮您找到更合理的保费",
+    "variant": "auto-scroll",
+    "headline": "我们合作的保险公司"
+  },
+  "howItWorks": {
+    "cta": {
+      "href": "/zh/quote",
+      "label": "开始免费报价"
+    },
+    "steps": [
+      {
+        "title": "告诉我们您的保障需求",
+        "number": "01",
+        "duration": "约 2 分钟",
+        "description": "填写简短表单或直接来电，我们会快速了解您的险种和预算。"
+      },
+      {
+        "title": "我们为您比对 30+ 保险公司",
+        "number": "02",
+        "duration": "最快当天",
+        "description": "持牌经纪根据您的情况筛选方案，比较价格、条款和理赔服务。"
+      },
+      {
+        "title": "选择最适合您的方案",
+        "number": "03",
+        "duration": "由您决定",
+        "description": "我们清晰解释每个方案差异，您按预算与保障目标做最终选择。"
+      }
+    ],
+    "subline": "流程清晰、响应快速，让您省时省心拿到更合适的保险。",
+    "headline": "3 步完成保险比价与投保"
+  },
+  "testimonials": {
+    "limit": 3,
+    "variant": "featured-3",
+    "headline": "客户真实评价",
+    "showRating": true,
+    "showCoverageType": true
+  },
+  "insuranceLines": {
+    "subline": "个人、家庭、企业与专项险种全覆盖，一家经纪统一管理更省心。",
+    "variant": "featured-plus-grid",
+    "ctaLabel": "查看详情",
+    "headline": "我们可办理的保险类别",
+    "showIcons": true,
+    "showDescriptions": true
+  },
+  "whyIndependent": {
+    "points": [
+      {
+        "icon": "🔍",
+        "title": "跨公司比价，不局限单一品牌",
+        "description": "我们可同时比较 30+ 保险公司方案，帮助您在相同保障下争取更有竞争力的费率。"
+      },
+      {
+        "icon": "🤝",
+        "title": "立场以客户为先",
+        "description": "我们不是单一保险公司代理，建议更中立透明，围绕您的预算、风险和家庭情况给方案。"
+      },
+      {
+        "icon": "📞",
+        "title": "一位经纪覆盖多种需求",
+        "description": "车险、房屋险、商业险、TLC 等可统一规划，续保与理赔沟通更高效。"
+      }
+    ],
+    "subline": "与只销售单一公司产品的代理不同，独立经纪能给您更多选择与更灵活方案。",
+    "variant": "three-columns",
+    "headline": "为什么选择独立保险经纪？"
+  }
+}

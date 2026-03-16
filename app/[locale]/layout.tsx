@@ -114,6 +114,12 @@ export default async function LocaleLayout({
   if (!site) {
     return <div>No site configured</div>;
   }
+  const headerLocales = Array.from(
+    new Set<Locale>([
+      ...((site.supportedLocales || [site.defaultLocale]) as Locale[]),
+      locale as Locale,
+    ])
+  );
   
   // Load theme
   const theme = await loadTheme(site.id);
@@ -182,7 +188,7 @@ export default async function LocaleLayout({
         <Header
           locale={locale as Locale}
           siteId={site.id}
-          supportedLocales={site.supportedLocales}
+          supportedLocales={headerLocales}
           siteInfo={siteInfo ?? undefined}
           variant={headerConfig?.menu?.variant || siteInfo?.headerVariant || 'default'}
           headerConfig={headerConfig ?? undefined}
@@ -197,6 +203,7 @@ export default async function LocaleLayout({
           phone={(siteInfo as any)?.phone || ("(718) 799-0472")}
           phoneHref={(siteInfo as any)?.phone ? `tel:${((siteInfo as any).phone as string).replace(/\D/g, '')}` : 'tel:+17187990472'}
           quoteHref={`/${locale}/quote`}
+          locale={locale}
         />
       </div>
     </>

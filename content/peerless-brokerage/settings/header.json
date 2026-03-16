@@ -18,7 +18,7 @@
   "phoneDisplay": "(718) 799-0472",
   "phoneHref": "tel:+17187990472",
   "stickyOnMobile": true,
-  "showPhoneInHeader": true,
+  "showPhoneInHeader": false,
   "nav": [
     {
       "label": "Insurance",

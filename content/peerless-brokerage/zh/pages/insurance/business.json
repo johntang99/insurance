@@ -1,0 +1,151 @@
+{
+  "serviceHero": {
+    "variant": "service-hero",
+    "badge": "中小企业综合保障",
+    "headline": "商业保险",
+    "subline": "覆盖餐饮、零售、办公室、专业服务等常见业态。我们比较 30+ 保险公司，帮助企业在保障与成本间取得平衡。",
+    "ctaPrimary": {
+      "label": "获取商业险报价",
+      "href": "/zh/quote?type=business"
+    },
+    "ctaSecondary": {
+      "label": "致电 (718) 799-0472",
+      "href": "tel:+17187990472"
+    },
+    "image": "",
+    "imageAlt": "商业保险服务"
+  },
+  "whatItCovers": {
+    "headline": "商业险可覆盖哪些风险",
+    "included": [
+      {
+        "title": "一般责任险",
+        "description": "覆盖第三方人身伤害与财产损失责任，是多数企业的基础保障。"
+      },
+      {
+        "title": "商业财产险",
+        "description": "覆盖店面、设备、库存等因承保事故造成的损失。"
+      },
+      {
+        "title": "营业中断险",
+        "description": "事故导致暂时停业时，可补偿部分收入损失与固定支出。"
+      },
+      {
+        "title": "产品/完工责任",
+        "description": "适用于涉及产品销售或工程交付的企业责任风险。"
+      },
+      {
+        "title": "网络与数据风险（可选）",
+        "description": "适用于有线上支付、客户数据管理需求的企业。"
+      }
+    ],
+    "excluded": [
+      {
+        "title": "已知且未披露风险",
+        "description": "投保前已发生或已知重大风险，通常不在保障范围。"
+      },
+      {
+        "title": "故意行为导致损失",
+        "description": "故意违法或故意造成损失的情形通常不予赔付。"
+      }
+    ],
+    "whoNeedsIt": "有员工、对外经营或承接合同的企业基本都需要商业保险。很多房东、合作方和项目甲方在签约前都会要求提供 COI 保险证明。"
+  },
+  "whyUs": {
+    "variant": "three-columns",
+    "headline": "为什么企业客户选择 Peerless",
+    "points": [
+      {
+        "icon": "🏢",
+        "title": "熟悉本地业态",
+        "description": "针对法拉盛及纽约都会区常见行业，提供更贴合经营场景的保障建议。"
+      },
+      {
+        "icon": "📄",
+        "title": "COI 出具响应快",
+        "description": "合同或入场需要 COI 时，通常可快速协助处理。"
+      },
+      {
+        "icon": "💼",
+        "title": "可整合多险种",
+        "description": "可统一规划商业险、车险、工伤险等，减少管理成本。"
+      }
+    ]
+  },
+  "quoteProcess": {
+    "headline": "商业险报价流程",
+    "steps": [
+      {
+        "number": "01",
+        "title": "提交企业信息",
+        "description": "包括行业类型、营业地址、营收规模、员工人数等基础信息。"
+      },
+      {
+        "number": "02",
+        "title": "确认保障需求",
+        "description": "根据合同要求与经营风险，确定责任额度和附加保障。"
+      },
+      {
+        "number": "03",
+        "title": "获取多公司方案",
+        "description": "比较不同公司条款、保费和理赔服务后选择最适合方案。"
+      }
+    ],
+    "duration": "1-2 个工作日"
+  },
+  "rateFactors": {
+    "headline": "影响商业险保费的主要因素",
+    "factors": [
+      {
+        "factor": "行业风险等级",
+        "impact": "high",
+        "description": "行业事故率、第三方责任风险越高，保费通常越高。"
+      },
+      {
+        "factor": "营业规模",
+        "impact": "medium",
+        "description": "营收、场地面积、员工人数会影响承保额度与费率。"
+      },
+      {
+        "factor": "历史理赔记录",
+        "impact": "high",
+        "description": "既往理赔频率和金额会直接影响续保条件。"
+      },
+      {
+        "factor": "保障额度与自付额",
+        "impact": "medium",
+        "description": "更高责任限额通常对应更高保费，自付额调整会影响总成本。"
+      }
+    ],
+    "tips": [
+      "按合同要求准确设置责任额度，避免不足或过度投保",
+      "定期复核业务变化，及时更新保单信息",
+      "高频项目型企业建议提前准备 COI 模板，提升交付效率"
+    ]
+  },
+  "faq": {
+    "headline": "商业险常见问题",
+    "items": [
+      {
+        "question": "BOP 是什么？",
+        "answer": "BOP（商业业主综合保单）通常将一般责任险与商业财产险打包，适合多数中小企业。"
+      },
+      {
+        "question": "客户要求 COI，多久可以开？",
+        "answer": "资料完整时通常可较快处理。复杂项目会根据要求补充附加被保险人等条款。"
+      },
+      {
+        "question": "家庭小店或工作室也需要商业险吗？",
+        "answer": "只要存在对外经营、客户来访或合同责任，通常都建议配置至少基础责任保障。"
+      }
+    ]
+  },
+  "related": {
+    "headline": "商业险客户也常咨询",
+    "slugs": [
+      "workers-comp",
+      "commercial-auto",
+      "commercial-property"
+    ]
+  }
+}

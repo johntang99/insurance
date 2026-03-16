@@ -1,0 +1,106 @@
+{
+  "formConfig": {
+    "headline": "免费获取保险报价",
+    "subline": "持牌经纪将在 2 个工作小时内与您联系。",
+    "steps": [
+      {
+        "step": 1,
+        "title": "您需要哪些保险？",
+        "description": "可多选"
+      },
+      {
+        "step": 2,
+        "title": "联系方式",
+        "description": "我们将在 2 个工作小时内联系您"
+      },
+      {
+        "step": 3,
+        "title": "补充信息",
+        "description": "选填，便于提供更准确报价"
+      }
+    ],
+    "contactTimeOptions": [
+      "上午（9:00–12:00）",
+      "下午（12:00–17:00）",
+      "晚上（17:00–20:00）",
+      "任意时间"
+    ],
+    "languageOptions": [
+      "英文",
+      "西班牙语",
+      "中文",
+      "其他"
+    ],
+    "coverageTypes": [
+      {
+        "slug": "auto",
+        "label": "车险",
+        "icon": "car"
+      },
+      {
+        "slug": "tlc",
+        "label": "TLC / 营运车保险",
+        "icon": "taxi"
+      },
+      {
+        "slug": "commercial-auto",
+        "label": "商业车辆保险",
+        "icon": "truck"
+      },
+      {
+        "slug": "homeowner",
+        "label": "房屋保险",
+        "icon": "home"
+      },
+      {
+        "slug": "business",
+        "label": "商业保险",
+        "icon": "briefcase"
+      },
+      {
+        "slug": "workers-comp",
+        "label": "工伤保险",
+        "icon": "hard-hat"
+      },
+      {
+        "slug": "disability",
+        "label": "伤残保险",
+        "icon": "shield"
+      },
+      {
+        "slug": "construction",
+        "label": "建筑工程保险",
+        "icon": "hammer"
+      },
+      {
+        "slug": "motorcycle",
+        "label": "摩托车保险",
+        "icon": "zap"
+      },
+      {
+        "slug": "boat",
+        "label": "船只保险",
+        "icon": "anchor"
+      },
+      {
+        "slug": "travel",
+        "label": "旅行保险",
+        "icon": "plane"
+      },
+      {
+        "slug": "group-health",
+        "label": "团体健康保险",
+        "icon": "heart"
+      }
+    ],
+    "confirmation": {
+      "headline": "提交成功！我们已收到您的报价申请",
+      "subline": "持牌经纪将在 2 个工作小时内与您联系。",
+      "nextSteps": [
+        "评估您的保障需求与预算",
+        "为您比较 30+ 保险公司方案",
+        "提供清晰易懂的最佳选项"
+      ]
+    }
+  }
+}

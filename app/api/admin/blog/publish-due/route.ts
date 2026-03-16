@@ -31,7 +31,7 @@ async function listBlogFilesForSite(
   directory: 'blog' | 'blog-scheduled' = 'blog'
 ): Promise<Array<{ locale: string; path: string; data: any; sourceDirectory: 'blog' | 'blog-scheduled' }>> {
   const results: Array<{ locale: string; path: string; data: any; sourceDirectory: 'blog' | 'blog-scheduled' }> = [];
-  for (const locale of ['en']) {
+  for (const locale of ['en', 'zh']) {
     const blogDir = path.join(CONTENT_DIR, siteId, locale, directory);
     try {
       const files = await fs.readdir(blogDir);

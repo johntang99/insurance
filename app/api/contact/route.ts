@@ -24,7 +24,7 @@ interface ContactEmailContext {
 }
 
 function toLocale(rawLocale: unknown): Locale {
-  return 'en' as Locale;
+  return rawLocale === 'zh' ? 'zh' : 'en';
 }
 
 async function resolveRequestSiteInfo(request: NextRequest, locale: Locale): Promise<SiteInfo | null> {
@@ -297,10 +297,10 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(
-      { 
-        success: true, 
-        message: false // locale === 'zh'
-          ? '您的消息已发送成功。我们的团队将尽快与您联系，并请留意邮箱确认邮件。'
+      {
+        success: true,
+        message: locale === 'zh'
+          ? '您的信息已成功提交。我们的团队会尽快与您联系，请留意邮箱确认邮件。'
           : 'Your message has been sent successfully. Our team will contact you soon. Please check your email for confirmation.',
       },
       { status: 200 }

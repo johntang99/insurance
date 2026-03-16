@@ -1,0 +1,112 @@
+{
+  "columns": [
+    {
+      "heading": "保险产品",
+      "links": [
+        {
+          "label": "Auto Insurance",
+          "href": "/zh/insurance/auto"
+        },
+        {
+          "label": "TLC Insurance",
+          "href": "/zh/insurance/tlc"
+        },
+        {
+          "label": "Commercial Auto",
+          "href": "/zh/insurance/commercial-auto"
+        },
+        {
+          "label": "Homeowner Insurance",
+          "href": "/zh/insurance/homeowner"
+        },
+        {
+          "label": "Business Insurance",
+          "href": "/zh/insurance/business"
+        },
+        {
+          "label": "Workers Compensation",
+          "href": "/zh/insurance/workers-comp"
+        },
+        {
+          "label": "View All Coverage",
+          "href": "/zh/insurance"
+        }
+      ]
+    },
+    {
+      "heading": "公司信息",
+      "links": [
+        {
+          "label": "About Us",
+          "href": "/zh/about"
+        },
+        {
+          "label": "Our Agents",
+          "href": "/zh/agents"
+        },
+        {
+          "label": "Carrier Partners",
+          "href": "/zh/carriers"
+        },
+        {
+          "label": "Testimonials",
+          "href": "/zh/testimonials"
+        },
+        {
+          "label": "Service Areas",
+          "href": "/zh/locations"
+        },
+        {
+          "label": "Resources",
+          "href": "/zh/resources"
+        }
+      ]
+    },
+    {
+      "heading": "服务",
+      "links": [
+        {
+          "label": "Get a Quote",
+          "href": "/zh/quote"
+        },
+        {
+          "label": "Claims Assistance",
+          "href": "/zh/claims"
+        },
+        {
+          "label": "DMV Services",
+          "href": "/zh/services/dmv"
+        },
+        {
+          "label": "Notary Services",
+          "href": "/zh/services/notary"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/zh/contact"
+        }
+      ]
+    },
+    {
+      "heading": "联系方式",
+      "text": "136-31 41st Ave\nFlushing, NY 11355",
+      "phone": "(718) 799-0472",
+      "phoneHref": "tel:+17187990472",
+      "email": "info@pbiny.com",
+      "hours": "Mon–Fri: 9am–6pm\nSat: 10am–3pm"
+    }
+  ],
+  "legalText": "© {year} Peerless Brokerage Inc. 版权所有。",
+  "licenseText": "持牌保险经纪 | 执照号 #LA-1234567 | 持牌州：NY、NJ、CT、PA",
+  "disclaimer": "保险产品与服务受各州法规、承保条件及合同条款限制，并非所有州均可提供全部产品。",
+  "links": [
+    {
+      "label": "Privacy Policy",
+      "href": "/zh/privacy"
+    },
+    {
+      "label": "Terms of Service",
+      "href": "/zh/terms"
+    }
+  ]
+}

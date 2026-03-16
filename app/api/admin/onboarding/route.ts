@@ -539,7 +539,7 @@ export async function POST(request: NextRequest) {
 
   const TEMPLATE_ID = intake.templateSiteId || 'dr-huang-clinic';
   const SITE_ID: string = normalizedClientId;
-  const LOCALES: string[] = intake.locales?.supported || ['en'];
+  const LOCALES: string[] = intake.locales?.supported || ['en', 'zh'];
   const DEFAULT_LOCALE: string = intake.locales?.default || 'en';
   const SKIP_AI: boolean = intake.skipAi === true;
   const CONTENT_DIR = path.join(process.cwd(), 'content');

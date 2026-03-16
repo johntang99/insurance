@@ -3,6 +3,7 @@ import { Phone, Clock, Shield, Star, CheckCircle } from 'lucide-react';
 interface TrustPoint { icon: string; text: string; }
 
 interface QuoteTrustPanelProps {
+  locale?: string;
   headline?: string;
   points?: TrustPoint[];
   phone?: string;
@@ -27,26 +28,43 @@ const ICONS: Record<string, React.ComponentType<{ className?: string; style?: Re
 };
 
 export default function QuoteTrustPanel({
-  headline = 'Why Get a Quote From Us?',
-  points = DEFAULT_POINTS,
+  locale = 'en',
+  headline,
+  points,
   phone = ("(718) 799-0472"),
   phoneHref = 'tel:+17187990472',
-  phoneLabel = 'Prefer to call?',
-  responsePromise = 'We respond to all quote requests within 2 business hours.',
+  phoneLabel,
+  responsePromise,
   googleRating,
   googleReviewCount,
   googleReviewUrl,
   licenseText,
 }: QuoteTrustPanelProps) {
+  const isZh = locale === 'zh';
+  const localizedDefaultPoints: TrustPoint[] = isZh
+    ? [
+        { icon: 'clock', text: '通常 2 个工作小时内回复' },
+        { icon: 'shield', text: '无义务咨询，免费报价' },
+        { icon: 'store', text: '为您比较 30+ 保险公司方案' },
+        { icon: 'star', text: 'Google 4.9★ 评分（312+ 评价）' },
+      ]
+    : DEFAULT_POINTS;
+  const resolvedHeadline = headline || (isZh ? '为什么选择我们报价？' : 'Why Get a Quote From Us?');
+  const resolvedPoints = points || localizedDefaultPoints;
+  const resolvedPhoneLabel = phoneLabel || (isZh ? '更想直接电话沟通？' : 'Prefer to call?');
+  const resolvedResponsePromise = responsePromise || (isZh ? '我们通常在 2 个工作小时内回复所有报价申请。' : 'We respond to all quote requests within 2 business hours.');
+  const officeHours = isZh ? '周一至周六 9:00-18:00' : 'Mon–Sat 9am–6pm';
+  const reviewsLabel = isZh ? 'Google 评价' : 'Google reviews';
+
   return (
     <div style={{ position: 'sticky', top: '2rem', display: 'flex', flexDirection: 'column', gap: 16 }}>
       {/* Trust points card */}
       <div style={{ background: 'var(--bg-white)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', padding: '28px 24px', boxShadow: 'var(--shadow-sm)' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 20, fontSize: '1.1rem' }}>
-          {headline}
+          {resolvedHeadline}
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          {points.map((pt, i) => {
+          {resolvedPoints.map((pt, i) => {
             const Icon = ICONS[pt.icon] || ICONS.default;
             return (
               <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
@@ -78,7 +96,7 @@ export default function QuoteTrustPanel({
               <span style={{ fontWeight: 700, fontSize: '.9rem', color: 'var(--text-primary)' }}>{googleRating}</span>
             </div>
             <div style={{ fontSize: '.78rem', color: 'var(--text-muted)' }}>
-              {googleReviewCount ? `${googleReviewCount} Google reviews` : 'Google reviews'}
+              {googleReviewCount ? `${googleReviewCount} ${reviewsLabel}` : reviewsLabel}
             </div>
           </div>
         </a>
@@ -87,21 +105,21 @@ export default function QuoteTrustPanel({
       {/* Phone callout */}
       <div style={{ background: 'var(--navy-800)', borderRadius: 'var(--radius-lg)', padding: '20px 24px', textAlign: 'center' }}>
         <p style={{ fontSize: '.78rem', color: 'rgba(255,255,255,.6)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.08em', fontWeight: 600 }}>
-          {phoneLabel}
+          {resolvedPhoneLabel}
         </p>
         <a href={phoneHref} style={{ display: 'block', fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 700, color: 'var(--gold-400)', marginBottom: 4, textDecoration: 'none' }}>
           {phone}
         </a>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: '.78rem', color: 'rgba(255,255,255,.55)' }}>
           <Clock className="w-3 h-3" />
-          Mon–Sat 9am–6pm
+          {officeHours}
         </div>
       </div>
 
       {/* Response promise */}
       {responsePromise && (
         <div style={{ textAlign: 'center', fontSize: '.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-          {responsePromise}
+          {resolvedResponsePromise}
         </div>
       )}
 

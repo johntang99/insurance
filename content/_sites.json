@@ -6,7 +6,7 @@
       "domain": "pbiny.local",
       "enabled": true,
       "defaultLocale": "en",
-      "supportedLocales": ["en"],
+      "supportedLocales": ["en", "zh"],
       "type": "insurance-brokerage",
       "createdAt": "2026-03-15T00:00:00Z",
       "updatedAt": "2026-03-15T00:00:00Z"

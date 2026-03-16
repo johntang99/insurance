@@ -12,7 +12,7 @@ interface FAQItem { category: string; question: string; answer: string; }
 interface FAQCategory { id: string; label: string; }
 interface FAQContent {
   hero?: { headline?: string; subline?: string };
-  categories?: FAQCategory[];
+  categories?: Array<FAQCategory & { items?: Array<{ question: string; answer: string }> }>;
   categories_list?: FAQCategory[];
   items?: FAQItem[];
 }
@@ -52,6 +52,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function FAQPage({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const [content, siteInfo] = await Promise.all([
@@ -63,17 +64,47 @@ export default async function FAQPage({ params }: PageProps) {
   const phone = si?.phone || ("(718) 799-0472");
   const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const email = si?.email || 'info@pbiny.com';
+  const ui = {
+    heroLabel: isZh ? '常见问题' : 'FAQ',
+    heroHeadline: isZh ? '常见问题' : 'Frequently Asked Questions',
+    heroSubline: isZh ? '关于保险与投保流程，您需要知道的重点都在这里。' : 'Everything you need to know about working with us',
+    stillQuestions: isZh ? '还有疑问？我们随时为您提供帮助。' : 'Still have questions? We\'re here to help.',
+    callUs: isZh ? '致电咨询' : 'Call Us',
+    emailUs: isZh ? '邮件咨询' : 'Email Us',
+    freeQuote: isZh ? '免费获取报价' : 'Get a Free Quote',
+    response: isZh ? '通常 2 小时内回复' : '2-hour response guaranteed',
+    ctaHeadline: isZh ? '准备开始了吗？' : 'Ready to Get Started?',
+    ctaSubline: isZh ? '几分钟即可提交报价需求，无任何义务。' : 'Get a free quote in minutes. No obligation.',
+  };
 
-  // Use items from content JSON, fallback to defaults
-  const faqItems: FAQItem[] = content?.items || DEFAULT_FAQ;
-  const categories: FAQCategory[] = content?.categories || content?.categories_list || [
-    { id: 'general', label: 'General' },
-    { id: 'auto', label: 'Auto' },
-    { id: 'home', label: 'Home' },
-    { id: 'business', label: 'Business' },
+  // Use items from content JSON, supporting both flat items[] and categories[].items.
+  const nestedItems =
+    (content as any)?.categories?.flatMap((cat: any) =>
+      (cat?.items || []).map((item: any) => ({
+        category: cat.id,
+        question: item.question,
+        answer: item.answer,
+      }))
+    ) || [];
+  const faqItems: FAQItem[] = (content?.items && content.items.length > 0)
+    ? content.items
+    : nestedItems.length > 0
+      ? nestedItems
+      : DEFAULT_FAQ;
+  const categoriesFromNested: FAQCategory[] =
+    ((content as any)?.categories || [])
+      .filter((cat: any) => typeof cat?.id === 'string' && typeof cat?.label === 'string')
+      .map((cat: any) => ({ id: cat.id, label: cat.label }));
+  const categories: FAQCategory[] = categoriesFromNested.length > 0
+    ? categoriesFromNested
+    : content?.categories_list || [
+    { id: 'general', label: isZh ? '综合' : 'General' },
+    { id: 'auto', label: isZh ? '车险' : 'Auto' },
+    { id: 'home', label: isZh ? '房屋险' : 'Home' },
+    { id: 'business', label: isZh ? '商业险' : 'Business' },
     { id: 'tlc', label: 'TLC' },
-    { id: 'claims', label: 'Claims' },
-    { id: 'about', label: 'About Us' },
+    { id: 'claims', label: isZh ? '理赔' : 'Claims' },
+    { id: 'about', label: isZh ? '关于我们' : 'About Us' },
   ];
 
   return (
@@ -93,12 +124,12 @@ export default async function FAQPage({ params }: PageProps) {
         {/* Hero */}
         <section style={{ background: 'var(--navy-800)', padding: '64px 0 48px', textAlign: 'center' }}>
           <div className="container-custom">
-            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-400)', marginBottom: 12 }}>FAQ</p>
+            <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-400)', marginBottom: 12 }}>{ui.heroLabel}</p>
             <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(2rem,4vw,2.8rem)', marginBottom: 16 }}>
-              {content?.hero?.headline || 'Frequently Asked Questions'}
+              {content?.hero?.headline || ui.heroHeadline}
             </h1>
             <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '1.05rem', maxWidth: 540, margin: '0 auto', lineHeight: 1.65 }}>
-              {content?.hero?.subline || 'Everything you need to know about working with us'}
+              {content?.hero?.subline || ui.heroSubline}
             </p>
           </div>
         </section>
@@ -109,13 +140,14 @@ export default async function FAQPage({ params }: PageProps) {
           categories={categories}
           phone={phone}
           phoneHref={phoneHref}
+          locale={locale}
         />
 
         {/* Contact strip */}
         <section style={{ padding: '48px 0', background: 'var(--bg-subtle)', borderTop: '1px solid var(--border)' }}>
           <div className="container-custom">
             <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', textAlign: 'center', marginBottom: 28 }}>
-              Still have questions? We&apos;re here to help.
+              {ui.stillQuestions}
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }} className="grid-1col-mobile">
               <a href={phoneHref} style={{ display: 'flex', gap: 14, alignItems: 'center', background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '20px 24px', textDecoration: 'none' }}>
@@ -123,7 +155,7 @@ export default async function FAQPage({ params }: PageProps) {
                   <PhoneIcon className="w-5 h-5" style={{ color: 'var(--gold-500)' }} />
                 </div>
                 <div>
-                  <p style={{ fontWeight: 700, color: 'var(--navy-800)', fontSize: '.9rem', marginBottom: 2 }}>Call Us</p>
+                  <p style={{ fontWeight: 700, color: 'var(--navy-800)', fontSize: '.9rem', marginBottom: 2 }}>{ui.callUs}</p>
                   <p style={{ color: 'var(--text-muted)', fontSize: '.85rem' }}>{phone}</p>
                 </div>
               </a>
@@ -132,7 +164,7 @@ export default async function FAQPage({ params }: PageProps) {
                   <Mail className="w-5 h-5" style={{ color: 'var(--gold-500)' }} />
                 </div>
                 <div>
-                  <p style={{ fontWeight: 700, color: 'var(--navy-800)', fontSize: '.9rem', marginBottom: 2 }}>Email Us</p>
+                  <p style={{ fontWeight: 700, color: 'var(--navy-800)', fontSize: '.9rem', marginBottom: 2 }}>{ui.emailUs}</p>
                   <p style={{ color: 'var(--text-muted)', fontSize: '.85rem' }}>{email}</p>
                 </div>
               </a>
@@ -141,8 +173,8 @@ export default async function FAQPage({ params }: PageProps) {
                   <span style={{ fontSize: '1.25rem' }}>📋</span>
                 </div>
                 <div>
-                  <p style={{ fontWeight: 700, color: '#fff', fontSize: '.9rem', marginBottom: 2 }}>Get a Free Quote</p>
-                  <p style={{ color: 'rgba(255,255,255,.8)', fontSize: '.85rem' }}>2-hour response guaranteed</p>
+                  <p style={{ fontWeight: 700, color: '#fff', fontSize: '.9rem', marginBottom: 2 }}>{ui.freeQuote}</p>
+                  <p style={{ color: 'rgba(255,255,255,.8)', fontSize: '.85rem' }}>{ui.response}</p>
                 </div>
               </Link>
             </div>
@@ -151,8 +183,8 @@ export default async function FAQPage({ params }: PageProps) {
 
         <QuoteCTASection
           variant="cta-only"
-          headline="Ready to Get Started?"
-          subline="Get a free quote in minutes. No obligation."
+          headline={ui.ctaHeadline}
+          subline={ui.ctaSubline}
           phone={phone}
           phoneHref={phoneHref}
           locale={locale}

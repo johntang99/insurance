@@ -75,28 +75,62 @@ export async function loadContent<T>(
   locale: Locale,
   contentPath: string
 ): Promise<T | null> {
+  let dbDefaultFallback: T | null = null;
   if (canUseContentDb()) {
     const entry = await fetchContentEntry(siteId, locale, contentPath);
     if (entry?.data) {
       return entry.data as T;
     }
+    if (locale !== defaultLocale) {
+      const fallbackEntry = await fetchContentEntry(siteId, defaultLocale, contentPath);
+      if (fallbackEntry?.data) {
+        dbDefaultFallback = fallbackEntry.data as T;
+      }
+    }
   }
 
-  try {
-    const filePath = path.join(CONTENT_DIR, siteId, locale, contentPath);
-    
-    // Check if file exists
+  const loadFromFile = async (fileLocale: Locale): Promise<T | null> => {
+    const filePath = path.join(CONTENT_DIR, siteId, fileLocale, contentPath);
     if (!fs.existsSync(filePath)) {
-      console.warn(`Content file not found: ${filePath}`);
       return null;
     }
-    
     const data = await fs.promises.readFile(filePath, 'utf-8');
     return JSON.parse(data) as T;
+  };
+
+  try {
+    const preferred = await loadFromFile(locale);
+    if (preferred) return preferred;
+    if (dbDefaultFallback) return dbDefaultFallback;
+    if (locale !== defaultLocale) {
+      return await loadFromFile(defaultLocale);
+    }
+    return null;
   } catch (error) {
     console.error(`Error loading content from ${contentPath}:`, error);
     return null;
   }
+}
+
+async function listItemsFromLocale<T>(
+  siteId: string,
+  locale: Locale,
+  directory: string
+): Promise<T[]> {
+  const dirPath = path.join(CONTENT_DIR, siteId, locale, directory);
+  if (!fs.existsSync(dirPath)) {
+    return [];
+  }
+  const files = await fs.promises.readdir(dirPath);
+  const jsonFiles = files.filter(file => file.endsWith('.json'));
+  const items = await Promise.all(
+    jsonFiles.map(async (file) => {
+      const filePath = path.join(dirPath, file);
+      const data = await fs.promises.readFile(filePath, 'utf-8');
+      return JSON.parse(data) as T;
+    })
+  );
+  return items;
 }
 
 /**
@@ -181,29 +215,35 @@ export async function loadAllItems<T>(
       locale,
       `${directory}/`
     );
-    return entries.map((entry) => entry.data as T);
+    if (entries.length) {
+      return entries.map((entry) => entry.data as T);
+    }
+    const localeFileItems = await listItemsFromLocale<T>(resolvedSiteId, locale, directory);
+    if (localeFileItems.length) {
+      return localeFileItems;
+    }
+    if (locale !== defaultLocale) {
+      const fallbackEntries = await listContentEntriesByPrefix(
+        resolvedSiteId,
+        defaultLocale,
+        `${directory}/`
+      );
+      if (fallbackEntries.length) {
+        return fallbackEntries.map((entry) => entry.data as T);
+      }
+      return await listItemsFromLocale<T>(resolvedSiteId, defaultLocale, directory);
+    }
+    return [];
   }
 
   try {
     const resolvedSiteId = await resolveSiteId(siteId);
-    const dirPath = path.join(CONTENT_DIR, resolvedSiteId, locale, directory);
-    
-    if (!fs.existsSync(dirPath)) {
-      return [];
+    const items = await listItemsFromLocale<T>(resolvedSiteId, locale, directory);
+    if (items.length) return items;
+    if (locale !== defaultLocale) {
+      return await listItemsFromLocale<T>(resolvedSiteId, defaultLocale, directory);
     }
-    
-    const files = await fs.promises.readdir(dirPath);
-    const jsonFiles = files.filter(file => file.endsWith('.json'));
-    
-    const items = await Promise.all(
-      jsonFiles.map(async (file) => {
-        const filePath = path.join(dirPath, file);
-        const data = await fs.promises.readFile(filePath, 'utf-8');
-        return JSON.parse(data) as T;
-      })
-    );
-    
-    return items;
+    return [];
   } catch (error) {
     console.error(`Error loading items from ${directory}:`, error);
     return [];

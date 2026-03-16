@@ -29,6 +29,7 @@ interface FooterProps {
 function getYear() { return new Date().getFullYear(); }
 
 export default function Footer({ locale, footer }: FooterProps) {
+  const isZh = locale === 'zh';
   const columns = footer?.columns || [];
   const legalText = (footer?.legalText || '© {year} Insurance Brokerage. All rights reserved.').replace('{year}', String(getYear()));
   const licenseText = footer?.licenseText || '';
@@ -118,7 +119,7 @@ export default function Footer({ locale, footer }: FooterProps) {
                     style={{ background: 'var(--gold-500)', color: '#fff', padding: '12px 16px' }}
                     onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.background = 'var(--gold-600)')}
                     onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.background = 'var(--gold-500)')}>
-                    Get a Free Quote
+                    {isZh ? '免费获取报价' : 'Get a Free Quote'}
                   </Link>
                 )}
               </div>
@@ -132,30 +133,30 @@ export default function Footer({ locale, footer }: FooterProps) {
                     <div className="w-9 h-9 rounded-md flex items-center justify-center font-bold" style={{ background: 'var(--navy-700)', color: 'var(--gold-400)', fontFamily: 'var(--font-heading)' }}>P</div>
                     <span className="font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Peerless Brokerage</span>
                   </div>
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,.5)', lineHeight: 1.6 }}>Your trusted independent insurance broker in Flushing, NY.</p>
+                  <p className="text-sm" style={{ color: 'rgba(255,255,255,.5)', lineHeight: 1.6 }}>{isZh ? '法拉盛值得信赖的独立保险经纪。' : 'Your trusted independent insurance broker in Flushing, NY.'}</p>
                 </div>
                 <div>
-                  <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>Insurance</p>
+                  <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>{isZh ? '保险产品' : 'Insurance'}</p>
                   <div className="flex flex-col gap-2.5">
-                    {['Auto', 'TLC', 'Homeowner', 'Business', 'Workers Comp', 'View All'].map(l => (
-                      <Link key={l} href={`/${locale}/insurance`} className="text-sm" style={{ color: 'rgba(255,255,255,.65)' }}>{l} Insurance</Link>
+                    {(isZh ? ['车险', 'TLC', '房屋险', '商业险', '工伤险', '查看全部'] : ['Auto', 'TLC', 'Homeowner', 'Business', 'Workers Comp', 'View All']).map(l => (
+                      <Link key={l} href={`/${locale}/insurance`} className="text-sm" style={{ color: 'rgba(255,255,255,.65)' }}>{isZh ? l : `${l} Insurance`}</Link>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>Company</p>
+                  <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>{isZh ? '公司信息' : 'Company'}</p>
                   <div className="flex flex-col gap-2.5">
-                    {[['About', 'about'], ['Agents', 'agents'], ['Carriers', 'carriers'], ['Resources', 'resources'], ['FAQ', 'faq'], ['Contact', 'contact']].map(([l, h]) => (
+                    {(isZh ? [['关于我们', 'about'], ['顾问团队', 'agents'], ['合作保险公司', 'carriers'], ['资讯中心', 'resources'], ['常见问题', 'faq'], ['联系我们', 'contact']] : [['About', 'about'], ['Agents', 'agents'], ['Carriers', 'carriers'], ['Resources', 'resources'], ['FAQ', 'faq'], ['Contact', 'contact']]).map(([l, h]) => (
                       <Link key={h} href={`/${locale}/${h}`} className="text-sm" style={{ color: 'rgba(255,255,255,.65)' }}>{l}</Link>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>Get Started</p>
+                  <p className="mb-4 text-xs font-bold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,.4)' }}>{isZh ? '开始办理' : 'Get Started'}</p>
                   <Link href={`/${locale}/quote`}
                     className="block text-center rounded-lg font-semibold text-sm"
                     style={{ background: 'var(--gold-500)', color: '#fff', padding: '12px 16px' }}>
-                    Get a Free Quote
+                    {isZh ? '免费获取报价' : 'Get a Free Quote'}
                   </Link>
                 </div>
               </>

@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "variant": "centered",
+    "headline": "Insurance Resource Center",
+    "subline": "Expert guides, cost breakdowns, and coverage explainers — everything you need to make informed insurance decisions."
+  },
+  "cta": {
+    "headline": "Have Questions About Your Coverage?",
+    "subline": "Our licensed agents are happy to help.",
+    "ctaPrimary": {
+      "label": "Get a Free Quote",
+      "href": "/zh/quote"
+    },
+    "ctaSecondary": {
+      "label": "Call Us",
+      "href": "tel:+17187990472"
+    }
+  }
+}

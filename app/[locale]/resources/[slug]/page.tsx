@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { type Locale } from '@/lib/i18n';
 import { getRequestSiteId, loadSiteInfo, loadItemBySlug, loadAllItems } from '@/lib/content';
 import { buildPageMetadata } from '@/lib/seo';
@@ -59,6 +61,9 @@ export default async function ResourceArticlePage({ params }: PageProps) {
   const bodyText = post.body && post.body !== '[Full article content coming in Phase 2]'
     ? post.body
     : null;
+  const normalizedBody = bodyText
+    ? bodyText.replace(/\r\n/g, '\n').trim()
+    : null;
 
   return (
     <>
@@ -104,7 +109,60 @@ export default async function ResourceArticlePage({ params }: PageProps) {
 
                 {bodyText ? (
                   <div style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--text-secondary)' }}>
-                    {bodyText.split('\n\n').map((para, i) => <p key={i} style={{ marginBottom: '1.25em' }}>{para}</p>)}
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h2: (props) => <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.6rem', margin: '1.8em 0 0.7em' }} {...props} />,
+                        h3: (props) => <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.25rem', margin: '1.4em 0 0.6em' }} {...props} />,
+                        p: (props) => <p style={{ marginBottom: '1.25em' }} {...props} />,
+                        ul: (props) => <ul style={{ marginBottom: '1.25em', paddingLeft: '1.2em', listStyle: 'disc' }} {...props} />,
+                        ol: (props) => <ol style={{ marginBottom: '1.25em', paddingLeft: '1.2em', listStyle: 'decimal' }} {...props} />,
+                        li: (props) => <li style={{ marginBottom: '0.5em' }} {...props} />,
+                        table: (props) => (
+                          <div style={{ overflowX: 'auto', margin: '1.5em 0' }}>
+                            <table
+                              style={{
+                                width: '100%',
+                                borderCollapse: 'collapse',
+                                minWidth: '680px',
+                                border: '1px solid var(--border)',
+                                borderRadius: 8,
+                                overflow: 'hidden',
+                              }}
+                              {...props}
+                            />
+                          </div>
+                        ),
+                        thead: (props) => <thead style={{ background: 'var(--navy-50)' }} {...props} />,
+                        th: (props) => (
+                          <th
+                            style={{
+                              border: '1px solid var(--border)',
+                              padding: '0.7rem 0.8rem',
+                              textAlign: 'left',
+                              color: 'var(--navy-800)',
+                              fontWeight: 700,
+                              verticalAlign: 'top',
+                              lineHeight: 1.4,
+                            }}
+                            {...props}
+                          />
+                        ),
+                        td: (props) => (
+                          <td
+                            style={{
+                              border: '1px solid var(--border)',
+                              padding: '0.7rem 0.8rem',
+                              verticalAlign: 'top',
+                              lineHeight: 1.6,
+                            }}
+                            {...props}
+                          />
+                        ),
+                      }}
+                    >
+                      {normalizedBody || ''}
+                    </ReactMarkdown>
                   </div>
                 ) : (
                   <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '40px', textAlign: 'center' }}>
