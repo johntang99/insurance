@@ -44,7 +44,7 @@ function normalizeTime(value: string): string | null {
   return `${String(hours).padStart(2, '0')}:${minutes}`;
 }
 
-function buildOpeningHours(hours: unknown): Array<Record<string, string>> {
+function buildOpeningHours(hours: unknown): Array<Record<string, unknown>> {
   if (typeof hours === 'string') {
     const value = hours.toLowerCase();
     if (value.includes('mon') && value.includes('fri') && value.includes('9') && value.includes('6')) {
@@ -59,7 +59,7 @@ function buildOpeningHours(hours: unknown): Array<Record<string, string>> {
     }
   }
   if (!hours || typeof hours !== 'object') return [];
-  const rows: Array<Record<string, string>> = [];
+  const rows: Array<Record<string, unknown>> = [];
   for (const [day, slot] of Object.entries(hours as Record<string, HoursSlot>)) {
     const dayName = DAY_OF_WEEK[day];
     if (!dayName || !slot || typeof slot !== 'object' || slot.closed) continue;
