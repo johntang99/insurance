@@ -1,18 +1,18 @@
 {
-  "_note": "Full content coming in Phase 1D/2G",
+  "_note": "完整内容将持续补充",
   "serviceHero": {
     "image": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557655209-photo-1605281317010-fe5ffe798166.jpg",
-    "subline": "Get a free quote from Peerless Brokerage — we shop 30+ carriers for the best rate.",
+    "subline": "免费获取报价，我们为您比较 30+ 保险公司方案。",
     "variant": "service-hero",
-    "headline": "Boat Insurance",
+    "headline": "船只保险",
     "imageAlt": "",
     "ctaPrimary": {
       "href": "/zh/quote?type=boat",
-      "label": "Get a Quote"
+      "label": "免费获取报价"
     },
     "ctaSecondary": {
       "href": "tel:+17187990472",
-      "label": "Call (718) 799-0472"
+      "label": "致电 (718) 799-0472"
     }
   }
 }

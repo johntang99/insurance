@@ -1,18 +1,18 @@
 {
   "hero": {
     "variant": "centered",
-    "headline": "Insurance Resource Center",
-    "subline": "Expert guides, cost breakdowns, and coverage explainers — everything you need to make informed insurance decisions."
+    "headline": "保险资讯中心",
+    "subline": "专业指南、费用解析与保障说明，帮助您更安心地做出保险决策。"
   },
   "cta": {
-    "headline": "Have Questions About Your Coverage?",
-    "subline": "Our licensed agents are happy to help.",
+    "headline": "对保障方案有疑问？",
+    "subline": "我们的持牌顾问很乐意为您解答。",
     "ctaPrimary": {
-      "label": "Get a Free Quote",
+      "label": "免费获取报价",
       "href": "/zh/quote"
     },
     "ctaSecondary": {
-      "label": "Call Us",
+      "label": "立即致电",
       "href": "tel:+17187990472"
     }
   }

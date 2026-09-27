@@ -64,6 +64,28 @@ async function collectImportCandidates(siteId: string, locale: string): Promise<
     });
   };
 
+  const collectJsonFilesRecursive = async (baseDir: string, relativePrefix = ''): Promise<Array<{ contentPath: string; filePath: string }>> => {
+    const entries = await fs.readdir(baseDir, { withFileTypes: true });
+    const files: Array<{ contentPath: string; filePath: string }> = [];
+
+    for (const entry of entries) {
+      const entryRelativePath = relativePrefix ? `${relativePrefix}/${entry.name}` : entry.name;
+      const fullPath = path.join(baseDir, entry.name);
+
+      if (entry.isDirectory()) {
+        const nested = await collectJsonFilesRecursive(fullPath, entryRelativePath);
+        files.push(...nested);
+        continue;
+      }
+
+      if (entry.isFile() && entry.name.endsWith('.json')) {
+        files.push({ contentPath: entryRelativePath, filePath: fullPath });
+      }
+    }
+
+    return files;
+  };
+
   // Root locale JSON files
   try {
     const rootFiles = await fs.readdir(localeRoot);
@@ -77,9 +99,9 @@ async function collectImportCandidates(siteId: string, locale: string): Promise<
   // Pages
   const pagesDir = path.join(localeRoot, 'pages');
   try {
-    const pageFiles = await fs.readdir(pagesDir);
-    for (const file of pageFiles.filter((item) => item.endsWith('.json'))) {
-      await addCandidate(locale, `pages/${file}`, path.join(pagesDir, file));
+    const pageFiles = await collectJsonFilesRecursive(pagesDir);
+    for (const file of pageFiles) {
+      await addCandidate(locale, `pages/${file.contentPath}`, file.filePath);
     }
   } catch {
     // ignore missing pages dir
@@ -88,9 +110,9 @@ async function collectImportCandidates(siteId: string, locale: string): Promise<
   // Blog posts
   const blogDir = path.join(localeRoot, 'blog');
   try {
-    const blogFiles = await fs.readdir(blogDir);
-    for (const file of blogFiles.filter((item) => item.endsWith('.json'))) {
-      await addCandidate(locale, `blog/${file}`, path.join(blogDir, file));
+    const blogFiles = await collectJsonFilesRecursive(blogDir);
+    for (const file of blogFiles) {
+      await addCandidate(locale, `blog/${file.contentPath}`, file.filePath);
     }
   } catch {
     // ignore missing blog dir

@@ -4,31 +4,31 @@
       "heading": "保险产品",
       "links": [
         {
-          "label": "Auto Insurance",
+          "label": "车险",
           "href": "/zh/insurance/auto"
         },
         {
-          "label": "TLC Insurance",
+          "label": "TLC 保险",
           "href": "/zh/insurance/tlc"
         },
         {
-          "label": "Commercial Auto",
+          "label": "商业车辆保险",
           "href": "/zh/insurance/commercial-auto"
         },
         {
-          "label": "Homeowner Insurance",
+          "label": "房屋保险",
           "href": "/zh/insurance/homeowner"
         },
         {
-          "label": "Business Insurance",
+          "label": "商业保险",
           "href": "/zh/insurance/business"
         },
         {
-          "label": "Workers Compensation",
+          "label": "工伤保险",
           "href": "/zh/insurance/workers-comp"
         },
         {
-          "label": "View All Coverage",
+          "label": "查看全部险种",
           "href": "/zh/insurance"
         }
       ]
@@ -37,27 +37,27 @@
       "heading": "公司信息",
       "links": [
         {
-          "label": "About Us",
+          "label": "关于我们",
           "href": "/zh/about"
         },
         {
-          "label": "Our Agents",
+          "label": "顾问团队",
           "href": "/zh/agents"
         },
         {
-          "label": "Carrier Partners",
+          "label": "合作保险公司",
           "href": "/zh/carriers"
         },
         {
-          "label": "Testimonials",
+          "label": "客户评价",
           "href": "/zh/testimonials"
         },
         {
-          "label": "Service Areas",
+          "label": "服务区域",
           "href": "/zh/locations"
         },
         {
-          "label": "Resources",
+          "label": "资讯中心",
           "href": "/zh/resources"
         }
       ]
@@ -66,23 +66,23 @@
       "heading": "服务",
       "links": [
         {
-          "label": "Get a Quote",
+          "label": "免费获取报价",
           "href": "/zh/quote"
         },
         {
-          "label": "Claims Assistance",
+          "label": "理赔协助",
           "href": "/zh/claims"
         },
         {
-          "label": "DMV Services",
+          "label": "DMV 服务",
           "href": "/zh/services/dmv"
         },
         {
-          "label": "Notary Services",
+          "label": "公证服务",
           "href": "/zh/services/notary"
         },
         {
-          "label": "Contact Us",
+          "label": "联系我们",
           "href": "/zh/contact"
         }
       ]
@@ -101,11 +101,11 @@
   "disclaimer": "保险产品与服务受各州法规、承保条件及合同条款限制，并非所有州均可提供全部产品。",
   "links": [
     {
-      "label": "Privacy Policy",
+      "label": "隐私政策",
       "href": "/zh/privacy"
     },
     {
-      "label": "Terms of Service",
+      "label": "服务条款",
       "href": "/zh/terms"
     }
   ]

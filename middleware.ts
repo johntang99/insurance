@@ -32,7 +32,8 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/apple-icon/') ||
     pathname === '/robots.txt' ||
     pathname === '/sitemap.xml' ||
-    pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js)$/)
+    pathname === '/llms.txt' ||
+    pathname.match(/\.(ico|png|jpg|jpeg|webp|gif|svg|css|js|map|txt|xml|json|woff|woff2|ttf|eot|otf|pdf|mp4|webm)$/)
   ) {
     return NextResponse.next();
   }

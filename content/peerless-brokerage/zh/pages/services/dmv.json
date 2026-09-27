@@ -1,38 +1,38 @@
 {
   "hero": {
     "variant": "centered",
-    "headline": "DMV Services",
-    "subline": "Save time on vehicle registration, title transfers, and other DMV transactions — handled right from our Brooklyn office."
+    "headline": "DMV 办理服务",
+    "subline": "车辆注册、过户等 DMV 事务可由我们协助办理，节省您排队与沟通时间。"
   },
   "serviceDetail": {
-    "headline": "What We Handle",
+    "headline": "可协助办理事项",
     "services": [
-      "Vehicle registration and renewals",
-      "Title transfers and title searches",
-      "License plate surrender",
-      "VIN inspections",
-      "Out-of-state vehicle registration in NY",
-      "Commercial vehicle registration"
+      "车辆注册与续期",
+      "车辆产权过户与记录查询",
+      "车牌上交/停用办理",
+      "VIN 车辆识别码核验",
+      "外州车辆在纽约注册",
+      "商用车辆注册"
     ]
   },
   "requirements": {
-    "headline": "What to Bring",
+    "headline": "办理所需资料",
     "items": [
-      "Valid government-issued photo ID",
-      "Vehicle title or existing registration",
-      "Proof of insurance",
-      "Payment (check or credit card)"
+      "有效政府签发身份证件",
+      "车辆产权文件或现有注册文件",
+      "有效保险证明",
+      "付款方式（支票或信用卡）"
     ]
   },
   "cta": {
-    "headline": "Need DMV Help?",
-    "subline": "Stop by our office or call ahead to confirm what documents you'll need.",
+    "headline": "需要 DMV 协助？",
+    "subline": "欢迎来电确认所需材料后到店办理。",
     "ctaPrimary": {
-      "label": "Call Us",
+      "label": "立即致电",
       "href": "tel:+17187990472"
     },
     "ctaSecondary": {
-      "label": "Get Directions",
+      "label": "查看路线",
       "href": "/zh/contact"
     }
   }

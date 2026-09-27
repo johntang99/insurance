@@ -12,14 +12,17 @@ interface PageProps { params: { locale: Locale } }
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   const city = (siteInfo as any)?.city || 'Flushing';
   return buildPageMetadata({
     siteId, locale, slug: 'quote',
-    title: `Get a Free Insurance Quote | ${siteName}`,
-    description: `Get a free insurance quote in minutes. We compare 30+ carriers to find your best rate. ${siteName} — serving ${city}, NY.`,
+    title: isZh ? `免费获取保险报价 | ${siteName}` : `Get a Free Insurance Quote | ${siteName}`,
+    description: isZh
+      ? `几分钟完成免费保险报价。我们比较 30+ 保险公司，帮助您匹配更合适费率。${siteName}，服务于 ${city} 及周边。`
+      : `Get a free insurance quote in minutes. We compare 30+ carriers to find your best rate. ${siteName} — serving ${city}, NY.`,
   });
 }
 

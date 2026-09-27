@@ -1,45 +1,45 @@
 {
   "hero": {
     "variant": "centered",
-    "headline": "Notary Services",
-    "subline": "Licensed notary public on-site. Get your important documents notarized quickly and professionally."
+    "headline": "公证服务",
+    "subline": "现场持牌公证服务，协助您高效完成重要文件公证。"
   },
   "serviceDetail": {
-    "headline": "Documents We Notarize",
+    "headline": "常见公证文件",
     "services": [
-      "Insurance forms and policies",
-      "Real estate and property documents",
-      "Affidavits and sworn statements",
-      "Power of attorney",
-      "Loan documents",
-      "Business contracts",
-      "Immigration forms",
-      "General legal documents"
+      "保险相关文件与保单",
+      "房产与不动产相关文件",
+      "宣誓声明与 affidavit 文件",
+      "授权委托书（Power of Attorney）",
+      "贷款与金融文件",
+      "商业合同文件",
+      "移民相关文件",
+      "其他常见法律文件"
     ]
   },
   "pricing": {
-    "headline": "Pricing",
-    "note": "Notary fees are set by New York State law.",
+    "headline": "收费说明",
+    "note": "公证收费标准依据纽约州相关规定执行。",
     "items": [
       {
-        "service": "First signature",
+        "service": "首个签名",
         "price": "$2.00"
       },
       {
-        "service": "Each additional signature",
+        "service": "每增加一个签名",
         "price": "$2.00"
       }
     ]
   },
   "cta": {
-    "headline": "Need a Notary?",
-    "subline": "Walk-ins welcome during business hours. Large documents — call ahead.",
+    "headline": "需要办理公证？",
+    "subline": "营业时间欢迎到店，文件较多建议先来电预约。",
     "ctaPrimary": {
-      "label": "Call Ahead",
+      "label": "电话预约",
       "href": "tel:+17187990472"
     },
     "ctaSecondary": {
-      "label": "Get Directions",
+      "label": "查看路线",
       "href": "/zh/contact"
     }
   }

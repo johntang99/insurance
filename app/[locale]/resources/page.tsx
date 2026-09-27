@@ -37,9 +37,19 @@ const CATEGORY_ICONS: Record<string, string> = {
   general: '📋', 'workers-comp': '🦺', 'commercial-auto': '🚛',
 };
 
+const CATEGORY_LABELS: Record<string, { en: string; zh: string }> = {
+  auto: { en: 'Auto', zh: '车险' },
+  tlc: { en: 'TLC', zh: 'TLC 保险' },
+  business: { en: 'Business', zh: '商业保险' },
+  homeowner: { en: 'Homeowner', zh: '房屋保险' },
+  general: { en: 'General', zh: '综合指南' },
+  'workers-comp': { en: 'Workers Comp', zh: '工伤保险' },
+  'commercial-auto': { en: 'Commercial Auto', zh: '商业车辆保险' },
+};
+
 // Reusable 16:9 image block — shows real photo or gradient fallback
 // Checks both `image` (admin PostsPanel field) and `coverImage` (JSON field)
-function CardImage({ post, minHeight, large = false }: { post: BlogPost; minHeight?: number; large?: boolean }) {
+function CardImage({ post, minHeight, large = false, categoryLabel }: { post: BlogPost; minHeight?: number; large?: boolean; categoryLabel?: string }) {
   const cat = post.category || 'general';
   const bg = CATEGORY_COLORS[cat] || CATEGORY_COLORS.general;
   const icon = CATEGORY_ICONS[cat] || '📄';
@@ -77,7 +87,7 @@ function CardImage({ post, minHeight, large = false }: { post: BlogPost; minHeig
       {/* Category badge */}
       {cat && (
         <span style={{ position: 'absolute', bottom: 12, left: 12, background: 'rgba(0,0,0,.45)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: '.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: 100, letterSpacing: '.04em', textTransform: 'uppercase', zIndex: 1 }}>
-          {cat}
+          {categoryLabel || cat}
         </span>
       )}
     </div>
@@ -86,18 +96,22 @@ function CardImage({ post, minHeight, large = false }: { post: BlogPost; minHeig
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   return buildPageMetadata({
     siteId, locale, slug: 'resources',
-    title: `Insurance Resource Center | ${siteName}`,
-    description: `Insurance guides, cost breakdowns, and expert tips from ${siteName}. Learn about auto, home, business, TLC, and more.`,
+    title: isZh ? `保险资讯中心 | ${siteName}` : `Insurance Resource Center | ${siteName}`,
+    description: isZh
+      ? `${siteName} 为您提供保险指南、费用解析与专业建议，涵盖车险、房屋险、商业险、TLC 保险等。`
+      : `Insurance guides, cost breakdowns, and expert tips from ${siteName}. Learn about auto, home, business, TLC, and more.`,
   });
 }
 
 export default async function ResourcesPage({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const [content, siteInfo, posts] = await Promise.all([
@@ -113,6 +127,20 @@ export default async function ResourcesPage({ params }: PageProps) {
   const published = posts.filter(p => p.title);
   const featured = published[0];
   const rest = published.slice(1);
+  const localeCode = isZh ? 'zh-CN' : 'en-US';
+  const ui = {
+    pageTag: isZh ? '资讯中心' : 'Resource Center',
+    fallbackHeadline: isZh ? '保险资讯中心' : 'Insurance Resource Center',
+    fallbackSubline: isZh ? '保险指南、费用解析与保障说明，帮助您做出更明智的保险决策。' : 'Guides, tips, and explainers to help you make the best coverage decisions.',
+    quoteCta: isZh ? '免费获取报价' : 'Get a Free Quote',
+    featuredTag: isZh ? '精选文章' : 'Featured Article',
+    readArticle: isZh ? '阅读文章 →' : 'Read Article →',
+    readMore: isZh ? '继续阅读 →' : 'Read more →',
+    ctaHeadline: isZh ? '对保障方案有疑问？' : 'Have Coverage Questions?',
+    ctaSubline: isZh ? '我们的持牌顾问很乐意为您解答，欢迎来电或在线获取免费报价。' : 'Our licensed agents are happy to help — call or get a free quote.',
+  };
+  const getCategoryLabel = (slug: string) =>
+    (isZh ? CATEGORY_LABELS[slug]?.zh : CATEGORY_LABELS[slug]?.en) || slug;
 
   return (
     <main>
@@ -120,14 +148,14 @@ export default async function ResourcesPage({ params }: PageProps) {
       <section style={{ background: 'linear-gradient(160deg,var(--navy-50) 0%,var(--bg-white) 60%,var(--gold-100) 100%)', padding: '64px 0 48px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: -80, right: -120, width: 500, height: 500, background: 'radial-gradient(circle,rgba(201,147,58,.07) 0%,transparent 65%)', pointerEvents: 'none' }} />
         <div className="container-custom" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>Resource Center</p>
+          <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 12 }}>{ui.pageTag}</p>
           <h1 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: 'clamp(2rem,4vw,2.8rem)', marginBottom: 16 }}>
-            {content?.hero?.headline || 'Insurance Resource Center'}
+            {content?.hero?.headline || ui.fallbackHeadline}
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: 560, margin: '0 auto 28px', lineHeight: 1.65 }}>
-            {content?.hero?.subline || 'Guides, tips, and explainers to help you make the best coverage decisions.'}
+            {content?.hero?.subline || ui.fallbackSubline}
           </p>
-          <Link href={`/${locale}/quote`} className="btn-gold">Get a Free Quote</Link>
+          <Link href={`/${locale}/quote`} className="btn-gold">{ui.quoteCta}</Link>
         </div>
       </section>
 
@@ -135,20 +163,25 @@ export default async function ResourcesPage({ params }: PageProps) {
       {featured && (
         <section style={{ padding: '56px 0 40px', background: 'var(--bg-white)' }}>
           <div className="container-custom">
-            <p style={{ fontSize: '.78rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 16 }}>Featured Article</p>
+            <p style={{ fontSize: '.78rem', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 16 }}>{ui.featuredTag}</p>
             <Link href={`/${locale}/resources/${featured.slug}`}
               style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', textDecoration: 'none', background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow)' }}
               className="hover-lift featured-grid">
 
               {/* Left: 16:9 image */}
-              <CardImage post={featured} large={true} />
+              <CardImage post={featured} large={true} categoryLabel={getCategoryLabel(featured.category || 'general')} />
 
               {/* Right: text */}
               <div style={{ padding: '36px 36px 36px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                {featured.publishedAt && <p style={{ fontSize: '.8rem', color: 'var(--text-muted)', marginBottom: 10 }}>{new Date(featured.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>}
+                {featured.category && (
+                  <p style={{ fontSize: '.75rem', color: 'var(--gold-600)', fontWeight: 700, marginBottom: 8 }}>
+                    {getCategoryLabel(featured.category)}
+                  </p>
+                )}
+                {featured.publishedAt && <p style={{ fontSize: '.8rem', color: 'var(--text-muted)', marginBottom: 10 }}>{new Date(featured.publishedAt).toLocaleDateString(localeCode, { month: isZh ? 'numeric' : 'long', day: 'numeric', year: 'numeric' })}</p>}
                 <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1.6rem', lineHeight: 1.25, marginBottom: 14 }}>{featured.title}</h2>
                 {featured.excerpt && <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 20, fontSize: '.9375rem' }}>{featured.excerpt}</p>}
-                <span style={{ color: 'var(--gold-600)', fontWeight: 700, fontSize: '.9rem' }}>Read Article →</span>
+                <span style={{ color: 'var(--gold-600)', fontWeight: 700, fontSize: '.9rem' }}>{ui.readArticle}</span>
               </div>
             </Link>
           </div>
@@ -165,13 +198,14 @@ export default async function ResourcesPage({ params }: PageProps) {
                   style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', textDecoration: 'none', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-sm)' }}
                   className="hover-lift">
                   {/* 16:9 image or gradient */}
-                  <CardImage post={post} />
+                  <CardImage post={post} categoryLabel={getCategoryLabel(post.category || 'general')} />
 
                   <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    {post.publishedAt && <p style={{ fontSize: '.78rem', color: 'var(--text-muted)', marginBottom: 8 }}>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>}
+                    {post.publishedAt && <p style={{ fontSize: '.78rem', color: 'var(--text-muted)', marginBottom: 8 }}>{new Date(post.publishedAt).toLocaleDateString(localeCode, { month: isZh ? 'numeric' : 'short', day: 'numeric', year: 'numeric' })}</p>}
+                    {post.category && <p style={{ fontSize: '.72rem', color: 'var(--gold-600)', fontWeight: 700, marginBottom: 8 }}>{getCategoryLabel(post.category)}</p>}
                     <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', lineHeight: 1.35, marginBottom: 10, fontWeight: 600 }}>{post.title}</h3>
                     {post.excerpt && <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>}
-                    <span style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.8rem', marginTop: 14 }}>Read more →</span>
+                    <span style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.8rem', marginTop: 14 }}>{ui.readMore}</span>
                   </div>
                 </Link>
               ))}
@@ -182,8 +216,8 @@ export default async function ResourcesPage({ params }: PageProps) {
 
       <QuoteCTASection
         variant="cta-only"
-        headline="Have Coverage Questions?"
-        subline="Our licensed agents are happy to help — call or get a free quote."
+        headline={ui.ctaHeadline}
+        subline={ui.ctaSubline}
         phone={phone}
         phoneHref={phoneHref}
         locale={locale}

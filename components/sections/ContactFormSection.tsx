@@ -47,7 +47,7 @@ export default function ContactFormSection({
     callDirectly: isZh ? '直接致电联系我们' : 'call us directly',
     officeHours: isZh ? '办公时间' : 'Office Hours',
     closed: isZh ? '休息' : 'Closed',
-    weSpeak: isZh ? '我们可用语言：' : '🌐 We speak:',
+    weSpeak: isZh ? '我们可用语言：' : 'We speak:',
   };
   const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', email: '', coverageType: '', message: '', bestTime: '', language: isZh ? '中文' : 'English' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');

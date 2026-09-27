@@ -99,3 +99,9 @@ drop policy if exists "deny_public" on public.rewrite_audit_logs;
 create policy "deny_public" on public.rewrite_audit_logs for all
   to anon, authenticated
   using (false) with check (false);
+
+-- Data API explicit grants for service_role
+grant usage on schema public to service_role;
+grant select, insert, update, delete on table public.rewrite_jobs to service_role;
+grant select, insert, update, delete on table public.rewrite_items to service_role;
+grant select, insert, update, delete on table public.rewrite_audit_logs to service_role;

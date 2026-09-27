@@ -2,7 +2,7 @@
   "menu": {
     "variant": "default",
     "logo": {
-      "text": "Peerless 保险经纪",
+      "text": "Peerless 天天保险",
       "subtext": "独立保险顾问"
     }
   },
@@ -21,6 +21,11 @@
   "showPhoneInHeader": false,
   "nav": [
     {
+      "label": "首页",
+      "type": "link",
+      "href": ""
+    },
+    {
       "label": "保险产品",
       "type": "mega",
       "columns": [
@@ -28,32 +33,32 @@
           "heading": "个人保险",
           "links": [
             {
-              "label": "Auto Insurance",
+              "label": "车险",
               "href": "insurance/auto",
               "icon": "🚗"
             },
             {
-              "label": "TLC Insurance",
+              "label": "TLC 保险",
               "href": "insurance/tlc",
               "icon": "🚕"
             },
             {
-              "label": "Homeowner Insurance",
+              "label": "房屋保险",
               "href": "insurance/homeowner",
               "icon": "🏠"
             },
             {
-              "label": "Motorcycle Insurance",
+              "label": "摩托车保险",
               "href": "insurance/motorcycle",
               "icon": "🏍️"
             },
             {
-              "label": "Boat Insurance",
+              "label": "船只保险",
               "href": "insurance/boat",
               "icon": "⛵"
             },
             {
-              "label": "Travel Insurance",
+              "label": "旅行保险",
               "href": "insurance/travel",
               "icon": "✈️"
             }
@@ -63,32 +68,32 @@
           "heading": "商业保险",
           "links": [
             {
-              "label": "Business Insurance",
+              "label": "商业保险",
               "href": "insurance/business",
               "icon": "💼"
             },
             {
-              "label": "Commercial Auto",
+              "label": "商业车辆保险",
               "href": "insurance/commercial-auto",
               "icon": "🚛"
             },
             {
-              "label": "Workers Compensation",
+              "label": "工伤保险",
               "href": "insurance/workers-comp",
               "icon": "🦺"
             },
             {
-              "label": "Construction Insurance",
+              "label": "建筑工程保险",
               "href": "insurance/construction",
               "icon": "🏗️"
             },
             {
-              "label": "Disability Insurance",
+              "label": "伤残保险",
               "href": "insurance/disability",
               "icon": "🛡️"
             },
             {
-              "label": "Group Health",
+              "label": "团体健康保险",
               "href": "insurance/group-health",
               "icon": "❤️"
             }
@@ -98,31 +103,31 @@
           "heading": "便民服务",
           "links": [
             {
-              "label": "All Coverage Types →",
+              "label": "全部险种 →",
               "href": "insurance",
               "icon": "📋",
               "highlight": true
             },
             {
-              "label": "DMV Services",
+              "label": "DMV 服务",
               "href": "services/dmv",
               "icon": "📄"
             },
             {
-              "label": "Notary Services",
+              "label": "公证服务",
               "href": "services/notary",
               "icon": "✒️"
             },
             {
-              "label": "Claims Assistance",
+              "label": "理赔协助",
               "href": "claims",
               "icon": "🛡️"
             }
           ],
           "cta": {
-            "label": "Get a Free Quote",
+            "label": "免费获取报价",
             "href": "quote",
-            "description": "We respond within 2 hours"
+            "description": "我们通常在 2 小时内回复"
           }
         }
       ]
@@ -132,29 +137,29 @@
       "type": "dropdown",
       "links": [
         {
-          "label": "About Us",
+          "label": "关于我们",
           "href": "about",
-          "description": "Our story, mission & credentials"
+          "description": "品牌故事、使命与资质"
         },
         {
-          "label": "Our Agents",
+          "label": "顾问团队",
           "href": "agents",
-          "description": "Licensed experts in every coverage type"
+          "description": "覆盖各险种的持牌顾问"
         },
         {
-          "label": "Carrier Partners",
+          "label": "合作保险公司",
           "href": "carriers",
-          "description": "30+ carriers we work with"
+          "description": "我们合作的 30+ 保险公司"
         },
         {
-          "label": "Service Areas",
+          "label": "服务区域",
           "href": "locations",
-          "description": "Cities and regions we serve"
+          "description": "我们覆盖的城市与区域"
         },
         {
-          "label": "Testimonials",
+          "label": "客户评价",
           "href": "testimonials",
-          "description": "5,000+ satisfied clients"
+          "description": "5,000+ 客户真实反馈"
         }
       ]
     },
@@ -163,19 +168,19 @@
       "type": "dropdown",
       "links": [
         {
-          "label": "Resource Center",
+          "label": "资源中心",
           "href": "resources",
-          "description": "Insurance guides & expert tips"
+          "description": "保险指南与实用建议"
         },
         {
           "label": "FAQ",
           "href": "faq",
-          "description": "Answers to common questions"
+          "description": "常见问题解答"
         },
         {
-          "label": "Claims Help",
+          "label": "理赔协助",
           "href": "claims",
-          "description": "Guidance through your claim"
+          "description": "理赔流程与协助"
         }
       ]
     },

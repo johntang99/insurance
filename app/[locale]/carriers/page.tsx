@@ -16,19 +16,23 @@ interface PageProps { params: { locale: Locale } }
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   const si = siteInfo as any;
   return buildPageMetadata({
     siteId, locale, slug: 'carriers',
-    title: `Carrier Partners | ${siteName}`,
-    description: `${siteName} works with ${si?.carriersCount || 30}+ leading insurance carriers. See all the companies we shop to find your best rate.`,
+    title: isZh ? `合作保险公司 | ${siteName}` : `Carrier Partners | ${siteName}`,
+    description: isZh
+      ? `${siteName} 合作 ${si?.carriersCount || 30}+ 家保险公司，为您比价并匹配更合适费率。`
+      : `${siteName} works with ${si?.carriersCount || 30}+ leading insurance carriers. See all the companies we shop to find your best rate.`,
   });
 }
 
 export default async function CarriersPage({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const [content, siteInfo] = await Promise.all([
@@ -50,19 +54,44 @@ export default async function CarriersPage({ params }: PageProps) {
   const carriers: Carrier[] = (carriersRes?.data || []).map((sc: any) => ({ ...sc.carriers, is_featured: sc.is_featured })).filter(Boolean);
 
   const categories = ['general', 'personal', 'commercial', 'specialty'];
-  const categoryLabels: Record<string, string> = { general: 'General', personal: 'Personal Lines', commercial: 'Commercial Lines', specialty: 'Specialty' };
+  const categoryLabels: Record<string, string> = isZh
+    ? { general: '综合', personal: '个人险', commercial: '商业险', specialty: '专项险' }
+    : { general: 'General', personal: 'Personal Lines', commercial: 'Commercial Lines', specialty: 'Specialty' };
+  const ui = {
+    heroTag: isZh ? '合作伙伴' : 'Our Partners',
+    heroTitle: isZh ? '合作保险公司' : 'Carrier Partners',
+    heroSubline: isZh
+      ? `我们合作 ${carriersCount}+ 家主流保险公司，帮助您拿到更有竞争力的费率，而不是单一公司的报价。`
+      : `We represent ${carriersCount}+ leading insurance carriers — so you get the most competitive rates, not just one company's price.`,
+    philosophy: isZh
+      ? [
+          { icon: '🔍', title: '多公司统一比价', body: '我们会横向比较所有可用方案，而不是只给您单一报价。' },
+          { icon: '⚖️', title: '不偏向单一承保方', body: '我们的建议以客户需求与性价比为核心。' },
+          { icon: '🎯', title: '您做最终决策', body: '我们负责筛选和解读，您按保障与预算做最终选择。' },
+        ]
+      : [
+          { icon: '🔍', title: 'We Shop All of Them', body: 'We compare rates across every carrier we represent — not just the first one that qualifies.' },
+          { icon: '⚖️', title: 'No Carrier Bias', body: 'Our commission structure doesn\'t incentivize one carrier over another. Your best rate wins, period.' },
+          { icon: '🎯', title: 'You Stay in Control', body: 'You see the comparison. You choose. We just do the shopping so you don\'t have to.' },
+        ],
+    fallbackText: isZh ? '我们合作多家主流保险公司，为您提供更丰富的承保选择。' : 'Our carrier partners include leading national insurers.',
+    quoteHeadline: isZh
+      ? `我们比较 ${carriersCount}+ 家保险公司，为您匹配更优费率`
+      : `We Shop ${carriersCount}+ Carriers — You Get the Best Rate`,
+    quoteSubline: isZh ? '免费报价，无强制。我们负责比价，您负责选择。' : 'Free quotes, no obligation. We do the shopping so you don\'t have to.',
+  };
 
   return (
     <main>
       {/* Hero */}
       <section style={{ background: 'var(--navy-800)', padding: '64px 0 48px', textAlign: 'center' }}>
         <div className="container-custom">
-          <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-400)', marginBottom: 12 }}>Our Partners</p>
+          <p style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-400)', marginBottom: 12 }}>{ui.heroTag}</p>
           <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(2rem,4vw,2.8rem)', marginBottom: 16 }}>
-            {content?.hero?.headline || 'Carrier Partners'}
+            {content?.hero?.headline || ui.heroTitle}
           </h1>
           <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '1.05rem', maxWidth: 560, margin: '0 auto 8px', lineHeight: 1.65 }}>
-            We represent <strong style={{ color: 'var(--gold-400)' }}>{carriersCount}+ leading insurance carriers</strong> — so you get the most competitive rates, not just one company&apos;s price.
+            {ui.heroSubline}
           </p>
         </div>
       </section>
@@ -71,11 +100,7 @@ export default async function CarriersPage({ params }: PageProps) {
       <section style={{ padding: '48px 0', background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
         <div className="container-custom">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 32 }} className="grid-1col-mobile">
-            {[
-              { icon: '🔍', title: 'We Shop All of Them', body: 'We compare rates across every carrier we represent — not just the first one that qualifies.' },
-              { icon: '⚖️', title: 'No Carrier Bias', body: 'Our commission structure doesn\'t incentivize one carrier over another. Your best rate wins, period.' },
-              { icon: '🎯', title: 'You Stay in Control', body: 'You see the comparison. You choose. We just do the shopping so you don\'t have to.' },
-            ].map(({ icon, title, body }) => (
+            {ui.philosophy.map(({ icon, title, body }) => (
               <div key={title} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>{icon}</span>
                 <div>
@@ -121,7 +146,7 @@ export default async function CarriersPage({ params }: PageProps) {
           ) : (
             // Fallback: show placeholder carrier pills (DB not configured)
             <div>
-              <p style={{ color: 'var(--text-muted)', textAlign: 'center', marginBottom: 32 }}>Our carrier partners include leading national insurers.</p>
+              <p style={{ color: 'var(--text-muted)', textAlign: 'center', marginBottom: 32 }}>{ui.fallbackText}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center' }}>
                 {['Travelers', 'Progressive', 'Nationwide', 'Liberty Mutual', 'The Hartford', 'Chubb', 'Employers', 'AmTrust', 'Hiscox', 'GEICO', 'Mercury', 'Bristol West', 'Dairyland', 'National General', 'Foremost'].map(n => (
                   <div key={n} style={{ padding: '10px 20px', border: '1.5px solid var(--border)', borderRadius: 8, fontWeight: 600, fontSize: '.875rem', color: 'var(--text-secondary)', background: 'var(--bg-white)' }}>{n}</div>
@@ -134,8 +159,8 @@ export default async function CarriersPage({ params }: PageProps) {
 
       <QuoteCTASection
         variant="cta-only"
-        headline={`We Shop ${carriersCount}+ Carriers — You Get the Best Rate`}
-        subline="Free quotes, no obligation. We do the shopping so you don't have to."
+        headline={ui.quoteHeadline}
+        subline={ui.quoteSubline}
         phone={phone}
         phoneHref={phoneHref}
         locale={locale}

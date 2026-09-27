@@ -121,3 +121,17 @@ alter table public.bookings
   add column if not exists details jsonb not null default '{}'::jsonb;
 alter table public.sites
   add column if not exists herb_store_slug text;
+
+-- ================================================================
+-- Data API explicit grants (Supabase requirement)
+-- IMPORTANT: When adding new public tables, include explicit GRANTs.
+-- ================================================================
+grant usage on schema public to service_role;
+grant select, insert, update, delete on all tables in schema public to service_role;
+grant usage, select on all sequences in schema public to service_role;
+
+alter default privileges in schema public
+grant select, insert, update, delete on tables to service_role;
+
+alter default privileges in schema public
+grant usage, select on sequences to service_role;

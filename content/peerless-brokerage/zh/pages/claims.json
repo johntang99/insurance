@@ -1,39 +1,39 @@
 {
   "hero": {
     "variant": "centered",
-    "headline": "Claims Assistance",
-    "subline": "Filing a claim can be stressful. We're here to guide you through every step of the process."
+    "headline": "理赔协助",
+    "subline": "理赔过程可能繁琐，我们将协助您梳理步骤、准备资料并持续跟进。"
   },
   "process": {
-    "headline": "How We Help with Claims",
+    "headline": "我们如何协助理赔",
     "steps": [
       {
         "step": 1,
-        "title": "Contact Us First",
-        "description": "Call or email us before contacting your insurance carrier directly. We'll advise on the best approach for your situation."
+        "title": "先联系顾问",
+        "description": "建议在直接联系保险公司前先与我们沟通，我们会根据您的情况给出处理建议。"
       },
       {
         "step": 2,
-        "title": "Document Everything",
-        "description": "We'll help you gather the right documentation — photos, police reports, medical records — to support your claim."
+        "title": "整理理赔资料",
+        "description": "我们协助您准备关键材料，如现场照片、报告、票据及其他支持文件。"
       },
       {
         "step": 3,
-        "title": "File Your Claim",
-        "description": "We file on your behalf or guide you through the carrier's claims process to ensure nothing is missed."
+        "title": "提交理赔申请",
+        "description": "可由我们协助提交，或逐步指导您完成保险公司理赔流程，减少遗漏。"
       },
       {
         "step": 4,
-        "title": "Follow Up",
-        "description": "We monitor your claim and advocate for a fair and timely resolution."
+        "title": "持续跟进进度",
+        "description": "我们会持续跟进理赔状态，协助推进更及时、清晰的处理结果。"
       }
     ]
   },
   "contact": {
-    "headline": "Start Your Claim",
+    "headline": "开始理赔咨询",
     "phone": "+1 (718) 799-0472",
     "phoneHref": "tel:+17187990472",
     "email": "claims@pbiny.com",
-    "note": "For life-threatening emergencies, always call 911 first."
+    "note": "如遇人身安全紧急情况，请优先拨打 911。"
   }
 }

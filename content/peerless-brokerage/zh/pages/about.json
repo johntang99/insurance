@@ -1,109 +1,109 @@
 {
   "hero": {
     "variant": "centered",
-    "badge": "Serving Brooklyn Since 1999",
-    "headline": "About Peerless Brokerage Inc",
-    "subline": "25 years of independent insurance expertise, working for clients — not insurance companies."
+    "badge": "自 1999 年服务纽约社区",
+    "headline": "关于 Peerless Brokerage",
+    "subline": "超过 25 年独立保险经纪经验，坚持以客户利益为先。"
   },
   "story": {
-    "headline": "Our Story",
+    "headline": "我们的故事",
     "founded": "1999",
-    "body": "Peerless Brokerage was founded in 1999 with a simple mission: give Brooklyn families and businesses the same access to insurance options that large corporations enjoy. As an independent broker, we represent you — not any single insurance company.",
+    "body": "Peerless Brokerage 创立于 1999 年。我们的初心很简单：让纽约本地家庭与企业也能获得像大型机构一样的保险选择与专业建议。作为独立经纪，我们服务的是客户，而非单一保险公司。",
     "milestones": [
       {
         "year": "1999",
-        "text": "Founded in Brooklyn, NY"
+        "text": "在纽约布鲁克林成立"
       },
       {
         "year": "2005",
-        "text": "Expanded to commercial and TLC insurance"
+        "text": "业务扩展至商业险与 TLC 保险"
       },
       {
         "year": "2012",
-        "text": "Reached 2,000 clients served"
+        "text": "累计服务客户突破 2,000"
       },
       {
         "year": "2018",
-        "text": "Opened second location in Queens"
+        "text": "在皇后区开设第二服务点"
       },
       {
         "year": "2024",
-        "text": "5,000+ clients, 30+ carrier partnerships"
+        "text": "累计 5,000+ 客户，合作 30+ 保险公司"
       }
     ]
   },
   "mission": {
-    "headline": "Our Mission",
-    "body": "We believe every family and business deserves access to the best insurance options at the best price. As independent brokers, we shop multiple carriers on your behalf — so you never overpay or under-protect.",
+    "headline": "我们的使命",
+    "body": "我们相信每个家庭与企业都应获得透明、合适且有竞争力的保险方案。通过多公司比价与专业解读，帮助客户避免保障不足或保费偏高。",
     "pillars": [
       {
-        "title": "Independent Advice",
-        "text": "We work for you, not the insurance company."
+        "title": "独立建议",
+        "text": "立场以客户为先，不受单一承保方限制。"
       },
       {
-        "title": "Best Rate",
-        "text": "We shop 30+ carriers to find the lowest price for your coverage."
+        "title": "多方比价",
+        "text": "比较 30+ 保险公司，筛选更合适的价格与条款。"
       },
       {
-        "title": "Local Expertise",
-        "text": "We know Brooklyn, Queens, and the NYC market inside and out."
+        "title": "本地经验",
+        "text": "熟悉纽约都会区市场与本地客户常见风险场景。"
       }
     ]
   },
   "licenses": {
-    "headline": "Licenses & Credentials",
+    "headline": "执照与资质",
     "items": [
       {
-        "state": "New York",
+        "state": "纽约州",
         "licenseNumber": "LA-1234567",
         "verifyUrl": "https://www.dfs.ny.gov"
       },
       {
-        "state": "New Jersey",
+        "state": "新泽西州",
         "licenseNumber": "NJ-7654321",
         "verifyUrl": "https://www.nj.gov/dobi"
       },
       {
-        "state": "Connecticut",
+        "state": "康涅狄格州",
         "licenseNumber": "CT-1122334",
         "verifyUrl": "https://portal.ct.gov/cid"
       },
       {
-        "state": "Pennsylvania",
+        "state": "宾夕法尼亚州",
         "licenseNumber": "PA-4433221",
         "verifyUrl": "https://www.insurance.pa.gov"
       }
     ],
     "memberships": [
       {
-        "name": "Professional Insurance Agents (PIANY)"
+        "name": "纽约专业保险代理协会（PIANY）"
       },
       {
-        "name": "Independent Insurance Agents of NY (IIABNY)"
+        "name": "纽约独立保险代理协会（IIABNY）"
       },
       {
-        "name": "Better Business Bureau (BBB)"
+        "name": "商业信誉局（BBB）"
       }
     ],
-    "disclaimer": "E&O insurance holder. All licenses verified and in good standing."
+    "disclaimer": "已配置职业责任险（E&O）。相关执照均为有效状态。"
   },
   "team": {
-    "headline": "Meet Our Licensed Agents"
+    "headline": "认识我们的持牌顾问"
   },
   "carriers": {
     "variant": "static-grid",
-    "headline": "Carrier Partners",
-    "subline": "We work with the best carriers to give you the most options"
+    "headline": "合作保险公司",
+    "subline": "与多家主流承保方合作，为您提供更灵活选择"
   },
   "cta": {
-    "headline": "Ready to Work with Peerless?",
-    "subline": "Get a free quote today and see how much you can save.",
+    "headline": "准备开始优化您的保险方案？",
+    "subline": "立即获取免费报价，看看您可节省多少。",
     "ctaPrimary": {
-      "label": "Get a Free Quote",
+      "label": "免费获取报价",
       "href": "/zh/quote"
     },
     "ctaSecondary": {
-      "label": "Call Us",
+      "label": "立即致电",
       "href": "tel:+17187990472"
     }
   }

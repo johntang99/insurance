@@ -104,7 +104,6 @@ export default async function HomePage({ params }: PageProps) {
     clientReviews: isZh ? '客户评价' : 'Client Reviews',
     testimonials: isZh ? '客户真实反馈' : 'What Our Clients Say',
     reviewTag: isZh ? 'Google 评价' : 'Google Review',
-    readAllReviews: isZh ? '查看全部评价 →' : 'See all our reviews →',
     meetTeam: isZh ? '顾问团队' : 'Meet the Team',
     teamHeadline: isZh ? '认识您的保险顾问' : 'Meet Your Insurance Experts',
     teamSubline: isZh ? '真人服务，专业建议。' : 'Real people. Real expertise. No bots.',
@@ -202,10 +201,10 @@ export default async function HomePage({ params }: PageProps) {
         <div className="container-custom">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
             {(stats.items || [
-              { value: '25', label: 'Years in Business', suffix: '+' },
-              { value: '30', label: 'Carrier Partners', suffix: '+' },
-              { value: '5,000', label: 'Clients Served', suffix: '+' },
-              { value: '4.9', label: 'Google Rating', suffix: '★' },
+              { value: '25', label: isZh ? '从业年限' : 'Years in Business', suffix: '+' },
+              { value: '30', label: isZh ? '合作保险公司' : 'Carrier Partners', suffix: '+' },
+              { value: '5,000', label: isZh ? '服务客户' : 'Clients Served', suffix: '+' },
+              { value: '4.9', label: isZh ? 'Google 评分' : 'Google Rating', suffix: '★' },
             ]).map((s: any, i: number) => (
               <div key={i} style={{ textAlign: 'center', padding: '52px 24px', position: 'relative' }}>
                 {i > 0 && <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', width: 1, height: 60, background: 'rgba(255,255,255,.12)' }} />}
@@ -221,7 +220,7 @@ export default async function HomePage({ params }: PageProps) {
 
       {/* ── SECTION 5: CARRIER CAROUSEL ─────────────────────────── */}
       <CarrierLogoCarousel
-        headline={content.carriers?.headline || 'Carriers We Work With'}
+        headline={content.carriers?.headline || (isZh ? '合作保险公司' : 'Carriers We Work With')}
         subline={content.carriers?.subline}
         carriers={carriers}
         variant="auto-scroll"
@@ -274,11 +273,19 @@ export default async function HomePage({ params }: PageProps) {
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
-            {(testimonials.length > 0 ? testimonials : [
-              { quote: 'Michael helped me find auto insurance that saved me $800 a year. He shopped 8 carriers and explained every option clearly.', name: 'Robert K.', coverage_type: 'auto' },
-              { quote: 'As a TLC driver, I needed TLC-compliant insurance fast. James had me covered the same day. He speaks Spanish which made everything easier.', name: 'Carlos M.', coverage_type: 'tlc' },
-              { quote: "We've been using Peerless for our restaurant's BOP and workers comp for 6 years. Maria always finds us the best rates.", name: 'Linda T.', coverage_type: 'business' },
-            ]).map((t: any, i: number) => (
+            {(testimonials.length > 0 ? testimonials : (
+              isZh
+                ? [
+                    { quote: 'Michael 帮我找到更合适的车险方案，每年节省约 $800。他比较了 8 家保险公司，并且把每个方案都讲得很清楚。', name: 'Robert K.', coverage_type: 'auto' },
+                    { quote: '作为 TLC 司机，我需要尽快办理合规保险。James 当天就帮我搞定了，流程非常顺利。', name: 'Carlos M.', coverage_type: 'tlc' },
+                    { quote: '我们餐厅的商业险和工伤险已经交给 Peerless 6 年了。Maria 总能帮我们争取到更合理的费率。', name: 'Linda T.', coverage_type: 'business' },
+                  ]
+                : [
+                    { quote: 'Michael helped me find auto insurance that saved me $800 a year. He shopped 8 carriers and explained every option clearly.', name: 'Robert K.', coverage_type: 'auto' },
+                    { quote: 'As a TLC driver, I needed TLC-compliant insurance fast. James had me covered the same day. He speaks Spanish which made everything easier.', name: 'Carlos M.', coverage_type: 'tlc' },
+                    { quote: "We've been using Peerless for our restaurant's BOP and workers comp for 6 years. Maria always finds us the best rates.", name: 'Linda T.', coverage_type: 'business' },
+                  ]
+            )).map((t: any, i: number) => (
               <div key={i} className="hover-lift" style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 28, display: 'flex', flexDirection: 'column', gap: 16, boxShadow: 'var(--shadow-sm)' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
                   <span style={{ color: 'var(--gold-500)', letterSpacing: 2, fontSize: '.95rem' }}>★★★★★</span>
@@ -298,11 +305,6 @@ export default async function HomePage({ params }: PageProps) {
                 </div>
               </div>
             ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 40 }}>
-            <Link href={`/${locale}/testimonials`} style={{ color: 'var(--gold-600)', fontWeight: 600, fontSize: '.9375rem', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              {ui.readAllReviews}
-            </Link>
           </div>
         </div>
       </section>

@@ -7,8 +7,8 @@
   "phone": "(718) 799-0472",
   "state": "NY",
   "social": {
-    "google": "",
-    "facebook": ""
+    "google": "https://maps.google.com/?q=136-31+41st+Ave+Flushing+NY+11355",
+    "facebook": "https://www.facebook.com/pbiny"
   },
   "address": "136-31 41st Ave, Flushing, NY 11355",
   "logoUrl": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/logo.png",
@@ -35,5 +35,7 @@
   "yearsInBusiness": 25,
   "googleReviewsCount": 312,
   "googleReviewsRating": 4.9,
-  "iconCharacter": "PBI"
+  "iconCharacter": "PBI",
+  "lat": 40.7598,
+  "lng": -73.8285
 }

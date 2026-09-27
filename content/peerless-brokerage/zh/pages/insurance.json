@@ -1,66 +1,66 @@
 {
   "hero": {
     "variant": "centered",
-    "badge": "15 Coverage Lines",
-    "headline": "Comprehensive Insurance Coverage",
-    "subline": "One independent broker for all your personal, business, and specialty insurance needs."
+    "badge": "15+ 险种覆盖",
+    "headline": "一站式保险保障方案",
+    "subline": "通过独立保险经纪，统一管理个人、家庭、企业与专项险种。"
   },
   "serviceGrid": {
-    "headline": "All Coverage Types",
-    "subline": "Select any line to learn more and get a quote tailored to your needs.",
+    "headline": "全部险种",
+    "subline": "选择任一险种查看详情，并获取按您需求定制的报价。",
     "variant": "grid-3col"
   },
   "whyUs": {
-    "headline": "Why Peerless Brokerage?",
+    "headline": "为什么选择 Peerless？",
     "points": [
       {
         "icon": "search",
-        "title": "30+ Carriers",
-        "description": "We shop the market so you don't have to."
+        "title": "30+ 保险公司比价",
+        "description": "我们替您做横向比较，省去逐家询价时间。"
       },
       {
         "icon": "shield",
-        "title": "Independent Advice",
-        "description": "We work for you — no bias toward any one carrier."
+        "title": "独立顾问立场",
+        "description": "不绑定单一保险公司，建议更中立透明。"
       },
       {
         "icon": "clock",
-        "title": "Fast Quotes",
-        "description": "Quote within 2 hours during business hours."
+        "title": "报价响应快",
+        "description": "营业时间内多数需求可在 2 小时内反馈。"
       },
       {
         "icon": "map-pin",
-        "title": "Local Expertise",
-        "description": "25+ years serving Brooklyn, Queens, and NYC."
+        "title": "本地经验",
+        "description": "深耕纽约都会区多年，熟悉本地客户保障需求。"
       }
     ]
   },
   "faq": {
-    "headline": "Common Questions",
+    "headline": "常见问题",
     "items": [
       {
-        "question": "What's the difference between an insurance broker and a captive agent?",
-        "answer": "A captive agent (like State Farm or Allstate agents) only sells one company's products. An independent broker like Peerless represents many carriers and can shop your coverage across 30+ options to find the best rate."
+        "question": "独立保险经纪和单一公司代理有什么区别？",
+        "answer": "单一公司代理通常只能销售一家公司的产品；独立经纪可比较多家公司方案，帮助您在同类保障下筛选更合适费率。"
       },
       {
-        "question": "How long does it take to get a quote?",
-        "answer": "Most quotes are ready within 2 hours during business hours. Complex commercial or specialty coverage may take 1–2 business days."
+        "question": "一般多久可以拿到报价？",
+        "answer": "个人险多数可在营业时间内 2 小时左右反馈；复杂商业险或专项险通常需 1-2 个工作日。"
       },
       {
-        "question": "Do you serve clients outside of Brooklyn?",
-        "answer": "Yes. We are licensed in New York, New Jersey, Connecticut, and Pennsylvania. We serve clients throughout these states."
+        "question": "除了布鲁克林，你们也服务其他区域吗？",
+        "answer": "可以。我们在 NY、NJ、CT、PA 等州持牌，可服务上述区域客户。"
       }
     ]
   },
   "cta": {
-    "headline": "Ready to Get Started?",
-    "subline": "Tell us what you need and we'll find your best rate.",
+    "headline": "准备开始了吗？",
+    "subline": "告诉我们您的需求，我们会帮您筛选更合适方案。",
     "ctaPrimary": {
-      "label": "Get a Free Quote",
+      "label": "免费获取报价",
       "href": "/zh/quote"
     },
     "ctaSecondary": {
-      "label": "Call (718) 799-0472",
+      "label": "致电 (718) 799-0472",
       "href": "tel:+17187990472"
     }
   }

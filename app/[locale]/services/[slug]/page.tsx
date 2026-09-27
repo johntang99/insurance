@@ -9,13 +9,14 @@ import QuoteCTASection from '@/components/sections/QuoteCTASection';
 
 interface PageProps { params: { locale: Locale; slug: string } }
 
-const SERVICE_META: Record<string, { name: string; icon: string; description: string }> = {
-  dmv:    { name: 'DMV Services',    icon: '📄', description: 'Vehicle registration, title transfers, and more.' },
-  notary: { name: 'Notary Services', icon: '✒️', description: 'Licensed notary public on-site. Walk-ins welcome.' },
+const SERVICE_META: Record<string, { name: string; icon: string; description: string; nameZh: string; descriptionZh: string }> = {
+  dmv:    { name: 'DMV Services',    icon: '📄', description: 'Vehicle registration, title transfers, and more.', nameZh: 'DMV 服务', descriptionZh: '车辆注册、过户及相关办理服务。' },
+  notary: { name: 'Notary Services', icon: '✒️', description: 'Licensed notary public on-site. Walk-ins welcome.', nameZh: '公证服务', descriptionZh: '现场持牌公证服务，支持到访办理。' },
 };
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale, slug } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
@@ -23,13 +24,16 @@ export async function generateMetadata({ params }: PageProps) {
   if (!meta) return {};
   return buildPageMetadata({
     siteId, locale, slug: `services/${slug}`,
-    title: `${meta.name} | ${siteName}`,
-    description: `${meta.description} Available at ${siteName}, Flushing, NY.`,
+    title: isZh ? `${meta.nameZh} | ${siteName}` : `${meta.name} | ${siteName}`,
+    description: isZh
+      ? `${meta.descriptionZh} 由 ${siteName} 提供。`
+      : `${meta.description} Available at ${siteName}, Flushing, NY.`,
   });
 }
 
 export default async function ServiceSlugPage({ params }: PageProps) {
   const { locale, slug } = params;
+  const isZh = locale === 'zh';
   if (!SERVICE_META[slug]) notFound();
 
   const siteId = await getRequestSiteId();
@@ -46,6 +50,18 @@ export default async function ServiceSlugPage({ params }: PageProps) {
   const hero = content?.hero || {};
   const detail = content?.serviceDetail || {};
   const extra = slug === 'dmv' ? content?.requirements : content?.pricing;
+  const ui = {
+    fallbackName: isZh ? meta.nameZh : meta.name,
+    fallbackDesc: isZh ? meta.descriptionZh : meta.description,
+    whatWeHandle: isZh ? '服务内容' : 'What We Handle',
+    detailsSoon: isZh ? '服务详情即将更新。' : 'Service details coming soon.',
+    whatToBring: isZh ? '所需资料' : 'What to Bring',
+    pricing: isZh ? '价格说明' : 'Pricing',
+    contactHours: isZh ? '营业时间欢迎来电或到店咨询' : 'Call or visit us during business hours',
+    directions: isZh ? '查看路线 →' : 'Get Directions →',
+    ctaHeadline: isZh ? '也需要保险服务？' : 'Need Insurance Too?',
+    ctaSubline: isZh ? '我们同时提供 15+ 类保险产品与配套服务。' : 'We offer 15+ insurance lines alongside our support services.',
+  };
 
   return (
     <main>
@@ -53,10 +69,10 @@ export default async function ServiceSlugPage({ params }: PageProps) {
         <div className="container-custom">
           <span style={{ fontSize: '3rem', display: 'block', marginBottom: 16 }}>{meta.icon}</span>
           <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(2rem,4vw,2.8rem)', marginBottom: 12 }}>
-            {hero.headline || meta.name}
+            {hero.headline || ui.fallbackName}
           </h1>
           <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '1.05rem', maxWidth: 500, margin: '0 auto', lineHeight: 1.65 }}>
-            {hero.subline || meta.description}
+            {hero.subline || ui.fallbackDesc}
           </p>
         </div>
       </section>
@@ -67,7 +83,7 @@ export default async function ServiceSlugPage({ params }: PageProps) {
             {/* Services list */}
             <div>
               <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 20 }}>
-                {detail.headline || `What We Handle`}
+                {detail.headline || ui.whatWeHandle}
               </h2>
               {(detail.services || []).length > 0 ? (
                 <ul style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -79,7 +95,7 @@ export default async function ServiceSlugPage({ params }: PageProps) {
                   ))}
                 </ul>
               ) : (
-                <p style={{ color: 'var(--text-muted)' }}>Service details coming soon.</p>
+                <p style={{ color: 'var(--text-muted)' }}>{ui.detailsSoon}</p>
               )}
             </div>
 
@@ -88,7 +104,7 @@ export default async function ServiceSlugPage({ params }: PageProps) {
               {extra && (
                 <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '24px' }}>
                   <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 16, fontSize: '1.05rem' }}>
-                    {slug === 'dmv' ? 'What to Bring' : 'Pricing'}
+                    {slug === 'dmv' ? ui.whatToBring : ui.pricing}
                   </h3>
                   {slug === 'dmv' ? (
                     <ul style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -114,13 +130,13 @@ export default async function ServiceSlugPage({ params }: PageProps) {
 
               <div style={{ background: 'var(--navy-800)', borderRadius: 'var(--radius-lg)', padding: '24px', textAlign: 'center' }}>
                 <p style={{ color: 'rgba(255,255,255,.75)', marginBottom: 16, fontSize: '.9rem' }}>
-                  {content?.cta?.ctaSecondary?.label || 'Call or visit us during business hours'}
+                  {content?.cta?.ctaSecondary?.label || ui.contactHours}
                 </p>
                 <a href={phoneHref} className="btn-gold" style={{ display: 'block', textAlign: 'center', marginBottom: 10 }}>
                   {phone}
                 </a>
                 <Link href={`/${locale}/contact`} style={{ fontSize: '.82rem', color: 'rgba(255,255,255,.5)' }}>
-                  Get Directions →
+                  {ui.directions}
                 </Link>
               </div>
             </div>
@@ -130,8 +146,8 @@ export default async function ServiceSlugPage({ params }: PageProps) {
 
       <QuoteCTASection
         variant="cta-only"
-        headline="Need Insurance Too?"
-        subline="We offer 15+ insurance lines alongside our support services."
+        headline={ui.ctaHeadline}
+        subline={ui.ctaSubline}
         phone={phone}
         phoneHref={phoneHref}
         locale={locale}

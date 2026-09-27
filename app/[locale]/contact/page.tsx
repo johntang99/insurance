@@ -9,16 +9,34 @@ import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 interface PageProps { params: { locale: Locale } }
 
+function buildAddress(siteInfo: any): string {
+  if (!siteInfo) return '123 Main Street, Flushing, NY 11201';
+  const rawAddress = String(siteInfo.address || '').trim();
+  const city = String(siteInfo.city || '').trim();
+  const state = String(siteInfo.state || '').trim();
+  const zip = String(siteInfo.zip || '').trim();
+  const cityStateZip = [city, [state, zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  if (!rawAddress) return cityStateZip || '123 Main Street, Flushing, NY 11201';
+  if (!cityStateZip) return rawAddress;
+  // Avoid duplicate "city, state zip" when address already includes it.
+  return rawAddress.includes(cityStateZip) ? rawAddress : `${rawAddress}, ${cityStateZip}`;
+}
+
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   const si = siteInfo as any;
+  const city = si?.city || 'Flushing';
+  const phone = si?.phone || '(718) 799-0472';
   return buildPageMetadata({
     siteId, locale, slug: 'contact',
-    title: `Contact ${siteName} | Insurance Broker in ${si?.city || 'Flushing'}`,
-    description: `Reach ${siteName} by phone, email, or visit our ${si?.city || 'Flushing'} office. Free insurance quotes. ${si?.phone || '(718) 799-0472'}.`,
+    title: isZh ? `联系 ${siteName} | ${city} 保险经纪` : `Contact ${siteName} | Insurance Broker in ${city}`,
+    description: isZh
+      ? `欢迎电话、邮件或到店联系 ${siteName}。提供免费保险报价。电话：${phone}。`
+      : `Reach ${siteName} by phone, email, or visit our ${city} office. Free insurance quotes. ${phone}.`,
   });
 }
 
@@ -36,7 +54,7 @@ export default async function ContactPage({ params }: PageProps) {
   const phone = si?.phone || ("(718) 799-0472");
   const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const email = si?.email || 'info@pbiny.com';
-  const address = si?.address ? `${si.address}, ${si.city}, ${si.state} ${si.zip}` : '123 Main Street, Flushing, NY 11201';
+  const address = buildAddress(si);
   const languages = si?.languages || (isZh ? ['英文', '西班牙语', '中文'] : ['English', 'Spanish', 'Chinese']);
   const hours = content?.contactInfo?.hours || [
     { days: isZh ? '周一至周五' : 'Monday – Friday', hours: isZh ? '9:00–18:00' : '9:00am – 6:00pm' },

@@ -23,8 +23,19 @@ interface BlogPost {
 
 interface PageProps { params: { locale: Locale; slug: string } }
 
+const CATEGORY_LABELS: Record<string, { en: string; zh: string }> = {
+  auto: { en: 'Auto', zh: '车险' },
+  tlc: { en: 'TLC', zh: 'TLC 保险' },
+  business: { en: 'Business', zh: '商业保险' },
+  homeowner: { en: 'Homeowner', zh: '房屋保险' },
+  general: { en: 'General', zh: '综合指南' },
+  'workers-comp': { en: 'Workers Comp', zh: '工伤保险' },
+  'commercial-auto': { en: 'Commercial Auto', zh: '商业车辆保险' },
+};
+
 export async function generateMetadata({ params }: PageProps) {
   const { locale, slug } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const [post, siteInfo] = await Promise.all([
     loadItemBySlug<BlogPost>(siteId, locale, 'blog', slug),
@@ -34,12 +45,13 @@ export async function generateMetadata({ params }: PageProps) {
   return buildPageMetadata({
     siteId, locale, slug: `resources/${slug}`,
     title: post?.title ? `${post.title} | ${siteName}` : `Article | ${siteName}`,
-    description: post?.excerpt || `Read this insurance guide from ${siteName}.`,
+    description: post?.excerpt || (isZh ? `阅读来自 ${siteName} 的保险指南。` : `Read this insurance guide from ${siteName}.`),
   });
 }
 
 export default async function ResourceArticlePage({ params }: PageProps) {
   const { locale, slug } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
 
   const [post, siteInfo, allPosts] = await Promise.all([
@@ -54,6 +66,27 @@ export default async function ResourceArticlePage({ params }: PageProps) {
   const phone = si?.phone || ("(718) 799-0472");
   const phoneHref = si?.phone ? `tel:${si.phone.replace(/\D/g, '')}` : 'tel:+17187990472';
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
+  const dateLocale = isZh ? 'zh-CN' : 'en-US';
+  const ui = {
+    backToResources: isZh ? '← 返回资讯中心' : '← Resource Center',
+    by: isZh ? '作者' : 'By',
+    minRead: isZh ? '阅读约 5 分钟' : '5 min read',
+    fullArticleSoonTitle: isZh ? '完整文章即将上线' : 'Full Article Coming Soon',
+    fullArticleSoonBody: isZh ? '文章内容正在整理中。若您有相关保险问题，我们的持牌顾问可为您提供一对一建议。' : 'This article is being prepared by our team. In the meantime, our licensed agents are happy to answer your questions directly.',
+    inlineCtaTitle: isZh ? '想快速获取合适保障方案？我们通常可在 2 小时内给到报价建议。' : 'Ready to get coverage? We&apos;ll find your best rate in 2 hours.',
+    inlineCtaButton: isZh ? '免费获取报价 →' : 'Get a Free Quote →',
+    quotePanelTitle: isZh ? '想先拿报价？' : 'Ready for a Quote?',
+    quotePanelSubline: isZh ? '几分钟完成需求提交，我们为您比较 30+ 保险公司方案。' : 'Free quote in minutes. We compare 30+ carriers for you.',
+    quotePanelButton: isZh ? '免费获取报价' : 'Get a Free Quote',
+    relatedCoverage: isZh ? '相关险种' : 'Related Coverage',
+    relatedArticles: isZh ? '相关文章' : 'Related Articles',
+    youMayLike: isZh ? '你可能也想看' : 'You Might Also Like',
+    readMore: isZh ? '继续阅读 →' : 'Read more →',
+  };
+  const getCategoryLabel = (slugValue?: string) => {
+    if (!slugValue) return '';
+    return (isZh ? CATEGORY_LABELS[slugValue]?.zh : CATEGORY_LABELS[slugValue]?.en) || getLineName(slugValue);
+  };
 
   // Related articles (same category, exclude current)
   const related = allPosts.filter(p => p.slug !== slug && p.category === post.category).slice(0, 3);
@@ -82,20 +115,20 @@ export default async function ResourceArticlePage({ params }: PageProps) {
         <section style={{ background: 'var(--navy-800)', padding: '48px 0 36px' }}>
           <div className="container-custom">
             <Link href={`/${locale}/resources`} style={{ color: 'rgba(255,255,255,.6)', fontSize: '.85rem', display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 20 }}>
-              ← Resource Center
+              {ui.backToResources}
             </Link>
             {post.category && (
               <span style={{ display: 'inline-block', background: 'rgba(201,147,58,.2)', color: 'var(--gold-300)', fontSize: '.78rem', fontWeight: 700, padding: '4px 12px', borderRadius: 100, marginBottom: 14 }}>
-                {post.category}
+                {getCategoryLabel(post.category)}
               </span>
             )}
             <h1 style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontSize: 'clamp(1.6rem,3.5vw,2.4rem)', lineHeight: 1.2, marginBottom: 16, maxWidth: 700 }}>
               {post.title}
             </h1>
             <div style={{ display: 'flex', gap: 16, color: 'rgba(255,255,255,.55)', fontSize: '.85rem' }}>
-              {post.author && <span>By {post.author}</span>}
-              {post.publishedAt && <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>}
-              <span>5 min read</span>
+              {post.author && <span>{ui.by} {post.author}</span>}
+              {post.publishedAt && <span>{new Date(post.publishedAt).toLocaleDateString(dateLocale, { month: isZh ? 'numeric' : 'long', day: 'numeric', year: 'numeric' })}</span>}
+              <span>{ui.minRead}</span>
             </div>
           </div>
         </section>
@@ -167,8 +200,8 @@ export default async function ResourceArticlePage({ params }: PageProps) {
                 ) : (
                   <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '40px', textAlign: 'center' }}>
                     <p style={{ fontSize: '2rem', marginBottom: 16 }}>📝</p>
-                    <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 8 }}>Full Article Coming Soon</h3>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: 20 }}>This article is being prepared by our team. In the meantime, our licensed agents are happy to answer your questions directly.</p>
+                    <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 8 }}>{ui.fullArticleSoonTitle}</h3>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: 20 }}>{ui.fullArticleSoonBody}</p>
                     <a href={phoneHref} style={{ color: 'var(--gold-600)', fontWeight: 700 }}>{phone}</a>
                   </div>
                 )}
@@ -177,8 +210,8 @@ export default async function ResourceArticlePage({ params }: PageProps) {
                 <div style={{ background: 'var(--gold-100)', border: '2px solid var(--gold-400)', borderRadius: 'var(--radius-lg)', padding: '24px 28px', margin: '40px 0', display: 'flex', gap: 20, alignItems: 'center' }}>
                   <span style={{ fontSize: '2rem' }}>💡</span>
                   <div>
-                    <p style={{ fontWeight: 700, color: 'var(--navy-800)', marginBottom: 6 }}>Ready to get coverage? We&apos;ll find your best rate in 2 hours.</p>
-                    <Link href={`/${locale}/quote`} className="btn-gold-sm">Get a Free Quote →</Link>
+                    <p style={{ fontWeight: 700, color: 'var(--navy-800)', marginBottom: 6 }}>{ui.inlineCtaTitle}</p>
+                    <Link href={`/${locale}/quote`} className="btn-gold-sm">{ui.inlineCtaButton}</Link>
                   </div>
                 </div>
 
@@ -198,12 +231,12 @@ export default async function ResourceArticlePage({ params }: PageProps) {
               <aside style={{ position: 'sticky', top: '2rem' }}>
                 {/* Quote CTA */}
                 <div style={{ background: 'var(--navy-800)', borderRadius: 'var(--radius-lg)', padding: '28px 24px', marginBottom: 20 }}>
-                  <h4 style={{ fontFamily: 'var(--font-heading)', color: '#fff', marginBottom: 8 }}>Ready for a Quote?</h4>
+                  <h4 style={{ fontFamily: 'var(--font-heading)', color: '#fff', marginBottom: 8 }}>{ui.quotePanelTitle}</h4>
                   <p style={{ color: 'rgba(255,255,255,.65)', fontSize: '.875rem', marginBottom: 20, lineHeight: 1.6 }}>
-                    Free quote in minutes. We compare 30+ carriers for you.
+                    {ui.quotePanelSubline}
                   </p>
                   <Link href={`/${locale}/quote`} className="btn-gold" style={{ display: 'block', textAlign: 'center', width: '100%' }}>
-                    Get a Free Quote
+                    {ui.quotePanelButton}
                   </Link>
                   <a href={phoneHref} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 12, color: 'rgba(255,255,255,.7)', fontSize: '.85rem', fontWeight: 600 }}>
                     📞 {phone}
@@ -214,15 +247,15 @@ export default async function ResourceArticlePage({ params }: PageProps) {
                 {post.category && (
                   <Link href={`/${locale}/insurance/${post.category}`}
                     style={{ display: 'block', background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px', marginBottom: 20, textDecoration: 'none' }}>
-                    <p style={{ fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--text-muted)', marginBottom: 6 }}>Related Coverage</p>
-                    <p style={{ fontWeight: 700, color: 'var(--navy-800)', fontSize: '.95rem' }}>{getLineName(post.category)} →</p>
+                    <p style={{ fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--text-muted)', marginBottom: 6 }}>{ui.relatedCoverage}</p>
+                    <p style={{ fontWeight: 700, color: 'var(--navy-800)', fontSize: '.95rem' }}>{getCategoryLabel(post.category)} →</p>
                   </Link>
                 )}
 
                 {/* Related articles */}
                 {related.length > 0 && (
                   <div>
-                    <p style={{ fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--text-muted)', marginBottom: 12 }}>Related Articles</p>
+                    <p style={{ fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--text-muted)', marginBottom: 12 }}>{ui.relatedArticles}</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                       {related.map(r => (
                         <Link key={r.slug} href={`/${locale}/resources/${r.slug}`}
@@ -242,7 +275,7 @@ export default async function ResourceArticlePage({ params }: PageProps) {
         {related.length > 0 && (
           <section style={{ padding: '48px 0', background: 'var(--bg-subtle)', borderTop: '1px solid var(--border)' }}>
             <div className="container-custom">
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 24 }}>You Might Also Like</h3>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 24 }}>{ui.youMayLike}</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }} className="grid-1col-mobile">
                 {related.map(r => (
                   <Link key={r.slug} href={`/${locale}/resources/${r.slug}`}
@@ -250,7 +283,7 @@ export default async function ResourceArticlePage({ params }: PageProps) {
                     className="hover-lift">
                     <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', marginBottom: 8 }}>{r.title}</h4>
                     {r.excerpt && <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{r.excerpt}</p>}
-                    <span style={{ display: 'inline-block', marginTop: 12, color: 'var(--gold-600)', fontWeight: 600, fontSize: '.8rem' }}>Read more →</span>
+                    <span style={{ display: 'inline-block', marginTop: 12, color: 'var(--gold-600)', fontWeight: 600, fontSize: '.8rem' }}>{ui.readMore}</span>
                   </Link>
                 ))}
               </div>

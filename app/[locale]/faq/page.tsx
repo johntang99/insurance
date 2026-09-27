@@ -40,13 +40,16 @@ const DEFAULT_FAQ: FAQItem[] = [
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const siteInfo = await loadSiteInfo(siteId, locale) as SiteInfo | null;
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   return buildPageMetadata({
     siteId, locale, slug: 'faq',
-    title: `Frequently Asked Questions | ${siteName}`,
-    description: `Get answers to common insurance questions from ${siteName}. Independent broker FAQ — auto, home, business, TLC, claims, and more.`,
+    title: isZh ? `常见问题 | ${siteName}` : `Frequently Asked Questions | ${siteName}`,
+    description: isZh
+      ? `了解 ${siteName} 常见保险问题解答：车险、房屋险、商业险、TLC 与理赔等。`
+      : `Get answers to common insurance questions from ${siteName}. Independent broker FAQ — auto, home, business, TLC, claims, and more.`,
   });
 }
 

@@ -21,6 +21,11 @@
   "showPhoneInHeader": false,
   "nav": [
     {
+      "label": "Home",
+      "type": "link",
+      "href": ""
+    },
+    {
       "label": "Insurance",
       "type": "mega",
       "columns": [

@@ -161,3 +161,11 @@ INSERT INTO public.carriers (name, slug, category, description, sort_order) VALU
   ('State Auto',       'state-auto',       'general',    'Personal and commercial property insurance',                    19),
   ('Berkley One',      'berkley-one',      'specialty',  'High net worth personal lines insurance',                       20)
 ON CONFLICT (slug) DO NOTHING;
+
+-- Data API explicit grants for service_role
+grant usage on schema public to service_role;
+grant select, insert, update, delete on table public.agents to service_role;
+grant select, insert, update, delete on table public.carriers to service_role;
+grant select, insert, update, delete on table public.site_carriers to service_role;
+grant select, insert, update, delete on table public.insurance_lines to service_role;
+grant select, insert, update, delete on table public.quote_requests to service_role;
