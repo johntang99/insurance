@@ -53,8 +53,8 @@ export default async function QuotePage({ params }: PageProps) {
       : ['✦ No obligation', '✦ 30+ carriers compared', '✦ Response within 2 hours'],
     loading: isZh ? '表单加载中...' : 'Loading form...',
     mobileStats: isZh
-      ? [{ emoji: '🏆', text: '25+ 年经验' }, { emoji: '🔍', text: '30+ 公司' }, { emoji: '⭐', text: '4.9 评分' }, { emoji: '⚡', text: '2 小时回复' }]
-      : [{ emoji: '🏆', text: '25+ Years' }, { emoji: '🔍', text: '30+ Carriers' }, { emoji: '⭐', text: '4.9 Stars' }, { emoji: '⚡', text: '2-Hr Response' }],
+      ? [{ emoji: '🏆', text: '28 年经验' }, { emoji: '🔍', text: '30+ 公司' }, { emoji: '⭐', text: '4.9 评分' }, { emoji: '⚡', text: '2 小时回复' }]
+      : [{ emoji: '🏆', text: '28 Years' }, { emoji: '🔍', text: '30+ Carriers' }, { emoji: '⭐', text: '4.9 Stars' }, { emoji: '⚡', text: '2-Hr Response' }],
   };
 
   return (

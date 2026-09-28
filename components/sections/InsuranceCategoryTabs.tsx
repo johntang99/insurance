@@ -37,6 +37,24 @@ const LINE_NAMES: Record<string, string> = {
   'commercial-property': 'Commercial Property', dmv: 'DMV Services', notary: 'Notary Services',
 };
 
+const LINE_NAMES_ZH: Record<string, string> = {
+  auto: '车险',
+  tlc: 'TLC 保险',
+  'commercial-auto': '商业车辆保险',
+  homeowner: '房屋保险',
+  business: '商业保险',
+  'workers-comp': '工伤保险',
+  disability: '伤残保险',
+  construction: '建筑工程保险',
+  motorcycle: '摩托车保险',
+  boat: '船只保险',
+  travel: '旅行保险',
+  'group-health': '团体健康保险',
+  'commercial-property': '商业房产保险',
+  dmv: 'DMV 服务',
+  notary: '公证服务',
+};
+
 const LINE_DESC: Record<string, string> = {
   auto: 'Personal vehicle coverage from 20+ carriers', tlc: 'NYC for-hire vehicle compliance, same-day binding',
   'commercial-auto': 'Fleets, delivery vehicles & commercial drivers', homeowner: 'Protect your home with competitive rates',
@@ -48,6 +66,24 @@ const LINE_DESC: Record<string, string> = {
   notary: 'Document notarization on-site',
 };
 
+const LINE_DESC_ZH: Record<string, string> = {
+  auto: '个人车辆保障',
+  tlc: '纽约营运车辆合规保障',
+  'commercial-auto': '车队与商业车辆保障',
+  homeowner: '房屋与财产保障',
+  business: '企业责任、财产与收入保障',
+  'workers-comp': '纽约州雇主法定保障',
+  disability: '短期与长期收入保障',
+  construction: '工程责任与施工风险保障',
+  motorcycle: '全年或季节性骑行保障',
+  boat: '船只与水上交通工具保障',
+  travel: '行程取消与旅行医疗保障',
+  'group-health': '企业团体医疗保障',
+  'commercial-property': '楼宇、设备与库存保障',
+  dmv: '过户、注册与车管业务办理',
+  notary: '现场文件公证服务',
+};
+
 const TABS = [
   { id: 'all', label: 'All Coverage' },
   { id: 'personal', label: 'Personal' },
@@ -57,7 +93,17 @@ const TABS = [
 ];
 
 export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines: InsuranceLine[]; locale?: string }) {
+  const isZh = locale === 'zh';
   const [activeTab, setActiveTab] = useState('all');
+  const tabs = isZh
+    ? [
+        { id: 'all', label: '全部险种' },
+        { id: 'personal', label: '个人保险' },
+        { id: 'commercial', label: '商业保险' },
+        { id: 'specialty', label: '专项保险' },
+        { id: 'services', label: '便民服务' },
+      ]
+    : TABS;
 
   const filteredLines = lines.filter(l => {
     const slug = l.line_slug || l.slug || '';
@@ -70,7 +116,7 @@ export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines:
       <div className="container-custom">
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 4, marginBottom: 48, overflowX: 'auto', paddingBottom: 2, borderBottom: '2px solid var(--border)' }}>
-          {TABS.map(tab => (
+          {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: '10px 20px', borderRadius: '8px 8px 0 0', fontWeight: 600, fontSize: '.9rem', cursor: 'pointer',
@@ -90,8 +136,12 @@ export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines:
           {filteredLines.map(l => {
             const slug = l.line_slug || l.slug || '';
             const icon = ICON_MAP[slug] || '🔐';
-            const name = l.name || LINE_NAMES[slug] || slug;
-            const desc = l.description || LINE_DESC[slug] || '';
+            const name = isZh
+              ? (LINE_NAMES_ZH[slug] || l.name || LINE_NAMES[slug] || slug)
+              : (l.name || LINE_NAMES[slug] || slug);
+            const desc = isZh
+              ? (LINE_DESC_ZH[slug] || l.description || LINE_DESC[slug] || '')
+              : (l.description || LINE_DESC[slug] || '');
             const isFeatured = l.is_featured;
             const href = `/${locale}/insurance/${slug}`;
 
@@ -104,10 +154,12 @@ export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines:
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{name}</h3>
                 <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.5, flex: 1, marginBottom: 14 }}>{desc}</p>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <span style={{ fontSize: '.78rem', fontWeight: 600, color: 'var(--gold-600)' }}>Learn More →</span>
+                  <span style={{ fontSize: '.78rem', fontWeight: 600, color: 'var(--gold-600)' }}>
+                    {isZh ? '了解详情 →' : 'Learn More →'}
+                  </span>
                   <Link href={`/${locale}/quote?type=${slug}`} onClick={e => e.stopPropagation()}
                     style={{ fontSize: '.78rem', fontWeight: 600, color: 'var(--navy-500)', marginLeft: 'auto' }}>
-                    Get Quote
+                    {isZh ? '获取报价' : 'Get Quote'}
                   </Link>
                 </div>
               </Link>
@@ -116,7 +168,7 @@ export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines:
 
           {filteredLines.length === 0 && (
             <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: 40, color: 'var(--text-muted)' }}>
-              No coverage types in this category.
+              {isZh ? '该分类下暂无险种。' : 'No coverage types in this category.'}
             </div>
           )}
         </div>

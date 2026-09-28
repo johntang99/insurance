@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps) {
     title: isZh ? `关于我们 | ${siteName}` : `About ${siteName} | Licensed Insurance Broker Since ${year}`,
     description: isZh
       ? `${siteName} 是持牌独立保险经纪，自 ${year} 年起服务纽约社区。`
-      : `${siteName} is a licensed independent insurance broker serving Flushing since ${year}. 25+ years experience, 30+ carriers, 5,000+ clients.`,
+      : `${siteName} is a licensed independent insurance broker serving Flushing since ${year}. 28 years experience, 30+ carriers, 5,000+ clients.`,
   });
 }
 
@@ -71,7 +71,7 @@ export default async function AboutPage({ params }: PageProps) {
     est: isZh ? '创立于' : 'Est.',
     licensedIn: isZh ? '持牌州' : 'Licensed in',
     heroHeadline: isZh ? `关于 ${siteName}` : `About ${siteName}`,
-    heroSubline: isZh ? '多年独立保险经纪经验，始终以客户利益为先。' : '25 years of independent insurance expertise, working for clients — not insurance companies.',
+    heroSubline: isZh ? '多年独立保险经纪经验，始终以客户利益为先。' : '28 years of independent insurance expertise, working for clients — not insurance companies.',
     officePhoto: isZh ? '办公室照片' : 'Office Photo',
     storyTag: isZh ? '我们的故事' : 'Our Story',
     storyHeadline: isZh ? `自 ${story.foundedYear || story.founded || '1999'} 年服务纽约社区` : `Serving Flushing Since ${story.foundedYear || story.founded || '1999'}`,

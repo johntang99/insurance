@@ -29,9 +29,14 @@ export function filterSitesForUser(sites: SiteConfig[], user: User) {
 }
 
 export function requireRole(user: User, roles: User['role'][]) {
-  if (!roles.includes(user.role)) {
-    throw new Error('Forbidden');
-  }
+  // Insurance keeps a legacy high-privilege role name (`platform_super_admin`).
+  // Any guard that allows `super_admin` must also allow that alias.
+  if (roles.includes(user.role)) return;
+  if (roles.includes('super_admin') && isSuperAdmin(user)) return;
+  if (roles.includes('site_admin') && isSuperAdmin(user)) return;
+  if (roles.includes('editor') && isSuperAdmin(user)) return;
+  if (roles.includes('viewer') && isSuperAdmin(user)) return;
+  throw new Error('Forbidden');
 }
 
 export function requireSiteAccess(user: User, siteId: string) {

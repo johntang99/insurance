@@ -201,7 +201,7 @@ export default async function HomePage({ params }: PageProps) {
         <div className="container-custom">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
             {(stats.items || [
-              { value: '25', label: isZh ? '从业年限' : 'Years in Business', suffix: '+' },
+              { value: '28', label: isZh ? '从业年限' : 'Years in Business', suffix: '' },
               { value: '30', label: isZh ? '合作保险公司' : 'Carrier Partners', suffix: '+' },
               { value: '5,000', label: isZh ? '服务客户' : 'Clients Served', suffix: '+' },
               { value: '4.9', label: isZh ? 'Google 评分' : 'Google Rating', suffix: '★' },

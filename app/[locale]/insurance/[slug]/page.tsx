@@ -58,8 +58,27 @@ const LINE_NAMES: Record<string, string> = {
   'commercial-property': 'Commercial Property Insurance',
 };
 
+const LINE_NAMES_ZH: Record<string, string> = {
+  auto: '车险',
+  tlc: 'TLC 保险',
+  'commercial-auto': '商业车辆保险',
+  homeowner: '房屋保险',
+  business: '商业保险',
+  'workers-comp': '工伤保险',
+  disability: '伤残保险',
+  construction: '建筑工程保险',
+  motorcycle: '摩托车保险',
+  boat: '船只保险',
+  travel: '旅行保险',
+  'group-health': '团体健康保险',
+  'commercial-property': '商业房产保险',
+  dmv: 'DMV 服务',
+  notary: '公证服务',
+};
+
 export async function generateMetadata({ params }: PageProps) {
   const { locale, slug } = params;
+  const isZh = locale === 'zh';
   const siteId = await getRequestSiteId();
   const [content, siteInfo] = await Promise.all([
     loadPageContent<any>(`insurance/${slug}`, locale, siteId),
@@ -67,11 +86,17 @@ export async function generateMetadata({ params }: PageProps) {
   ]);
   const siteName = getSiteDisplayName(siteInfo, 'Peerless Brokerage');
   const city = (siteInfo as any)?.city || 'Flushing';
-  const lineName = content?.serviceHero?.headline || LINE_NAMES[slug] || `${slug} Insurance`;
+  const lineName = content?.serviceHero?.headline
+    || (isZh ? LINE_NAMES_ZH[slug] : LINE_NAMES[slug])
+    || (isZh ? `${slug} 保险` : `${slug} Insurance`);
   return buildPageMetadata({
     siteId, locale, slug: `insurance/${slug}`,
-    title: `${lineName} in ${city} | ${siteName}`,
-    description: content?.serviceHero?.subline || `Get a free ${lineName.toLowerCase()} quote from ${siteName}. We compare 30+ carriers to find your best rate in ${city}.`,
+    title: isZh ? `${lineName} | ${city} | ${siteName}` : `${lineName} in ${city} | ${siteName}`,
+    description: content?.serviceHero?.subline || (
+      isZh
+        ? `获取免费的${lineName}报价。我们比较 30+ 保险公司，为您匹配在 ${city} 更合适的费率。`
+        : `Get a free ${lineName.toLowerCase()} quote from ${siteName}. We compare 30+ carriers to find your best rate in ${city}.`
+    ),
   });
 }
 
@@ -106,7 +131,9 @@ export default async function InsuranceServicePage({ params }: PageProps) {
   const related = content?.related || {};
   const testimonials = testimonialsRes?.data || [];
 
-  const lineName = hero.headline || LINE_NAMES[slug] || `${slug.charAt(0).toUpperCase() + slug.slice(1)} Insurance`;
+  const lineName = hero.headline
+    || (isZh ? LINE_NAMES_ZH[slug] : LINE_NAMES[slug])
+    || (isZh ? `${slug} 保险` : `${slug.charAt(0).toUpperCase() + slug.slice(1)} Insurance`);
   const icon = LINE_ICONS[slug] || '🔐';
   const isTLC = slug === 'tlc';
   const ui = {
@@ -248,7 +275,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             {(whyUs.points || [
               { icon: '🔍', title: `30+ ${lineName} Carriers`, description: 'We compare all major carriers to guarantee you the lowest rate for your situation.' },
               { icon: '⚡', title: 'Same-Day Quotes', description: 'Fast turnaround — most quotes ready within 2 hours during business hours.' },
-              { icon: '🏆', title: '25 Years Experience', description: 'Decades of expertise means we know which carriers provide the best value for each situation.' },
+              { icon: '🏆', title: '28 Years Experience', description: 'Decades of expertise means we know which carriers provide the best value for each situation.' },
             ]).map((point: any, i: number) => (
               <div key={i} style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '32px 24px', textAlign: 'center' }}>
                 <span style={{ fontSize: '2rem', display: 'block', marginBottom: 14 }}>{resolveIcon(point.icon)}</span>
@@ -308,15 +335,49 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
-            {(quoteProcess.steps || [
-              { number: '01', title: `Tell us about your ${slug === 'homeowner' ? 'home' : slug === 'business' ? 'business' : 'vehicle'}`, description: 'Quick 2-minute form or call us — we\'ll gather what we need.' },
-              { number: '02', title: 'We compare 30+ carrier rates', description: 'Our licensed brokers compare every relevant carrier on your behalf.' },
-              { number: '03', title: 'Bind your policy', description: 'Review your options and we\'ll bind your policy — same day in most cases.' },
-            ]).map((step: any, i: number) => (
+            {(quoteProcess.steps || (
+              isZh
+                ? [
+                    {
+                      number: '01',
+                      title: slug === 'homeowner' ? '提供房产信息' : slug === 'business' ? '提供企业信息' : '提供车辆信息',
+                      description: '在线填写 2 分钟表单，或直接致电，我们会快速收集所需资料。',
+                    },
+                    {
+                      number: '02',
+                      title: '比较 30+ 保险公司费率',
+                      description: '持牌经纪为您横向比较保障与保费，筛选合适方案。',
+                    },
+                    {
+                      number: '03',
+                      title: '确认方案并出单',
+                      description: '确定后可快速生效，多数情况可在当天完成。',
+                    },
+                  ]
+                : [
+                    {
+                      number: '01',
+                      title: `Tell us about your ${slug === 'homeowner' ? 'home' : slug === 'business' ? 'business' : 'vehicle'}`,
+                      description: 'Quick 2-minute form or call us — we\'ll gather what we need.',
+                    },
+                    {
+                      number: '02',
+                      title: 'We compare 30+ carrier rates',
+                      description: 'Our licensed brokers compare every relevant carrier on your behalf.',
+                    },
+                    {
+                      number: '03',
+                      title: 'Bind your policy',
+                      description: 'Review your options and we\'ll bind your policy — same day in most cases.',
+                    },
+                  ]
+            )).map((step: any, i: number) => (
               <div key={i} style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '32px 24px', textAlign: 'center' }}>
                 {/* Step number — gold gradient circle badge */}
                 <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px', boxShadow: '0 4px 12px rgba(201,147,58,.35)' }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{step.number}</span>
+                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>
+                    {step.number || String(i + 1).padStart(2, '0')}
+                  </span>
                 </div>
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', marginBottom: 10, fontSize: '1.05rem' }}>{step.title}</h3>
                 <p style={{ fontSize: '.9rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{step.description}</p>
@@ -325,7 +386,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
           </div>
           <div style={{ textAlign: 'center', marginTop: 40 }}>
             <Link href={`/${locale}/quote?type=${slug}`} className="btn-gold">
-              {quoteProcess.cta?.label || `Start My ${lineName} Quote`}
+              {quoteProcess.cta?.label || (isZh ? `开始获取${lineName}报价` : `Start My ${lineName} Quote`)}
             </Link>
           </div>
         </div>
@@ -392,7 +453,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
               {related.slugs.map((rs: string) => (
                 <Link key={rs} href={`/${locale}/insurance/${rs}`}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 20px', textDecoration: 'none', color: 'var(--text-primary)', fontWeight: 500, fontSize: '.9rem' }}>
-                  {LINE_ICONS[rs] || '🔐'} {LINE_NAMES[rs] || rs}
+                  {LINE_ICONS[rs] || '🔐'} {(isZh ? LINE_NAMES_ZH[rs] : LINE_NAMES[rs]) || rs}
                 </Link>
               ))}
             </div>

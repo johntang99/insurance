@@ -68,6 +68,42 @@ const SITUATION_PRESETS: Record<string, string[]> = {
   'other':           [],
 };
 
+const ZH_LINE_NAMES: Record<string, string> = {
+  auto: '车险',
+  tlc: 'TLC 保险',
+  'commercial-auto': '商业车辆保险',
+  homeowner: '房屋保险',
+  business: '商业保险',
+  'workers-comp': '工伤保险',
+  disability: '伤残保险',
+  construction: '建筑工程保险',
+  motorcycle: '摩托车保险',
+  boat: '船只保险',
+  travel: '旅行保险',
+  'group-health': '团体健康保险',
+  'commercial-property': '商业房产保险',
+  dmv: 'DMV 服务',
+  notary: '公证服务',
+};
+
+const ZH_LINE_DESC: Record<string, string> = {
+  auto: '个人车辆保障',
+  tlc: '纽约营运车辆合规保障',
+  'commercial-auto': '车队与商业车辆保障',
+  homeowner: '房屋与财产保障',
+  business: '企业责任、财产与收入保障',
+  'workers-comp': '纽约州雇主法定保障',
+  disability: '短期与长期收入保障',
+  construction: '工程责任与施工风险保障',
+  motorcycle: '全年或季节性骑行保障',
+  boat: '船只与水上交通工具保障',
+  travel: '行程取消与旅行医疗保障',
+  'group-health': '企业团体医疗保障',
+  'commercial-property': '楼宇、设备与库存保障',
+  dmv: '过户、注册与车管业务办理',
+  notary: '现场文件公证服务',
+};
+
 export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), phoneHref = 'tel:+17187990472', locale = 'en', coverageTypes: ctProp }: QuoteFormProps) {
   const isZh = locale === 'zh';
   const t = {
@@ -76,6 +112,7 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
     thanks: isZh ? `感谢您，` : `Thank you, `,
     contactSoon: isZh ? '我们将在 2 个工作小时内联系您。' : 'We\'ll contact you within 2 business hours.',
     coverageRequested: isZh ? '申请险种：' : 'Coverage requested:',
+    reachAt: isZh ? '我们将通过以下方式联系您：' : "We'll reach you at",
     nextTitle: isZh ? '后续流程' : 'What Happens Next',
     nextItems: isZh
       ? ['评估您的保障需求', '比较 30+ 保险公司费率', '电话或邮件回复您的方案']
@@ -112,7 +149,11 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
   };
   const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>(1);
-  const [form, setForm] = useState<FormData>({ ...INITIAL, agentId: searchParams.get('agent') || '' });
+  const [form, setForm] = useState<FormData>(() => ({
+    ...INITIAL,
+    language: isZh ? '中文' : 'English',
+    agentId: searchParams.get('agent') || '',
+  }));
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [showSituation, setShowSituation] = useState(false);
@@ -217,14 +258,16 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
           {t.thanks}<strong>{form.firstName}</strong>! {t.contactSoon}
         </p>
         <p style={{ color: 'var(--text-muted)', fontSize: '.9rem', marginBottom: 4 }}>
-          {form.phone && <>We&apos;ll reach you at <strong>{form.phone}</strong></>}
+          {form.phone && <>{t.reachAt} <strong>{form.phone}</strong></>}
           {form.email && <> · {form.email}</>}
         </p>
         {form.coverageTypes.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'center', margin: '16px 0 28px' }}>
             <span style={{ fontSize: '.85rem', color: 'var(--text-muted)' }}>{t.coverageRequested}</span>
             {form.coverageTypes.map(s => (
-              <span key={s} className="badge badge-navy">{getLineName(s)}</span>
+              <span key={s} className="badge badge-navy">
+                {isZh ? (ZH_LINE_NAMES[s] || getLineName(s)) : getLineName(s)}
+              </span>
             ))}
           </div>
         )}
@@ -312,8 +355,12 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
                 const slug = l.line_slug;
                 const selected = form.coverageTypes.includes(slug);
                 const icon = getLineIcon(slug);
-                const name = l.name || getLineName(slug);
-                const desc = INSURANCE_LINE_META[slug]?.description || '';
+                const name = isZh
+                  ? (ZH_LINE_NAMES[slug] || l.name || getLineName(slug))
+                  : (l.name || getLineName(slug));
+                const desc = isZh
+                  ? (ZH_LINE_DESC[slug] || INSURANCE_LINE_META[slug]?.description || '')
+                  : (INSURANCE_LINE_META[slug]?.description || '');
                 return (
                   <button key={slug} type="button" onClick={() => toggleCoverage(slug)}
                     style={{
@@ -396,7 +443,8 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
                 <label className="form-label" style={{ display: 'block', fontSize: '.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 6 }}>
                   {t.firstName} <span style={{ color: 'var(--red-500)' }}>*</span>
                 </label>
-                <input className="form-input" type="text" autoFocus placeholder="John"
+                <input className="form-input" type="text" autoFocus
+                  placeholder={isZh ? '例如：小明' : 'John'}
                   value={form.firstName}
                   onChange={e => { setForm(f => ({ ...f, firstName: e.target.value })); if (errors.firstName) setErrors(e2 => ({ ...e2, firstName: '' })); }}
                   onBlur={() => { if (!form.firstName.trim()) setErrors(e => ({ ...e, firstName: t.required })); }}
@@ -407,7 +455,8 @@ export default function QuoteForm({ insuranceLines, phone = ("(718) 799-0472"), 
                 <label className="form-label" style={{ display: 'block', fontSize: '.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 6 }}>
                   {t.lastName} <span style={{ color: 'var(--red-500)' }}>*</span>
                 </label>
-                <input className="form-input" type="text" placeholder="Smith"
+                <input className="form-input" type="text"
+                  placeholder={isZh ? '例如：王' : 'Smith'}
                   value={form.lastName}
                   onChange={e => { setForm(f => ({ ...f, lastName: e.target.value })); if (errors.lastName) setErrors(e2 => ({ ...e2, lastName: '' })); }}
                   onBlur={() => { if (!form.lastName.trim()) setErrors(e => ({ ...e, lastName: t.required })); }}
