@@ -161,6 +161,22 @@ export function HeaderPanel({
               />
             </div>
           </div>
+          <div className="mt-3 max-w-xs">
+            <label className="block text-xs text-gray-500">Logo Height (px)</label>
+            <input
+              type="number"
+              min={20}
+              max={120}
+              className="mt-1 w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              value={formData.menu?.logo?.image?.height ?? ''}
+              placeholder="40"
+              onChange={(event) => {
+                const raw = event.target.value.trim();
+                updateFormValue(['menu', 'logo', 'image', 'height'], raw === '' ? '' : Number(raw));
+              }}
+            />
+            <p className="mt-1 text-[11px] text-gray-400">Recommended: 32-56px.</p>
+          </div>
         </div>
 
         <div>

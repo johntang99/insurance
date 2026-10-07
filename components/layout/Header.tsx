@@ -112,7 +112,14 @@ function localizeNavForZh(items: NavItem[]): NavItem[] {
 }
 
 export interface HeaderConfig {
-  menu?: { variant?: string; logo?: { text?: string; subtext?: string; image?: { src?: string; alt?: string } } };
+  menu?: {
+    variant?: string;
+    logo?: {
+      text?: string;
+      subtext?: string;
+      image?: { src?: string; alt?: string; height?: number | string };
+    };
+  };
   cta?: { text?: string; link?: string };
   topbar?: { phone?: string; phoneHref?: string; badge?: string };
   phoneDisplay?: string;
@@ -210,6 +217,10 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
   const logoText = headerConfig?.menu?.logo?.text || siteName;
   const logoSubtext = headerConfig?.menu?.logo?.subtext || ui.logoSubtext;
   const logoImg = headerConfig?.menu?.logo?.image?.src;
+  const configuredLogoHeight = Number(headerConfig?.menu?.logo?.image?.height);
+  const logoHeight = Number.isFinite(configuredLogoHeight)
+    ? Math.min(120, Math.max(20, configuredLogoHeight))
+    : 40;
   const phone = headerConfig?.phoneDisplay || (siteInfo as any)?.phone || '';
   const phoneHref = headerConfig?.phoneHref || (phone ? `tel:${phone.replace(/\D/g, '')}` : '#');
   const ctaLabel = headerConfig?.cta?.text || ui.quoteCta;
@@ -300,7 +311,14 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
           {/* Logo */}
           <Link href={`/${locale}`} className="flex items-center gap-2.5 flex-shrink-0" style={{ textDecoration: 'none' }}>
             {logoImg ? (
-              <Image src={logoImg} alt={logoText} width={140} height={40} className="h-10 w-auto object-contain" />
+              <Image
+                src={logoImg}
+                alt={logoText}
+                width={Math.round(logoHeight * 3.5)}
+                height={logoHeight}
+                className="w-auto object-contain"
+                style={{ height: `${logoHeight}px` }}
+              />
             ) : (
               <>
                 <div className="flex items-center justify-center w-9 h-9 rounded-lg font-bold text-base flex-shrink-0"

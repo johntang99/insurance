@@ -1,193 +1,197 @@
 {
-  "menu": {
-    "variant": "default",
-    "logo": {
-      "text": "Peerless 天天保险",
-      "subtext": "独立保险顾问"
-    }
-  },
   "cta": {
-    "text": "免费获取报价",
-    "link": "/zh/quote"
+    "link": "/zh/quote",
+    "text": "免费获取报价"
   },
-  "topbar": {
-    "phone": "(718) 799-0472",
-    "phoneHref": "tel:+17187990472",
-    "badge": "2小时内回复报价"
-  },
-  "phoneDisplay": "(718) 799-0472",
-  "phoneHref": "tel:+17187990472",
-  "stickyOnMobile": true,
-  "showPhoneInHeader": false,
   "nav": [
     {
-      "label": "首页",
+      "href": "",
       "type": "link",
-      "href": ""
+      "label": "首页"
     },
     {
-      "label": "保险产品",
       "type": "mega",
+      "label": "保险产品",
       "columns": [
         {
-          "heading": "个人保险",
           "links": [
             {
-              "label": "车险",
               "href": "insurance/auto",
-              "icon": "🚗"
+              "icon": "🚗",
+              "label": "车险"
             },
             {
-              "label": "TLC 保险",
               "href": "insurance/tlc",
-              "icon": "🚕"
+              "icon": "🚕",
+              "label": "TLC 保险"
             },
             {
-              "label": "房屋保险",
               "href": "insurance/homeowner",
-              "icon": "🏠"
+              "icon": "🏠",
+              "label": "房屋保险"
             },
             {
-              "label": "摩托车保险",
               "href": "insurance/motorcycle",
-              "icon": "🏍️"
+              "icon": "🏍️",
+              "label": "摩托车保险"
             },
             {
-              "label": "船只保险",
               "href": "insurance/boat",
-              "icon": "⛵"
+              "icon": "⛵",
+              "label": "船只保险"
             },
             {
-              "label": "旅行保险",
               "href": "insurance/travel",
-              "icon": "✈️"
+              "icon": "✈️",
+              "label": "旅行保险"
             }
-          ]
+          ],
+          "heading": "个人保险"
         },
         {
-          "heading": "商业保险",
           "links": [
             {
-              "label": "商业保险",
               "href": "insurance/business",
-              "icon": "💼"
+              "icon": "💼",
+              "label": "商业保险"
             },
             {
-              "label": "商业车辆保险",
               "href": "insurance/commercial-auto",
-              "icon": "🚛"
+              "icon": "🚛",
+              "label": "商业车辆保险"
             },
             {
-              "label": "工伤保险",
               "href": "insurance/workers-comp",
-              "icon": "🦺"
+              "icon": "🦺",
+              "label": "工伤保险"
             },
             {
-              "label": "建筑工程保险",
               "href": "insurance/construction",
-              "icon": "🏗️"
+              "icon": "🏗️",
+              "label": "建筑工程保险"
             },
             {
-              "label": "伤残保险",
               "href": "insurance/disability",
-              "icon": "🛡️"
+              "icon": "🛡️",
+              "label": "伤残保险"
             },
             {
-              "label": "团体健康保险",
               "href": "insurance/group-health",
-              "icon": "❤️"
+              "icon": "❤️",
+              "label": "团体健康保险"
             }
-          ]
+          ],
+          "heading": "商业保险"
         },
         {
-          "heading": "便民服务",
+          "cta": {
+            "href": "quote",
+            "label": "免费获取报价",
+            "description": "我们通常在 2 小时内回复"
+          },
           "links": [
             {
-              "label": "全部险种 →",
               "href": "insurance",
               "icon": "📋",
+              "label": "全部险种 →",
               "highlight": true
             },
             {
-              "label": "DMV 服务",
               "href": "services/dmv",
-              "icon": "📄"
+              "icon": "📄",
+              "label": "DMV 服务"
             },
             {
-              "label": "公证服务",
               "href": "services/notary",
-              "icon": "✒️"
+              "icon": "✒️",
+              "label": "公证服务"
             },
             {
-              "label": "理赔协助",
               "href": "claims",
-              "icon": "🛡️"
+              "icon": "🛡️",
+              "label": "理赔协助"
             }
           ],
-          "cta": {
-            "label": "免费获取报价",
-            "href": "quote",
-            "description": "我们通常在 2 小时内回复"
-          }
+          "heading": "便民服务"
         }
       ]
     },
     {
-      "label": "关于我们",
       "type": "dropdown",
+      "label": "关于我们",
       "links": [
         {
-          "label": "关于我们",
           "href": "about",
+          "label": "关于我们",
           "description": "品牌故事、使命与资质"
         },
         {
-          "label": "顾问团队",
           "href": "agents",
+          "label": "顾问团队",
           "description": "覆盖各险种的持牌顾问"
         },
         {
-          "label": "合作保险公司",
           "href": "carriers",
+          "label": "合作保险公司",
           "description": "我们合作的 30+ 保险公司"
         },
         {
-          "label": "服务区域",
           "href": "locations",
+          "label": "服务区域",
           "description": "我们覆盖的城市与区域"
         },
         {
-          "label": "客户评价",
           "href": "testimonials",
+          "label": "客户评价",
           "description": "5,000+ 客户真实反馈"
         }
       ]
     },
     {
-      "label": "资讯中心",
       "type": "dropdown",
+      "label": "资讯中心",
       "links": [
         {
-          "label": "资源中心",
           "href": "resources",
+          "label": "资源中心",
           "description": "保险指南与实用建议"
         },
         {
-          "label": "FAQ",
           "href": "faq",
+          "label": "FAQ",
           "description": "常见问题解答"
         },
         {
-          "label": "理赔协助",
           "href": "claims",
+          "label": "理赔协助",
           "description": "理赔流程与协助"
         }
       ]
     },
     {
-      "label": "联系我们",
+      "href": "contact",
       "type": "link",
-      "href": "contact"
+      "label": "联系我们"
     }
-  ]
+  ],
+  "menu": {
+    "logo": {
+      "text": "Peerless 天天保险",
+      "subtext": "独立保险顾问",
+      "image": {
+        "src": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1791351954153-pbi-logo-chinese-text-2.png",
+        "height": 68
+      }
+    },
+    "variant": "default"
+  },
+  "topbar": {
+    "badge": "2小时内回复报价",
+    "phone": "(718) 799-0472",
+    "phoneHref": "tel:+17187990472"
+  },
+  "phoneHref": "tel:+17187990472",
+  "phoneDisplay": "(718) 799-0472",
+  "stickyOnMobile": true,
+  "showPhoneInHeader": false
 }

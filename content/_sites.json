@@ -5,7 +5,7 @@
       "name": "Peerless Brokerage Inc",
       "domain": "pbiny.local",
       "enabled": true,
-      "defaultLocale": "en",
+      "defaultLocale": "zh",
       "supportedLocales": ["en", "zh"],
       "type": "insurance-brokerage",
       "createdAt": "2026-03-15T00:00:00Z",

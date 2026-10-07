@@ -167,7 +167,7 @@ export default async function LocationServicePage({ params }: PageProps) {
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }} className="grid-1col-mobile">
               {[
-                { icon: '📍', title: `Local ${loc.name} Expertise`, body: `We\'ve been serving ${loc.name} clients for 28 years. We know the local market, the best carriers for ${loc.stateCode}, and how to get you the best rate.` },
+                { icon: '📍', title: `Local ${loc.name} Expertise`, body: `We\'ve been serving ${loc.name} clients for 23 years. We know the local market, the best carriers for ${loc.stateCode}, and how to get you the best rate.` },
                 { icon: '🔍', title: '30+ Carriers Compared', body: `We shop every major carrier available in ${loc.name} to guarantee you\'re not overpaying. One call, dozens of quotes.` },
                 { icon: '⚡', title: 'Same-Day Response', body: `${loc.name} clients get same-day quote responses during business hours. Need it fast? Call us directly at ${phone}.` },
               ].map(({ icon, title, body }) => (

@@ -175,7 +175,8 @@ function CenteredHero(props: InsuranceHeroProps) {
 // Text left, single photo right, inside container
 // ════════════════════════════════════════════════════════════════
 function SplitImageHero(props: InsuranceHeroProps) {
-  const { image, imageAlt, headline, icon } = props;
+  const { image, backgroundImage, imageAlt, headline, icon } = props;
+  const resolvedImage = image || backgroundImage;
   return (
     <section style={{ position: 'relative', background: NAVY_BG, padding: '64px 0', overflow: 'hidden' }}>
       <div style={GRID_OVERLAY} />
@@ -183,8 +184,8 @@ function SplitImageHero(props: InsuranceHeroProps) {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center' }} className="hero-split-grid">
           <div><TextBlock {...props} center={false} /></div>
           <div style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', aspectRatio: '4/3', background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.1)' }}>
-            {image ? (
-              <Image src={image} alt={imageAlt || headline} fill style={{ objectFit: 'cover' }} priority />
+            {resolvedImage ? (
+              <Image src={resolvedImage} alt={imageAlt || headline} fill style={{ objectFit: 'cover' }} priority />
             ) : (
               <div style={{ width: '100%', height: '100%', minHeight: 300, background: 'linear-gradient(135deg,rgba(201,147,58,.12) 0%,rgba(255,255,255,.04) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12 }}>
                 <span style={{ fontSize: '4rem', opacity: .4 }}>{icon || '🏢'}</span>

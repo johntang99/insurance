@@ -105,6 +105,7 @@ async function ensureHeaderFile(siteId: string, locale: string) {
             image: {
               src: '',
               alt: '',
+              height: 40,
             },
           },
           items: [],

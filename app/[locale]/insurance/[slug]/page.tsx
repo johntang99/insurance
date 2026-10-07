@@ -275,7 +275,7 @@ export default async function InsuranceServicePage({ params }: PageProps) {
             {(whyUs.points || [
               { icon: '🔍', title: `30+ ${lineName} Carriers`, description: 'We compare all major carriers to guarantee you the lowest rate for your situation.' },
               { icon: '⚡', title: 'Same-Day Quotes', description: 'Fast turnaround — most quotes ready within 2 hours during business hours.' },
-              { icon: '🏆', title: '28 Years Experience', description: 'Decades of expertise means we know which carriers provide the best value for each situation.' },
+              { icon: '🏆', title: '23 Years Experience', description: 'Decades of expertise means we know which carriers provide the best value for each situation.' },
             ]).map((point: any, i: number) => (
               <div key={i} style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '32px 24px', textAlign: 'center' }}>
                 <span style={{ fontSize: '2rem', display: 'block', marginBottom: 14 }}>{resolveIcon(point.icon)}</span>

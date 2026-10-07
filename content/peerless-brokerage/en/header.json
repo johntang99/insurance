@@ -1,193 +1,197 @@
 {
-  "menu": {
-    "variant": "default",
-    "logo": {
-      "text": "Peerless Brokerage",
-      "subtext": "Independent Insurance Broker"
-    }
-  },
   "cta": {
-    "text": "Get a Free Quote",
-    "link": "/en/quote"
+    "link": "/en/quote",
+    "text": "Get a Free Quote"
   },
-  "topbar": {
-    "phone": "(718) 799-0472",
-    "phoneHref": "tel:+17187990472",
-    "badge": "Free quote within 2 hours"
-  },
-  "phoneDisplay": "(718) 799-0472",
-  "phoneHref": "tel:+17187990472",
-  "stickyOnMobile": true,
-  "showPhoneInHeader": false,
   "nav": [
     {
-      "label": "Home",
+      "href": "",
       "type": "link",
-      "href": ""
+      "label": "Home"
     },
     {
-      "label": "Insurance",
       "type": "mega",
+      "label": "Insurance",
       "columns": [
         {
-          "heading": "Personal",
           "links": [
             {
-              "label": "Auto Insurance",
               "href": "insurance/auto",
-              "icon": "🚗"
+              "icon": "🚗",
+              "label": "Auto Insurance"
             },
             {
-              "label": "TLC Insurance",
               "href": "insurance/tlc",
-              "icon": "🚕"
+              "icon": "🚕",
+              "label": "TLC Insurance"
             },
             {
-              "label": "Homeowner Insurance",
               "href": "insurance/homeowner",
-              "icon": "🏠"
+              "icon": "🏠",
+              "label": "Homeowner Insurance"
             },
             {
-              "label": "Motorcycle Insurance",
               "href": "insurance/motorcycle",
-              "icon": "🏍️"
+              "icon": "🏍️",
+              "label": "Motorcycle Insurance"
             },
             {
-              "label": "Boat Insurance",
               "href": "insurance/boat",
-              "icon": "⛵"
+              "icon": "⛵",
+              "label": "Boat Insurance"
             },
             {
-              "label": "Travel Insurance",
               "href": "insurance/travel",
-              "icon": "✈️"
+              "icon": "✈️",
+              "label": "Travel Insurance"
             }
-          ]
+          ],
+          "heading": "Personal"
         },
         {
-          "heading": "Business",
           "links": [
             {
-              "label": "Business Insurance",
               "href": "insurance/business",
-              "icon": "💼"
+              "icon": "💼",
+              "label": "Business Insurance"
             },
             {
-              "label": "Commercial Auto",
               "href": "insurance/commercial-auto",
-              "icon": "🚛"
+              "icon": "🚛",
+              "label": "Commercial Auto"
             },
             {
-              "label": "Workers Compensation",
               "href": "insurance/workers-comp",
-              "icon": "🦺"
+              "icon": "🦺",
+              "label": "Workers Compensation"
             },
             {
-              "label": "Construction Insurance",
               "href": "insurance/construction",
-              "icon": "🏗️"
+              "icon": "🏗️",
+              "label": "Construction Insurance"
             },
             {
-              "label": "Disability Insurance",
               "href": "insurance/disability",
-              "icon": "🛡️"
+              "icon": "🛡️",
+              "label": "Disability Insurance"
             },
             {
-              "label": "Group Health",
               "href": "insurance/group-health",
-              "icon": "❤️"
+              "icon": "❤️",
+              "label": "Group Health"
             }
-          ]
+          ],
+          "heading": "Business"
         },
         {
-          "heading": "Services",
+          "cta": {
+            "href": "quote",
+            "label": "Get a Free Quote",
+            "description": "We respond within 2 hours"
+          },
           "links": [
             {
-              "label": "All Coverage Types →",
               "href": "insurance",
               "icon": "📋",
+              "label": "All Coverage Types →",
               "highlight": true
             },
             {
-              "label": "DMV Services",
               "href": "services/dmv",
-              "icon": "📄"
+              "icon": "📄",
+              "label": "DMV Services"
             },
             {
-              "label": "Notary Services",
               "href": "services/notary",
-              "icon": "✒️"
+              "icon": "✒️",
+              "label": "Notary Services"
             },
             {
-              "label": "Claims Assistance",
               "href": "claims",
-              "icon": "🛡️"
+              "icon": "🛡️",
+              "label": "Claims Assistance"
             }
           ],
-          "cta": {
-            "label": "Get a Free Quote",
-            "href": "quote",
-            "description": "We respond within 2 hours"
-          }
+          "heading": "Services"
         }
       ]
     },
     {
-      "label": "Company",
       "type": "dropdown",
+      "label": "Company",
       "links": [
         {
-          "label": "About Us",
           "href": "about",
+          "label": "About Us",
           "description": "Our story, mission & credentials"
         },
         {
-          "label": "Our Agents",
           "href": "agents",
+          "label": "Our Agents",
           "description": "Licensed experts in every coverage type"
         },
         {
-          "label": "Carrier Partners",
           "href": "carriers",
+          "label": "Carrier Partners",
           "description": "30+ carriers we work with"
         },
         {
-          "label": "Service Areas",
           "href": "locations",
+          "label": "Service Areas",
           "description": "Cities and regions we serve"
         },
         {
-          "label": "Testimonials",
           "href": "testimonials",
+          "label": "Testimonials",
           "description": "5,000+ satisfied clients"
         }
       ]
     },
     {
-      "label": "Resources",
       "type": "dropdown",
+      "label": "Resources",
       "links": [
         {
-          "label": "Resource Center",
           "href": "resources",
+          "label": "Resource Center",
           "description": "Insurance guides & expert tips"
         },
         {
-          "label": "FAQ",
           "href": "faq",
+          "label": "FAQ",
           "description": "Answers to common questions"
         },
         {
-          "label": "Claims Help",
           "href": "claims",
+          "label": "Claims Help",
           "description": "Guidance through your claim"
         }
       ]
     },
     {
-      "label": "Contact",
+      "href": "contact",
       "type": "link",
-      "href": "contact"
+      "label": "Contact"
     }
-  ]
+  ],
+  "menu": {
+    "logo": {
+      "text": "Peerless Brokerage",
+      "image": {
+        "src": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1791351954153-pbi-logo-chinese-text-2.png",
+        "height": 68
+      },
+      "subtext": "Independent Insurance Broker"
+    },
+    "variant": "default"
+  },
+  "topbar": {
+    "badge": "Free quote within 2 hours",
+    "phone": "(718) 799-0472",
+    "phoneHref": "tel:+17187990472"
+  },
+  "phoneHref": "tel:+17187990472",
+  "phoneDisplay": "(718) 799-0472",
+  "stickyOnMobile": true,
+  "showPhoneInHeader": false
 }

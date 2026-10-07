@@ -62,7 +62,7 @@ export default async function InsurancePage({ params }: PageProps) {
           { icon: '🔍', title: '30+ Carriers', desc: 'We shop the market so you don\'t have to.' },
           { icon: '🛡️', title: 'Independent Advice', desc: 'We work for you — no bias toward any one carrier.' },
           { icon: '⚡', title: 'Fast Quotes', desc: 'Quote within 2 hours during business hours.' },
-          { icon: '📍', title: 'Local Expertise', desc: '28 years serving Flushing, Queens, and NYC.' },
+          { icon: '📍', title: 'Local Expertise', desc: '23 years serving Flushing, Queens, and NYC.' },
         ],
     ctaHeadline: isZh ? '准备开始了吗？' : 'Ready to Get Started?',
     ctaSubline: isZh ? '告诉我们需求，我们将帮您匹配更合适费率。' : 'Tell us what you need and we\'ll find your best rate.',

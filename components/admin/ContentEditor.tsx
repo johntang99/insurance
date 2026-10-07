@@ -1312,6 +1312,22 @@ export function ContentEditor({
     };
 
     collectFields(formData);
+
+    const ensureField = (path: string[], label: string) => {
+      const key = path.join('.');
+      if (!fields.some((field) => field.path.join('.') === key)) {
+        fields.push({ path, label });
+      }
+    };
+
+    // Always expose core hero image fields even if keys are currently missing in JSON.
+    // This avoids the "cannot set split-image photo" issue when variant changes.
+    ensureField(['hero', 'image'], 'Hero > Image');
+    ensureField(['hero', 'backgroundImage'], 'Hero > Background Image');
+    ensureField(['hero', 'galleryImages', '0'], 'Gallery Image 1');
+    ensureField(['hero', 'galleryImages', '1'], 'Gallery Image 2');
+    ensureField(['hero', 'galleryImages', '2'], 'Gallery Image 3');
+
     return fields;
   }, [isHomePageFile, formData]);
 

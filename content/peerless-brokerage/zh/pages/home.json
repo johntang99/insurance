@@ -17,7 +17,7 @@
     "stats": [
       {
         "label": "从业年限",
-        "value": "28",
+        "value": "23",
         "suffix": ""
       },
       {
@@ -37,8 +37,8 @@
       }
     ],
     "subline": "车险、房屋险、商业险与专项险种一站式办理。我们代表您比较 30+ 保险公司方案，而不是只推荐单一公司产品。",
-    "variant": "split-gallery-right",
-    "headline": "天天保险，服务纽约华人社区28年，是您值得信任的伙伴！",
+    "variant": "split-image",
+    "headline": "天天保险，服务纽约华人社区23年，是您值得信任的伙伴！",
     "ctaPrimary": {
       "href": "/zh/quote",
       "label": "免费获取报价"
@@ -52,13 +52,13 @@
       "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773557655209-photo-1605281317010-fe5ffe798166.jpg",
       "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773559113044-photo-1595670322505-4de61b9cdf47.jpg"
     ],
-    "backgroundImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1773558370396-photo-1561525140-c2a4cc68e4bd.jpg"
+    "backgroundImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/general/1791352925796-insurance-office-1.png"
   },
   "stats": {
     "items": [
       {
         "label": "本地服务经验",
-        "value": "28",
+        "value": "23",
         "suffix": ""
       },
       {
