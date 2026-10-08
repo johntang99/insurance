@@ -1,4 +1,7 @@
-# Chinese Medicine Template
+
+
+Email: admin@pbiny.com
+Password: admin123
 
 
 lsof -ti:3007 | xargs kill -9
