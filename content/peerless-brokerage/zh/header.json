@@ -41,9 +41,9 @@
               "label": "船只保险"
             },
             {
-              "href": "insurance/travel",
-              "icon": "✈️",
-              "label": "旅行保险"
+              "href": "insurance/life-annuity",
+              "icon": "🌱",
+              "label": "人寿与年金保险"
             }
           ],
           "heading": "个人保险"

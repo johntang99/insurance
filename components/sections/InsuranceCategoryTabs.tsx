@@ -17,7 +17,7 @@ interface InsuranceLine {
 const ICON_MAP: Record<string, string> = {
   auto: '🚗', tlc: '🚕', 'commercial-auto': '🚛', homeowner: '🏠',
   business: '💼', 'workers-comp': '🦺', disability: '🛡️', construction: '🏗️',
-  motorcycle: '🏍️', boat: '⛵', travel: '✈️', 'group-health': '❤️',
+  motorcycle: '🏍️', boat: '⛵', 'life-annuity': '🌱', 'group-health': '❤️',
   'commercial-property': '🏢', dmv: '📄', notary: '✒️',
 };
 
@@ -25,7 +25,7 @@ const CATEGORY_MAP: Record<string, string> = {
   auto: 'personal', tlc: 'specialty', 'commercial-auto': 'commercial',
   homeowner: 'personal', business: 'commercial', 'workers-comp': 'commercial',
   disability: 'personal', construction: 'commercial', motorcycle: 'personal',
-  boat: 'personal', travel: 'personal', 'group-health': 'commercial',
+  boat: 'personal', 'life-annuity': 'personal', 'group-health': 'commercial',
   'commercial-property': 'commercial', dmv: 'services', notary: 'services',
 };
 
@@ -33,7 +33,7 @@ const LINE_NAMES: Record<string, string> = {
   auto: 'Auto Insurance', tlc: 'TLC Insurance', 'commercial-auto': 'Commercial Auto',
   homeowner: 'Homeowner Insurance', business: 'Business Insurance', 'workers-comp': 'Workers Compensation',
   disability: 'Disability Insurance', construction: 'Construction Insurance', motorcycle: 'Motorcycle Insurance',
-  boat: 'Boat Insurance', travel: 'Travel Insurance', 'group-health': 'Group Health Insurance',
+  boat: 'Boat Insurance', 'life-annuity': 'Life and Annuity Insurance', 'group-health': 'Group Health Insurance',
   'commercial-property': 'Commercial Property', dmv: 'DMV Services', notary: 'Notary Services',
 };
 
@@ -48,7 +48,7 @@ const LINE_NAMES_ZH: Record<string, string> = {
   construction: '建筑工程保险',
   motorcycle: '摩托车保险',
   boat: '船只保险',
-  travel: '旅行保险',
+  'life-annuity': '人寿与年金保险',
   'group-health': '团体健康保险',
   'commercial-property': '商业房产保险',
   dmv: 'DMV 服务',
@@ -61,7 +61,7 @@ const LINE_DESC: Record<string, string> = {
   business: 'GL, property & business income in one policy', 'workers-comp': 'Required by NY law — fast binding, audit support',
   disability: 'Short and long-term income protection', construction: 'GL, builders risk & contractor coverage',
   motorcycle: 'Year-round or seasonal coverage', boat: 'Marine & watercraft coverage',
-  travel: 'Trip cancellation, medical & group rates', 'group-health': 'Employer-sponsored ACA-compliant plans',
+  'life-annuity': 'Term & whole life coverage plus annuities', 'group-health': 'Employer-sponsored ACA-compliant plans',
   'commercial-property': 'Buildings, equipment & inventory', dmv: 'Registration & title transfers',
   notary: 'Document notarization on-site',
 };
@@ -77,7 +77,7 @@ const LINE_DESC_ZH: Record<string, string> = {
   construction: '工程责任与施工风险保障',
   motorcycle: '全年或季节性骑行保障',
   boat: '船只与水上交通工具保障',
-  travel: '行程取消与旅行医疗保障',
+  'life-annuity': '定期寿险、终身寿险与年金规划',
   'group-health': '企业团体医疗保障',
   'commercial-property': '楼宇、设备与库存保障',
   dmv: '过户、注册与车管业务办理',

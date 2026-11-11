@@ -279,7 +279,7 @@ export const INSURANCE_LINE_META: Record<string, { name: string; icon: string; d
   'construction':       { name: 'Construction Insurance',   icon: '🏗️', description: 'GL, builders risk & contractor coverage',       category: 'commercial' },
   'motorcycle':         { name: 'Motorcycle Insurance',     icon: '🏍️', description: 'Year-round or seasonal coverage',              category: 'personal' },
   'boat':               { name: 'Boat Insurance',           icon: '⛵', description: 'Marine & watercraft coverage',                  category: 'personal' },
-  'travel':             { name: 'Travel Insurance',         icon: '✈️', description: 'Trip cancellation, medical & group rates',      category: 'personal' },
+  'life-annuity':       { name: 'Life and Annuity Insurance', icon: '🌱', description: 'Term & whole life coverage plus annuities', category: 'personal' },
   'group-health':       { name: 'Group Health Insurance',   icon: '❤️', description: 'Employer-sponsored ACA-compliant plans',        category: 'commercial' },
   'commercial-property':{ name: 'Commercial Property',      icon: '🏢', description: 'Buildings, equipment & inventory',              category: 'commercial' },
   'dmv':                { name: 'DMV Services',             icon: '📄', description: 'Registration & title transfers',               category: 'services' },

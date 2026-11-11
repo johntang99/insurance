@@ -15,7 +15,7 @@ interface PageProps { params: { locale: Locale; slug: string } }
 const LINE_ICONS: Record<string, string> = {
   auto: '🚗', tlc: '🚕', 'commercial-auto': '🚛', homeowner: '🏠',
   business: '💼', 'workers-comp': '🦺', disability: '🛡️', construction: '🏗️',
-  motorcycle: '🏍️', boat: '⛵', travel: '✈️', 'group-health': '❤️',
+  motorcycle: '🏍️', boat: '⛵', 'life-annuity': '🌱', 'group-health': '❤️',
   'commercial-property': '🏢',
 };
 
@@ -54,7 +54,7 @@ const LINE_NAMES: Record<string, string> = {
   auto: 'Auto Insurance', tlc: 'TLC Insurance', 'commercial-auto': 'Commercial Auto Insurance',
   homeowner: 'Homeowner Insurance', business: 'Business Insurance', 'workers-comp': 'Workers Compensation',
   disability: 'Disability Insurance', construction: 'Construction Insurance', motorcycle: 'Motorcycle Insurance',
-  boat: 'Boat Insurance', travel: 'Travel Insurance', 'group-health': 'Group Health Insurance',
+  boat: 'Boat Insurance', 'life-annuity': 'Life and Annuity Insurance', 'group-health': 'Group Health Insurance',
   'commercial-property': 'Commercial Property Insurance',
 };
 
@@ -69,7 +69,7 @@ const LINE_NAMES_ZH: Record<string, string> = {
   construction: '建筑工程保险',
   motorcycle: '摩托车保险',
   boat: '船只保险',
-  travel: '旅行保险',
+  'life-annuity': '人寿与年金保险',
   'group-health': '团体健康保险',
   'commercial-property': '商业房产保险',
   dmv: 'DMV 服务',

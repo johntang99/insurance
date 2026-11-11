@@ -10,7 +10,7 @@
     { "slug": "construction",       "name": "Construction Insurance",  "icon": "hammer",     "description": "GL, builders risk, and contractor coverage",                     "is_enabled": true,  "is_featured": false, "sort_order": 8 },
     { "slug": "motorcycle",         "name": "Motorcycle Insurance",    "icon": "zap",        "description": "Year-round or seasonal motorcycle coverage",                     "is_enabled": true,  "is_featured": false, "sort_order": 9 },
     { "slug": "boat",               "name": "Boat Insurance",          "icon": "anchor",     "description": "Marine coverage and agreed value policies",                      "is_enabled": true,  "is_featured": false, "sort_order": 10 },
-    { "slug": "travel",             "name": "Travel Insurance",        "icon": "plane",      "description": "Trip cancellation, medical, and group travel rates",             "is_enabled": true,  "is_featured": false, "sort_order": 11 },
+    { "slug": "life-annuity",       "name": "Life and Annuity Insurance", "icon": "sprout", "description": "Term and whole life coverage, plus fixed and indexed annuities",             "is_enabled": true,  "is_featured": false, "sort_order": 11 },
     { "slug": "group-health",       "name": "Group Health Insurance",  "icon": "users",      "description": "Employer-sponsored and ACA-compliant health plans",              "is_enabled": true,  "is_featured": false, "sort_order": 12 }
   ]
 }

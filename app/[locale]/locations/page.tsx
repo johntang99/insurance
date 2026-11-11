@@ -27,7 +27,7 @@ const COVERAGE_NAMES_ZH: Record<string, string> = {
   construction: '建筑工程保险',
   motorcycle: '摩托车保险',
   boat: '船只保险',
-  travel: '旅行保险',
+  'life-annuity': '人寿与年金保险',
   'group-health': '团体健康保险',
 };
 const CITY_NAMES_ZH: Record<string, string> = {

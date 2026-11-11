@@ -32,7 +32,7 @@
             { "label": "Homeowner Insurance",   "href": "insurance/homeowner",   "icon": "🏠" },
             { "label": "Motorcycle Insurance",  "href": "insurance/motorcycle",  "icon": "🏍️" },
             { "label": "Boat Insurance",        "href": "insurance/boat",        "icon": "⛵" },
-            { "label": "Travel Insurance",      "href": "insurance/travel",      "icon": "✈️" }
+            { "label": "Life and Annuity Insurance", "href": "insurance/life-annuity", "icon": "🌱" }
           ]
         },
         {

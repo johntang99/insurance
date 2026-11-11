@@ -82,6 +82,9 @@ const nextConfig = {
   // ── Redirects ─────────────────────────────────────────────
   async redirects() {
     return [
+      // Travel Insurance was replaced by Life and Annuity Insurance
+      { source: '/:locale/insurance/travel', destination: '/:locale/insurance/life-annuity', permanent: true },
+      { source: '/:locale/insurance/travel/:city', destination: '/:locale/insurance/life-annuity/:city', permanent: true },
       // Redirect old /blog paths to /resources
       { source: '/en/blog', destination: '/en/resources', permanent: true },
       { source: '/en/blog/:slug', destination: '/en/resources/:slug', permanent: true },

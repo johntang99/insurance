@@ -1,0 +1,189 @@
+{
+  "serviceHero": {
+    "variant": "service-hero",
+    "badge": "Family Protection & Retirement Income",
+    "headline": "Life and Annuity Insurance",
+    "subline": "Protect the people who depend on you and plan for a steady retirement income. We compare term, whole life, and annuity options from leading carriers to find the right fit for your goals and budget.",
+    "stats": [
+      {
+        "value": "30",
+        "label": "Carriers Compared",
+        "suffix": "+"
+      },
+      {
+        "value": "NY · NJ · CT · PA",
+        "label": "Licensed In"
+      }
+    ],
+    "ctaPrimary": {
+      "label": "Get a Life Insurance Quote",
+      "href": "/en/quote?type=life-annuity"
+    },
+    "ctaSecondary": {
+      "label": "Call (718) 799-0472",
+      "href": "tel:+17187990472"
+    },
+    "image": "",
+    "imageAlt": ""
+  },
+  "whatItCovers": {
+    "headline": "What Life and Annuity Insurance Covers",
+    "included": [
+      {
+        "title": "Term Life Insurance",
+        "description": "Affordable coverage for a set period — typically 10, 20, or 30 years. Pays a tax-free death benefit to your beneficiaries if you pass away during the term."
+      },
+      {
+        "title": "Whole Life Insurance",
+        "description": "Permanent coverage that lasts your entire life, with fixed premiums and a guaranteed cash value that grows over time."
+      },
+      {
+        "title": "Universal & Indexed Universal Life",
+        "description": "Permanent coverage with flexible premiums and death benefits. Indexed policies can credit interest based on a market index, with a floor to protect against losses."
+      },
+      {
+        "title": "Fixed & Fixed Indexed Annuities",
+        "description": "Grow retirement savings tax-deferred with a guaranteed minimum rate or index-linked growth, while protecting your principal from market downturns."
+      },
+      {
+        "title": "Income Annuities",
+        "description": "Turn a lump sum into guaranteed income for a set number of years or for life, so you don't outlive your savings."
+      }
+    ],
+    "excluded": [
+      {
+        "title": "Suicide Clause",
+        "description": "Most life policies do not pay the death benefit if the insured dies by suicide within the first two years of the policy."
+      },
+      {
+        "title": "Misrepresentation on the Application",
+        "description": "During the contestability period (usually two years), the carrier can deny a claim if health or lifestyle information on the application was inaccurate."
+      },
+      {
+        "title": "Early Annuity Withdrawals",
+        "description": "Withdrawing more than the free amount during the surrender period can trigger surrender charges, and withdrawals before age 59½ may face IRS penalties."
+      }
+    ],
+    "whoNeedsIt": "If anyone depends on your income — a spouse, children, aging parents, or business partners — life insurance makes sure they can cover the mortgage, daily expenses, and education if something happens to you. Annuities are a good fit if you are approaching retirement and want guaranteed income or a safe place to grow savings tax-deferred."
+  },
+  "whyUs": {
+    "variant": "three-columns",
+    "headline": "Why Get Life Insurance Through Peerless?",
+    "points": [
+      {
+        "icon": "🔍",
+        "title": "Independent Comparison",
+        "description": "We aren't tied to one company. We compare term, permanent, and annuity products across multiple highly rated carriers to find the best value."
+      },
+      {
+        "icon": "🗣️",
+        "title": "Advice in Your Language",
+        "description": "We explain policy options, riders, and annuity terms clearly in English or Chinese, so you understand exactly what you are buying."
+      },
+      {
+        "icon": "🤝",
+        "title": "Support for Your Family",
+        "description": "We review your coverage as your life changes and help your beneficiaries through the claim process when they need it most."
+      }
+    ]
+  },
+  "quoteProcess": {
+    "headline": "How to Get a Life Insurance Quote",
+    "steps": [
+      {
+        "title": "Tell Us Your Goals",
+        "description": "Who you want to protect, how much coverage you need, and whether you are also planning for retirement income."
+      },
+      {
+        "title": "Basic Health Information",
+        "description": "Age, height and weight, tobacco use, and any major medical conditions or medications."
+      },
+      {
+        "title": "Compare & Apply",
+        "description": "We present quotes side by side, help you choose, and guide you through the application and any medical exam."
+      }
+    ],
+    "duration": "2 hours"
+  },
+  "rateFactors": {
+    "headline": "What Affects Your Life Insurance Premium",
+    "factors": [
+      {
+        "factor": "Age",
+        "impact": "high",
+        "description": "Premiums are lowest when you are young. Every year you wait to buy coverage, the cost increases."
+      },
+      {
+        "factor": "Health & Medical History",
+        "impact": "high",
+        "description": "Conditions such as diabetes, heart disease, or high blood pressure affect your underwriting class and price."
+      },
+      {
+        "factor": "Tobacco Use",
+        "impact": "high",
+        "description": "Smokers typically pay two to three times more than non-smokers for the same coverage."
+      },
+      {
+        "factor": "Policy Type & Coverage Amount",
+        "impact": "medium",
+        "description": "Permanent policies cost more than term, and a larger death benefit or longer term raises the premium."
+      },
+      {
+        "factor": "Family History",
+        "impact": "medium",
+        "description": "Early heart disease or cancer in parents or siblings can affect your rate class."
+      },
+      {
+        "factor": "Lifestyle & Occupation",
+        "impact": "low",
+        "description": "Hazardous jobs, private piloting, or high-risk hobbies may add to the premium."
+      }
+    ],
+    "tips": [
+      "Buy coverage while you are young and healthy to lock in a lower rate",
+      "Consider term life for large, temporary needs like a mortgage or raising children",
+      "Quitting tobacco for 12 months or more can qualify you for non-smoker rates",
+      "Review your policy and beneficiaries after marriage, a new child, or a home purchase"
+    ]
+  },
+  "testimonials": {
+    "variant": "featured-3",
+    "filterByCoverageType": "life-annuity",
+    "limit": 3,
+    "showRating": true,
+    "showCoverageType": false
+  },
+  "faq": {
+    "headline": "Life and Annuity Insurance FAQs",
+    "items": [
+      {
+        "question": "How much life insurance do I need?",
+        "answer": "A common starting point is 10–15 times your annual income, but the right amount depends on your debts, mortgage, children's education, and other savings. We'll help you calculate a number that fits your family."
+      },
+      {
+        "question": "What is the difference between term and whole life insurance?",
+        "answer": "Term life covers you for a set period and is the most affordable option. Whole life lasts your entire life and builds cash value, but costs more. Many families combine the two."
+      },
+      {
+        "question": "Do I need a medical exam?",
+        "answer": "Not always. Many carriers offer simplified or accelerated underwriting with no exam for qualifying applicants. Larger coverage amounts or certain health histories may require one."
+      },
+      {
+        "question": "What is an annuity and how does it work?",
+        "answer": "An annuity is a contract with an insurance company. You pay a lump sum or a series of payments, and in return the money grows tax-deferred and can later be converted into guaranteed income for a set period or for life."
+      },
+      {
+        "question": "Can I access money in an annuity before retirement?",
+        "answer": "Most annuities allow a free withdrawal each year (often up to 10%). Larger withdrawals during the surrender period may incur charges, and withdrawals before age 59½ may face a 10% IRS penalty."
+      }
+    ]
+  },
+  "related": {
+    "headline": "Clients Also Ask About",
+    "slugs": [
+      "disability",
+      "homeowner",
+      "group-health"
+    ]
+  }
+}

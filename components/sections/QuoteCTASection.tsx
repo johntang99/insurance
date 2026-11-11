@@ -33,7 +33,7 @@ const COVERAGE_OPTIONS = [
   { slug: 'construction', name: 'Construction Insurance' },
   { slug: 'motorcycle', name: 'Motorcycle Insurance' },
   { slug: 'boat', name: 'Boat Insurance' },
-  { slug: 'travel', name: 'Travel Insurance' },
+  { slug: 'life-annuity', name: 'Life and Annuity Insurance' },
   { slug: 'group-health', name: 'Group Health Insurance' },
 ];
 
@@ -48,7 +48,7 @@ const COVERAGE_NAMES_ZH: Record<string, string> = {
   construction: '建筑工程保险',
   motorcycle: '摩托车保险',
   boat: '船只保险',
-  travel: '旅行保险',
+  'life-annuity': '人寿与年金保险',
   'group-health': '团体健康保险',
 };
 

@@ -37,7 +37,7 @@ const ZH_LABEL_MAP: Record<string, string> = {
   Motorcycle: '摩托车保险',
   'Motorcycle Insurance': '摩托车保险',
   'Boat Insurance': '船只保险',
-  'Travel Insurance': '旅行保险',
+  'Life and Annuity Insurance': '人寿与年金保险',
   'Business Insurance': '商业保险',
   'Commercial Auto': '商业车辆保险',
   'Workers Comp': '工伤保险',

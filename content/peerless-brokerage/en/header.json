@@ -41,9 +41,9 @@
               "label": "Boat Insurance"
             },
             {
-              "href": "insurance/travel",
-              "icon": "✈️",
-              "label": "Travel Insurance"
+              "href": "insurance/life-annuity",
+              "icon": "🌱",
+              "label": "Life and Annuity Insurance"
             }
           ],
           "heading": "Personal"

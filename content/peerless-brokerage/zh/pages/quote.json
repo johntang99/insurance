@@ -83,9 +83,9 @@
         "icon": "anchor"
       },
       {
-        "slug": "travel",
-        "label": "旅行保险",
-        "icon": "plane"
+        "slug": "life-annuity",
+        "label": "人寿与年金保险",
+        "icon": "sprout"
       },
       {
         "slug": "group-health",

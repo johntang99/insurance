@@ -16,7 +16,7 @@ export type InsuranceLineSlug =
   | 'construction'
   | 'motorcycle'
   | 'boat'
-  | 'travel'
+  | 'life-annuity'
   | 'group-health'
   | 'commercial-property'
   | 'dmv'
@@ -332,7 +332,7 @@ export const INSURANCE_LINE_DEFINITIONS: InsuranceLineDefinition[] = [
   { slug: 'construction',        name: 'Construction Insurance',   icon: 'hammer',     description: 'GL, builders risk, and contractor coverage',                   route: '/insurance/construction' },
   { slug: 'motorcycle',          name: 'Motorcycle Insurance',     icon: 'zap',        description: 'Year-round or seasonal motorcycle coverage',                   route: '/insurance/motorcycle' },
   { slug: 'boat',                name: 'Boat Insurance',           icon: 'anchor',     description: 'Marine coverage and agreed value policies',                    route: '/insurance/boat' },
-  { slug: 'travel',              name: 'Travel Insurance',         icon: 'plane',      description: 'Trip cancellation, medical, and group travel rates',            route: '/insurance/travel' },
+  { slug: 'life-annuity',        name: 'Life and Annuity Insurance', icon: 'sprout', description: 'Term and whole life coverage, plus fixed and indexed annuities', route: '/insurance/life-annuity' },
   { slug: 'group-health',        name: 'Group Health Insurance',   icon: 'heart',      description: 'Employer-sponsored and ACA-compliant health plans',             route: '/insurance/group-health' },
   { slug: 'commercial-property', name: 'Commercial Property',      icon: 'building',   description: 'Buildings, equipment, and inventory coverage',                  route: '/insurance/commercial-property' },
   { slug: 'dmv',                 name: 'DMV Services',             icon: 'file',       description: 'Registration, title transfers, and vehicle services',           route: '/services/dmv' },
