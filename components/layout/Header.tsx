@@ -306,12 +306,12 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
         boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,.1)' : 'none',
         transition: 'box-shadow .2s',
       }}>
-        <div className="container-custom flex items-center justify-between" style={{ height: 68, gap: 6 }}>
+        <div className="container-custom flex items-center justify-between h-[68px] lg:h-[92px]" style={{ gap: 6 }}>
 
           {/* Logo */}
           <Link
             href={`/${locale}`}
-            className="flex items-center gap-2 min-w-0 lg:flex-shrink-0"
+            className="flex items-center gap-2 min-w-0"
             style={{ textDecoration: 'none', maxWidth: 'calc(100% - 52px)', overflow: 'hidden' }}
           >
             {logoImg ? (

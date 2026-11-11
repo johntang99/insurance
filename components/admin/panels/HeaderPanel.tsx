@@ -175,7 +175,7 @@ export function HeaderPanel({
                 updateFormValue(['menu', 'logo', 'image', 'height'], raw === '' ? '' : Number(raw));
               }}
             />
-            <p className="mt-1 text-[11px] text-gray-400">Recommended: 32-56px.</p>
+            <p className="mt-1 text-[11px] text-gray-400">Recommended: 40-80px (desktop header is 92px tall; phones scale the logo down automatically).</p>
           </div>
         </div>
 
