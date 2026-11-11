@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import { getLineName } from '@/lib/insurance/theme';
 
 interface Agent {
@@ -107,7 +107,14 @@ export default function AgentsGrid({ agents, locale = 'en' }: AgentsGridProps) {
                 )}
 
                 <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 700, color: 'var(--navy-800)', marginBottom: 4 }}>{agent.name}</h3>
-                <p style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', textTransform: 'uppercase', letterSpacing: '.07em', marginBottom: 16 }}>{agent.title}</p>
+                <p style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--gold-600)', textTransform: 'uppercase', letterSpacing: '.07em', marginBottom: agent.email ? 8 : 16 }}>{agent.title}</p>
+                {agent.email && (
+                  <a href={`mailto:${agent.email}`}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '.85rem', color: 'var(--navy-700)', textDecoration: 'none', marginBottom: 16, wordBreak: 'break-all' }}>
+                    <Mail className="w-4 h-4" style={{ flexShrink: 0 }} />
+                    {agent.email}
+                  </a>
+                )}
 
                 <div style={{ height: 1, background: 'var(--border)', width: '100%', margin: '0 0 14px' }} />
 
@@ -139,7 +146,7 @@ export default function AgentsGrid({ agents, locale = 'en' }: AgentsGridProps) {
                   </div>
                 )}
 
-                {agent.years_experience && agent.years_experience > 0 && (
+                {(agent.years_experience ?? 0) > 0 && (
                   <p style={{ fontSize: '.82rem', color: 'var(--text-muted)', marginBottom: 4 }}>📅 {agent.years_experience} years experience</p>
                 )}
                 {agent.license_number && (
