@@ -70,6 +70,10 @@
           "href": "/zh/quote"
         },
         {
+          "label": "在线付款",
+          "href": "/zh/payment"
+        },
+        {
           "label": "理赔协助",
           "href": "/zh/claims"
         },
@@ -93,11 +97,11 @@
       "phone": "(718) 799-0472",
       "phoneHref": "tel:+17187990472",
       "email": "info@pbiny.com",
-      "hours": "Mon–Fri: 9am–6pm\nSat: 10am–3pm"
+      "hours": "Mon–Fri: 9am–6pm\nSat: 10am–5pm"
     }
   ],
   "legalText": "© {year} Peerless Brokerage Inc. 版权所有。",
-  "licenseText": "持牌保险经纪 | 执照号 #LA-1234567 | 持牌州：NY、NJ、CT、PA",
+  "licenseText": "持牌保险经纪 | 持牌州：NY、NJ、CT、PA",
   "disclaimer": "保险产品与服务受各州法规、承保条件及合同条款限制，并非所有州均可提供全部产品。",
   "links": [
     {

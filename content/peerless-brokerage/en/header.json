@@ -169,6 +169,11 @@
       ]
     },
     {
+      "href": "payment",
+      "type": "link",
+      "label": "Payment"
+    },
+    {
       "href": "contact",
       "type": "link",
       "label": "Contact"

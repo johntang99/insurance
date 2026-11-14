@@ -179,6 +179,7 @@ function getDefaultNav(locale: Locale): NavItem[] {
       { label: 'FAQ',                                  href: 'faq',       description: isZh ? '常见问题解答' : 'Common questions answered' },
       { label: isZh ? '理赔协助' : 'Claims Help',      href: 'claims',    description: isZh ? '理赔流程与协助' : 'Guidance through your claim' },
     ]},
+    { label: isZh ? '在线付款' : 'Payment', type: 'link', href: 'payment' },
     { label: isZh ? '联系我们' : 'Contact', type: 'link', href: 'contact' },
   ];
 }

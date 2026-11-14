@@ -1,18 +1,18 @@
 {
   "hero": {
     "variant": "centered",
-    "badge": "Serving Brooklyn Since 1999",
+    "badge": "Serving New York Since 2003",
     "headline": "About Peerless Brokerage Inc",
     "subline": "23 years of independent insurance expertise, working for clients — not insurance companies."
   },
   "story": {
     "headline": "Our Story",
-    "founded": "1999",
-    "body": "Peerless Brokerage was founded in 1999 with a simple mission: give Brooklyn families and businesses the same access to insurance options that large corporations enjoy. As an independent broker, we represent you — not any single insurance company.",
+    "founded": "2003",
+    "body": "Peerless Brokerage was founded in March 2003 in Flushing, NY, with a simple mission: give local families and businesses the same access to insurance options that large corporations enjoy. In July 2020, we expanded with a second office on 8th Avenue in Brooklyn to better serve our growing community. As an independent broker, we represent you — not any single insurance company.",
     "milestones": [
       {
-        "year": "1999",
-        "text": "Founded in Brooklyn, NY"
+        "year": "2003",
+        "text": "Founded in Flushing, NY (March 2003)"
       },
       {
         "year": "2005",
@@ -23,8 +23,8 @@
         "text": "Reached 2,000 clients served"
       },
       {
-        "year": "2018",
-        "text": "Opened second location in Queens"
+        "year": "2020",
+        "text": "Opened our Brooklyn office on 8th Avenue (July 2020)"
       },
       {
         "year": "2024",
@@ -52,28 +52,6 @@
   },
   "licenses": {
     "headline": "Licenses & Credentials",
-    "items": [
-      {
-        "state": "New York",
-        "licenseNumber": "LA-1234567",
-        "verifyUrl": "https://www.dfs.ny.gov"
-      },
-      {
-        "state": "New Jersey",
-        "licenseNumber": "NJ-7654321",
-        "verifyUrl": "https://www.nj.gov/dobi"
-      },
-      {
-        "state": "Connecticut",
-        "licenseNumber": "CT-1122334",
-        "verifyUrl": "https://portal.ct.gov/cid"
-      },
-      {
-        "state": "Pennsylvania",
-        "licenseNumber": "PA-4433221",
-        "verifyUrl": "https://www.insurance.pa.gov"
-      }
-    ],
     "memberships": [
       {
         "name": "Professional Insurance Agents (PIANY)"

@@ -19,12 +19,12 @@
     "中文"
   ],
   "faviconUrl": "/favicon.ico",
-  "description": "提供车险、房屋险、商业险等免费报价。Peerless Brokerage 比较30+保险公司方案，为您匹配更合适费率。自1999年服务法拉盛、皇后区与纽约市。",
+  "description": "提供车险、房屋险、商业险等免费报价。Peerless Brokerage 比较30+保险公司方案，为您匹配更合适费率。自2003年服务法拉盛、皇后区与纽约市。",
   "clientsCount": 5000,
   "addressMapUrl": "https://www.google.com/maps/search/?api=1&query=136-31+41st+Ave+Flushing+NY+11355",
   "carriersCount": 30,
   "headerVariant": "default",
-  "licenseNumber": "LA-1234567",
+  "licenseNumber": "",
   "policiesCount": 10000,
   "licensedStates": [
     "NY",

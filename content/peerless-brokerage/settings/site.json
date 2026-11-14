@@ -7,8 +7,8 @@
   "city": "Flushing",
   "state": "NY",
   "zip": "11355",
-  "hours": "Mon–Fri 9am–6pm, Sat 10am–3pm",
-  "licenseNumber": "LA-1234567",
+  "hours": "Mon–Fri 9am–6pm, Sat 10am–5pm",
+  "licenseNumber": "",
   "licensedStates": ["NY", "NJ", "CT", "PA"],
   "languages": ["English", "Spanish", "Chinese"],
   "yearsInBusiness": 23,
@@ -24,6 +24,6 @@
     "facebook": "",
     "google": ""
   },
-  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Flushing, Queens, NYC since 1999.",
+  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Flushing, Queens, NYC since 2003.",
   "headerVariant": "default"
 }

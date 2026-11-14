@@ -169,6 +169,11 @@
       ]
     },
     {
+      "href": "payment",
+      "type": "link",
+      "label": "在线付款"
+    },
+    {
       "href": "contact",
       "type": "link",
       "label": "联系我们"

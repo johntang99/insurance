@@ -58,14 +58,14 @@ export default async function ContactPage({ params }: PageProps) {
   const languages = si?.languages || (isZh ? ['英文', '西班牙语', '中文'] : ['English', 'Spanish', 'Chinese']);
   const hours = content?.contactInfo?.hours || [
     { days: isZh ? '周一至周五' : 'Monday – Friday', hours: isZh ? '9:00–18:00' : '9:00am – 6:00pm' },
-    { days: isZh ? '周六' : 'Saturday', hours: isZh ? '10:00–15:00' : '10:00am – 3:00pm' },
+    { days: isZh ? '周六' : 'Saturday', hours: isZh ? '10:00–17:00' : '10:00am – 5:00pm' },
     { days: isZh ? '周日' : 'Sunday', hours: isZh ? '休息' : 'Closed' },
   ];
   const ui = {
     heroHeadline: isZh ? '联系我们' : 'Contact Us',
     heroSubline: isZh ? '欢迎来电、邮件咨询，或到办公室当面沟通。' : "We're here to help — call, email, or stop by our office.",
     callText: isZh ? '电话咨询' : 'Call or Text',
-    available: isZh ? '周一至周六可联系' : 'Available Mon–Sat 9am–6pm',
+    available: isZh ? '周一至周五 9:00–18:00，周六 10:00–17:00' : 'Mon–Fri 9am–6pm, Sat 10am–5pm',
     office: isZh ? '办公室地址' : 'Our Office',
     directions: isZh ? '导航前往 →' : 'Get Directions →',
     emailQuote: isZh ? '邮箱与报价' : 'Email or Quote',

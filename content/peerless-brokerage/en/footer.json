@@ -70,6 +70,10 @@
           "href": "/en/quote"
         },
         {
+          "label": "Make a Payment",
+          "href": "/en/payment"
+        },
+        {
           "label": "Claims Assistance",
           "href": "/en/claims"
         },
@@ -93,11 +97,11 @@
       "phone": "(718) 799-0472",
       "phoneHref": "tel:+17187990472",
       "email": "info@pbiny.com",
-      "hours": "Mon–Fri: 9am–6pm\nSat: 10am–3pm"
+      "hours": "Mon–Fri: 9am–6pm\nSat: 10am–5pm"
     }
   ],
   "legalText": "© {year} Peerless Brokerage Inc. All rights reserved.",
-  "licenseText": "Licensed Insurance Broker | License #LA-1234567 | Licensed in NY, NJ, CT, PA",
+  "licenseText": "Licensed Insurance Broker | Licensed in NY, NJ, CT, PA",
   "disclaimer": "Insurance products and services subject to state availability, issue limitations, and contractual terms. Not all products available in all states.",
   "links": [
     {

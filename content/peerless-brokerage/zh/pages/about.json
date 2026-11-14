@@ -1,18 +1,18 @@
 {
   "hero": {
     "variant": "centered",
-    "badge": "自 1999 年服务纽约社区",
+    "badge": "自 2003 年服务纽约社区",
     "headline": "关于 Peerless Brokerage",
     "subline": "23 年独立保险经纪经验，坚持以客户利益为先。"
   },
   "story": {
     "headline": "我们的故事",
-    "founded": "1999",
-    "body": "Peerless Brokerage 创立于 1999 年。我们的初心很简单：让纽约本地家庭与企业也能获得像大型机构一样的保险选择与专业建议。作为独立经纪，我们服务的是客户，而非单一保险公司。",
+    "founded": "2003",
+    "body": "Peerless Brokerage 于 2003 年 3 月在纽约法拉盛创立。我们的初心很简单：让本地家庭与企业也能获得像大型机构一样的保险选择与专业建议。2020 年 7 月，我们在布鲁克林第八大道开设第二个办公室，更好地服务不断壮大的社区。作为独立经纪，我们服务的是客户，而非单一保险公司。",
     "milestones": [
       {
-        "year": "1999",
-        "text": "在纽约布鲁克林成立"
+        "year": "2003",
+        "text": "在纽约法拉盛成立（2003 年 3 月）"
       },
       {
         "year": "2005",
@@ -23,8 +23,8 @@
         "text": "累计服务客户突破 2,000"
       },
       {
-        "year": "2018",
-        "text": "在皇后区开设第二服务点"
+        "year": "2020",
+        "text": "在布鲁克林第八大道开设办公室（2020 年 7 月）"
       },
       {
         "year": "2024",
@@ -52,28 +52,6 @@
   },
   "licenses": {
     "headline": "执照与资质",
-    "items": [
-      {
-        "state": "纽约州",
-        "licenseNumber": "LA-1234567",
-        "verifyUrl": "https://www.dfs.ny.gov"
-      },
-      {
-        "state": "新泽西州",
-        "licenseNumber": "NJ-7654321",
-        "verifyUrl": "https://www.nj.gov/dobi"
-      },
-      {
-        "state": "康涅狄格州",
-        "licenseNumber": "CT-1122334",
-        "verifyUrl": "https://portal.ct.gov/cid"
-      },
-      {
-        "state": "宾夕法尼亚州",
-        "licenseNumber": "PA-4433221",
-        "verifyUrl": "https://www.insurance.pa.gov"
-      }
-    ],
     "memberships": [
       {
         "name": "纽约专业保险代理协会（PIANY）"

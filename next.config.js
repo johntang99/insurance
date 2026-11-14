@@ -88,6 +88,9 @@ const nextConfig = {
   // ── Redirects ─────────────────────────────────────────────
   async redirects() {
     return [
+      // Old pbiny.com payment pages → new Payment page
+      { source: '/make-a-payment.html', destination: '/en/payment', permanent: true },
+      { source: '/make_a_payment_zh.html', destination: '/zh/payment', permanent: true },
       // Travel Insurance was replaced by Life and Annuity Insurance
       { source: '/:locale/insurance/travel', destination: '/:locale/insurance/life-annuity', permanent: true },
       { source: '/:locale/insurance/travel/:city', destination: '/:locale/insurance/life-annuity/:city', permanent: true },

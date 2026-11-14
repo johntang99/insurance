@@ -83,6 +83,11 @@
       ]
     },
     {
+      "label": "Payment",
+      "type": "link",
+      "href": "payment"
+    },
+    {
       "label": "Contact",
       "type": "link",
       "href": "contact"

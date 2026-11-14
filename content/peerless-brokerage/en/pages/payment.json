@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "headline": "Make a Payment",
+    "subline": "Please call Peerless Brokerage to confirm your payment amount before you pay."
+  },
+  "online": {
+    "headline": "Pay Online",
+    "description": "Make a one-time payment by E-Check, Visa, MasterCard, American Express, or Discover Card.",
+    "methods": ["E-Check", "Visa", "MasterCard", "American Express", "Discover"],
+    "feeNote": "Service fees apply.",
+    "buttonLabel": "Pay Now",
+    "paymentUrl": "https://seppay.com/s/al?a=edEVTTg4vqICjc%2F%2FX1UTQA",
+    "qrImage": "/uploads/peerless-brokerage/payment/payment-qr.png",
+    "qrCaption": "Scan here with your phone camera to make a payment"
+  },
+  "zelle": {
+    "headline": "Pay with Zelle",
+    "description": "Send your payment with Zelle from your bank's mobile app or online banking.",
+    "recipient": "",
+    "recipientName": "",
+    "memoNote": "Please include your name and policy number in the memo.",
+    "comingSoon": "Zelle payment details are coming soon. Please call us for Zelle payment instructions."
+  },
+  "recurring": {
+    "headline": "Recurring Payments",
+    "description": "Recurring payments for agency-billed policies must be arranged through our customer service department or an underwriter.",
+    "phones": [
+      { "label": "Queens", "number": "718-799-0472" },
+      { "label": "Brooklyn", "number": "718-333-5259" }
+    ]
+  },
+  "terms": {
+    "headline": "Payment Terms & Conditions",
+    "items": [
+      "A payment made on a policy that has already been cancelled for non-payment will not reinstate the policy.",
+      "If you make a payment on a policy that is pending cancellation for non-payment, please contact our customer service department as soon as possible after paying.",
+      "Credit card payments may take up to 4 business days to process.",
+      "E-Check payments may take up to one week to process.",
+      "If your payment is rejected by your card issuer or bank, the policy will remain cancelled for non-payment. Peerless Brokerage is not responsible for any fees charged for rejected payments."
+    ]
+  }
+}

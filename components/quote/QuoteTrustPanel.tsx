@@ -53,7 +53,7 @@ export default function QuoteTrustPanel({
   const resolvedPoints = points || localizedDefaultPoints;
   const resolvedPhoneLabel = phoneLabel || (isZh ? '更想直接电话沟通？' : 'Prefer to call?');
   const resolvedResponsePromise = responsePromise || (isZh ? '我们通常在 2 个工作小时内回复所有报价申请。' : 'We respond to all quote requests within 2 business hours.');
-  const officeHours = isZh ? '周一至周六 9:00-18:00' : 'Mon–Sat 9am–6pm';
+  const officeHours = isZh ? '周一至周五 9:00-18:00，周六 10:00-17:00' : 'Mon–Fri 9am–6pm, Sat 10am–5pm';
   const reviewsLabel = isZh ? 'Google 评价' : 'Google reviews';
 
   return (

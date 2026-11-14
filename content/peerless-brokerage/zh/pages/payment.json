@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "headline": "在线付款",
+    "subline": "付款前，请先致电 Peerless Brokerage 确认付款金额。"
+  },
+  "online": {
+    "headline": "网上付款",
+    "description": "可使用电子支票（E-Check）、Visa、MasterCard、American Express 或 Discover 信用卡进行单次付款。",
+    "methods": ["E-Check", "Visa", "MasterCard", "American Express", "Discover"],
+    "feeNote": "需收取服务费。",
+    "buttonLabel": "立即付款",
+    "paymentUrl": "https://seppay.com/s/al?a=edEVTTg4vqICjc%2F%2FX1UTQA",
+    "qrImage": "/uploads/peerless-brokerage/payment/payment-qr.png",
+    "qrCaption": "用手机相机扫描此二维码即可付款"
+  },
+  "zelle": {
+    "headline": "Zelle 付款",
+    "description": "可通过您银行的手机 App 或网上银行使用 Zelle 转账付款。",
+    "recipient": "",
+    "recipientName": "",
+    "memoNote": "请在备注中注明您的姓名和保单号码。",
+    "comingSoon": "Zelle 收款信息即将公布，如需使用 Zelle 付款，请先致电我们。"
+  },
+  "recurring": {
+    "headline": "定期自动付款",
+    "description": "由经纪公司代收保费（Agency Bill）的保单如需设置定期付款，请联系我们的客户服务部或核保人员办理。",
+    "phones": [
+      { "label": "皇后区", "number": "718-799-0472" },
+      { "label": "布鲁克林", "number": "718-333-5259" }
+    ]
+  },
+  "terms": {
+    "headline": "付款条款与说明",
+    "items": [
+      "若保单已因未缴费被取消，此时付款不会使保单恢复生效。",
+      "若保单正处于因未缴费待取消状态，付款后请尽快联系我们的客户服务部。",
+      "信用卡付款最长可能需要 4 个工作日处理。",
+      "电子支票（E-Check）付款最长可能需要一周处理。",
+      "若您的付款被发卡机构或银行拒绝，保单将维持因未缴费取消的状态。Peerless Brokerage 不承担因付款被拒产生的任何费用。"
+    ]
+  }
+}

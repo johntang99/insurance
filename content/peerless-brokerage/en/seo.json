@@ -1,7 +1,7 @@
 {
   "titleTemplate": "%s | Peerless Brokerage Inc",
   "defaultTitle": "Peerless Brokerage Inc — Independent Insurance Broker in Flushing, NY",
-  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Flushing, Queens, NYC since 1999.",
+  "description": "Get free insurance quotes for auto, home, business & more. Peerless Brokerage shops 30+ carriers to find your best rate. Serving Flushing, Queens, NYC since 2003.",
   "ogImage": "https://gohgfhdyvoweishixxhb.supabase.co/storage/v1/object/public/media/peerless-brokerage/og-default.jpg",
   "twitterHandle": "",
   "canonicalBase": "https://pbiny.com",
@@ -19,12 +19,12 @@
       "description": "Submit your quote request in 2 minutes. We'll shop 30+ carriers and contact you within 2 business hours."
     },
     "about": {
-      "title": "About Us | Licensed Since 1999",
+      "title": "About Us | Licensed Since 2003",
       "description": "23 years serving Flushing, Queens, and NYC. Licensed in NY, NJ, CT, PA. Independent brokers who work for you, not the insurance company."
     },
     "contact": {
       "title": "Contact Us | Flushing, NY",
-      "description": "Visit our office at 136-31 41st Ave, Flushing, NY 11355. Call (718) 799-0472. Mon–Fri 9am–6pm, Sat 10am–3pm."
+      "description": "Visit our office at 136-31 41st Ave, Flushing, NY 11355. Call (718) 799-0472. Mon–Fri 9am–6pm, Sat 10am–5pm."
     }
   }
 }

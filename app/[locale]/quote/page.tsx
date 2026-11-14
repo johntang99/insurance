@@ -102,7 +102,7 @@ export default async function QuotePage({ params }: PageProps) {
               responsePromise={trustPanel.responsePromise}
               googleRating={si?.googleReviewsRating}
               googleReviewCount={si?.googleReviewsCount}
-              licenseText={si?.licenseNumber ? (isZh ? `持牌州：${si?.licensedStates?.join('、') || 'NY、NJ、CT、PA'}` : `Licensed in ${si?.licensedStates?.join(', ') || 'NY, NJ, CT, PA'}`) : undefined}
+              licenseText={isZh ? `持牌州：${si?.licensedStates?.join('、') || 'NY、NJ、CT、PA'}` : `Licensed in ${si?.licensedStates?.join(', ') || 'NY, NJ, CT, PA'}`}
             />
           </div>
         </div>

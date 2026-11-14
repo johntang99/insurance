@@ -184,7 +184,7 @@ function createAutoReplyHTML(name: string, context: ContactEmailContext): string
                       <p style="margin: 0; color: #065f46; font-size: 14px; line-height: 1.6;">
                         <strong>🕐 Need immediate assistance?</strong><br>
                         Call us at <a href="tel:${phone.replace(/\D/g, '')}" style="color: #059669; text-decoration: none; font-weight: 600;">${phone}</a><br>
-                        <span style="color: #6b7280; font-size: 13px;">Mon-Fri: 8am-8pm | Sat-Sun: 9am-6pm</span>
+                        <span style="color: #6b7280; font-size: 13px;">Mon-Fri: 9am-6pm | Sat: 10am-5pm | Sun: Closed</span>
                       </p>
                     </div>
 
