@@ -63,19 +63,25 @@ const nextConfig = {
         ],
       },
       {
-        // Cache static assets aggressively
+        // Uploaded images keep fixed file names and may be replaced (e.g. a new
+        // carrier logo), so cache for a day rather than forever.
         source: '/uploads/(.*)',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
         ],
       },
-      {
-        // Cache Next.js static files
-        source: '/_next/static/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      // Long-term caching of Next.js static files is only safe in production,
+      // where file names are content-hashed. In development the names never
+      // change, so caching them makes the browser run stale code and causes
+      // "Text content does not match server-rendered HTML" errors.
+      ...(process.env.NODE_ENV === 'production'
+        ? [{
+            source: '/_next/static/(.*)',
+            headers: [
+              { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+            ],
+          }]
+        : []),
     ];
   },
 
