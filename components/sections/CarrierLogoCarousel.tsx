@@ -19,12 +19,22 @@ export default function CarrierLogoCarousel({
   carriers = [],
   variant = 'auto-scroll',
 }: CarrierLogoCarouselProps) {
-  const names = carriers.length > 0
-    ? carriers.map(c => c.name)
-    : FALLBACK_CARRIERS;
+  const items: Array<{ name: string; logo_url?: string }> = carriers.length > 0
+    ? carriers.map(c => ({ name: c.name, logo_url: c.logo_url || undefined }))
+    : FALLBACK_CARRIERS.map(name => ({ name }));
+  const hasLogos = items.some(c => c.logo_url);
+  const cardHeight = hasLogos ? 80 : 54;
+
+  // Logos of any size are scaled to fit the same box without stretching
+  const renderContent = (c: { name: string; logo_url?: string }) =>
+    c.logo_url ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={c.logo_url} alt={c.name} title={c.name} loading="lazy"
+        style={{ display: 'block', maxHeight: 52, maxWidth: 150, width: 'auto', height: 'auto', objectFit: 'contain' }} />
+    ) : c.name;
 
   // Duplicate for infinite loop
-  const doubled = [...names, ...names];
+  const doubled = [...items, ...items];
 
   if (variant === 'static-grid') {
     return (
@@ -36,15 +46,15 @@ export default function CarrierLogoCarousel({
             {subline && <p style={{ color: 'var(--text-muted)', marginTop: 8, fontSize: '1rem' }}>{subline}</p>}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 16 }}>
-            {names.map((name) => (
-              <div key={name} style={{
+            {items.map((c) => (
+              <div key={c.name} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                minHeight: 54, background: 'var(--bg-white)', border: '1.5px solid var(--border)',
+                minHeight: cardHeight, background: 'var(--bg-white)', border: '1.5px solid var(--border)',
                 borderRadius: 10, padding: '0 20px', fontSize: '.82rem', fontWeight: 700,
                 color: 'var(--text-muted)', letterSpacing: '.04em', textTransform: 'uppercase',
                 textAlign: 'center',
               }}>
-                {name}
+                {renderContent(c)}
               </div>
             ))}
           </div>
@@ -73,17 +83,17 @@ export default function CarrierLogoCarousel({
           display: 'flex',
           gap: 16,
           width: 'max-content',
-          animation: 'carrier-scroll 32s linear infinite',
+          animation: `carrier-scroll ${Math.max(32, items.length * 3)}s linear infinite`,
           padding: '4px 0',
         }}
           className="carrier-track"
           onMouseEnter={e => ((e.currentTarget as HTMLElement).style.animationPlayState = 'paused')}
           onMouseLeave={e => ((e.currentTarget as HTMLElement).style.animationPlayState = 'running')}
         >
-          {doubled.map((name, i) => (
-            <div key={`${name}-${i}`} style={{
+          {doubled.map((c, i) => (
+            <div key={`${c.name}-${i}`} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              minWidth: 140, height: 54,
+              minWidth: hasLogos ? 180 : 140, height: cardHeight,
               background: 'var(--bg-white)',
               border: '1.5px solid var(--border)',
               borderRadius: 10,
@@ -92,7 +102,7 @@ export default function CarrierLogoCarousel({
               color: 'var(--text-muted)',
               letterSpacing: '.04em', textTransform: 'uppercase',
               whiteSpace: 'nowrap',
-              filter: 'grayscale(1)',
+              filter: c.logo_url ? 'none' : 'grayscale(1)',
               transition: 'filter .2s, border-color .2s, color .2s, box-shadow .2s',
               cursor: 'default',
             }}
@@ -103,13 +113,13 @@ export default function CarrierLogoCarousel({
                 (e.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow-sm)';
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.filter = 'grayscale(1)';
+                (e.currentTarget as HTMLElement).style.filter = c.logo_url ? 'none' : 'grayscale(1)';
                 (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
                 (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
                 (e.currentTarget as HTMLElement).style.boxShadow = 'none';
               }}
             >
-              {name}
+              {renderContent(c)}
             </div>
           ))}
         </div>
