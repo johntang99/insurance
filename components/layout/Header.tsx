@@ -274,7 +274,7 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
     <>
       {/* ── TOP BAR ──────────────────────────────────────── */}
       <div className="hidden md:block" style={{ background: 'var(--navy-800)', padding: '7px 0', fontSize: '.8rem', color: 'rgba(255,255,255,.75)', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
-        <div className="container-custom flex justify-between items-center gap-4">
+        <div className="container-custom flex justify-between items-center gap-4" style={{ maxWidth: 1400 }}>
           <div className="flex items-center gap-4 flex-wrap">
             {licenseNumber && (
               <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(255,255,255,.1)', color: 'rgba(255,255,255,.85)' }}>
@@ -307,7 +307,7 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
         boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,.1)' : 'none',
         transition: 'box-shadow .2s',
       }}>
-        <div className="container-custom flex items-center justify-between h-[68px] lg:h-[92px]" style={{ gap: 6 }}>
+        <div className="container-custom flex items-center justify-between h-[68px] lg:h-[92px]" style={{ gap: 6, maxWidth: 1400 }}>
 
           {/* Logo */}
           <Link
@@ -322,7 +322,7 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
                 width={Math.round(logoHeight * 3.5)}
                 height={logoHeight}
                 className="w-auto max-w-full object-contain"
-                style={{ height: `min(${logoHeight}px, 11vw)` }}
+                style={{ height: `min(${logoHeight}px, 11vw)`, objectPosition: 'left center' }}
               />
             ) : (
               <>
@@ -351,7 +351,7 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
               if (item.type === 'link') {
                 return (
                   <Link key={item.label} href={href(item.href || '')}
-                    className="px-3.5 py-2 rounded-md text-sm font-medium transition-colors"
+                    className="px-2.5 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors"
                     style={{ color: isActive(item.href || '') ? 'var(--navy-800)' : 'var(--text-secondary)', fontWeight: isActive(item.href || '') ? 700 : 500, textDecoration: 'none' }}>
                     {item.label}
                   </Link>
@@ -362,7 +362,7 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
                 <div key={item.label} className="relative"
                   onMouseEnter={() => handleMouseEnter(item.label)}
                   onMouseLeave={handleMouseLeave}>
-                  <button className="flex items-center gap-1 px-3.5 py-2 rounded-md text-sm font-medium transition-colors"
+                  <button className="flex items-center gap-1 px-2.5 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors"
                     style={{ color: isOpen ? 'var(--navy-800)' : 'var(--text-secondary)', fontWeight: isOpen ? 700 : 500, background: isOpen ? 'var(--navy-50)' : 'transparent', border: 'none', cursor: 'pointer' }}>
                     {item.label}
                     <ChevronDown className="w-3.5 h-3.5" style={{ transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s', color: 'var(--text-muted)' }} />
@@ -430,7 +430,7 @@ export default function Header({ locale, siteInfo, headerConfig, supportedLocale
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0">
             {showLocaleSwitcher && (
               <div className="flex items-center rounded-lg border" style={{ borderColor: 'var(--border)', overflow: 'hidden' }}>
                 {activeLocales.map((item) => (
