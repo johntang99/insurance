@@ -111,14 +111,5 @@
   "legalText": "© {year} Peerless Brokerage Inc. All rights reserved.",
   "licenseText": "Licensed Insurance Broker | Licensed in NY, NJ, CT, PA",
   "disclaimer": "Insurance products and services subject to state availability, issue limitations, and contractual terms. Not all products available in all states.",
-  "links": [
-    {
-      "label": "Privacy Policy",
-      "href": "/en/privacy"
-    },
-    {
-      "label": "Terms & Conditions",
-      "href": "/en/terms"
-    }
-  ]
+  "links": []
 }

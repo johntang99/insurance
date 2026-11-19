@@ -111,14 +111,5 @@
   "legalText": "© {year} Peerless Brokerage Inc. 版权所有。",
   "licenseText": "持牌保险经纪 | 持牌州：NY、NJ、CT、PA",
   "disclaimer": "保险产品与服务受各州法规、承保条件及合同条款限制，并非所有州均可提供全部产品。",
-  "links": [
-    {
-      "label": "隐私政策",
-      "href": "/zh/privacy"
-    },
-    {
-      "label": "条款与条件",
-      "href": "/zh/terms"
-    }
-  ]
+  "links": []
 }
