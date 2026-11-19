@@ -59,6 +59,14 @@
         {
           "label": "资讯中心",
           "href": "/zh/resources"
+        },
+        {
+          "label": "隐私政策",
+          "href": "/zh/privacy"
+        },
+        {
+          "label": "条款与条件",
+          "href": "/zh/terms"
         }
       ]
     },
@@ -109,7 +117,7 @@
       "href": "/zh/privacy"
     },
     {
-      "label": "服务条款",
+      "label": "条款与条件",
       "href": "/zh/terms"
     }
   ]

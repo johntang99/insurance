@@ -59,6 +59,14 @@
         {
           "label": "Resources",
           "href": "/en/resources"
+        },
+        {
+          "label": "Privacy Policy",
+          "href": "/en/privacy"
+        },
+        {
+          "label": "Terms & Conditions",
+          "href": "/en/terms"
         }
       ]
     },
@@ -109,7 +117,7 @@
       "href": "/en/privacy"
     },
     {
-      "label": "Terms of Service",
+      "label": "Terms & Conditions",
       "href": "/en/terms"
     }
   ]

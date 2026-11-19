@@ -146,10 +146,13 @@ export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines:
             const href = `/${locale}/insurance/${slug}`;
 
             return (
-              <Link key={slug} href={href}
-                style={{ display: 'flex', flexDirection: 'column', background: 'var(--bg-white)', border: isFeatured ? '1.5px solid var(--gold-500)' : '1.5px solid var(--border)', borderRadius: 'var(--radius)', padding: '24px 20px', textDecoration: 'none', transition: 'border-color .2s, transform .2s, box-shadow .2s' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--navy-600)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = isFeatured ? 'var(--gold-500)' : 'var(--border)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>
+              <div key={slug}
+                style={{ position: 'relative', display: 'flex', flexDirection: 'column', background: 'var(--bg-white)', border: isFeatured ? '1.5px solid var(--gold-500)' : '1.5px solid var(--border)', borderRadius: 'var(--radius)', padding: '24px 20px', transition: 'border-color .2s, transform .2s, box-shadow .2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--navy-600)'; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = 'var(--shadow)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = isFeatured ? 'var(--gold-500)' : 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                {/* Full-card link overlay (avoids nesting <a> inside <a>) */}
+                <Link href={href} aria-label={name}
+                  style={{ position: 'absolute', inset: 0, zIndex: 0, borderRadius: 'inherit' }} />
                 <span style={{ fontSize: '2rem', display: 'block', marginBottom: 12 }}>{icon}</span>
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--navy-800)', fontSize: '1rem', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{name}</h3>
                 <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.5, flex: 1, marginBottom: 14 }}>{desc}</p>
@@ -157,12 +160,12 @@ export default function InsuranceCategoryTabs({ lines, locale = 'en' }: { lines:
                   <span style={{ fontSize: '.78rem', fontWeight: 600, color: 'var(--gold-600)' }}>
                     {isZh ? '了解详情 →' : 'Learn More →'}
                   </span>
-                  <Link href={`/${locale}/quote?type=${slug}`} onClick={e => e.stopPropagation()}
-                    style={{ fontSize: '.78rem', fontWeight: 600, color: 'var(--navy-500)', marginLeft: 'auto' }}>
+                  <Link href={`/${locale}/quote?type=${slug}`}
+                    style={{ position: 'relative', zIndex: 1, fontSize: '.78rem', fontWeight: 600, color: 'var(--navy-500)', marginLeft: 'auto' }}>
                     {isZh ? '获取报价' : 'Get Quote'}
                   </Link>
                 </div>
-              </Link>
+              </div>
             );
           })}
 

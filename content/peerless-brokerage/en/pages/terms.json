@@ -1,0 +1,41 @@
+{
+  "title": "Terms & Conditions",
+  "updatedAt": "November 19, 2026",
+  "intro": "By using our Services, you acknowledge and agree to the following terms and conditions.",
+  "sections": [
+    {
+      "heading": "Opt-In and Message Frequency",
+      "body": "By opting in, you agree to receive informational messages related to customer care and support from Peerless Brokerage Inc. Message frequency varies depending on the nature of the services provided."
+    },
+    {
+      "heading": "Message and Data Rates",
+      "body": "Message and data rates may apply based on your mobile carrier's plan. Please check with your mobile provider for more information."
+    },
+    {
+      "heading": "Customer Care Contact Information",
+      "body": "For help or more information, you can:",
+      "bullets": [
+        "Text HELP for assistance",
+        "Email us at Peerless@pbiny.com",
+        "Call our customer support line at 718-799-0472"
+      ]
+    },
+    {
+      "heading": "Opt-Out Information",
+      "body": "To stop receiving messages at any time, text STOP to cancel."
+    },
+    {
+      "heading": "Contact Us",
+      "body": "For questions or concerns about this Privacy Policy and Terms, please contact us:",
+      "bullets": [
+        "Email: Peerless@pbiny.com",
+        "Phone: 718-799-0472",
+        "Address: 136-31 41st Ave Suite 3D, Flushing, NY 11355"
+      ]
+    },
+    {
+      "heading": "Acknowledgment",
+      "body": "By using our Services, you acknowledge that you have read, understood, and agree to this Privacy Policy and Terms."
+    }
+  ]
+}

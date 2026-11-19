@@ -1,0 +1,37 @@
+{
+  "title": "Privacy Policy",
+  "updatedAt": "November 19, 2026",
+  "intro": "At Peerless Brokerage Inc, we value your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our services (\"Services\").",
+  "sections": [
+    {
+      "heading": "Information We Collect",
+      "body": "We may collect personal information, including but not limited to, your name, email address, phone number, and other relevant details to provide you with our Services."
+    },
+    {
+      "heading": "How We Use Your Information",
+      "body": "We use the information we collect to:",
+      "bullets": [
+        "Provide and improve our Services",
+        "Communicate with you regarding customer care and support",
+        "Respond to inquiries and fulfill requests"
+      ]
+    },
+    {
+      "heading": "Sharing of Information",
+      "body": "We do NOT sell or share your personal information to third parties for marketing or promotional purposes. Your information will remain confidential, and we will only share it if required by law or necessary to fulfill the Services provided.\n\nMobile information will not be shared with third parties/affiliates for marketing/promotional purposes. All the above categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties."
+    },
+    {
+      "heading": "Communication Opt-Out",
+      "body": "If you wish to be removed from receiving future communications, you can opt out by texting STOP, QUIT, END, REVOKE, OPT OUT, CANCEL, or UNSUBSCRIBE."
+    },
+    {
+      "heading": "Contact Us",
+      "body": "For questions or concerns about this Privacy Policy, please contact us:",
+      "bullets": [
+        "Email: Peerless@pbiny.com",
+        "Phone: 718-799-0472",
+        "Address: 136-31 41st Ave Suite 3D, Flushing, NY 11355"
+      ]
+    }
+  ]
+}
